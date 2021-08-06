@@ -3,9 +3,11 @@ import IdentitySdkCore
 
 class SignupController: UIViewController {
     @IBOutlet weak var emailInput: UITextField!
+    @IBOutlet weak var phoneInput: UITextField!
     @IBOutlet weak var passwordInput: UITextField!
     @IBOutlet weak var nameInput: UITextField!
     @IBOutlet weak var redirectUrlInput: UITextField!
+    var redirectUrl: String? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -14,9 +16,10 @@ class SignupController: UIViewController {
 
     @IBAction func signup(_ sender: Any) {
         let email = emailInput.text ?? ""
+        let phone = phoneInput.text ?? ""
         let password = passwordInput.text ?? ""
         let name = nameInput.text ?? ""
-        var redirectUrl: String? = nil
+        
             
         if (!redirectUrlInput.text!.isEmpty)
         {
@@ -27,14 +30,37 @@ class SignupController: UIViewController {
             "test_string": .string("some random string"),
             "test_integer": .int(1)
         ]
-        
-        let profile = ProfileSignupRequest(
-            password: password,
-            email: email,
-            name: name,
-            customFields: customFields
-        )
-        AppDelegate.reachfive().signup(profile: profile,redirectUrl: redirectUrl).onSuccess(callback: goToProfile)
+        if (email.isEmpty) && (!phone.isEmpty)
+              {
+              let profile = ProfileSignupRequest(
+                  password: password,
+                  phoneNumber:phone,
+                  name: name,
+                  customFields: customFields
+              )
+            self.signup(profile:profile)
+              }
+              else if (!email.isEmpty) && (phone.isEmpty){
+                  
+                  let profile = ProfileSignupRequest(
+                      password: password,
+                      email: email,
+                      name: name,
+                      customFields: customFields
+                  )
+                self.signup(profile:profile)
+              }
+              else if ((!email.isEmpty) && (!phone.isEmpty))
+              {
+                let profile = ProfileSignupRequest(
+                    password: password,
+                    email: email,
+                    phoneNumber: phone,
+                    name: name,
+                    customFields: customFields
+                )
+                self.signup(profile:profile)
+              }
     }
     
     func goToProfile(_ authToken: AuthToken) {
@@ -45,5 +71,10 @@ class SignupController: UIViewController {
         ) as! ProfileController
         profileController.authToken = authToken
         self.self.navigationController?.pushViewController(profileController, animated: true)
+    }
+    
+    func signup(profile:ProfileSignupRequest)
+    {
+        AppDelegate.reachfive().signup(profile: profile,redirectUrl: redirectUrl).onSuccess(callback: goToProfile)
     }
 }

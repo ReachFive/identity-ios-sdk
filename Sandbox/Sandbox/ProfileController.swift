@@ -31,6 +31,9 @@ class ProfileController: UIViewController, UITableViewDelegate, UITableViewDataS
                 if profile.email != nil {
                     self.emailLabel?.text = "Email: " + profile.email!
                 }
+                if profile.phoneNumber != nil {
+                    self.phoneLabel?.text = "Phone: " + profile.phoneNumber!
+                }
             }
             .onFailure { error in
                 self.alertError(error: error)
@@ -38,6 +41,7 @@ class ProfileController: UIViewController, UITableViewDelegate, UITableViewDataS
         
         self.refreshDevicesDisplayed()
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.devices.count
     }
@@ -75,6 +79,7 @@ class ProfileController: UIViewController, UITableViewDelegate, UITableViewDataS
                 self.navigationController?.popViewController(animated: true)
             }
     }
+    
     @IBAction func addDeviceFido(_ sender: Any) {
         
         AppDelegate.reachfive().addNewWebAuthnDevice(authToken: self.authToken!,origin: AppDelegate.origin,friendlyName: deviceNameText.text,viewController: self)
@@ -83,10 +88,9 @@ class ProfileController: UIViewController, UITableViewDelegate, UITableViewDataS
             }
             .onFailure { error in
                 self.alertError(error: error)
-                
             }
-        
     }
+    
     func refreshDevicesDisplayed()
     {
         AppDelegate.reachfive().listWebAuthnDevices(authToken: self.authToken!).onSuccess { listDevice in
@@ -98,10 +102,8 @@ class ProfileController: UIViewController, UITableViewDelegate, UITableViewDataS
                 self.deviceFidoTableview.reloadData()
             }
         }
-        .onFailure { error in
-            self.alertError(error: error)
-        }
     }
+    
     func alertError(error: ReachFiveError)
     {
         var messageAlert = ""
