@@ -6,7 +6,7 @@ version: 2.1
 jobs:
   build:
     macos:
-      xcode: "11.2.0"
+      xcode: "11.4.1"
     steps:
       - checkout
       - run:
@@ -42,7 +42,7 @@ jobs:
             pod lib lint IdentitySdkWebView.podspec --allow-warnings
   build-for-release:
     macos:
-      xcode: "11.2.0"
+      xcode: "11.4.1"
     steps:
       - checkout
       - run:
@@ -79,7 +79,7 @@ jobs:
 
   publish:
     macos:
-      xcode: "11.2.0"
+      xcode: "11.4.1"
     steps:
       - checkout
       - run:
@@ -91,7 +91,7 @@ jobs:
       - run: pod trunk push IdentitySdkWebView.podspec
   build-sandbox:
     macos:
-      xcode: "11.2.0"
+      xcode: "11.4.1"
     working_directory: ~/repo/Sandbox
     steps:
       - checkout:
