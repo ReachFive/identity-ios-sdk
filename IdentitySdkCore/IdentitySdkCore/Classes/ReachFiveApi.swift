@@ -142,7 +142,7 @@ public class ReachFiveApi {
         return AF
             .request(
                 createUrl(
-                    path: "/identity/v1/me?device=\(deviceInfo)&fields=\(profile_fields.joined(separator: ","))"
+                    path: "/identity/v1/userinfo?device=\(deviceInfo)&fields=\(profile_fields.joined(separator: ","))"
                 ),
                 method: .get,
                 headers: tokenHeader(authToken)
