@@ -15,4 +15,22 @@ public class Base64 {
         
         return Data(base64Encoded: base64, options: NSData.Base64DecodingOptions(rawValue: 0))
     }
+    public static func encodeBase64(_ bytes: [UInt8]) -> String {
+           return encodeBase64(Data(_: bytes))
+       }
+       
+       public static func encodeBase64(_ data: Data) -> String {
+           return data.base64EncodedString()
+       }
+
+       public static func encodeBase64URL(_ bytes: [UInt8]) -> String {
+           return encodeBase64URL(Data(_: bytes))
+       }
+
+       public static func encodeBase64URL(_ data: Data) -> String {
+           return data.base64EncodedString()
+               .replacingOccurrences(of: "+", with: "-")
+               .replacingOccurrences(of: "/", with: "_")
+               .replacingOccurrences(of: "=", with: "")
+       }
 }

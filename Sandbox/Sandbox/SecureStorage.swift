@@ -1,8 +1,3 @@
-//
-// Created by François Devémy on 10/09/2020.
-// Copyright (c) 2020 Reachfive. All rights reserved.
-//
-
 import IdentitySdkCore
 
 public class SecureStorage: Storage {

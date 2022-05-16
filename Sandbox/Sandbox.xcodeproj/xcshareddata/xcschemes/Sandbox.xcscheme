@@ -47,6 +47,16 @@
                ReferencedContainer = "container:Sandbox.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "8496EB9525DEC1DB005098DD"
+               BuildableName = "RNWebAuthnKitTests.xctest"
+               BlueprintName = "RNWebAuthnKitTests"
+               ReferencedContainer = "container:Sandbox.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
