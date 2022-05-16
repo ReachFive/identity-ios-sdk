@@ -53,6 +53,8 @@
 	<string>1</string>
 	<key>FacebookAppID</key>
 	<string>1634029666893228</string>
+	<key>FacebookClientToken</key>
+	<string>1a774a90e2e5ec97b21afcd93ce69909</string>
 	<key>FacebookDisplayName</key>
 	<string>Reach5 SDK Mobile</string>
 	<key>LSApplicationQueriesSchemes</key>

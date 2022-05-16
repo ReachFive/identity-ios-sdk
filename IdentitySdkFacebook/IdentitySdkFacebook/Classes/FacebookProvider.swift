@@ -2,8 +2,6 @@ import Foundation
 import UIKit
 import IdentitySdkCore
 import BrightFutures
-import FacebookCore
-import FacebookLogin
 import FBSDKLoginKit
 
 public class FacebookProvider: ProviderCreator {
@@ -64,7 +62,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
             case .success(_, _, let token):
                 let loginProviderRequest = LoginProviderRequest(
                     provider: self.providerConfig.provider,
-                    providerToken: token.tokenString,
+                    providerToken: token?.tokenString,
                     code: nil,
                     origin: origin,
                     clientId: self.sdkConfig.clientId,
@@ -99,7 +97,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
     }
     
     public func applicationDidBecomeActive(_ application: UIApplication) {
-        AppEvents.activateApp()
+        AppEvents.shared.activateApp()
     }
     
     public func logout() -> Future<(), ReachFiveError> {
