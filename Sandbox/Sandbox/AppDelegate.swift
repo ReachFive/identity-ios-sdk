@@ -10,12 +10,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     public static let storage = SecureStorage()
     public static let authKey = "AUTH_TOKEN"
+    public static let origin = ProcessInfo.processInfo.environment["ORIGIN"]!
+
 
     let reachfive: ReachFive = ReachFive(
             sdkConfig: SdkConfig(
-                    domain: "sdk-mobile-sandbox.reach5.net",
-                    clientId: "TYAIHFRJ2a1FGJ1T8pKD",
-                    scheme: "reachfive-TYAIHFRJ2a1FGJ1T8pKD://callback"
+                    domain: ProcessInfo.processInfo.environment["DOMAIN"]!,
+                    clientId: ProcessInfo.processInfo.environment["CLIENT_ID"]!,
+                    scheme: ProcessInfo.processInfo.environment["SCHEME"]!
             ),
             providersCreators: [
                 FacebookProvider(),
