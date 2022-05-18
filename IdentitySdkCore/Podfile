@@ -9,8 +9,8 @@ target 'IdentitySdkCore' do
   use_frameworks!
 
   # Pods for IdentitySdkCore
-  pod 'Alamofire', '~> 5.2.2'
-  pod 'BrightFutures', '~> 8.0.0'
+  pod 'Alamofire', '~> 5.6.1'
+  pod 'BrightFutures', '~> 8.1.0'
   pod 'EllipticCurveKeyPair', '~> 2.0'
   pod 'KeychainAccess', '~> 4.2.1'
   pod 'PromiseKit', '~> 6.13.1'
