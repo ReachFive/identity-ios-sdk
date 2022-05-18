@@ -18,7 +18,6 @@ jobs:
             cd IdentitySdkCore
             pod install
             cd ../
-            pod cache clean --all
             pod lib lint IdentitySdkCore.podspec --allow-warnings
       - run:
           name: Check IdentitySdkFacebook
