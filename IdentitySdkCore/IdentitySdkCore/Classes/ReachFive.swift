@@ -70,8 +70,7 @@ public class ReachFive: NSObject {
             "code_challenge_method": pkce.codeChallengeMethod
         ]
         // Build redirectUri
-        let redirectUri = self.reachFiveApi
-            .authorize(options: options)
+        let redirectUri = self.reachFiveApi.authorize(options: options)
         // Pass the redirectUri to Safari to get code
         let redirectionSafari = RedirectionSafari(url: redirectUri)
         redirectionSafari.login().onComplete { result in
@@ -83,7 +82,7 @@ public class ReachFive: NSObject {
         }
     }
     
-    public func authWithCode(code: String, pkce :Pkce) -> Future<AuthToken, ReachFiveError> {
+    internal func authWithCode(code: String, pkce :Pkce) -> Future<AuthToken, ReachFiveError> {
         let authCodeRequest = AuthCodeRequest(
             clientId: self.sdkConfig.clientId ,
             code: code,
@@ -94,8 +93,8 @@ public class ReachFive: NSObject {
             .authWithCode(authCodeRequest: authCodeRequest)
             .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) })
     }
-    
-    public func signupWithWebAuthn(profile: ProfileWebAuthnSignupRequest,origin: String,friendlyName: String?,viewController: UIViewController,scopes: [String]?, completion: @escaping ((Future<AuthToken, ReachFiveError>) -> Any)) {
+
+    internal func signupWithWebAuthn(profile: ProfileWebAuthnSignupRequest,origin: String,friendlyName: String?,viewController: UIViewController,scopes: [String]?, completion: @escaping ((Future<AuthToken, ReachFiveError>) -> Any)) {
         let webAuthnRegistrationRequest = WebAuthnRegistrationRequest(
             origin: origin,
             friendlyName: friendlyName ?? "",
@@ -139,8 +138,8 @@ public class ReachFive: NSObject {
                 _ = completion(thePromise.future)
             }
     }
-    
-    public func loginWithWebAuthn(email: String, origin: String, scopes: [String]?,viewController: UIViewController, completion: @escaping ((Future<AuthToken, ReachFiveError>) -> Any)) {
+
+    internal func loginWithWebAuthn(email: String, origin: String, scopes: [String]?,viewController: UIViewController, completion: @escaping ((Future<AuthToken, ReachFiveError>) -> Any)) {
         
         let webAuthnLoginRequest = WebAuthnLoginRequest(
             clientId: sdkConfig.clientId,
@@ -184,8 +183,8 @@ public class ReachFive: NSObject {
                 _ = completion(thePromise.future)
             }
     }
-    
-    public func listWebAuthnDevices(authToken: AuthToken) -> Future<[DeviceCredential], ReachFiveError> {
+
+    internal func listWebAuthnDevices(authToken: AuthToken) -> Future<[DeviceCredential], ReachFiveError> {
         
         return self.reachFiveApi
             .getWebAuthnRegistrations(authorization: buildAuthorization(authToken: authToken))

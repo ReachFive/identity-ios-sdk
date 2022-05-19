@@ -16,6 +16,7 @@ class LoginWithFidoViewController: UIViewController{
     
     @IBAction func loginButton(_ sender: Any) {
         
+/*
         AppDelegate.reachfive().loginWithWebAuthn(email: self.emailText.text!,origin: AppDelegate.origin,scopes: scopes,viewController: self)
         { (authToken) -> Any in
             authToken.onSuccess(callback: self.goToProfile)
@@ -34,6 +35,7 @@ class LoginWithFidoViewController: UIViewController{
                     self.present(alert, animated: true, completion: nil)
                 }
         }
+*/
     }
     
     func goToProfile(_ authToken: AuthToken) {

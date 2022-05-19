@@ -23,6 +23,7 @@ class SignUpFidoControllerViewController: UIViewController{
             givenName: givenNameText.text,
             familyName: familyNameText.text )
         
+/*
         AppDelegate.reachfive().signupWithWebAuthn(profile: profile,origin: AppDelegate.origin,friendlyName: deviceNameText.text,viewController: self,scopes: self.scopes)
         { (authToken) -> Any in
             authToken.onSuccess(callback: self.goToProfile)
@@ -41,6 +42,7 @@ class SignUpFidoControllerViewController: UIViewController{
                     self.present(alert, animated: true, completion: nil)
                 }
         }
+*/
     }
     
     func goToProfile(_ authToken: AuthToken) {

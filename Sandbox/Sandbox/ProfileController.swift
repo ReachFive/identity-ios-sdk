@@ -32,6 +32,7 @@ class ProfileController: UIViewController, UITableViewDelegate, UITableViewDataS
         .onFailure { error in print("getProfile error = \(error)") }
         
         
+/*
         AppDelegate.reachfive().listWebAuthnDevices(authToken: self.authToken!).onSuccess { listDevice in
             self.devices.append(contentsOf: listDevice)
             
@@ -42,7 +43,8 @@ class ProfileController: UIViewController, UITableViewDelegate, UITableViewDataS
         }
         .onFailure { error in
             print("getDevices error = \(error)") }
-        
+*/
+
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.devices.count
