@@ -82,7 +82,7 @@ public class ReachFiveApi {
         loginProviderRequest: LoginProviderRequest
     ) -> Future<AccessTokenResponse, ReachFiveError> {
         return AF
-            .request(createUrl(path: "/identity/v1/oauth/provider/token?device=\(deviceInfo)"), method: .post, parameters: loginProviderRequest.dictionary(), encoding: JSONEncoding.default)
+            .request(createUrl(path: "/identity/v1/oauth/provider/token?platform=ios&device=\(deviceInfo)"), method: .post, parameters: loginProviderRequest.dictionary(), encoding: JSONEncoding.default)
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
             .responseJson(type: AccessTokenResponse.self, decoder: self.decoder)
@@ -91,7 +91,7 @@ public class ReachFiveApi {
     public func signupWithPassword(signupRequest: SignupRequest) -> Future<AccessTokenResponse, ReachFiveError> {
         return AF
             .request(
-                createUrl(path: "/identity/v1/signup-token?device=\(deviceInfo)"),
+                createUrl(path: "/identity/v1/signup-token?platform=ios&device=\(deviceInfo)"),
                 method: .post,
                 parameters: signupRequest.dictionary(),
                 encoding: JSONEncoding.default
@@ -103,7 +103,7 @@ public class ReachFiveApi {
     public func loginWithPassword(loginRequest: LoginRequest) -> Future<AccessTokenResponse, ReachFiveError> {
         return AF
             .request(
-                createUrl(path: "/oauth/token?device=\(deviceInfo)"),
+                createUrl(path: "/oauth/token?platform=ios&device=\(deviceInfo)"),
                 method: .post,
                 parameters: loginRequest.dictionary(),
                 encoding: JSONEncoding.default
@@ -115,7 +115,7 @@ public class ReachFiveApi {
     public func authWithCode(authCodeRequest: AuthCodeRequest) -> Future<AccessTokenResponse, ReachFiveError> {
         return AF
             .request(
-                createUrl(path: "/oauth/token?device=\(deviceInfo)"),
+                createUrl(path: "/oauth/token?platform=ios&device=\(deviceInfo)"),
                 method: .post,
                 parameters: authCodeRequest.dictionary(),
                 encoding: JSONEncoding.default
@@ -128,7 +128,7 @@ public class ReachFiveApi {
     public func refreshAccessToken(_ refreshRequest: RefreshRequest) -> Future<AccessTokenResponse, ReachFiveError> {
         return AF
             .request(
-                createUrl(path: "/oauth/token?device=\(deviceInfo)"),
+                createUrl(path: "/oauth/token?platform=ios&device=\(deviceInfo)"),
                 method: .post,
                 parameters: refreshRequest.dictionary(),
                 encoding: JSONEncoding.default
@@ -142,7 +142,7 @@ public class ReachFiveApi {
         return AF
             .request(
                 createUrl(
-                    path: "/identity/v1/userinfo?device=\(deviceInfo)&fields=\(profile_fields.joined(separator: ","))"
+                    path: "/identity/v1/userinfo?platform=ios&device=\(deviceInfo)&fields=\(profile_fields.joined(separator: ","))"
                 ),
                 method: .get,
                 headers: tokenHeader(authToken)
@@ -158,7 +158,7 @@ public class ReachFiveApi {
     ) -> Future<(), ReachFiveError> {
         return AF
             .request(
-                createUrl(path: "/identity/v1/verify-phone-number?device=\(deviceInfo)"),
+                createUrl(path: "/identity/v1/verify-phone-number?platform=ios&device=\(deviceInfo)"),
                 method: .post,
                 parameters: verifyPhoneNumberRequest.dictionary(),
                 encoding: JSONEncoding.default,
@@ -174,7 +174,7 @@ public class ReachFiveApi {
     ) -> Future<Profile, ReachFiveError> {
         return AF
             .request(
-                createUrl(path: "/identity/v1/update-email?device=\(deviceInfo)"),
+                createUrl(path: "/identity/v1/update-email?platform=ios&device=\(deviceInfo)"),
                 method: .post,
                 parameters: updateEmailRequest.dictionary(),
                 encoding: JSONEncoding.default,
@@ -191,7 +191,7 @@ public class ReachFiveApi {
     ) -> Future<Profile, ReachFiveError> {
         return AF
             .request(
-                createUrl(path: "/identity/v1/update-profile?device=\(deviceInfo)"),
+                createUrl(path: "/identity/v1/update-profile?platform=ios&device=\(deviceInfo)"),
                 method: .post,
                 parameters: profile.dictionary(),
                 encoding: JSONEncoding.default,
@@ -209,7 +209,7 @@ public class ReachFiveApi {
         let headers: HTTPHeaders = authToken != nil ? tokenHeader(authToken!) : [:]
         return AF
             .request(
-                createUrl(path: "/identity/v1/update-password?device=\(deviceInfo)"),
+                createUrl(path: "/identity/v1/update-password?platform=ios&device=\(deviceInfo)"),
                 method: .post,
                 parameters: updatePasswordRequest.dictionary(),
                 encoding: JSONEncoding.default,
@@ -225,7 +225,7 @@ public class ReachFiveApi {
     ) -> Future<Profile, ReachFiveError> {
         return AF
             .request(
-                createUrl(path: "/identity/v1/update-phone-number?device=\(deviceInfo)"),
+                createUrl(path: "/identity/v1/update-phone-number?platform=ios&device=\(deviceInfo)"),
                 method: .post,
                 parameters: updatePhoneNumberRequest.dictionary(),
                 encoding: JSONEncoding.default,
@@ -240,7 +240,7 @@ public class ReachFiveApi {
     ) -> Future<(), ReachFiveError> {
         return AF
             .request(createUrl(
-                path: "/identity/v1/forgot-password?device=\(deviceInfo)"),
+                path: "/identity/v1/forgot-password?platform=ios&device=\(deviceInfo)"),
                      method: .post,
                      parameters: requestPasswordResetRequest.dictionary(),
                      encoding: JSONEncoding.default
@@ -252,7 +252,7 @@ public class ReachFiveApi {
     public func startPasswordless(_ startPasswordlessRequest: StartPasswordlessRequest) -> Future<(), ReachFiveError> {
         return AF
             .request(
-                createUrl(path: "/identity/v1/passwordless/start?device=\(deviceInfo)"),
+                createUrl(path: "/identity/v1/passwordless/start?platform=ios&device=\(deviceInfo)"),
                 method: .post,
                 parameters: startPasswordlessRequest.dictionary(),
                 encoding: JSONEncoding.default
@@ -264,7 +264,7 @@ public class ReachFiveApi {
     public func verifyPasswordless(verifyPasswordlessRequest: VerifyPasswordlessRequest) -> Future<PasswordlessVerifyResponse, ReachFiveError> {
         return AF
             .request(
-                createUrl(path: "/identity/v1/passwordless/verify?device=\(deviceInfo)"),
+                createUrl(path: "/identity/v1/passwordless/verify?platform=ios&device=\(deviceInfo)"),
                 method: .post,
                 parameters: verifyPasswordlessRequest.dictionary()
         )
@@ -275,7 +275,7 @@ public class ReachFiveApi {
     public func verifyAuthCode(verifyAuthCodeRequest: VerifyAuthCodeRequest) -> Future<(), ReachFiveError> {
         return AF
             .request(
-                createUrl(path: "/identity/v1/verify-auth-code?device=\(deviceInfo)"),
+                createUrl(path: "/identity/v1/verify-auth-code?platform=ios&device=\(deviceInfo)"),
                 method: .post,
                 parameters: verifyAuthCodeRequest.dictionary(),
                 encoding: JSONEncoding.default
@@ -287,7 +287,7 @@ public class ReachFiveApi {
     public func logout() -> Future<(), ReachFiveError> {
         return AF
             .request(
-                createUrl(path: "/identity/v1/logout?device=\(deviceInfo)"),
+                createUrl(path: "/identity/v1/logout?platform=ios&device=\(deviceInfo)"),
                 method: .get
         )
             .validate(statusCode: 200..<300)
@@ -306,6 +306,7 @@ public class ReachFiveApi {
         
         let request: URLRequest?
         var redirectUri = String()
+        //TODO add platform=ios
         do {
             request = try URLRequest(url: createUrl(path: "/oauth/authorize?"), method: .get, headers: nil)
             let encodedURLRequest = try URLEncoding.queryString.encode(request!, with: options )
@@ -320,7 +321,7 @@ public class ReachFiveApi {
     public func createWebAuthnSignupOptions(webAuthnRegistrationRequest: WebAuthnRegistrationRequest) -> Future<RegistrationOptions, ReachFiveError> {
         return AF
             .request(
-                createUrl(path: "/identity/v1/webauthn/signup-options?device=\(deviceInfo)"),
+                createUrl(path: "/identity/v1/webauthn/signup-options?platform=ios&device=\(deviceInfo)"),
                 method: .post,
                 parameters: webAuthnRegistrationRequest.dictionary(),
                 encoding: JSONEncoding.default
@@ -328,10 +329,11 @@ public class ReachFiveApi {
             .validate(contentType: ["application/json"])
             .responseJson(type: RegistrationOptions.self, decoder: self.decoder)
     }
+
     public func signupWithWebAuthn(webauthnSignupCredential: WebauthnSignupCredential) -> Future<AuthenticationToken, ReachFiveError> {
         return AF
             .request(
-                createUrl(path: "/identity/v1/webauthn/signup?device=\(deviceInfo)"),
+                createUrl(path: "/identity/v1/webauthn/signup?platform=ios&device=\(deviceInfo)"),
                 method: .post,
                 parameters: webauthnSignupCredential.dictionary(),
                 encoding: JSONEncoding.default
@@ -343,7 +345,7 @@ public class ReachFiveApi {
     public func createWebAuthnAuthenticationOptions(webAuthnLoginRequest: WebAuthnLoginRequest) -> Future<AuthenticationOptions, ReachFiveError> {
         return AF
             .request(
-                createUrl(path: "/identity/v1/webauthn/authentication-options?device=\(deviceInfo)"),
+                createUrl(path: "/identity/v1/webauthn/authentication-options?platform=ios&device=\(deviceInfo)"),
                 method: .post,
                 parameters: webAuthnLoginRequest.dictionary(),
                 encoding: JSONEncoding.default
@@ -355,7 +357,7 @@ public class ReachFiveApi {
     public func authenticateWithWebAuthn(authenticationPublicKeyCredential: AuthenticationPublicKeyCredential) -> Future<AuthenticationToken, ReachFiveError> {
         return AF
             .request(
-                createUrl(path: "/identity/v1/webauthn/authentication?device=\(deviceInfo)"),
+                createUrl(path: "/identity/v1/webauthn/authentication?platform=ios&device=\(deviceInfo)"),
                 method: .post,
                 parameters: authenticationPublicKeyCredential.dictionary(),
                 encoding: JSONEncoding.default
@@ -369,7 +371,7 @@ public class ReachFiveApi {
         let headers : HTTPHeaders = [ "Authorization" : authorization ]
         return AF
             .request(
-                createUrl(path: "/identity/v1/webauthn/registration?device=\(deviceInfo)"),
+                createUrl(path: "/identity/v1/webauthn/registration?platform=ios&device=\(deviceInfo)"),
                 method: .get,
                 encoding: JSONEncoding.default,
                 headers: headers
