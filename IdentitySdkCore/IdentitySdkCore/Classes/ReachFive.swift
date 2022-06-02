@@ -94,34 +94,6 @@ public class ReachFive: NSObject {
             .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) })
     }
 
-    internal func signupWithWebAuthn(profile: ProfileWebAuthnSignupRequest,origin: String,friendlyName: String?,viewController: UIViewController,scopes: [String]?, completion: @escaping ((Future<AuthToken, ReachFiveError>) -> Any)) {
-        let webAuthnRegistrationRequest = WebAuthnRegistrationRequest(
-            origin: origin,
-            friendlyName: friendlyName ?? "",
-            profile: profile,
-            clientId: sdkConfig.clientId
-        )
-        // get registrationOptions
-        self.reachFiveApi
-            .createWebAuthnSignupOptions(webAuthnRegistrationRequest: webAuthnRegistrationRequest)
-            .onSuccess{registrationOptions in
-                // prepare and setup the reachFiveClientFido
-                let reachFiveClientFido = ReachFiveFidoClient (viewController: viewController, origin: origin)
-                reachFiveClientFido.setupWebAuthnClient()
-                reachFiveClientFido.startRegistration(registrationOption: registrationOptions).onSuccess{ webauthnSignupCredential in
-                    // start the onSignupWithWebAuthnResult func to get firstly the authenticationToken and then exchange the tkn with an access token
-                    self.onSignupWithWebAuthnResult(webauthnSignupCredential: webauthnSignupCredential,scopes: scopes)
-                    { (authToken) -> Any in
-                        _ = completion(authToken)
-                    }
-                }
-            }.onFailure { error in
-                let thePromise = BrightFutures.Promise<AuthToken, ReachFiveError>()
-                thePromise.failure(error)
-                _ = completion(thePromise.future)
-            }
-    }
-    
     private func onSignupWithWebAuthnResult(webauthnSignupCredential: WebauthnSignupCredential,scopes: [String]?, completion: @escaping ((Future<AuthToken, ReachFiveError>) -> Any)) {
         
         self.reachFiveApi
@@ -139,35 +111,6 @@ public class ReachFive: NSObject {
             }
     }
 
-    internal func loginWithWebAuthn(email: String, origin: String, scopes: [String]?,viewController: UIViewController, completion: @escaping ((Future<AuthToken, ReachFiveError>) -> Any)) {
-        
-        let webAuthnLoginRequest = WebAuthnLoginRequest(
-            clientId: sdkConfig.clientId,
-            origin: origin,
-            email: email,
-            scope: [String](scopes!).joined(separator: " ")
-        )
-        
-        self.reachFiveApi
-            .createWebAuthnAuthenticationOptions(webAuthnLoginRequest: webAuthnLoginRequest)
-            .onSuccess { authenticationOptions in
-                
-                let reachFiveClientFido = ReachFiveFidoClient (viewController: viewController, origin: origin)
-                reachFiveClientFido.setupWebAuthnClient()
-                reachFiveClientFido.startAuthentication(authenticationOptions: authenticationOptions).onSuccess{ authenticationPublicKeyCredential in
-                    
-                    self.onLoginWithWebAuthnResult(authenticationPublicKeyCredential: authenticationPublicKeyCredential,scopes: scopes)
-                    { (authToken) -> Any in
-                        _ = completion(authToken)
-                    }
-                }
-            }.onFailure { error in
-                let thePromise = BrightFutures.Promise<AuthToken, ReachFiveError>()
-                thePromise.failure(error)
-                _ = completion(thePromise.future)
-            }
-    }
-    
     private func onLoginWithWebAuthnResult(authenticationPublicKeyCredential: AuthenticationPublicKeyCredential, scopes: [String]?, completion: @escaping ((Future<AuthToken, ReachFiveError>) -> Any)) {
         self.reachFiveApi
             .authenticateWithWebAuthn(authenticationPublicKeyCredential: authenticationPublicKeyCredential)

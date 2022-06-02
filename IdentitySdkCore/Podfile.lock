@@ -13,11 +13,6 @@ PODS:
     - PromiseKit/CorePromise
   - PromiseKit/UIKit (6.13.1):
     - PromiseKit/CorePromise
-  - WebAuthnKit (0.9.6):
-    - CryptoSwift (~> 1.3.8)
-    - EllipticCurveKeyPair (~> 2.0)
-    - KeychainAccess (~> 4.2.1)
-    - PromiseKit (~> 6.13.1)
 
 DEPENDENCIES:
   - Alamofire (~> 5.6.1)
@@ -26,7 +21,6 @@ DEPENDENCIES:
   - EllipticCurveKeyPair (~> 2.0)
   - KeychainAccess (~> 4.2.1)
   - PromiseKit (~> 6.13.1)
-  - WebAuthnKit (~> 0.9.6)
 
 SPEC REPOS:
   trunk:
@@ -36,7 +30,6 @@ SPEC REPOS:
     - EllipticCurveKeyPair
     - KeychainAccess
     - PromiseKit
-    - WebAuthnKit
 
 SPEC CHECKSUMS:
   Alamofire: 87bd8c952f9a4454320fce00d9cc3de57bcadaf5
@@ -45,8 +38,7 @@ SPEC CHECKSUMS:
   EllipticCurveKeyPair: 8c69e5238a6e47243a10a48fbd41dfb19110b22e
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
-  WebAuthnKit: b778fee9d900b6b2697fbcac1e95b4609356801d
 
-PODFILE CHECKSUM: 6b85935b68564269a21160390d2ec21280a34515
+PODFILE CHECKSUM: e441a8b34e7a5ed4f16795390a962d49d174caa4
 
 COCOAPODS: 1.11.3

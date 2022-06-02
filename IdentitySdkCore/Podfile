@@ -14,7 +14,6 @@ target 'IdentitySdkCore' do
   pod 'EllipticCurveKeyPair', '~> 2.0'
   pod 'KeychainAccess', '~> 4.2.1'
   pod 'PromiseKit', '~> 6.13.1'
-  pod 'WebAuthnKit', '~> 0.9.6'
   pod "CryptoSwift", "~> 1.3.8"
 
 
