@@ -23,5 +23,6 @@ Pod::Spec.new do |spec|
   spec.dependency 'KeychainAccess', '~> 4.2.1'
   spec.dependency 'PromiseKit', '~> 6.13.1'
   spec.dependency 'CryptoSwift', '~> 1.3.8'
+  spec.dependency 'WebAuthnKit', '~> 0.9.6'
 
 end
