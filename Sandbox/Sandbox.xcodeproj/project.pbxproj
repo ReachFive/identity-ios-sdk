@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A9D190728904A9F00B8A4B9 /* WebviewLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9D190628904A9F00B8A4B9 /* WebviewLoginController.swift */; };
 		3414A7CD22DDD39C00CF393A /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3414A7CC22DDD39C00CF393A /* ProfileController.swift */; };
 		341731FE229D6B6400681CFD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341731FD229D6B6400681CFD /* AppDelegate.swift */; };
 		34173200229D6B6400681CFD /* LoginWithProvidersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341731FF229D6B6400681CFD /* LoginWithProvidersController.swift */; };
@@ -54,6 +55,7 @@
 
 /* Begin PBXFileReference section */
 		1B4336D32015A6A13AA1DB17 /* Pods-Sandbox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sandbox.release.xcconfig"; path = "Target Support Files/Pods-Sandbox/Pods-Sandbox.release.xcconfig"; sourceTree = "<group>"; };
+		2A9D190628904A9F00B8A4B9 /* WebviewLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebviewLoginController.swift; sourceTree = "<group>"; };
 		2E55CD881F31583F8D3480D8 /* Pods_Sandbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sandbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3414A7CC22DDD39C00CF393A /* ProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
 		341731FA229D6B6400681CFD /* Sandbox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sandbox.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -138,6 +140,7 @@
 				3417FF6D22FB06E50009EC84 /* PasswordlessController.swift */,
 				349E16EB230BEBBF002EA06B /* UpdatePasswordController.swift */,
 				34173201229D6B6400681CFD /* Main.storyboard */,
+				2A9D190628904A9F00B8A4B9 /* WebviewLoginController.swift */,
 				34173204229D6B6400681CFD /* Assets.xcassets */,
 				34173206229D6B6400681CFD /* LaunchScreen.storyboard */,
 				34173209229D6B6400681CFD /* Info.plist */,
@@ -352,6 +355,7 @@
 				34173200229D6B6400681CFD /* LoginWithProvidersController.swift in Sources */,
 				349E16EC230BEBBF002EA06B /* UpdatePasswordController.swift in Sources */,
 				8496EB4825DEB764005098DD /* LoginWithFidoViewController.swift in Sources */,
+				2A9D190728904A9F00B8A4B9 /* WebviewLoginController.swift in Sources */,
 				8433EA3C25F13D0A00329358 /* DevicesFidoCell.swift in Sources */,
 				341731FE229D6B6400681CFD /* AppDelegate.swift in Sources */,
 				3417FF6822F846610009EC84 /* UpdatePhoneNumberController.swift in Sources */,
@@ -547,7 +551,7 @@
 					"\"${PODS_ROOT}/GoogleSignIn/Frameworks\"",
 				);
 				INFOPLIST_FILE = Sandbox/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -569,7 +573,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6KDQ68PRPG;
 				INFOPLIST_FILE = Sandbox/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
