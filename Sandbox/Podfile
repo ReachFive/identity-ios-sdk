@@ -1,6 +1,6 @@
 use_frameworks!
 
-platform :ios, '12.2'
+platform :ios, '13'
 
 target 'Sandbox' do
   #pod 'IdentitySdkCore', '5.0.0'
