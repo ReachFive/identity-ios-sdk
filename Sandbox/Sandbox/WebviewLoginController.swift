@@ -7,7 +7,7 @@ class WebviewLoginController: UIViewController, ASWebAuthenticationPresentationC
 
     @IBAction func login(_ sender: Any) {
         AppDelegate.reachfive()
-            .webviewLogin(WebviewLoginRequest(scope: ["email", "profile"], presentationContextProvider: self))
+            .webviewLogin(WebviewLoginRequest(state: "state", nonce: "nonce", scope: ["email", "profile"], presentationContextProvider: self))
             .onComplete { self.handleResult(result: $0) }
     }
 
@@ -27,7 +27,7 @@ class WebviewLoginController: UIViewController, ASWebAuthenticationPresentationC
     // same as login with providers
     func goToProfile() {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let profileController = storyBoard.instantiateViewController(withIdentifier: "ProfileScene") as! ProfileController
+        let profileController = storyBoard.instantiateViewController(withIdentifier: "ProfileScene")
         navigationController?.pushViewController(profileController, animated: true)
     }
 
