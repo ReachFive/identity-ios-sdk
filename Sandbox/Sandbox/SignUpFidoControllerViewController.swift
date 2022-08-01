@@ -18,7 +18,7 @@ class SignUpFidoControllerViewController: UIViewController{
     }
     
     @IBAction func SignupButton(_ sender: Any) {
-        let profile = ProfileWebAuthnSignupRequest(
+        _ = ProfileWebAuthnSignupRequest(
             email: emailText.text,
             givenName: givenNameText.text,
             familyName: familyNameText.text )
