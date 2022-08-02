@@ -7,7 +7,7 @@ public class R5PublicKeyCredentialRequestOptions: Codable, DictionaryEncodable {
     public var allowCredentials: [R5PublicKeyCredentialDescriptor]? = nil
     public var userVerification: String
     
-    public init(challenge: String,timeout: Int?,rpId: String, allowCredentials: [R5PublicKeyCredentialDescriptor]?, userVerification: String) {
+    public init(challenge: String, timeout: Int?, rpId: String, allowCredentials: [R5PublicKeyCredentialDescriptor]?, userVerification: String) {
         self.challenge = challenge
         self.timeout = timeout
         self.rpId = rpId

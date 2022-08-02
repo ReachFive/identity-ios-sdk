@@ -3,7 +3,7 @@ import IdentitySdkCore
 import PromiseKit
 import CryptoSwift
 
-class SignUpFidoControllerViewController: UIViewController{
+class SignUpFidoControllerViewController: UIViewController {
     
     @IBOutlet weak var emailText: UITextField!
     @IBOutlet weak var givenNameText: UITextField!
@@ -12,17 +12,17 @@ class SignUpFidoControllerViewController: UIViewController{
     let scopes = ["openid", "email", "profile", "phone", "full_write", "offline_access"]
     
     override func viewDidLoad() {
-        super.viewDidLoad()        
+        super.viewDidLoad()
         AppDelegate.reachfive().initialize().onComplete { _ in }
-        deviceNameText.text = UIDevice.current.name        
+        deviceNameText.text = UIDevice.current.name
     }
     
     @IBAction func SignupButton(_ sender: Any) {
         _ = ProfileWebAuthnSignupRequest(
             email: emailText.text,
             givenName: givenNameText.text,
-            familyName: familyNameText.text )
-        
+            familyName: familyNameText.text)
+
 /*
         AppDelegate.reachfive().signupWithWebAuthn(profile: profile,origin: AppDelegate.origin,friendlyName: deviceNameText.text,viewController: self,scopes: self.scopes)
         { (authToken) -> Any in
@@ -42,7 +42,7 @@ class SignUpFidoControllerViewController: UIViewController{
                     self.present(alert, animated: true, completion: nil)
                 }
         }
-*/
+    */
     }
     
     func goToProfile(_ authToken: AuthToken) {

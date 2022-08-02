@@ -2,8 +2,7 @@ import UIKit
 import SafariServices
 import BrightFutures
 
-class RedirectionSafari: NSObject, SFSafariViewControllerDelegate
-{
+class RedirectionSafari: NSObject, SFSafariViewControllerDelegate {
     var url: String
     private let notificationName = Notification.Name("AuthCallbackNotification")
     private var safariViewController: SFSafariViewController? = nil
@@ -26,7 +25,7 @@ class RedirectionSafari: NSObject, SFSafariViewControllerDelegate
         return promise.future
     }
     
-    @objc func handleLogin(_ notification : Notification) {
+    @objc func handleLogin(_ notification: Notification) {
         NotificationCenter.default.removeObserver(self, name: self.notificationName, object: nil)
         
         let url = notification.object as? URL
@@ -49,7 +48,7 @@ class RedirectionSafari: NSObject, SFSafariViewControllerDelegate
         controller.dismiss(animated: true, completion: nil)
     }
     
-    public func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
+    public func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
         if let sourceApplication = options[.sourceApplication] {
             if (String(describing: sourceApplication) == "com.apple.SafariViewService") {
                 NotificationCenter.default.post(name: self.notificationName, object: url)

@@ -5,7 +5,7 @@ public class VerifyAuthCodeRequest: Codable, DictionaryEncodable {
     let phoneNumber: String?
     let email: String?
     let verificationCode: String
-
+    
     public init(
         authType: PasswordLessAuthType? = nil,
         phoneNumber: String? = nil,

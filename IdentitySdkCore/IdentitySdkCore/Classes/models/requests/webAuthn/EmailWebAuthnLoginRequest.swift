@@ -6,7 +6,7 @@ public class EmailWebAuthnLoginRequest: Codable, DictionaryEncodable {
     public var email: String
     public var scope: String? = nil
     
-    public init(clientId: String,origin: String,email: String, scope: String?) {
+    public init(clientId: String, origin: String, email: String, scope: String?) {
         self.clientId = clientId
         self.origin = origin
         self.email = email

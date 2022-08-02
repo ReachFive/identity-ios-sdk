@@ -60,25 +60,26 @@ public class OpenIdUser: Codable {
 
 extension OpenIdUser {
     struct CodingData: Codable {
-       var sub: String?
-       var name: String?
-       var preferredUsername: String?
-       var givenName: String?
-       var familyName: String?
-       var middleName: String?
-       var nickname: String?
-       var picture: String?
-       var website: String?
-       var email: String?
-       var emailVerified: Bool?
-       var gender: String?
-       var zoneinfo: String?
-       var locale: String?
-       var phoneNumber: String?
-       var phoneNumberVerified: Bool?
-       var address: ProfileAddress?
+        var sub: String?
+        var name: String?
+        var preferredUsername: String?
+        var givenName: String?
+        var familyName: String?
+        var middleName: String?
+        var nickname: String?
+        var picture: String?
+        var website: String?
+        var email: String?
+        var emailVerified: Bool?
+        var gender: String?
+        var zoneinfo: String?
+        var locale: String?
+        var phoneNumber: String?
+        var phoneNumberVerified: Bool?
+        var address: ProfileAddress?
     }
 }
+
 extension OpenIdUser.CodingData {
     var openIdUser: OpenIdUser {
         return OpenIdUser.init(

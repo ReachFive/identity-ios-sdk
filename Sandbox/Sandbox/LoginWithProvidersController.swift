@@ -26,7 +26,7 @@ class LoginWithProvidersController: UIViewController, UITableViewDataSource, UIT
         self.providers = providers
         self.providersTableView.reloadData()
     }
-        
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return providers.count
     }
@@ -50,7 +50,7 @@ class LoginWithProvidersController: UIViewController, UITableViewDataSource, UIT
             print(error)
         }
     }
-        
+    
     func goToProfile(_ authToken: AuthToken) {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let profileController = storyBoard.instantiateViewController(

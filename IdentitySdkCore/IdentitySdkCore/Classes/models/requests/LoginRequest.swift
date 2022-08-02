@@ -6,7 +6,7 @@ public class LoginRequest: Codable, DictionaryEncodable {
     public let grantType: String
     public let clientId: String
     public let scope: String
-
+    
     public init(username: String, password: String, grantType: String, clientId: String, scope: String) {
         self.username = username
         self.password = password

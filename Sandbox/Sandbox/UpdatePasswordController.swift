@@ -6,7 +6,7 @@ class UpdatePasswordController: UIViewController {
     var authToken: AuthToken? = AppDelegate.storage.get(key: AppDelegate.authKey)
     @IBOutlet weak var oldPassword: UITextField!
     @IBOutlet weak var newPassword: UITextField!
-
+    
     @IBAction func update(_ sender: Any) {
         if (authToken != nil) {
             AppDelegate.reachfive()

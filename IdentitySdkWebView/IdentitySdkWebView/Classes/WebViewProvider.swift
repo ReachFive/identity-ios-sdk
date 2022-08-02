@@ -30,7 +30,7 @@ class ConfiguredWebViewProvider: NSObject, Provider, SFSafariViewControllerDeleg
     private var safariViewController: SFSafariViewController? = nil
     private var pkce: Pkce = Pkce.generate()
     private var promise: Promise<AuthToken, ReachFiveError>?
-
+    
     var name: String = WebViewProvider.NAME
     
     let sdkConfig: SdkConfig
@@ -76,7 +76,7 @@ class ConfiguredWebViewProvider: NSObject, Provider, SFSafariViewControllerDeleg
         return promise.future
     }
     
-    @objc func handleLogin(_ notification : Notification) {
+    @objc func handleLogin(_ notification: Notification) {
         NotificationCenter.default.removeObserver(self, name: self.notificationName, object: nil)
         
         let url = notification.object as? URL
@@ -118,7 +118,7 @@ class ConfiguredWebViewProvider: NSObject, Provider, SFSafariViewControllerDeleg
         controller.dismiss(animated: true, completion: nil)
     }
     
-    public func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
+    public func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
         if let sourceApplication = options[.sourceApplication] {
             if (String(describing: sourceApplication) == "com.apple.SafariViewService") {
                 NotificationCenter.default.post(name: self.notificationName, object: url)

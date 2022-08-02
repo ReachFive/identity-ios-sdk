@@ -8,8 +8,9 @@ extension DictionaryEncodable {
         encoder.keyEncodingStrategy = .convertToSnakeCase
         encoder.dateEncodingStrategy = .millisecondsSince1970
         guard let json = try? encoder.encode(self),
-            let dict = try? JSONSerialization.jsonObject(with: json, options: []) as? [String: Any] else {
-                return nil
+              let dict = try? JSONSerialization.jsonObject(with: json, options: []) as? [String: Any]
+        else {
+            return nil
         }
         return dict
     }

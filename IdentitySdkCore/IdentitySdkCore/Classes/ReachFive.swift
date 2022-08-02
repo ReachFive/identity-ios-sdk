@@ -20,7 +20,7 @@ public class ReachFive: NSObject {
     internal var scope: [String] = []
     internal let storage: Storage
     let codeResponseType = "code"
-
+    
     public init(sdkConfig: SdkConfig, providersCreators: Array<ProviderCreator>, storage: Storage?) {
         self.sdkConfig = sdkConfig
         self.providersCreators = providersCreators
@@ -34,7 +34,7 @@ public class ReachFive: NSObject {
             .sequence()
             .flatMap { _ in self.reachFiveApi.logout() }
     }
-
+    
     public func refreshAccessToken(authToken: AuthToken) -> Future<AuthToken, ReachFiveError> {
         let refreshRequest = RefreshRequest(
             clientId: sdkConfig.clientId,
@@ -45,7 +45,7 @@ public class ReachFive: NSObject {
             .refreshAccessToken(refreshRequest)
             .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) })
     }
-
+    
     public override var description: String {
         return """
                Config: domain=\(sdkConfig.domain), clientId=\(sdkConfig.clientId)
@@ -53,7 +53,7 @@ public class ReachFive: NSObject {
                Scope: \(scope.joined(separator: " "))
                """
     }
-
+    
     private func loginCallback(tkn: String, scopes: [String]?, completion: @escaping ((Future<AuthToken, ReachFiveError>) -> Any)) {
         var resultAuthToken = Future<AuthToken, ReachFiveError>()
         let pkce = Pkce.generate()
@@ -73,14 +73,13 @@ public class ReachFive: NSObject {
         // Pass the redirectUri to Safari to get code
         let redirectionSafari = RedirectionSafari(url: redirectUri!)
         redirectionSafari.login().onComplete { result in
-
             let code = redirectionSafari.handleResult(result: result)
             resultAuthToken = self.authWithCode(code: code, pkce: pkce)
             // return authToken with completion
             _ = completion(resultAuthToken)
         }
     }
-
+    
     internal func authWithCode(code: String, pkce: Pkce) -> Future<AuthToken, ReachFiveError> {
         let authCodeRequest = AuthCodeRequest(
             clientId: self.sdkConfig.clientId,
@@ -92,7 +91,7 @@ public class ReachFive: NSObject {
             .authWithCode(authCodeRequest: authCodeRequest)
             .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) })
     }
-
+    
     private func onSignupWithWebAuthnResult(webauthnSignupCredential: WebauthnSignupCredential, scopes: [String]?, completion: @escaping ((Future<AuthToken, ReachFiveError>) -> Any)) {
         self.reachFiveApi
             .signupWithWebAuthn(webauthnSignupCredential: webauthnSignupCredential)
@@ -108,7 +107,7 @@ public class ReachFive: NSObject {
                 _ = completion(thePromise.future)
             }
     }
-
+    
     private func onLoginWithWebAuthnResult(authenticationPublicKeyCredential: AuthenticationPublicKeyCredential, scopes: [String]?, completion: @escaping ((Future<AuthToken, ReachFiveError>) -> Any)) {
         self.reachFiveApi
             .authenticateWithWebAuthn(authenticationPublicKeyCredential: authenticationPublicKeyCredential)
@@ -123,12 +122,12 @@ public class ReachFive: NSObject {
                 _ = completion(thePromise.future)
             }
     }
-
+    
     internal func listWebAuthnDevices(authToken: AuthToken) -> Future<[DeviceCredential], ReachFiveError> {
         return self.reachFiveApi
             .getWebAuthnRegistrations(authorization: buildAuthorization(authToken: authToken))
     }
-
+    
     private func buildAuthorization(authToken: AuthToken) -> String {
         return authToken.tokenType! + " " + authToken.accessToken
     }

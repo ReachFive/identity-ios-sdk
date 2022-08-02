@@ -29,7 +29,7 @@ public class Profile: Codable, DictionaryEncodable {
     public let updatedAt: String?
     public let company: String?
     public let liteOnly: Bool?
-
+    
     public required init(
         uid: String? = nil,
         givenName: String? = nil,

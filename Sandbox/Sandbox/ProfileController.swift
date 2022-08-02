@@ -3,7 +3,7 @@ import IdentitySdkCore
 
 class ProfileController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var authToken: AuthToken? = AppDelegate.storage.get(key: AppDelegate.authKey)
-    var devices : [DeviceCredential] = []
+    var devices: [DeviceCredential] = []
     
     @IBOutlet weak var familyNameLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
@@ -18,7 +18,8 @@ class ProfileController: UIViewController, UITableViewDelegate, UITableViewDataS
         
         AppDelegate.reachfive()
             .getProfile(authToken: self.authToken!)
-            .onSuccess { profile in print("Profile = \(profile)")
+            .onSuccess { profile in
+                print("Profile = \(profile)")
                 if profile.givenName != nil {
                     self.nameLabel?.text = "Given name: " + profile.givenName!
                 }
@@ -28,10 +29,10 @@ class ProfileController: UIViewController, UITableViewDelegate, UITableViewDataS
                 if profile.email != nil {
                     self.emailLabel?.text = "Email: " + profile.email!
                 }
-        }
-        .onFailure { error in print("getProfile error = \(error)") }
-        
-        
+            }
+            .onFailure { error in print("getProfile error = \(error)") }
+
+
 /*
         AppDelegate.reachfive().listWebAuthnDevices(authToken: self.authToken!).onSuccess { listDevice in
             self.devices.append(contentsOf: listDevice)
@@ -43,16 +44,17 @@ class ProfileController: UIViewController, UITableViewDelegate, UITableViewDataS
         }
         .onFailure { error in
             print("getDevices error = \(error)") }
-*/
-
+    */
+    
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.devices.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell:DevicesFidoCell = self.deviceFidoTableview.dequeueReusableCell(withIdentifier: "deviceFidoCell") as! DevicesFidoCell
+        let cell: DevicesFidoCell = self.deviceFidoTableview.dequeueReusableCell(withIdentifier: "deviceFidoCell") as! DevicesFidoCell
         cell.friendlyNameText.text = self.devices[indexPath.row].friendlyName
         return cell
     }
@@ -67,6 +69,6 @@ class ProfileController: UIViewController, UITableViewDelegate, UITableViewDataS
                 AppDelegate.storage.clear(key: AppDelegate.authKey)
                 self.authToken = nil
                 self.navigationController?.popViewController(animated: true)
-        }
+            }
     }
 }

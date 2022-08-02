@@ -9,5 +9,4 @@ target 'Sandbox' do
   pod 'IdentitySdkGoogle', :path => '../IdentitySdkGoogle.podspec'
   pod 'IdentitySdkFacebook', :path => '../IdentitySdkFacebook.podspec'
 
-  
 end

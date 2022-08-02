@@ -23,7 +23,7 @@ public class UserDefaultsStorage: Storage {
         }
     }
     
-    public func take<D>(key: String) -> D? where D : Decodable, D : Encodable {
+    public func take<D>(key: String) -> D? where D: Decodable, D: Encodable {
         let value: D? = get(key: key)
         clear(key: key)
         return value

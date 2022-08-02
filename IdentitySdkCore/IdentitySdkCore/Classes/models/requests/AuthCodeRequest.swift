@@ -6,7 +6,7 @@ public class AuthCodeRequest: Codable, DictionaryEncodable {
     public let grantType: String
     public let redirectUri: String
     public let codeVerifier: String
-
+    
     public convenience init(
         clientId: String,
         code: String,

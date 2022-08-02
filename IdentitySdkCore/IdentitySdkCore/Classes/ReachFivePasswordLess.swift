@@ -11,7 +11,7 @@ public extension ReachFive {
     func addPasswordlessCallback(passwordlessCallback: @escaping PasswordlessCallback) {
         self.passwordlessCallback = passwordlessCallback
     }
-        
+    
     func startPasswordless(_ request: PasswordLessRequest) -> Future<(), ReachFiveError> {
         let pkce = Pkce.generate()
         self.storage.save(key: "PASSWORDLESS_PKCE", value: pkce)

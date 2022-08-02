@@ -3,7 +3,7 @@ import UIKit
 import IdentitySdkCore
 
 class PasswordlessController: UIViewController {
-
+    
     @IBOutlet weak var redirectUriInput: UITextField!
     @IBOutlet weak var emailInput: UITextField!
     @IBOutlet weak var phoneNumberInput: UITextField!
