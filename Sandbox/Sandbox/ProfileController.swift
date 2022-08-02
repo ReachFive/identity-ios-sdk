@@ -19,7 +19,6 @@ class ProfileController: UIViewController, UITableViewDelegate, UITableViewDataS
         AppDelegate.reachfive()
             .getProfile(authToken: authToken!)
             .onSuccess { profile in
-                print("Profile = \(profile)")
                 if profile.givenName != nil {
                     self.nameLabel?.text = "Given name: " + profile.givenName!
                 }
@@ -53,7 +52,6 @@ class ProfileController: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell: DevicesFidoCell = deviceFidoTableview.dequeueReusableCell(withIdentifier: "deviceFidoCell") as! DevicesFidoCell
         cell.friendlyNameText.text = devices[indexPath.row].friendlyName
         return cell
