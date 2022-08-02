@@ -450,8 +450,6 @@
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/CryptoSwift\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKCoreKit\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKLoginKit\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/FacebookCore\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/FacebookLogin\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/GTMSessionFetcher\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/GoogleToolboxForMac\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/IdentitySdkCore\"",
