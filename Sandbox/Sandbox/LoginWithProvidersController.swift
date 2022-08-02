@@ -24,11 +24,11 @@ class LoginWithProvidersController: UIViewController, UITableViewDataSource, UIT
     
     public func reloadProvidersData(providers: [Provider]) {
         self.providers = providers
-        self.providersTableView.reloadData()
+        providersTableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return providers.count
+        providers.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -56,7 +56,7 @@ class LoginWithProvidersController: UIViewController, UITableViewDataSource, UIT
         let profileController = storyBoard.instantiateViewController(
             withIdentifier: "ProfileScene"
         ) as! ProfileController
-        self.self.navigationController?.pushViewController(profileController, animated: true)
+        navigationController?.pushViewController(profileController, animated: true)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -79,6 +79,6 @@ class LoginWithProvidersController: UIViewController, UITableViewDataSource, UIT
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        1
     }
 }

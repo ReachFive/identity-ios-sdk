@@ -17,7 +17,7 @@ class ProfileController: UIViewController, UITableViewDelegate, UITableViewDataS
         deviceFidoTableview.dataSource = self
         
         AppDelegate.reachfive()
-            .getProfile(authToken: self.authToken!)
+            .getProfile(authToken: authToken!)
             .onSuccess { profile in
                 print("Profile = \(profile)")
                 if profile.givenName != nil {
@@ -49,13 +49,13 @@ class ProfileController: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.devices.count
+        devices.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell: DevicesFidoCell = self.deviceFidoTableview.dequeueReusableCell(withIdentifier: "deviceFidoCell") as! DevicesFidoCell
-        cell.friendlyNameText.text = self.devices[indexPath.row].friendlyName
+        let cell: DevicesFidoCell = deviceFidoTableview.dequeueReusableCell(withIdentifier: "deviceFidoCell") as! DevicesFidoCell
+        cell.friendlyNameText.text = devices[indexPath.row].friendlyName
         return cell
     }
     

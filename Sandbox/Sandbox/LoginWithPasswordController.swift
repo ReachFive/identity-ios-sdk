@@ -18,7 +18,7 @@ class LoginWithPasswordController: UIViewController {
         let password = passwordInput.text ?? ""
         AppDelegate.reachfive()
             .loginWithPassword(username: email, password: password)
-            .onSuccess(callback: self.goToProfile)
+            .onSuccess(callback: goToProfile)
             .onFailure(callback: { error in
                 switch error {
                 case .RequestError(let requestErrors):
@@ -35,6 +35,6 @@ class LoginWithPasswordController: UIViewController {
         let profileController = storyBoard.instantiateViewController(
             withIdentifier: "ProfileScene"
         ) as! ProfileController
-        self.self.navigationController?.pushViewController(profileController, animated: true)
+        navigationController?.pushViewController(profileController, animated: true)
     }
 }

@@ -8,13 +8,13 @@ public class Pkce: NSObject, Codable {
     
     init(codeVerifier: String) {
         self.codeVerifier = codeVerifier
-        self.codeChallenge = Data(Digest.sha256(Array(codeVerifier.utf8)))
+        codeChallenge = Data(Digest.sha256(Array(codeVerifier.utf8)))
             .base64EncodedString()
             .replacingOccurrences(of: "+", with: "-")
             .replacingOccurrences(of: "/", with: "_")
             .replacingOccurrences(of: "=", with: "")
             .trimmingCharacters(in: .whitespaces)
-        self.codeChallengeMethod = "S256"
+        codeChallengeMethod = "S256"
     }
     
     public static func generate() -> Pkce {
@@ -41,6 +41,6 @@ public class Pkce: NSObject, Codable {
     }
     
     public override var description: String {
-        return "PKCE codeVerifier=\(codeVerifier) codeChallenge=\(codeChallenge) codeChallengeMethod=\(codeChallengeMethod)"
+        "PKCE codeVerifier=\(codeVerifier) codeChallenge=\(codeChallenge) codeChallengeMethod=\(codeChallengeMethod)"
     }
 }

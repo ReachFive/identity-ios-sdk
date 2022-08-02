@@ -3,7 +3,7 @@ import BrightFutures
 
 public extension ReachFive {
     func getProfile(authToken: AuthToken) -> Future<Profile, ReachFiveError> {
-        return reachFiveApi.getProfile(authToken: authToken)
+        reachFiveApi.getProfile(authToken: authToken)
     }
     
     func verifyPhoneNumber(
@@ -15,7 +15,7 @@ public extension ReachFive {
             phoneNumber: phoneNumber,
             verificationCode: verificationCode
         )
-        return self.reachFiveApi
+        return reachFiveApi
             .verifyPhoneNumber(authToken: authToken, verifyPhoneNumberRequest: verifyPhoneNumberRequest)
     }
     
@@ -46,7 +46,7 @@ public extension ReachFive {
         authToken: AuthToken,
         profile: Profile
     ) -> Future<Profile, ReachFiveError> {
-        return reachFiveApi.updateProfile(authToken: authToken, profile: profile)
+        reachFiveApi.updateProfile(authToken: authToken, profile: profile)
     }
     
     func updatePassword(_ updatePasswordParams: UpdatePasswordParams) -> Future<(), ReachFiveError> {
@@ -55,7 +55,7 @@ public extension ReachFive {
             authToken: authToken,
             updatePasswordRequest: UpdatePasswordRequest(
                 updatePasswordParams: updatePasswordParams,
-                sdkConfig: self.sdkConfig
+                sdkConfig: sdkConfig
             )
         )
     }

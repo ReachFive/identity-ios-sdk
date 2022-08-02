@@ -3,17 +3,17 @@ import BrightFutures
 
 public extension ReachFive {
     func getProvider(name: String) -> Provider? {
-        return providers.first(where: { $0.name == name })
+        providers.first(where: { $0.name == name })
     }
     
     func getProviders() -> [Provider] {
-        return providers
+        providers
     }
     
     func initialize() -> Future<[Provider], ReachFiveError> {
-        switch self.state {
+        switch state {
         case .NotInitialized:
-            return self.reachFiveApi.clientConfig().flatMap({ clientConfig -> Future<[Provider], ReachFiveError> in
+            return reachFiveApi.clientConfig().flatMap({ clientConfig -> Future<[Provider], ReachFiveError> in
                 self.scope = clientConfig.scope.components(separatedBy: " ")
                 return self.reachFiveApi.providersConfigs().map { providersConfigs in
                     let providers = self.createProviders(providersConfigsResult: providersConfigs, clientConfigResponse: clientConfig)
@@ -24,7 +24,7 @@ public extension ReachFive {
             })
         
         case .Initialized:
-            return Future.init(value: self.providers)
+            return Future.init(value: providers)
         }
     }
     

@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     static func shared() -> AppDelegate {
-        return UIApplication.shared.delegate as! AppDelegate
+        UIApplication.shared.delegate as! AppDelegate
     }
     
     static func createAlert(title: String, message: String) -> UIAlertController {
@@ -56,7 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        return reachfive.application(app, open: url, options: options)
+        reachfive.application(app, open: url, options: options)
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

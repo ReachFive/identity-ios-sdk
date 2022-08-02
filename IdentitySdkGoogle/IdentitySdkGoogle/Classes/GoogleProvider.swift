@@ -17,7 +17,7 @@ public class GoogleProvider: ProviderCreator {
         reachFiveApi: ReachFiveApi,
         clientConfigResponse: ClientConfigResponse
     ) -> Provider {
-        return ConfiguredGoogleProvider(
+        ConfiguredGoogleProvider(
             sdkConfig: sdkConfig,
             providerConfig: providerConfig,
             reachFiveApi: reachFiveApi,
@@ -47,18 +47,18 @@ public class ConfiguredGoogleProvider: NSObject, Provider, GIDSignInDelegate {
     
     public func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if error != nil {
-            self.promise?.failure(.AuthFailure(reason: error.localizedDescription))
+            promise?.failure(.AuthFailure(reason: error.localizedDescription))
         } else {
             let loginProviderRequest = LoginProviderRequest(
-                provider: self.providerConfig.provider,
+                provider: providerConfig.provider,
                 providerToken: user.authentication.accessToken,
                 code: nil,
                 origin: origin,
-                clientId: self.sdkConfig.clientId,
+                clientId: sdkConfig.clientId,
                 responseType: "token",
-                scope: scope != nil ? scope!.joined(separator: " ") : self.clientConfigResponse.scope
+                scope: scope != nil ? scope!.joined(separator: " ") : clientConfigResponse.scope
             )
-            self.reachFiveApi
+            reachFiveApi
                 .loginWithProvider(loginProviderRequest: loginProviderRequest)
                 .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) })
                 .onSuccess { authToken in
@@ -79,8 +79,8 @@ public class ConfiguredGoogleProvider: NSObject, Provider, GIDSignInDelegate {
         self.origin = origin
         let promise = Promise<AuthToken, ReachFiveError>()
         self.promise = promise
-        GIDSignIn.sharedInstance().clientID = self.providerConfig.clientId
-        GIDSignIn.sharedInstance().scopes = self.providerConfig.scope
+        GIDSignIn.sharedInstance().clientID = providerConfig.clientId
+        GIDSignIn.sharedInstance().scopes = providerConfig.scope
         GIDSignIn.sharedInstance().delegate = self
         GIDSignIn.sharedInstance().presentingViewController = viewController
         GIDSignIn.sharedInstance().signIn()
@@ -107,6 +107,6 @@ public class ConfiguredGoogleProvider: NSObject, Provider, GIDSignInDelegate {
     }
     
     public override var description: String {
-        return "Provider: \(name)"
+        "Provider: \(name)"
     }
 }

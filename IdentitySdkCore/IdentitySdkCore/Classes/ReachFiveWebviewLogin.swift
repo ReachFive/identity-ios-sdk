@@ -9,7 +9,7 @@ public extension ReachFive {
         let promise = Promise<AuthToken, ReachFiveError>()
         
         let pkce = Pkce.generate()
-        let scope = (request.scope ?? self.scope).joined(separator: " ")
+        let scope = (request.scope ?? scope).joined(separator: " ")
         let options: [String: String] = [
             "client_id": sdkConfig.clientId,
             "redirect_uri": sdkConfig.scheme,

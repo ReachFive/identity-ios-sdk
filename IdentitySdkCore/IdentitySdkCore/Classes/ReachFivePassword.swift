@@ -9,7 +9,7 @@ public extension ReachFive {
             scope: (scope ?? self.scope).joined(separator: " "),
             redirectUrl: redirectUrl
         )
-        return self.reachFiveApi
+        return reachFiveApi
             .signupWithPassword(signupRequest: signupRequest)
             .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) })
     }
@@ -26,7 +26,7 @@ public extension ReachFive {
             clientId: sdkConfig.clientId,
             scope: (scope ?? self.scope).joined(separator: " ")
         )
-        return self.reachFiveApi
+        return reachFiveApi
             .loginWithPassword(loginRequest: loginRequest)
             .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) })
     }

@@ -16,7 +16,7 @@ public class WebViewProvider: ProviderCreator {
         reachFiveApi: ReachFiveApi,
         clientConfigResponse: ClientConfigResponse
     ) -> Provider {
-        return ConfiguredWebViewProvider(
+        ConfiguredWebViewProvider(
             sdkConfig: sdkConfig,
             providerConfig: providerConfig,
             reachFiveApi: reachFiveApi,
@@ -56,28 +56,28 @@ class ConfiguredWebViewProvider: NSObject, Provider, SFSafariViewControllerDeleg
         origin: String,
         viewController: UIViewController?
     ) -> Future<AuthToken, ReachFiveError> {
-        self.promise?.tryFailure(.AuthCanceled)
+        promise?.tryFailure(.AuthCanceled)
         let promise = Promise<AuthToken, ReachFiveError>()
         self.promise = promise
-        self.pkce = Pkce.generate()
+        pkce = Pkce.generate()
         UserDefaultsStorage().save(key: "PASSWORDLESS_PKCE", value: pkce)
-        let url = self.buildUrl(
+        let url = buildUrl(
             sdkConfig: sdkConfig,
             providerConfig: providerConfig,
-            scope: scope != nil ? scope!.joined(separator: " ") : self.clientConfigResponse.scope,
+            scope: scope != nil ? scope!.joined(separator: " ") : clientConfigResponse.scope,
             pkce: pkce
         )
         
-        NotificationCenter.default.addObserver(self, selector: #selector(handleLogin(_:)), name: self.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleLogin(_:)), name: notificationName, object: nil)
         
-        self.safariViewController = SFSafariViewController.init(url: URL(string: url)!)
+        safariViewController = SFSafariViewController.init(url: URL(string: url)!)
         
         viewController?.present(safariViewController!, animated: true)
         return promise.future
     }
     
     @objc func handleLogin(_ notification: Notification) {
-        NotificationCenter.default.removeObserver(self, name: self.notificationName, object: nil)
+        NotificationCenter.default.removeObserver(self, name: notificationName, object: nil)
         
         let url = notification.object as? URL
         
@@ -85,25 +85,25 @@ class ConfiguredWebViewProvider: NSObject, Provider, SFSafariViewControllerDeleg
             let params = QueryString.parseQueriesStrings(query: query)
             let code = params["code"]
             if code != nil {
-                self.handleAuthCode(code!!)
+                handleAuthCode(code!!)
             } else {
-                self.promise?.failure(.TechnicalError(reason: "No authorization code"))
+                promise?.failure(.TechnicalError(reason: "No authorization code"))
             }
         } else {
-            self.promise?.failure(.TechnicalError(reason: "No authorization code"))
+            promise?.failure(.TechnicalError(reason: "No authorization code"))
         }
         
-        self.safariViewController?.dismiss(animated: true, completion: nil)
+        safariViewController?.dismiss(animated: true, completion: nil)
     }
     
     private func handleAuthCode(_ code: String) {
         let authCodeRequest = AuthCodeRequest(
-            clientId: self.sdkConfig.clientId,
+            clientId: sdkConfig.clientId,
             code: code,
             redirectUri: sdkConfig.scheme,
-            pkce: self.pkce
+            pkce: pkce
         )
-        self.reachFiveApi.authWithCode(authCodeRequest: authCodeRequest)
+        reachFiveApi.authWithCode(authCodeRequest: authCodeRequest)
             .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) })
             .onSuccess { authToken in
                 self.promise?.success(authToken)
@@ -114,14 +114,14 @@ class ConfiguredWebViewProvider: NSObject, Provider, SFSafariViewControllerDeleg
     }
     
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-        NotificationCenter.default.removeObserver(self, name: self.notificationName, object: nil)
+        NotificationCenter.default.removeObserver(self, name: notificationName, object: nil)
         controller.dismiss(animated: true, completion: nil)
     }
     
     public func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
         if let sourceApplication = options[.sourceApplication] {
             if (String(describing: sourceApplication) == "com.apple.SafariViewService") {
-                NotificationCenter.default.post(name: self.notificationName, object: url)
+                NotificationCenter.default.post(name: notificationName, object: url)
                 return true
             }
         }
@@ -130,7 +130,7 @@ class ConfiguredWebViewProvider: NSObject, Provider, SFSafariViewControllerDeleg
     }
     
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        return true
+        true
     }
     
     public func applicationDidBecomeActive(_ application: UIApplication) {
@@ -138,7 +138,7 @@ class ConfiguredWebViewProvider: NSObject, Provider, SFSafariViewControllerDeleg
     }
     
     public func logout() -> Future<(), ReachFiveError> {
-        return Future.init(value: ())
+        Future.init(value: ())
     }
     
     func buildUrl(sdkConfig: SdkConfig, providerConfig: ProviderConfig, scope: String, pkce: Pkce) -> String {
@@ -162,6 +162,6 @@ class ConfiguredWebViewProvider: NSObject, Provider, SFSafariViewControllerDeleg
     }
     
     override var description: String {
-        return "Provider: \(self.name)"
+        "Provider: \(name)"
     }
 }

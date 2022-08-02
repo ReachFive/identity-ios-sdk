@@ -45,6 +45,6 @@ class LoginWithFidoViewController: UIViewController {
             withIdentifier: "ProfileScene"
         ) as! ProfileController
         profileController.authToken = authToken
-        self.self.navigationController?.pushViewController(profileController, animated: true)
+        navigationController?.pushViewController(profileController, animated: true)
     }
 }

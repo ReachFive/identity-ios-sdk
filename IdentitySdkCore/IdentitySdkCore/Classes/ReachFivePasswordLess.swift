@@ -14,7 +14,7 @@ public extension ReachFive {
     
     func startPasswordless(_ request: PasswordLessRequest) -> Future<(), ReachFiveError> {
         let pkce = Pkce.generate()
-        self.storage.save(key: "PASSWORDLESS_PKCE", value: pkce)
+        storage.save(key: "PASSWORDLESS_PKCE", value: pkce)
         switch request {
         case let .Email(email, redirectUri):
             let startPasswordlessRequest = StartPasswordlessRequest(
@@ -40,8 +40,8 @@ public extension ReachFive {
     }
     
     func verifyPasswordlessCode(verifyAuthCodeRequest: VerifyAuthCodeRequest) -> Future<AuthToken, ReachFiveError> {
-        let pkce: Pkce? = self.storage.take(key: "PASSWORDLESS_PKCE")
-        return self.reachFiveApi
+        let pkce: Pkce? = storage.take(key: "PASSWORDLESS_PKCE")
+        return reachFiveApi
             .verifyAuthCode(verifyAuthCodeRequest: verifyAuthCodeRequest)
             .flatMap { _ -> Future<AuthToken, ReachFiveError> in
                 let verifyPasswordlessRequest = VerifyPasswordlessRequest(
@@ -68,19 +68,19 @@ public extension ReachFive {
     
     internal func interceptPasswordless(_ url: URL) {
         let params = QueryString.parseQueriesStrings(query: url.query ?? "")
-        let pkce: Pkce? = self.storage.take(key: "PASSWORDLESS_PKCE")
+        let pkce: Pkce? = storage.take(key: "PASSWORDLESS_PKCE")
         if (pkce != nil) {
             if let state = params["state"] {
                 if state == "passwordless" {
                     if let code = params["code"] {
                         let authCodeRequest = AuthCodeRequest(
-                            clientId: self.sdkConfig.clientId,
+                            clientId: sdkConfig.clientId,
                             code: code ?? "",
-                            redirectUri: self.sdkConfig.scheme,
+                            redirectUri: sdkConfig.scheme,
                             pkce: pkce!
                         )
                         
-                        self.reachFiveApi.authWithCode(authCodeRequest: authCodeRequest)
+                        reachFiveApi.authWithCode(authCodeRequest: authCodeRequest)
                             .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) })
                             .onComplete { result in
                                 self.passwordlessCallback?(result)
@@ -89,7 +89,7 @@ public extension ReachFive {
                 }
             }
         } else {
-            self.passwordlessCallback?(.failure(.TechnicalError(reason: "Pkce not found")))
+            passwordlessCallback?(.failure(.TechnicalError(reason: "Pkce not found")))
         }
     }
 }

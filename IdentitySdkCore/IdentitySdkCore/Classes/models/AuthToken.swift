@@ -37,7 +37,7 @@ public class AuthToken: Codable {
     static func fromOpenIdTokenResponse(openIdTokenResponse: AccessTokenResponse) -> Result<AuthToken, ReachFiveError> {
         if openIdTokenResponse.idToken != nil {
             return fromIdToken(openIdTokenResponse.idToken!).flatMap { user in
-                return .success(withUser(openIdTokenResponse, user))
+                .success(withUser(openIdTokenResponse, user))
             }
         } else {
             return .success(withUser(openIdTokenResponse, nil))
@@ -45,7 +45,7 @@ public class AuthToken: Codable {
     }
     
     static func withUser(_ accessTokenResponse: AccessTokenResponse, _ user: OpenIdUser?) -> AuthToken {
-        return AuthToken(
+        AuthToken(
             idToken: accessTokenResponse.idToken,
             accessToken: accessTokenResponse.accessToken,
             refreshToken: accessTokenResponse.refreshToken,
@@ -62,10 +62,10 @@ public class AuthToken: Codable {
         if parts.count == 3 {
             let data = Base64.base64UrlSafeDecode(parts[1])
             let user = Result.init(catching: {
-                return try decoder.decode(OpenIdUser.CodingData.self, from: data!).openIdUser
+                try decoder.decode(OpenIdUser.CodingData.self, from: data!).openIdUser
             })
             return user.mapError({ error in
-                return .TechnicalError(reason: error.localizedDescription)
+                .TechnicalError(reason: error.localizedDescription)
             })
         } else {
             return .failure(.TechnicalError(reason: "idToken invalid"))

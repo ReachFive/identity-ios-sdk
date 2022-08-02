@@ -14,44 +14,44 @@ class RedirectionSafari: NSObject, SFSafariViewControllerDelegate {
     }
     
     public func login() -> Future<String, ReachFiveError> {
-        self.promise?.tryFailure(.AuthCanceled)
+        promise?.tryFailure(.AuthCanceled)
         let promise = Promise<String, ReachFiveError>()
         self.promise = promise
         
-        NotificationCenter.default.addObserver(self, selector: #selector(handleLogin(_:)), name: self.notificationName, object: nil)
-        self.safariViewController = SFSafariViewController.init(url: URL(string: url)!)
-        self.safariViewController?.delegate = self
+        NotificationCenter.default.addObserver(self, selector: #selector(handleLogin(_:)), name: notificationName, object: nil)
+        safariViewController = SFSafariViewController.init(url: URL(string: url)!)
+        safariViewController?.delegate = self
         UIApplication.shared.keyWindow?.rootViewController?.present(safariViewController!, animated: true)
         return promise.future
     }
     
     @objc func handleLogin(_ notification: Notification) {
-        NotificationCenter.default.removeObserver(self, name: self.notificationName, object: nil)
+        NotificationCenter.default.removeObserver(self, name: notificationName, object: nil)
         
         let url = notification.object as? URL
         if let query = url?.query {
             let params = QueryString.parseQueriesStrings(query: query)
             let code = params["code"]
             if code != nil {
-                self.promise?.success(code!!)
+                promise?.success(code!!)
             } else {
-                self.promise?.failure(.TechnicalError(reason: "No authorization code"))
+                promise?.failure(.TechnicalError(reason: "No authorization code"))
             }
         } else {
-            self.promise?.failure(.TechnicalError(reason: "No authorization code"))
+            promise?.failure(.TechnicalError(reason: "No authorization code"))
         }
-        self.safariViewController?.dismiss(animated: true, completion: nil)
+        safariViewController?.dismiss(animated: true, completion: nil)
     }
     
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-        NotificationCenter.default.removeObserver(self, name: self.notificationName, object: nil)
+        NotificationCenter.default.removeObserver(self, name: notificationName, object: nil)
         controller.dismiss(animated: true, completion: nil)
     }
     
     public func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
         if let sourceApplication = options[.sourceApplication] {
             if (String(describing: sourceApplication) == "com.apple.SafariViewService") {
-                NotificationCenter.default.post(name: self.notificationName, object: url)
+                NotificationCenter.default.post(name: notificationName, object: url)
                 return true
             }
         }
@@ -60,14 +60,14 @@ class RedirectionSafari: NSObject, SFSafariViewControllerDelegate {
     }
     
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        return true
+        true
     }
     
     public func applicationDidBecomeActive(_ application: UIApplication) {
     }
     
     func logout() -> Future<(), ReachFiveError> {
-        return Future.init(value: ())
+        Future.init(value: ())
     }
     
     func handleResult(result: Result<String, ReachFiveError>) -> String {

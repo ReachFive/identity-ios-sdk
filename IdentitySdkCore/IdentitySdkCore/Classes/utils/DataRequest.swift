@@ -5,7 +5,7 @@ import BrightFutures
 extension DataRequest {
     
     private func isSuccess(_ status: Int?) -> Bool {
-        return status != nil && status! >= 200 && status! < 300
+        status != nil && status! >= 200 && status! < 300
     }
     
     private func parseJson<T: Decodable>(json: Data, type: T.Type, decoder: JSONDecoder) -> Swift.Result<T, ReachFiveError> {
@@ -34,7 +34,7 @@ extension DataRequest {
     
     func responseJson(decoder: JSONDecoder) -> Future<(), ReachFiveError> {
         let promise = BrightFutures.Promise<(), ReachFiveError>()
-        self.responseString { responseData in
+        responseString { responseData in
             let status = responseData.response?.statusCode
             if (self.isSuccess(status)) {
                 promise.success(())
@@ -57,7 +57,7 @@ extension DataRequest {
     func responseJson<T: Decodable>(type: T.Type, decoder: JSONDecoder) -> Future<T, ReachFiveError> {
         let promise = BrightFutures.Promise<T, ReachFiveError>()
         
-        self.responseString { responseData in
+        responseString { responseData in
             let status = responseData.response?.statusCode
             if (self.isSuccess(status)) {
                 if let data = responseData.data {

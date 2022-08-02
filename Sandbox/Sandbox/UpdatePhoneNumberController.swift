@@ -12,7 +12,7 @@ class UpdatePhoneNumberController: UIViewController {
     
     @IBAction func update(_ sender: Any) {
         AppDelegate.reachfive()
-            .updatePhoneNumber(authToken: self.authToken!, phoneNumber: phoneNumberInput.text ?? "")
+            .updatePhoneNumber(authToken: authToken!, phoneNumber: phoneNumberInput.text ?? "")
             .onSuccess { profile in
                 let alert = AppDelegate.createAlert(title: "Update", message: "Update Success")
                 self.present(alert, animated: true, completion: nil)
