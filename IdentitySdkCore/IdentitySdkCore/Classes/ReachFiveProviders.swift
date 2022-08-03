@@ -69,6 +69,16 @@ public extension ReachFive {
         return true
     }
     
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        initialize().map { providers in
+            for provider in providers {
+                let _ = provider.application(application, didFinishLaunchingWithOptions: launchOptions)
+            }
+        }
+        
+        return true
+    }
+    
     func applicationDidBecomeActive(_ application: UIApplication) {
         for provider in providers {
             let _ = provider.applicationDidBecomeActive(application)

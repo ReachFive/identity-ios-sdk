@@ -133,6 +133,10 @@ class ConfiguredWebViewProvider: NSObject, Provider, SFSafariViewControllerDeleg
         true
     }
     
+    public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        true
+    }
+    
     public func applicationDidBecomeActive(_ application: UIApplication) {
         
     }

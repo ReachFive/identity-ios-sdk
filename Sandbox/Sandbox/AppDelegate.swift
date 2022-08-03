@@ -3,7 +3,6 @@ import IdentitySdkCore
 import IdentitySdkFacebook
 import IdentitySdkWebView
 import IdentitySdkGoogle
-import FBSDKCoreKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -53,10 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("addPasswordlessCallback \(result)")
         }
         
-        // Initialize Facebook SDK
-        FBSDKCoreKit.ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
-
-        return true
+        return reachfive.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {

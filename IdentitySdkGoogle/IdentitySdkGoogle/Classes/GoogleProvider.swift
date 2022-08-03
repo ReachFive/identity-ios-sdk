@@ -99,6 +99,10 @@ public class ConfiguredGoogleProvider: NSObject, Provider, GIDSignInDelegate {
         return GIDSignIn.sharedInstance().handle(url)
     }
     
+    public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        true
+    }
+    
     public func applicationDidBecomeActive(_ application: UIApplication) {}
     
     public func logout() -> Future<(), ReachFiveError> {

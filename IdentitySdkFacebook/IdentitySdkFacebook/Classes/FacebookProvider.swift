@@ -103,6 +103,10 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         FBSDKCoreKit.ApplicationDelegate.shared.application(app, open: url, options: options)
     }
     
+    public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        FBSDKCoreKit.ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
+    }
+    
     public func applicationDidBecomeActive(_ application: UIApplication) {
         AppEvents.shared.activateApp()
     }
