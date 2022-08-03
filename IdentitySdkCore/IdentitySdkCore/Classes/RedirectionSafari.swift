@@ -2,7 +2,7 @@ import UIKit
 import SafariServices
 import BrightFutures
 
-class RedirectionSafari: NSObject, SFSafariViewControllerDelegate {
+internal class RedirectionSafari: NSObject, SFSafariViewControllerDelegate {
     var url: String
     private let notificationName = Notification.Name("AuthCallbackNotification")
     private var safariViewController: SFSafariViewController? = nil
