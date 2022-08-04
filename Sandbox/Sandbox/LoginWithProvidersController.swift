@@ -1,8 +1,9 @@
 import UIKit
 import IdentitySdkCore
 import GoogleSignIn
+import AuthenticationServices
 
-class LoginWithProvidersController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class LoginWithProvidersController: UIViewController, UITableViewDataSource, UITableViewDelegate, ASWebAuthenticationPresentationContextProviding {
     var providers: [Provider] = []
     
     @IBOutlet weak var providersTableView: UITableView!
@@ -80,5 +81,9 @@ class LoginWithProvidersController: UIViewController, UITableViewDataSource, UIT
     
     func numberOfSections(in tableView: UITableView) -> Int {
         1
+    }
+    
+    func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
+        view.window!
     }
 }
