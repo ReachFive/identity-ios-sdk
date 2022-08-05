@@ -3,7 +3,7 @@ PODS:
   - BrightFutures (8.2.0)
   - CryptoSwift (1.5.1)
   - EllipticCurveKeyPair (2.0)
-  - IdentitySdkCore (5.6.2):
+  - IdentitySdkCore (6.0.0-beta):
     - Alamofire (~> 5.6.1)
     - BrightFutures (~> 8.2.0)
     - CryptoSwift (~> 1.5.1)
@@ -42,10 +42,10 @@ SPEC CHECKSUMS:
   BrightFutures: 67e0e8cd974ab9f6c04650cc64153f7adf1ec489
   CryptoSwift: c4f2debceb38bf44c80659afe009f71e23e4a082
   EllipticCurveKeyPair: 8c69e5238a6e47243a10a48fbd41dfb19110b22e
-  IdentitySdkCore: 220a84190a749587cebe10496b090ec3dacebb6d
+  IdentitySdkCore: e11a0508f86609533ca4fd7a3c6d4fbbfd2b90f3
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   PromiseKit: 879fa89b55fcb8f11ade9aad0c9721850bb71b9f
 
-PODFILE CHECKSUM: ffd4df0ec9bb210afa5c733bd6e137d8178e43d3
+PODFILE CHECKSUM: 3222bad03d6ece5d96130a84a12ba0b316d770d5
 
 COCOAPODS: 1.11.3

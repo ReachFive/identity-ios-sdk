@@ -11,7 +11,7 @@ PODS:
   - FBSDKCoreKit_Basics (14.1.0)
   - FBSDKLoginKit (14.1.0):
     - FBSDKCoreKit (= 14.1.0)
-  - IdentitySdkCore (5.6.2):
+  - IdentitySdkCore (6.0.0-beta):
     - Alamofire (~> 5.6.1)
     - BrightFutures (~> 8.2.0)
     - CryptoSwift (~> 1.5.1)
@@ -60,10 +60,10 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: 24f8bc8d3b5b2a8c5c656a1329492a12e8efa792
   FBSDKCoreKit_Basics: 6e578c9bdc7aa1365dbbbde633c9ebb536bcaa98
   FBSDKLoginKit: 787de205d524c3a4b17d527916f1d066e4361660
-  IdentitySdkCore: 1105ab28e5598697e1beefe50143cbcbae63ba90
+  IdentitySdkCore: e11a0508f86609533ca4fd7a3c6d4fbbfd2b90f3
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   PromiseKit: 879fa89b55fcb8f11ade9aad0c9721850bb71b9f
 
-PODFILE CHECKSUM: 517c34edf936aa6a7bc0f128f942622ed455768e
+PODFILE CHECKSUM: 43759688747cfc22b195a09dab78d21d04a91a53
 
 COCOAPODS: 1.11.3
