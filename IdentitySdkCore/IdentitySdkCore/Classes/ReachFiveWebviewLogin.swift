@@ -10,7 +10,7 @@ public extension ReachFive {
         
         let pkce = Pkce.generate()
         let scope = (request.scope ?? scope).joined(separator: " ")
-        let options: [String: String] = [
+        let options = [
             "client_id": sdkConfig.clientId,
             "redirect_uri": sdkConfig.scheme,
             "response_type": codeResponseType,
@@ -18,11 +18,7 @@ public extension ReachFive {
             "code_challenge": pkce.codeChallenge,
             "code_challenge_method": pkce.codeChallengeMethod
         ]
-        let uri = reachFiveApi.buildAuthorizeURL(options: options)
-        guard let uri = uri, let authURL = URL(string: uri) else {
-            promise.failure(.TechnicalError(reason: "Cannot build authorize URL"))
-            return promise.future
-        }
+        let authURL = reachFiveApi.buildAuthorizeURL(queryParams: options)
         
         // Initialize the session.
         let session = ASWebAuthenticationSession(url: authURL, callbackURLScheme: "reachfive-\(reachFiveApi.sdkConfig.clientId)") { callbackURL, error in

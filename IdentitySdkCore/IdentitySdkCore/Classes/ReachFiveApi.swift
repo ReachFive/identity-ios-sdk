@@ -304,17 +304,10 @@ public class ReachFiveApi {
         "https://\(sdkConfig.domain)\(path)"
     }
     
-    internal func buildAuthorizeURL(options: [String: String]) -> String? {
-        let request: URLRequest?
-        var redirectUri = String()
-        do {
-            request = try URLRequest(url: createUrl(path: "/oauth/authorize?platform=ios&device=\(deviceInfo)"), method: .get, headers: nil)
-            let encodedURLRequest = try URLEncoding.queryString.encode(request!, with: options)
-            redirectUri = "\(encodedURLRequest)"
-        } catch {
-            return nil
-        }
-        return redirectUri
+    public func buildAuthorizeURL(queryParams: [String: String]) -> URL {
+        let request = try! URLRequest.init(url: createUrl(path: "/oauth/authorize?platform=ios&device=\(deviceInfo)"), method: .get, headers: nil)
+        let encodedURLRequest = try! URLEncoding.queryString.encode(request, with: queryParams)
+        return encodedURLRequest.url!
     }
     
     internal func createWebAuthnSignupOptions(webAuthnRegistrationRequest: WebAuthnRegistrationRequest) -> Future<RegistrationOptions, ReachFiveError> {

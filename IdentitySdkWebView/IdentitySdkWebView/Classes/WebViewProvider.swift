@@ -54,17 +54,16 @@ class ConfiguredWebViewProvider: NSObject, Provider, SFSafariViewControllerDeleg
     ) -> Future<AuthToken, ReachFiveError> {
         let promise = Promise<AuthToken, ReachFiveError>()
         let pkce = Pkce.generate()
-        let url = buildUrl(
-            sdkConfig: sdkConfig,
-            providerConfig: providerConfig,
-            scope: scope != nil ? scope!.joined(separator: " ") : clientConfigResponse.scope,
-            pkce: pkce
-        )
-        
-        guard let authURL = URL(string: url) else {
-            promise.failure(.TechnicalError(reason: "Cannot build authorize URL"))
-            return promise.future
-        }
+        let scope = scope != nil ? scope!.joined(separator: " ") : clientConfigResponse.scope
+        let authURL = reachFiveApi.buildAuthorizeURL(queryParams: [
+            "provider": providerConfig.provider,
+            "client_id": sdkConfig.clientId,
+            "response_type": "code",
+            "redirect_uri": sdkConfig.scheme,
+            "scope": scope,
+            "code_challenge": pkce.codeChallenge,
+            "code_challenge_method": pkce.codeChallengeMethod,
+        ])
         
         let session = ASWebAuthenticationSession(url: authURL, callbackURLScheme: "reachfive-\(sdkConfig.clientId)") { callbackURL, error in
             guard error == nil else {
@@ -131,26 +130,6 @@ class ConfiguredWebViewProvider: NSObject, Provider, SFSafariViewControllerDeleg
     
     public func logout() -> Future<(), ReachFiveError> {
         Future(value: ())
-    }
-    
-    func buildUrl(sdkConfig: SdkConfig, providerConfig: ProviderConfig, scope: String, pkce: Pkce) -> String {
-        let params = [
-            "provider": providerConfig.provider,
-            "client_id": sdkConfig.clientId,
-            "response_type": "code",
-            "redirect_uri": sdkConfig.scheme,
-            "scope": scope,
-            "platform": "ios",
-            "code_challenge": pkce.codeChallenge,
-            "code_challenge_method": pkce.codeChallengeMethod,
-        ]
-        let queryStrings = params
-            .map { "\($0)=\($1)" }
-            .map { $0.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) }
-            .filter { $0 != nil }
-            .map { $0! }
-            .joined(separator: "&")
-        return "https://\(sdkConfig.domain)/oauth/authorize?\(queryStrings)"
     }
     
     override var description: String {

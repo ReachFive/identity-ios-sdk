@@ -69,9 +69,9 @@ public class ReachFive: NSObject {
             "code_challenge_method": pkce.codeChallengeMethod
         ]
         // Build redirectUri
-        let redirectUri = reachFiveApi.buildAuthorizeURL(options: options)
+        let authURL = reachFiveApi.buildAuthorizeURL(queryParams: options)
         // Pass the redirectUri to Safari to get code
-        let redirectionSafari = RedirectionSafari(url: redirectUri!)
+        let redirectionSafari = RedirectionSafari(url: authURL.absoluteString)
         redirectionSafari.login().onComplete { result in
             let code = redirectionSafari.handleResult(result: result)
             resultAuthToken = self.authWithCode(code: code, pkce: pkce)
