@@ -99,11 +99,13 @@ public class ReachFiveApi {
             .validate(contentType: ["application/json"])
             .responseJson(type: AccessTokenResponse.self, decoder: decoder)
     }
+
+//    public func loginWithPassword(loginRequest: LoginRequest) -> Future<AuthenticationToken, ReachFiveError> {
     
     public func loginWithPassword(loginRequest: LoginRequest) -> Future<AccessTokenResponse, ReachFiveError> {
         AF
             .request(
-                createUrl(path: "/oauth/token?platform=ios&device=\(deviceInfo)"),
+                createUrl(path: "/identity/v1/password/login?platform=ios&device=\(deviceInfo)"),
                 method: .post,
                 parameters: loginRequest.dictionary(),
                 encoding: JSONEncoding.default
