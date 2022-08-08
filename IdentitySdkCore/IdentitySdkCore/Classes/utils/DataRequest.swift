@@ -44,7 +44,7 @@ extension DataRequest {
                     case .success(let apiError):
                         self.handleResponseStatus(status: status, apiError: apiError, promise: promise)
                     case .failure(let error):
-                        promise.failure(ReachFiveError.TechnicalError(reason: error.localizedDescription))
+                        promise.failure(ReachFiveError.TechnicalError(reason: error.message()))
                     }
                 } else {
                     self.handleResponseStatus(status: status, apiError: nil, promise: promise)
@@ -65,7 +65,7 @@ extension DataRequest {
                     case .success(let value):
                         promise.success(value)
                     case .failure(let error):
-                        promise.failure(ReachFiveError.TechnicalError(reason: error.localizedDescription))
+                        promise.failure(ReachFiveError.TechnicalError(reason: error.message()))
                     }
                 } else {
                     promise.failure(ReachFiveError.TechnicalError(reason: "No data from server"))
@@ -76,7 +76,7 @@ extension DataRequest {
                     case .success(let apiError):
                         self.handleResponseStatus(status: status, apiError: apiError, promise: promise)
                     case .failure(let error):
-                        promise.failure(ReachFiveError.TechnicalError(reason: error.localizedDescription))
+                        promise.failure(ReachFiveError.TechnicalError(reason: error.message()))
                     }
                 } else {
                     self.handleResponseStatus(status: status, apiError: nil, promise: promise)

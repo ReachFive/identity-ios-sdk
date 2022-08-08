@@ -18,7 +18,7 @@ class UpdatePhoneNumberController: UIViewController {
                 self.present(alert, animated: true, completion: nil)
             }
             .onFailure { error in
-                let alert = AppDelegate.createAlert(title: "Update", message: "Update Error: \(error.localizedDescription)")
+                let alert = AppDelegate.createAlert(title: "Update", message: "Update Error: \(error.message())")
                 self.present(alert, animated: true, completion: nil)
             }
     }

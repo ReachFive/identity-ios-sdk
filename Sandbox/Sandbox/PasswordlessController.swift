@@ -22,7 +22,7 @@ class PasswordlessController: UIViewController {
                 self.present(alert, animated: true, completion: nil)
             }
             .onFailure { error in
-                let alert = AppDelegate.createAlert(title: "Login with email", message: "Error: \(error.localizedDescription)")
+                let alert = AppDelegate.createAlert(title: "Login with email", message: "Error: \(error.message())")
                 self.present(alert, animated: true, completion: nil)
             }
             .onComplete { result in
@@ -43,7 +43,7 @@ class PasswordlessController: UIViewController {
                 self.present(alert, animated: true, completion: nil)
             }
             .onFailure { error in
-                let alert = AppDelegate.createAlert(title: "Login with phone number", message: "Error: \(error.localizedDescription)")
+                let alert = AppDelegate.createAlert(title: "Login with phone number", message: "Error: \(error.message())")
                 self.present(alert, animated: true, completion: nil)
             }
             .onComplete { result in
@@ -64,7 +64,7 @@ class PasswordlessController: UIViewController {
                 self.present(alert, animated: true, completion: nil)
             }
             .onFailure { error in
-                let alert = AppDelegate.createAlert(title: "Verify code", message: "Error: \(error.localizedDescription)")
+                let alert = AppDelegate.createAlert(title: "Verify code", message: "Error: \(error.message())")
                 self.present(alert, animated: true, completion: nil)
             }
             .onComplete { result in
