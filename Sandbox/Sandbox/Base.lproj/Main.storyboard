@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Gi6-Pt-F8W">
-    <device id="retina6_7" orientation="portrait" appearance="light"/>
+    <device id="retina6_7" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
@@ -335,7 +335,7 @@
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="GPv-qX-wVK"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="PrC-uY-vr2" firstAttribute="top" secondItem="yXF-2L-fNb" secondAttribute="bottom" constant="4" id="1v5-dc-uhb"/>
                             <constraint firstItem="Th6-Md-aQW" firstAttribute="top" secondItem="3c1-HW-jLt" secondAttribute="bottom" constant="8" id="1wV-94-gqy"/>
@@ -410,7 +410,7 @@
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" title="Login with providers" id="pxk-0X-m9H"/>
                     <connections>
@@ -461,7 +461,7 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="W3K-8i-RYY"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="W3K-8i-RYY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Kzo-Al-lH7" secondAttribute="trailing" symbolic="YES" id="0vR-R9-6bO"/>
                             <constraint firstItem="Qmz-jb-Bep" firstAttribute="top" secondItem="oh4-V5-P11" secondAttribute="top" constant="155" id="1kN-FV-pLv"/>
@@ -553,7 +553,7 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="h9m-aU-c5R"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="ISz-2N-3VB" firstAttribute="leading" secondItem="7ao-pe-HJy" secondAttribute="leadingMargin" id="02i-yX-oB5"/>
                             <constraint firstItem="8vr-zU-Z2f" firstAttribute="leading" secondItem="2Zm-rg-VoC" secondAttribute="leading" id="3Ek-r0-ne5"/>
@@ -680,7 +680,7 @@
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ss7-L2-u8Z"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="scf-fh-ZKc" firstAttribute="leading" secondItem="ss7-L2-u8Z" secondAttribute="leading" constant="20" id="42I-KG-fpt"/>
                             <constraint firstItem="ss7-L2-u8Z" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ORh-Wp-axD" secondAttribute="trailing" symbolic="YES" id="FJC-Nv-zaF"/>
@@ -747,7 +747,7 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="2zV-kh-fDP"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="2zV-kh-fDP" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="9e8-Az-d4M" secondAttribute="trailing" symbolic="YES" id="6Q9-vY-ZgZ"/>
                             <constraint firstItem="2zV-kh-fDP" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="dlP-6F-RvC" secondAttribute="trailing" symbolic="YES" id="CdU-eK-S6s"/>
