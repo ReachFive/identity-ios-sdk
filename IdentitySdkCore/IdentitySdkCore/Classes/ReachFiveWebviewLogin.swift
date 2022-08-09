@@ -10,15 +10,8 @@ public extension ReachFive {
         
         let pkce = Pkce.generate()
         let scope = (request.scope ?? scope).joined(separator: " ")
-        let options = [
-            "client_id": sdkConfig.clientId,
-            "redirect_uri": sdkConfig.scheme,
-            "response_type": codeResponseType,
-            "scope": scope,
-            "code_challenge": pkce.codeChallenge,
-            "code_challenge_method": pkce.codeChallengeMethod
-        ]
-        let authURL = reachFiveApi.buildAuthorizeURL(queryParams: options)
+
+        let authURL = reachFiveApi.buildAuthorizeURL(loginCallback: LoginCallback(sdkConfig: sdkConfig, scope: scope, pkce: pkce))
         
         // Initialize the session.
         let session = ASWebAuthenticationSession(url: authURL, callbackURLScheme: "reachfive-\(reachFiveApi.sdkConfig.clientId)") { callbackURL, error in
