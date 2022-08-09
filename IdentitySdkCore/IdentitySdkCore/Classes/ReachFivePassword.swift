@@ -30,6 +30,6 @@ public extension ReachFive {
         )
         return reachFiveApi
             .loginWithPassword(loginRequest: loginRequest)
-            .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) })
+            .flatMap({ self.loginCallback(tkn: $0.tkn, scopes: scope) })
     }
 }

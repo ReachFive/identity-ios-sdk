@@ -32,6 +32,7 @@ class LoginWithPasswordController: UIViewController {
         let profileController = storyBoard.instantiateViewController(
             withIdentifier: "ProfileScene"
         ) as! ProfileController
+        error.text = nil
         navigationController?.pushViewController(profileController, animated: true)
     }
 }

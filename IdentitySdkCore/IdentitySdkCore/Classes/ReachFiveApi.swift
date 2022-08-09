@@ -99,10 +99,8 @@ public class ReachFiveApi {
             .validate(contentType: ["application/json"])
             .responseJson(type: AccessTokenResponse.self, decoder: decoder)
     }
-
-//    public func loginWithPassword(loginRequest: LoginRequest) -> Future<AuthenticationToken, ReachFiveError> {
     
-    public func loginWithPassword(loginRequest: LoginRequest) -> Future<AccessTokenResponse, ReachFiveError> {
+    public func loginWithPassword(loginRequest: LoginRequest) -> Future<AuthenticationToken, ReachFiveError> {
         AF
             .request(
                 createUrl(path: "/identity/v1/password/login?platform=ios&device=\(deviceInfo)"),
@@ -111,16 +109,17 @@ public class ReachFiveApi {
                 encoding: JSONEncoding.default
             )
             .validate(contentType: ["application/json"])
-            .responseJson(type: AccessTokenResponse.self, decoder: decoder)
+            .responseJson(type: AuthenticationToken.self, decoder: decoder)
     }
     
-    public func loginCallback(url: URL) -> Future<String, ReachFiveError> {
+    public func loginCallback(loginCallback: LoginCallback) -> Future<String, ReachFiveError> {
         let promise = Promise<String, ReachFiveError>()
         
         AF
             .request(
-                url,
-                method: .get
+                createUrl(path: "/oauth/authorize?platform=ios&device=\(deviceInfo)"),
+                method: .get,
+                parameters: loginCallback.dictionary()
             )
             .redirect(using: Redirector.doNotFollow)
             .validate(statusCode: 300...308) //TODO pas de 305/306

@@ -54,20 +54,12 @@ public class ReachFive: NSObject {
         """
     }
     
-    private func loginCallback(tkn: String, scopes: [String]?) -> Future<AuthToken, ReachFiveError> {
+    public func loginCallback(tkn: String, scopes: [String]?) -> Future<AuthToken, ReachFiveError> {
         let pkce = Pkce.generate()
         let scope = (scopes ?? scope).joined(separator: " ")
-        let options = [
-            "client_id": sdkConfig.clientId,
-            "tkn": tkn,
-            "response_type": codeResponseType,
-            "redirect_uri": sdkConfig.scheme,
-            "scope": scope,
-            "code_challenge": pkce.codeChallenge,
-            "code_challenge_method": pkce.codeChallengeMethod
-        ]
-        let authURL = reachFiveApi.buildAuthorizeURL(queryParams: options)
-        return reachFiveApi.loginCallback(url: authURL).flatMap({ self.authWithCode(code: $0, pkce: pkce) })
+        
+        return reachFiveApi.loginCallback(loginCallback: LoginCallback(sdkConfig: sdkConfig, scope: scope, pkce: pkce, tkn: tkn))
+            .flatMap({ self.authWithCode(code: $0, pkce: pkce) })
     }
     
     internal func authWithCode(code: String, pkce: Pkce) -> Future<AuthToken, ReachFiveError> {
