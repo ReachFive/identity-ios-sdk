@@ -141,7 +141,6 @@
 		8496EB3925DEB141005098DD /* AuthenticationToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationToken.swift; sourceTree = "<group>"; };
 		8496EB3A25DEB141005098DD /* R5PublicKeyCredentialRpEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R5PublicKeyCredentialRpEntity.swift; sourceTree = "<group>"; };
 		8496EB3B25DEB141005098DD /* R5PublicKeyCredentialUserEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R5PublicKeyCredentialUserEntity.swift; sourceTree = "<group>"; };
-		84C353CD25E47238006978E5 /* PromiseKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PromiseKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84DB8B9E25E45B8900238991 /* ReachFiveFidoClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachFiveFidoClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -262,7 +261,6 @@
 		74FB8B4B94CB262BEC297380 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				84C353CD25E47238006978E5 /* PromiseKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
