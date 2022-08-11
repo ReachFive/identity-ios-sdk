@@ -3,10 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A87FE7128A539D80005E9C2 /* BrightFutures in Frameworks */ = {isa = PBXBuildFile; productRef = 2A87FE7028A539D80005E9C2 /* BrightFutures */; };
+		2A87FE7428A53A230005E9C2 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 2A87FE7328A53A230005E9C2 /* Alamofire */; };
 		3404A40822CB9B7E002FFEDB /* ReachFiveError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3404A40722CB9B7E002FFEDB /* ReachFiveError.swift */; };
 		3404A40C22CBA6DD002FFEDB /* AuthCodeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3404A40B22CBA6DD002FFEDB /* AuthCodeRequest.swift */; };
 		340AF1F7232A9A2B00AA114D /* QueryString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 340AF1F6232A9A2B00AA114D /* QueryString.swift */; };
@@ -50,7 +52,6 @@
 		34F7D3E622A54ADE003A7BC0 /* ProvidersConfigsResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F7D3E522A54ADE003A7BC0 /* ProvidersConfigsResult.swift */; };
 		72DDB78E22EF354300048262 /* ClientConfigResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72DDB78D22EF354300048262 /* ClientConfigResponse.swift */; };
 		8433EA3A25F1229F00329358 /* DeviceCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8433EA3925F1229F00329358 /* DeviceCredential.swift */; };
-		848D86C825DD4968003F1D80 /* RedirectionSafari.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848D86C725DD4968003F1D80 /* RedirectionSafari.swift */; };
 		8496EB2425DEAFCF005098DD /* R5AuthenticatorAssertionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496EB1B25DEAFCF005098DD /* R5AuthenticatorAssertionResponse.swift */; };
 		8496EB2525DEAFCF005098DD /* AuthenticationPublicKeyCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496EB1C25DEAFCF005098DD /* AuthenticationPublicKeyCredential.swift */; };
 		8496EB2625DEAFCF005098DD /* RegistrationPublicKeyCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496EB1D25DEAFCF005098DD /* RegistrationPublicKeyCredential.swift */; };
@@ -71,7 +72,6 @@
 		8496EB4325DEB141005098DD /* AuthenticationToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496EB3925DEB141005098DD /* AuthenticationToken.swift */; };
 		8496EB4425DEB141005098DD /* R5PublicKeyCredentialRpEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496EB3A25DEB141005098DD /* R5PublicKeyCredentialRpEntity.swift */; };
 		8496EB4525DEB141005098DD /* R5PublicKeyCredentialUserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496EB3B25DEB141005098DD /* R5PublicKeyCredentialUserEntity.swift */; };
-		84DB8B9F25E45B8900238991 /* ReachFiveFidoClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DB8B9E25E45B8900238991 /* ReachFiveFidoClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -120,7 +120,6 @@
 		34F7D3E522A54ADE003A7BC0 /* ProvidersConfigsResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvidersConfigsResult.swift; sourceTree = "<group>"; };
 		72DDB78D22EF354300048262 /* ClientConfigResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientConfigResponse.swift; sourceTree = "<group>"; };
 		8433EA3925F1229F00329358 /* DeviceCredential.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCredential.swift; sourceTree = "<group>"; };
-		848D86C725DD4968003F1D80 /* RedirectionSafari.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedirectionSafari.swift; sourceTree = "<group>"; };
 		8496EB1B25DEAFCF005098DD /* R5AuthenticatorAssertionResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R5AuthenticatorAssertionResponse.swift; sourceTree = "<group>"; };
 		8496EB1C25DEAFCF005098DD /* AuthenticationPublicKeyCredential.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationPublicKeyCredential.swift; sourceTree = "<group>"; };
 		8496EB1D25DEAFCF005098DD /* RegistrationPublicKeyCredential.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationPublicKeyCredential.swift; sourceTree = "<group>"; };
@@ -141,7 +140,6 @@
 		8496EB3925DEB141005098DD /* AuthenticationToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationToken.swift; sourceTree = "<group>"; };
 		8496EB3A25DEB141005098DD /* R5PublicKeyCredentialRpEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R5PublicKeyCredentialRpEntity.swift; sourceTree = "<group>"; };
 		8496EB3B25DEB141005098DD /* R5PublicKeyCredentialUserEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R5PublicKeyCredentialUserEntity.swift; sourceTree = "<group>"; };
-		84DB8B9E25E45B8900238991 /* ReachFiveFidoClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachFiveFidoClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +147,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A87FE7128A539D80005E9C2 /* BrightFutures in Frameworks */,
+				2A87FE7428A53A230005E9C2 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,9 +167,7 @@
 				3417FF6922FAD1810009EC84 /* ReachFivePasswordLess.swift */,
 				34BDDA4322E5D95B00D16DAE /* ReachFiveProfile.swift */,
 				34BDDA3F22E5D73900D16DAE /* ReachFiveProviders.swift */,
-				848D86C725DD4968003F1D80 /* RedirectionSafari.swift */,
 				34689A9A22CE3E34002970F9 /* utils */,
-				84DB8B9E25E45B8900238991 /* ReachFiveFidoClient.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -336,6 +334,10 @@
 			dependencies = (
 			);
 			name = IdentitySdkCore;
+			packageProductDependencies = (
+				2A87FE7028A539D80005E9C2 /* BrightFutures */,
+				2A87FE7328A53A230005E9C2 /* Alamofire */,
+			);
 			productName = IdentitySdkCore;
 			productReference = 347FDB42229BE84500660687 /* IdentitySdkCore.framework */;
 			productType = "com.apple.product-type.framework";
@@ -363,6 +365,10 @@
 				en,
 			);
 			mainGroup = 347FDB38229BE84500660687;
+			packageReferences = (
+				2A87FE6F28A539D80005E9C2 /* XCRemoteSwiftPackageReference "BrightFutures" */,
+				2A87FE7228A53A230005E9C2 /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			productRefGroup = 347FDB43229BE84500660687 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -405,7 +411,6 @@
 				3442C21E230EC48A009F8874 /* VerifyAuthCodeRequest.swift in Sources */,
 				34BDDA4222E5D87E00D16DAE /* ReachFivePassword.swift in Sources */,
 				8496EB4425DEB141005098DD /* R5PublicKeyCredentialRpEntity.swift in Sources */,
-				84DB8B9F25E45B8900238991 /* ReachFiveFidoClient.swift in Sources */,
 				34BDDA3C22E5BF3600D16DAE /* Emails.swift in Sources */,
 				8496EB3E25DEB141005098DD /* R5PublicKeyCredentialDescriptor.swift in Sources */,
 				34689A9C22CE3E57002970F9 /* Base64.swift in Sources */,
@@ -443,7 +448,6 @@
 				34BDDA4422E5D95B00D16DAE /* ReachFiveProfile.swift in Sources */,
 				8496EB2A25DEAFCF005098DD /* WebAuthnRegistrationRequest.swift in Sources */,
 				34BDDA4022E5D73900D16DAE /* ReachFiveProviders.swift in Sources */,
-				848D86C825DD4968003F1D80 /* RedirectionSafari.swift in Sources */,
 				347FDB67229C02FE00660687 /* ReachFive.swift in Sources */,
 				8496EB3F25DEB141005098DD /* RegistrationOptions.swift in Sources */,
 				34E18B8F22A6C32500952EBD /* LoginRequest.swift in Sources */,
@@ -672,6 +676,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2A87FE6F28A539D80005E9C2 /* XCRemoteSwiftPackageReference "BrightFutures" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Thomvis/BrightFutures.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
+		2A87FE7228A53A230005E9C2 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2A87FE7028A539D80005E9C2 /* BrightFutures */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2A87FE6F28A539D80005E9C2 /* XCRemoteSwiftPackageReference "BrightFutures" */;
+			productName = BrightFutures;
+		};
+		2A87FE7328A53A230005E9C2 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2A87FE7228A53A230005E9C2 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 347FDB39229BE84500660687 /* Project object */;
 }
