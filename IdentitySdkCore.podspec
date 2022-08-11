@@ -19,9 +19,6 @@ Pod::Spec.new do |spec|
 
   spec.dependency 'Alamofire', '~> 5.6.1'
   spec.dependency 'BrightFutures', '~> 8.2.0'
-  spec.dependency 'EllipticCurveKeyPair', '~> 2.0'
-  spec.dependency 'KeychainAccess', '~> 4.2.1'
-  spec.dependency 'PromiseKit', '~> 6.18.0'
   spec.dependency 'CryptoSwift', '~> 1.5.1'
 
 end

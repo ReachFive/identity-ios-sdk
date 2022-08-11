@@ -1,7 +1,5 @@
 import UIKit
 import IdentitySdkCore
-import PromiseKit
-import CryptoSwift
 
 class LoginWithFidoViewController: UIViewController {
     

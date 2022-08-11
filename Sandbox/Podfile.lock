@@ -8,7 +8,6 @@ PODS:
     - AppAuth/Core
   - BrightFutures (8.2.0)
   - CryptoSwift (1.5.1)
-  - EllipticCurveKeyPair (2.0)
   - FBAEMKit (14.1.0):
     - FBSDKCoreKit_Basics (= 14.1.0)
   - FBSDKCoreKit (14.1.0):
@@ -25,32 +24,19 @@ PODS:
     - AppAuth/Core (~> 1.4)
     - GTMSessionFetcher/Core (~> 1.5)
   - GTMSessionFetcher/Core (1.7.2)
-  - IdentitySdkCore (5.6.2):
+  - IdentitySdkCore (5.7.0):
     - Alamofire (~> 5.6.1)
     - BrightFutures (~> 8.2.0)
     - CryptoSwift (~> 1.5.1)
-    - EllipticCurveKeyPair (~> 2.0)
-    - KeychainAccess (~> 4.2.1)
-    - PromiseKit (~> 6.18.0)
-  - IdentitySdkFacebook (5.6.2):
+  - IdentitySdkFacebook (5.7.0):
     - FBSDKCoreKit (~> 14.1.0)
     - FBSDKLoginKit (~> 14.1.0)
     - IdentitySdkCore (~> 5)
-  - IdentitySdkGoogle (5.6.2):
+  - IdentitySdkGoogle (5.7.0):
     - GoogleSignIn (~> 6)
     - IdentitySdkCore (~> 5)
-  - IdentitySdkWebView (5.6.2):
+  - IdentitySdkWebView (5.7.0):
     - IdentitySdkCore (~> 5)
-  - KeychainAccess (4.2.2)
-  - PromiseKit (6.18.0):
-    - PromiseKit/CorePromise (= 6.18.0)
-    - PromiseKit/Foundation (= 6.18.0)
-    - PromiseKit/UIKit (= 6.18.0)
-  - PromiseKit/CorePromise (6.18.0)
-  - PromiseKit/Foundation (6.18.0):
-    - PromiseKit/CorePromise
-  - PromiseKit/UIKit (6.18.0):
-    - PromiseKit/CorePromise
 
 DEPENDENCIES:
   - IdentitySdkCore (from `../IdentitySdkCore.podspec`)
@@ -64,7 +50,6 @@ SPEC REPOS:
     - AppAuth
     - BrightFutures
     - CryptoSwift
-    - EllipticCurveKeyPair
     - FBAEMKit
     - FBSDKCoreKit
     - FBSDKCoreKit_Basics
@@ -72,8 +57,6 @@ SPEC REPOS:
     - GoogleSignIn
     - GTMAppAuth
     - GTMSessionFetcher
-    - KeychainAccess
-    - PromiseKit
 
 EXTERNAL SOURCES:
   IdentitySdkCore:
@@ -90,7 +73,6 @@ SPEC CHECKSUMS:
   AppAuth: 80317d99ac7ff2801a2f18ff86b48cd315ed465d
   BrightFutures: 67e0e8cd974ab9f6c04650cc64153f7adf1ec489
   CryptoSwift: c4f2debceb38bf44c80659afe009f71e23e4a082
-  EllipticCurveKeyPair: 8c69e5238a6e47243a10a48fbd41dfb19110b22e
   FBAEMKit: a899515e45476027f73aef377b5cffadcd56ca3a
   FBSDKCoreKit: 24f8bc8d3b5b2a8c5c656a1329492a12e8efa792
   FBSDKCoreKit_Basics: 6e578c9bdc7aa1365dbbbde633c9ebb536bcaa98
@@ -98,13 +80,11 @@ SPEC CHECKSUMS:
   GoogleSignIn: 3c68388ac221f379676e8f1cb115df3aaf73b93f
   GTMAppAuth: 4d8f864896f3646f0c33baf38a28362f4c601e15
   GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
-  IdentitySdkCore: 1105ab28e5598697e1beefe50143cbcbae63ba90
-  IdentitySdkFacebook: 00da162c8994dbbee777eaffc2eb31e06d23f898
-  IdentitySdkGoogle: f4beef4ba81b75ba76405617d85614d4c65fe761
-  IdentitySdkWebView: 130a251a9cf7a7cc9cc1d8e509612bfd299121e0
-  KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
-  PromiseKit: 879fa89b55fcb8f11ade9aad0c9721850bb71b9f
+  IdentitySdkCore: 537e4e97494cff0af3b6455a2d2bf5c4a2da7adc
+  IdentitySdkFacebook: a4e04cabf6d2e985b0479e5fa1bba4e1673c8a7c
+  IdentitySdkGoogle: 1cb1f2c67a837203ddee790a2c05c3abbff7a7dc
+  IdentitySdkWebView: ec6b1650ed776f5b24cb5a486252e90c893291f7
 
-PODFILE CHECKSUM: 170af3ab1fd0d478a9d939ec0b256e1f4b5b1fd3
+PODFILE CHECKSUM: f693e93a5f01f5edbdb7ab2ad033b3c84351b61f
 
 COCOAPODS: 1.11.3

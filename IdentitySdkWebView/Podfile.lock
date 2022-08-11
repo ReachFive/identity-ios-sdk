@@ -2,24 +2,10 @@ PODS:
   - Alamofire (5.6.2)
   - BrightFutures (8.2.0)
   - CryptoSwift (1.5.1)
-  - EllipticCurveKeyPair (2.0)
-  - IdentitySdkCore (5.6.2):
+  - IdentitySdkCore (5.7.0):
     - Alamofire (~> 5.6.1)
     - BrightFutures (~> 8.2.0)
     - CryptoSwift (~> 1.5.1)
-    - EllipticCurveKeyPair (~> 2.0)
-    - KeychainAccess (~> 4.2.1)
-    - PromiseKit (~> 6.18.0)
-  - KeychainAccess (4.2.2)
-  - PromiseKit (6.18.0):
-    - PromiseKit/CorePromise (= 6.18.0)
-    - PromiseKit/Foundation (= 6.18.0)
-    - PromiseKit/UIKit (= 6.18.0)
-  - PromiseKit/CorePromise (6.18.0)
-  - PromiseKit/Foundation (6.18.0):
-    - PromiseKit/CorePromise
-  - PromiseKit/UIKit (6.18.0):
-    - PromiseKit/CorePromise
 
 DEPENDENCIES:
   - IdentitySdkCore (from `../IdentitySdkCore.podspec`)
@@ -29,9 +15,6 @@ SPEC REPOS:
     - Alamofire
     - BrightFutures
     - CryptoSwift
-    - EllipticCurveKeyPair
-    - KeychainAccess
-    - PromiseKit
 
 EXTERNAL SOURCES:
   IdentitySdkCore:
@@ -41,11 +24,8 @@ SPEC CHECKSUMS:
   Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
   BrightFutures: 67e0e8cd974ab9f6c04650cc64153f7adf1ec489
   CryptoSwift: c4f2debceb38bf44c80659afe009f71e23e4a082
-  EllipticCurveKeyPair: 8c69e5238a6e47243a10a48fbd41dfb19110b22e
-  IdentitySdkCore: 220a84190a749587cebe10496b090ec3dacebb6d
-  KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
-  PromiseKit: 879fa89b55fcb8f11ade9aad0c9721850bb71b9f
+  IdentitySdkCore: 537e4e97494cff0af3b6455a2d2bf5c4a2da7adc
 
-PODFILE CHECKSUM: ffd4df0ec9bb210afa5c733bd6e137d8178e43d3
+PODFILE CHECKSUM: 3222bad03d6ece5d96130a84a12ba0b316d770d5
 
 COCOAPODS: 1.11.3
