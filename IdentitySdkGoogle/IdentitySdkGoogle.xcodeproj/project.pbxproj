@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		162E88AC53B118DC4D7CC08B /* Pods_IdentitySdkGoogle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D612CA360C22DF65ADBE2F82 /* Pods_IdentitySdkGoogle.framework */; };
 		3404A3F222C2522A002FFEDB /* IdentitySdkGoogle.h in Headers */ = {isa = PBXBuildFile; fileRef = 3404A3F022C2522A002FFEDB /* IdentitySdkGoogle.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3404A3FA22C252D1002FFEDB /* GoogleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3404A3F922C252D1002FFEDB /* GoogleProvider.swift */; };
 /* End PBXBuildFile section */
@@ -17,9 +16,6 @@
 		3404A3F022C2522A002FFEDB /* IdentitySdkGoogle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IdentitySdkGoogle.h; sourceTree = "<group>"; };
 		3404A3F122C2522A002FFEDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3404A3F922C252D1002FFEDB /* GoogleProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleProvider.swift; sourceTree = "<group>"; };
-		A11B170EDFDD4FFCC255F98A /* Pods-IdentitySdkGoogle.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IdentitySdkGoogle.release.xcconfig"; path = "Target Support Files/Pods-IdentitySdkGoogle/Pods-IdentitySdkGoogle.release.xcconfig"; sourceTree = "<group>"; };
-		D612CA360C22DF65ADBE2F82 /* Pods_IdentitySdkGoogle.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IdentitySdkGoogle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F371A5BC0488A7E5C8EFCDB9 /* Pods-IdentitySdkGoogle.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IdentitySdkGoogle.debug.xcconfig"; path = "Target Support Files/Pods-IdentitySdkGoogle/Pods-IdentitySdkGoogle.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,7 +23,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				162E88AC53B118DC4D7CC08B /* Pods_IdentitySdkGoogle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,7 +35,6 @@
 				3404A3EF22C2522A002FFEDB /* IdentitySdkGoogle */,
 				3404A3EE22C2522A002FFEDB /* Products */,
 				370FB538F74342D113C6FC5A /* Pods */,
-				F45D02EB221CEF120F5EC9CC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -73,18 +67,8 @@
 		370FB538F74342D113C6FC5A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				F371A5BC0488A7E5C8EFCDB9 /* Pods-IdentitySdkGoogle.debug.xcconfig */,
-				A11B170EDFDD4FFCC255F98A /* Pods-IdentitySdkGoogle.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		F45D02EB221CEF120F5EC9CC /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				D612CA360C22DF65ADBE2F82 /* Pods_IdentitySdkGoogle.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -105,7 +89,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3404A3F522C2522A002FFEDB /* Build configuration list for PBXNativeTarget "IdentitySdkGoogle" */;
 			buildPhases = (
-				8E669EF541F793E42DB3C41C /* [CP] Check Pods Manifest.lock */,
 				3404A3E822C2522A002FFEDB /* Headers */,
 				3404A3E922C2522A002FFEDB /* Sources */,
 				3404A3EA22C2522A002FFEDB /* Frameworks */,
@@ -161,31 +144,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		8E669EF541F793E42DB3C41C /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-IdentitySdkGoogle-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3404A3E922C2522A002FFEDB /* Sources */ = {
@@ -325,7 +283,6 @@
 		};
 		3404A3F622C2522A002FFEDB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F371A5BC0488A7E5C8EFCDB9 /* Pods-IdentitySdkGoogle.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -354,7 +311,6 @@
 		};
 		3404A3F722C2522A002FFEDB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A11B170EDFDD4FFCC255F98A /* Pods-IdentitySdkGoogle.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";

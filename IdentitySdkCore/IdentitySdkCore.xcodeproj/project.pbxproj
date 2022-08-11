@@ -48,7 +48,6 @@
 		34E508B222F19F7700BF9BAF /* DataRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E508B122F19F7700BF9BAF /* DataRequest.swift */; };
 		34F7D3E422A54AA2003A7BC0 /* ReachFiveApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F7D3E322A54AA2003A7BC0 /* ReachFiveApi.swift */; };
 		34F7D3E622A54ADE003A7BC0 /* ProvidersConfigsResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F7D3E522A54ADE003A7BC0 /* ProvidersConfigsResult.swift */; };
-		63B485A8E4E7A8A3D94D4C18 /* Pods_IdentitySdkCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B722D997B32FEE8753D77AB /* Pods_IdentitySdkCore.framework */; };
 		72DDB78E22EF354300048262 /* ClientConfigResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72DDB78D22EF354300048262 /* ClientConfigResponse.swift */; };
 		8433EA3A25F1229F00329358 /* DeviceCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8433EA3925F1229F00329358 /* DeviceCredential.swift */; };
 		848D86C825DD4968003F1D80 /* RedirectionSafari.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848D86C725DD4968003F1D80 /* RedirectionSafari.swift */; };
@@ -76,8 +75,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2B722D997B32FEE8753D77AB /* Pods_IdentitySdkCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IdentitySdkCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2CA6D9263DC2541C548301E9 /* Pods-IdentitySdkCore.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IdentitySdkCore.release.xcconfig"; path = "Target Support Files/Pods-IdentitySdkCore/Pods-IdentitySdkCore.release.xcconfig"; sourceTree = "<group>"; };
 		3404A40722CB9B7E002FFEDB /* ReachFiveError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachFiveError.swift; sourceTree = "<group>"; };
 		3404A40B22CBA6DD002FFEDB /* AuthCodeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCodeRequest.swift; sourceTree = "<group>"; };
 		340AF1F6232A9A2B00AA114D /* QueryString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryString.swift; sourceTree = "<group>"; };
@@ -146,7 +143,6 @@
 		8496EB3B25DEB141005098DD /* R5PublicKeyCredentialUserEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R5PublicKeyCredentialUserEntity.swift; sourceTree = "<group>"; };
 		84C353CD25E47238006978E5 /* PromiseKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PromiseKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84DB8B9E25E45B8900238991 /* ReachFiveFidoClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachFiveFidoClient.swift; sourceTree = "<group>"; };
-		92974ED6A8B2D1CEADE0BFF5 /* Pods-IdentitySdkCore.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IdentitySdkCore.debug.xcconfig"; path = "Target Support Files/Pods-IdentitySdkCore/Pods-IdentitySdkCore.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,7 +150,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63B485A8E4E7A8A3D94D4C18 /* Pods_IdentitySdkCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,7 +264,6 @@
 			isa = PBXGroup;
 			children = (
 				84C353CD25E47238006978E5 /* PromiseKit.framework */,
-				2B722D997B32FEE8753D77AB /* Pods_IdentitySdkCore.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -320,8 +314,6 @@
 		927803C28AA84ED9FC3390CF /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				92974ED6A8B2D1CEADE0BFF5 /* Pods-IdentitySdkCore.debug.xcconfig */,
-				2CA6D9263DC2541C548301E9 /* Pods-IdentitySdkCore.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -344,7 +336,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 347FDB4A229BE84500660687 /* Build configuration list for PBXNativeTarget "IdentitySdkCore" */;
 			buildPhases = (
-				3E48ED07786CEAA846211855 /* [CP] Check Pods Manifest.lock */,
 				347FDB3D229BE84500660687 /* Headers */,
 				347FDB3E229BE84500660687 /* Sources */,
 				347FDB3F229BE84500660687 /* Frameworks */,
@@ -400,31 +391,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		3E48ED07786CEAA846211855 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-IdentitySdkCore-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		347FDB3E229BE84500660687 /* Sources */ = {
@@ -627,7 +593,6 @@
 		};
 		347FDB4B229BE84500660687 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 92974ED6A8B2D1CEADE0BFF5 /* Pods-IdentitySdkCore.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -668,7 +633,6 @@
 		};
 		347FDB4C229BE84500660687 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2CA6D9263DC2541C548301E9 /* Pods-IdentitySdkCore.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";

@@ -22,7 +22,6 @@
 		8433EA3C25F13D0A00329358 /* DevicesFidoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8433EA3B25F13D0A00329358 /* DevicesFidoCell.swift */; };
 		8496EB4825DEB764005098DD /* LoginWithFidoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496EB4625DEB764005098DD /* LoginWithFidoViewController.swift */; };
 		8496EB4925DEB764005098DD /* SignUpFidoControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496EB4725DEB764005098DD /* SignUpFidoControllerViewController.swift */; };
-		D5915500A22E4272486BFD1C /* Pods_Sandbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E55CD881F31583F8D3480D8 /* Pods_Sandbox.framework */; };
 		EA91ACDEBA85D43349D63550 /* SecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA91A294C5DD405D6A38ADCC /* SecureStorage.swift */; };
 /* End PBXBuildFile section */
 
@@ -40,9 +39,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1B4336D32015A6A13AA1DB17 /* Pods-Sandbox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sandbox.release.xcconfig"; path = "Target Support Files/Pods-Sandbox/Pods-Sandbox.release.xcconfig"; sourceTree = "<group>"; };
 		2A9D190628904A9F00B8A4B9 /* WebviewLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebviewLoginController.swift; sourceTree = "<group>"; };
-		2E55CD881F31583F8D3480D8 /* Pods_Sandbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sandbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3414A7CC22DDD39C00CF393A /* ProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
 		341731FA229D6B6400681CFD /* Sandbox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sandbox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		341731FD229D6B6400681CFD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -63,7 +60,6 @@
 		84E69687258A53AD003AF19B /* IdentitySdkCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = IdentitySdkCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E6968B258A5534003AF19B /* IdentitySdkCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = IdentitySdkCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E6968F258A5661003AF19B /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
-		C9C16455A16CA84067D7FF45 /* Pods-Sandbox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sandbox.debug.xcconfig"; path = "Target Support Files/Pods-Sandbox/Pods-Sandbox.debug.xcconfig"; sourceTree = "<group>"; };
 		EA91A294C5DD405D6A38ADCC /* SecureStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecureStorage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -72,7 +68,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5915500A22E4272486BFD1C /* Pods_Sandbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,8 +119,6 @@
 		8CD874808BCF122A3F9EDA83 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				C9C16455A16CA84067D7FF45 /* Pods-Sandbox.debug.xcconfig */,
-				1B4336D32015A6A13AA1DB17 /* Pods-Sandbox.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -137,7 +130,6 @@
 				84E6968F258A5661003AF19B /* AddressBook.framework */,
 				84E6968B258A5534003AF19B /* IdentitySdkCore.framework */,
 				84E69687258A53AD003AF19B /* IdentitySdkCore.framework */,
-				2E55CD881F31583F8D3480D8 /* Pods_Sandbox.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -149,12 +141,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3417320C229D6B6400681CFD /* Build configuration list for PBXNativeTarget "Sandbox" */;
 			buildPhases = (
-				C62175C50B8B62E891F5598C /* [CP] Check Pods Manifest.lock */,
 				341731F6229D6B6400681CFD /* Sources */,
 				341731F7229D6B6400681CFD /* Frameworks */,
 				341731F8229D6B6400681CFD /* Resources */,
 				8496EBA525DEC1DB005098DD /* Embed Frameworks */,
-				A514CE717C81A5C4759D5906 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -213,48 +203,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		A514CE717C81A5C4759D5906 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Sandbox/Pods-Sandbox-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Sandbox/Pods-Sandbox-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Sandbox/Pods-Sandbox-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C62175C50B8B62E891F5598C /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Sandbox-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		341731F6229D6B6400681CFD /* Sources */ = {
@@ -419,7 +367,6 @@
 		};
 		3417320D229D6B6400681CFD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C9C16455A16CA84067D7FF45 /* Pods-Sandbox.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -456,7 +403,6 @@
 		};
 		3417320E229D6B6400681CFD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1B4336D32015A6A13AA1DB17 /* Pods-Sandbox.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
