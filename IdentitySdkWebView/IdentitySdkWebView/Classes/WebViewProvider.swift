@@ -55,7 +55,15 @@ class ConfiguredWebViewProvider: NSObject, Provider, SFSafariViewControllerDeleg
         let promise = Promise<AuthToken, ReachFiveError>()
         let pkce = Pkce.generate()
         let scope = scope != nil ? scope!.joined(separator: " ") : clientConfigResponse.scope
-        let authURL = reachFiveApi.buildAuthorizeURL(loginCallback: LoginCallback(sdkConfig: sdkConfig, scope: scope, pkce: pkce, provider: providerConfig.provider))
+        let authURL = reachFiveApi.buildAuthorizeURL(queryParams: [
+            "provider": providerConfig.provider,
+            "client_id": sdkConfig.clientId,
+            "response_type": "code",
+            "redirect_uri": sdkConfig.scheme,
+            "scope": scope,
+            "code_challenge": pkce.codeChallenge,
+            "code_challenge_method": pkce.codeChallengeMethod,
+        ])
         
         let session = ASWebAuthenticationSession(url: authURL, callbackURLScheme: "reachfive-\(sdkConfig.clientId)") { callbackURL, error in
             guard error == nil else {
