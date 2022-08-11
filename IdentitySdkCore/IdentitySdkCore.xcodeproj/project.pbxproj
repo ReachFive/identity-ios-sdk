@@ -216,7 +216,6 @@
 			children = (
 				347FDB44229BE84500660687 /* IdentitySdkCore */,
 				347FDB43229BE84500660687 /* Products */,
-				927803C28AA84ED9FC3390CF /* Pods */,
 				74FB8B4B94CB262BEC297380 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -309,13 +308,6 @@
 				8433EA3925F1229F00329358 /* DeviceCredential.swift */,
 			);
 			path = webAuthn;
-			sourceTree = "<group>";
-		};
-		927803C28AA84ED9FC3390CF /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

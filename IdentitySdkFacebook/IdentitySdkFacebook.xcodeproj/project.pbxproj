@@ -34,7 +34,6 @@
 			children = (
 				34DD7DC3229C222D007311FE /* IdentitySdkFacebook */,
 				34DD7DC2229C222D007311FE /* Products */,
-				920DCE1D92D2064208FC8E4B /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,13 +53,6 @@
 				34DD7DC5229C222D007311FE /* Info.plist */,
 			);
 			path = IdentitySdkFacebook;
-			sourceTree = "<group>";
-		};
-		920DCE1D92D2064208FC8E4B /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

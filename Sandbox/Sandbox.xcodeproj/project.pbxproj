@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -79,7 +79,6 @@
 			children = (
 				341731FC229D6B6400681CFD /* Sandbox */,
 				341731FB229D6B6400681CFD /* Products */,
-				8CD874808BCF122A3F9EDA83 /* Pods */,
 				A19C0883C2C3964994A2A248 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -114,13 +113,6 @@
 				8433EA3B25F13D0A00329358 /* DevicesFidoCell.swift */,
 			);
 			path = Sandbox;
-			sourceTree = "<group>";
-		};
-		8CD874808BCF122A3F9EDA83 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pods;
 			sourceTree = "<group>";
 		};
 		A19C0883C2C3964994A2A248 /* Frameworks */ = {

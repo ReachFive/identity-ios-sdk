@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -34,7 +34,6 @@
 			children = (
 				3404A3EF22C2522A002FFEDB /* IdentitySdkGoogle */,
 				3404A3EE22C2522A002FFEDB /* Products */,
-				370FB538F74342D113C6FC5A /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -62,13 +61,6 @@
 				3404A3F922C252D1002FFEDB /* GoogleProvider.swift */,
 			);
 			path = Classes;
-			sourceTree = "<group>";
-		};
-		370FB538F74342D113C6FC5A /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

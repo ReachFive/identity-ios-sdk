@@ -34,7 +34,6 @@
 			children = (
 				3404A3D722C24E7B002FFEDB /* IdentitySdkWebView */,
 				3404A3D622C24E7B002FFEDB /* Products */,
-				4DD507E8DCB0D82C91744289 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -62,13 +61,6 @@
 				3404A3E122C24F31002FFEDB /* WebViewProvider.swift */,
 			);
 			path = Classes;
-			sourceTree = "<group>";
-		};
-		4DD507E8DCB0D82C91744289 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
