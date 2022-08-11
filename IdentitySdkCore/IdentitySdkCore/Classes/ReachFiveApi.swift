@@ -330,9 +330,9 @@ public class ReachFiveApi {
         "https://\(sdkConfig.domain)\(path)"
     }
     
-    public func buildAuthorizeURL(loginCallback: LoginCallback) -> URL {
+    public func buildAuthorizeURL(queryParams: [String: String]) -> URL {
         let request = try! URLRequest.init(url: createUrl(path: "/oauth/authorize?platform=ios&device=\(deviceInfo)"), method: .get, headers: nil)
-        let encodedURLRequest = try! URLEncoding.queryString.encode(request, with: loginCallback.dictionary())
+        let encodedURLRequest = try! URLEncoding.queryString.encode(request, with: queryParams)
         return encodedURLRequest.url!
     }
     
