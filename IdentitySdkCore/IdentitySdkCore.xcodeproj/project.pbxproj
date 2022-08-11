@@ -96,7 +96,7 @@
 		3474D28A22D32F3A005112C1 /* RequestPasswordResetRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestPasswordResetRequest.swift; sourceTree = "<group>"; };
 		347FDB42229BE84500660687 /* IdentitySdkCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IdentitySdkCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		347FDB45229BE84500660687 /* IdentitySdkCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IdentitySdkCore.h; sourceTree = "<group>"; };
-		347FDB46229BE84500660687 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		347FDB46229BE84500660687 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
 		347FDB53229BE8F800660687 /* Provider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		347FDB64229C02A800660687 /* SdkConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SdkConfig.swift; sourceTree = "<group>"; };
 		347FDB66229C02FE00660687 /* ReachFive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachFive.swift; sourceTree = "<group>"; };
@@ -211,7 +211,7 @@
 		347FDB38229BE84500660687 = {
 			isa = PBXGroup;
 			children = (
-				347FDB44229BE84500660687 /* IdentitySdkCore */,
+				347FDB44229BE84500660687 /* Source */,
 				347FDB43229BE84500660687 /* Products */,
 				74FB8B4B94CB262BEC297380 /* Frameworks */,
 			);
@@ -225,14 +225,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		347FDB44229BE84500660687 /* IdentitySdkCore */ = {
+		347FDB44229BE84500660687 /* Source */ = {
 			isa = PBXGroup;
 			children = (
 				34173218229D801500681CFD /* Classes */,
 				347FDB45229BE84500660687 /* IdentitySdkCore.h */,
 				347FDB46229BE84500660687 /* Info.plist */,
 			);
-			path = IdentitySdkCore;
+			path = Source;
 			sourceTree = "<group>";
 		};
 		34E18B8D22A6C13100952EBD /* models */ = {
