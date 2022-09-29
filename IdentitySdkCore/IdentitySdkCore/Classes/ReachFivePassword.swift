@@ -17,12 +17,14 @@ public extension ReachFive {
     func loginWithPassword(
         email: String? = nil,
         phoneNumber: String? = nil,
+        customIdentifier: String? = nil,
         password: String,
         scope: [String]? = nil
     ) -> Future<AuthToken, ReachFiveError> {
         let loginRequest = LoginRequest(
             email: email,
             phoneNumber: phoneNumber,
+            customIdentifier: customIdentifier,
             password: password,
             grantType: "password",
             clientId: sdkConfig.clientId,

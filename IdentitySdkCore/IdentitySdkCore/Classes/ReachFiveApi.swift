@@ -46,6 +46,7 @@ public class ReachFiveApi {
         "picture",
         "phone_number",
         "phone_number_verified",
+        "custom_identifier",
         "provider_details",
         "providers",
         "social_identities",

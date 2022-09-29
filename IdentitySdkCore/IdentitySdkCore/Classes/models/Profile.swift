@@ -20,6 +20,7 @@ public class Profile: Codable, DictionaryEncodable {
     public let emails: Emails?
     public let phoneNumber: String?
     public let phoneNumberVerified: Bool?
+    public let customIdentifier: String?
     public let addresses: [ProfileAddress]?
     public let locale: String?
     public let bio: String?
@@ -50,6 +51,7 @@ public class Profile: Codable, DictionaryEncodable {
         emails: Emails? = nil,
         phoneNumber: String? = nil,
         phoneNumberVerified: Bool? = nil,
+        customIdentifier: String? = nil,
         addresses: [ProfileAddress]? = nil,
         locale: String? = nil,
         bio: String? = nil,
@@ -79,6 +81,7 @@ public class Profile: Codable, DictionaryEncodable {
         self.emails = emails
         self.phoneNumber = phoneNumber
         self.phoneNumberVerified = phoneNumberVerified
+        self.customIdentifier = customIdentifier
         self.addresses = addresses
         self.locale = locale
         self.bio = bio
