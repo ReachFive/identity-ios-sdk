@@ -4,6 +4,7 @@ public class ProfileSignupRequest: Codable, DictionaryEncodable {
     public let password: String
     public let email: String?
     public let phoneNumber: String?
+    public let customIdentifier: String?
     public let givenName: String?
     public let middleName: String?
     public let familyName: String?
@@ -26,6 +27,7 @@ public class ProfileSignupRequest: Codable, DictionaryEncodable {
         password: String,
         email: String? = nil,
         phoneNumber: String? = nil,
+        customIdentifier: String? = nil,
         givenName: String? = nil,
         middleName: String? = nil,
         familyName: String? = nil,
@@ -47,6 +49,7 @@ public class ProfileSignupRequest: Codable, DictionaryEncodable {
         self.password = password
         self.email = email
         self.phoneNumber = phoneNumber
+        self.customIdentifier = customIdentifier
         self.givenName = givenName
         self.middleName = middleName
         self.familyName = familyName
