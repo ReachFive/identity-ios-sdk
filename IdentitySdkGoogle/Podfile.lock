@@ -16,7 +16,7 @@ PODS:
     - AppAuth/Core (~> 1.6)
     - GTMSessionFetcher/Core (< 3.0, >= 1.5)
   - GTMSessionFetcher/Core (2.1.0)
-  - IdentitySdkCore (5.7.0):
+  - IdentitySdkCore (5.7.1):
     - Alamofire (~> 5.6.1)
     - BrightFutures (~> 8.2.0)
     - CryptoSwift (~> 1.5.1)
@@ -47,7 +47,7 @@ SPEC CHECKSUMS:
   GoogleSignIn: 5651ce3a61e56ca864160e79b484cd9ed3f49b7a
   GTMAppAuth: 0ff230db599948a9ad7470ca667337803b3fc4dd
   GTMSessionFetcher: ffbb25ec00ebcb5201adab0a56d808f6f1902d9f
-  IdentitySdkCore: 537e4e97494cff0af3b6455a2d2bf5c4a2da7adc
+  IdentitySdkCore: 1fa8c4cac0c951bb37bf94f479f7b193d8f138a0
 
 PODFILE CHECKSUM: d1d7c181812238ba7243b194ae72f26e3f2cba44
 

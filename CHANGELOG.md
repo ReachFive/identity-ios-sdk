@@ -1,5 +1,9 @@
 # Changelog
 
+## v5.7.1
+- Allow login with password using a custom identifier instead of an email or phone number.
+- Update dependency `GoogleSignIn` from 6.2.2 to 6.2.4
+
 ## v5.7.0
 
 Warning: There are Breaking Changes

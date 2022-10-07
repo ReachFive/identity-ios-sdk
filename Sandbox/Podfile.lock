@@ -24,18 +24,18 @@ PODS:
     - AppAuth/Core (~> 1.6)
     - GTMSessionFetcher/Core (< 3.0, >= 1.5)
   - GTMSessionFetcher/Core (2.1.0)
-  - IdentitySdkCore (5.7.0):
+  - IdentitySdkCore (5.7.1):
     - Alamofire (~> 5.6.1)
     - BrightFutures (~> 8.2.0)
     - CryptoSwift (~> 1.5.1)
-  - IdentitySdkFacebook (5.7.0):
+  - IdentitySdkFacebook (5.7.1):
     - FBSDKCoreKit (~> 14.1.0)
     - FBSDKLoginKit (~> 14.1.0)
     - IdentitySdkCore (~> 5)
-  - IdentitySdkGoogle (5.7.0):
+  - IdentitySdkGoogle (5.7.1):
     - GoogleSignIn (~> 6)
     - IdentitySdkCore (~> 5)
-  - IdentitySdkWebView (5.7.0):
+  - IdentitySdkWebView (5.7.1):
     - IdentitySdkCore (~> 5)
 
 DEPENDENCIES:
@@ -80,10 +80,10 @@ SPEC CHECKSUMS:
   GoogleSignIn: 5651ce3a61e56ca864160e79b484cd9ed3f49b7a
   GTMAppAuth: 0ff230db599948a9ad7470ca667337803b3fc4dd
   GTMSessionFetcher: ffbb25ec00ebcb5201adab0a56d808f6f1902d9f
-  IdentitySdkCore: 537e4e97494cff0af3b6455a2d2bf5c4a2da7adc
-  IdentitySdkFacebook: a4e04cabf6d2e985b0479e5fa1bba4e1673c8a7c
-  IdentitySdkGoogle: 1cb1f2c67a837203ddee790a2c05c3abbff7a7dc
-  IdentitySdkWebView: ec6b1650ed776f5b24cb5a486252e90c893291f7
+  IdentitySdkCore: 1fa8c4cac0c951bb37bf94f479f7b193d8f138a0
+  IdentitySdkFacebook: 75fc9b89a12dced7291733f96c00934c9c5af63e
+  IdentitySdkGoogle: 8156ddd5f789769d4febcb3ee28f3356fc4337a3
+  IdentitySdkWebView: 0314bc8805bbb9d84f77250923f659bbbca627ee
 
 PODFILE CHECKSUM: f693e93a5f01f5edbdb7ab2ad033b3c84351b61f
 
