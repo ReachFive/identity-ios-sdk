@@ -13,14 +13,10 @@ class LoginWithProvidersController: UIViewController, UITableViewDataSource, UIT
         
         providersTableView.dataSource = self
         providersTableView.delegate = self
+
+        providers.append(contentsOf: AppDelegate.reachfive().getProviders())
+        providersTableView.reloadData()
         
-        AppDelegate.reachfive()
-            .initialize()
-            .onSuccess { providers in
-                self.providers.append(contentsOf: providers)
-                self.providersTableView.reloadData()
-            }
-            .onFailure { print("initialize error \($0)") }
     }
     
     public func reloadProvidersData(providers: [Provider]) {

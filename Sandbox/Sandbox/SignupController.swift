@@ -6,11 +6,6 @@ class SignupController: UIViewController {
     @IBOutlet weak var passwordInput: UITextField!
     @IBOutlet weak var nameInput: UITextField!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        AppDelegate.reachfive().initialize().onComplete { _ in }
-    }
-    
     @IBAction func signup(_ sender: Any) {
         let email = emailInput.text ?? ""
         let password = passwordInput.text ?? ""

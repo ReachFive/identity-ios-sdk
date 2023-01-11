@@ -11,7 +11,6 @@ class SignUpFidoControllerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        AppDelegate.reachfive().initialize().onComplete { _ in }
         deviceNameText.text = UIDevice.current.name
     }
     
