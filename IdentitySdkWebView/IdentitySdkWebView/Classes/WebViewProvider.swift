@@ -152,9 +152,7 @@ class ConfiguredWebViewProvider: NSObject, Provider {
         ]
         let queryStrings = params
             .map { "\($0)=\($1)" }
-            .map { $0.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) }
-            .filter { $0 != nil }
-            .map { $0! }
+            .compactMap { $0.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) }
             .joined(separator: "&")
         return "https://\(sdkConfig.domain)/oauth/authorize?\(queryStrings)"
     }

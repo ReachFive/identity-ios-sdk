@@ -27,7 +27,12 @@ class SignupController: UIViewController {
             name: name,
             customFields: customFields
         )
-        AppDelegate.reachfive().signup(profile: profile).onSuccess(callback: goToProfile)
+        AppDelegate.reachfive().signup(profile: profile)
+            .onSuccess(callback: goToProfile)
+            .onFailure { error in
+                let alert = AppDelegate.createAlert(title: "Signup", message: "Error: \(error.message())")
+                self.present(alert, animated: true, completion: nil)
+            }
     }
     
     func goToProfile(_ authToken: AuthToken) {

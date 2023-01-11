@@ -6,11 +6,21 @@ public enum ReachFiveError: Error {
         case .RequestError(apiError: let apiError):
             return apiError.errorUserMsg ?? "no message"
         case .AuthFailure(reason: let reason, apiError: let apiError):
-            if (reason.isEmpty) { return apiError.flatMap({ $0.errorUserMsg }) ?? "no message" } else { return reason }
+            let eum = apiError.flatMap({ $0.errorUserMsg })
+            if (reason.isEmpty) {
+                return eum ?? "no message"
+            } else {
+                return eum.map { m in "\(reason): \(m)" } ?? reason
+            }
         case .AuthCanceled:
             return "Auth Canceled"
         case .TechnicalError(reason: let reason, apiError: let apiError):
-            if (reason.isEmpty) { return apiError.flatMap({ $0.errorUserMsg }) ?? "no message" } else { return reason }
+            let eum = apiError.flatMap({ $0.errorUserMsg })
+            if (reason.isEmpty) {
+                return eum ?? "no message"
+            } else {
+                return eum.map { m in "\(reason): \(m)" } ?? reason
+            }
         }
     }
     
