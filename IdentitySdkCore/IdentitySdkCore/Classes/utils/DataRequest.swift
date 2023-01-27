@@ -17,7 +17,7 @@ extension DataRequest {
         }
     }
     
-    private func handleResponseStatus<T>(status: Int?, apiError: ApiError?, promise: BrightFutures.Promise<T, ReachFiveError>) {
+    private func handleResponseStatus<T>(status: Int?, apiError: ApiError?, promise: Promise<T, ReachFiveError>) {
         if (status != nil && status == 400 && apiError != nil) {
             promise.failure(ReachFiveError.RequestError(apiError: apiError!))
         } else if (status != nil && status == 400) {

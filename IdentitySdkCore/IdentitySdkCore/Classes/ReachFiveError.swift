@@ -1,6 +1,7 @@
 import Foundation
 
 public enum ReachFiveError: Error {
+    //TODO trouver l'équivalent du toString
     public func message() -> String {
         switch self {
         case .RequestError(apiError: let apiError):
