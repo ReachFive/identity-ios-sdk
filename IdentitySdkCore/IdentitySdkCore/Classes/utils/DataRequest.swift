@@ -5,7 +5,10 @@ import BrightFutures
 extension DataRequest {
     
     private func isSuccess(_ status: Int?) -> Bool {
-        status != nil && status! >= 200 && status! < 300
+        guard let status else {
+            return false
+        }
+        return status >= 200 && status < 300
     }
     
     private func parseJson<T: Decodable>(json: Data, type: T.Type, decoder: JSONDecoder) -> Swift.Result<T, ReachFiveError> {
@@ -18,15 +21,22 @@ extension DataRequest {
     }
     
     private func handleResponseStatus<T>(status: Int?, apiError: ApiError?, promise: Promise<T, ReachFiveError>) {
-        if (status != nil && status == 400 && apiError != nil) {
-            promise.failure(ReachFiveError.RequestError(apiError: apiError!))
-        } else if (status != nil && status == 400) {
+        guard let status else {
+            promise.failure(ReachFiveError.TechnicalError(
+                reason: "Technical error: Request without error code",
+                apiError: apiError
+            ))
+            return
+        }
+        if let apiError, status == 400 {
+            promise.failure(ReachFiveError.RequestError(apiError: apiError))
+        } else if status == 400 {
             promise.failure(ReachFiveError.TechnicalError(reason: "Bad Request"))
-        } else if (status != nil && status! == 401) {
+        } else if status == 401 {
             promise.failure(ReachFiveError.AuthFailure(reason: "Unauthorized", apiError: apiError))
         } else {
             promise.failure(ReachFiveError.TechnicalError(
-                reason: "Technical error: Request with \(String(describing: status)) error code",
+                reason: "Technical error: Request with \(status) error code",
                 apiError: apiError
             ))
         }
@@ -36,7 +46,7 @@ extension DataRequest {
         let promise = BrightFutures.Promise<(), ReachFiveError>()
         responseString { responseData in
             let status = responseData.response?.statusCode
-            if (self.isSuccess(status)) {
+            if self.isSuccess(status) {
                 promise.success(())
             } else {
                 if let data = responseData.data {
@@ -59,7 +69,7 @@ extension DataRequest {
         
         responseString { responseData in
             let status = responseData.response?.statusCode
-            if (self.isSuccess(status)) {
+            if self.isSuccess(status) {
                 if let data = responseData.data {
                     switch self.parseJson(json: data, type: T.self, decoder: decoder) {
                     case .success(let value):
