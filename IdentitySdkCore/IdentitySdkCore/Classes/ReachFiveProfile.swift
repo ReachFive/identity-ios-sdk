@@ -75,4 +75,12 @@ public extension ReachFive {
             requestPasswordResetRequest: requestPasswordResetRequest
         )
     }
+    
+    func listWebAuthnCredentials(authToken: AuthToken) -> Future<[DeviceCredential], ReachFiveError> {
+        reachFiveApi.getWebAuthnRegistrations(authToken: authToken)
+    }
+    
+    func deleteWebAuthnRegistration(id: String, authToken: AuthToken) -> Future<(), ReachFiveError> {
+        reachFiveApi.deleteWebAuthnRegistration(id: id, authToken: authToken)
+    }
 }

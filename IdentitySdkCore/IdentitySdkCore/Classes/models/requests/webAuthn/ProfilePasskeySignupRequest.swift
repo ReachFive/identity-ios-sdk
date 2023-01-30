@@ -1,8 +1,9 @@
 import Foundation
 
-public class ProfileWebAuthnSignupRequest: Codable, DictionaryEncodable {
+public class ProfilePasskeySignupRequest: Codable, DictionaryEncodable {
     public let email: String?
     public let phoneNumber: String?
+    public let customIdentifier: String?
     public let givenName: String?
     public let middleName: String?
     public let familyName: String?
@@ -24,6 +25,7 @@ public class ProfileWebAuthnSignupRequest: Codable, DictionaryEncodable {
     public init(
         email: String? = nil,
         phoneNumber: String? = nil,
+        customIdentifier: String? = nil,
         givenName: String? = nil,
         middleName: String? = nil,
         familyName: String? = nil,
@@ -44,6 +46,7 @@ public class ProfileWebAuthnSignupRequest: Codable, DictionaryEncodable {
     ) {
         self.email = email
         self.phoneNumber = phoneNumber
+        self.customIdentifier = customIdentifier
         self.givenName = givenName
         self.middleName = middleName
         self.familyName = familyName

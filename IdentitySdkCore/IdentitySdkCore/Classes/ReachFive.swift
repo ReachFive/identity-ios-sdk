@@ -20,12 +20,14 @@ public class ReachFive: NSObject {
     internal var scope: [String] = []
     internal let storage: Storage
     let codeResponseType = "code"
+    let credentialManager: CredentialManager
     
     public init(sdkConfig: SdkConfig, providersCreators: Array<ProviderCreator>, storage: Storage?) {
         self.sdkConfig = sdkConfig
         self.providersCreators = providersCreators
         self.reachFiveApi = ReachFiveApi(sdkConfig: sdkConfig)
         self.storage = storage ?? UserDefaultsStorage()
+        self.credentialManager = CredentialManager(reachFiveApi: reachFiveApi)
     }
     
     public func logout() -> Future<(), ReachFiveError> {
@@ -72,25 +74,5 @@ public class ReachFive: NSObject {
         return reachFiveApi
             .authWithCode(authCodeRequest: authCodeRequest)
             .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) })
-    }
-    
-    private func onSignupWithWebAuthnResult(webauthnSignupCredential: WebauthnSignupCredential, scopes: [String]?) -> Future<AuthToken, ReachFiveError> {
-        reachFiveApi
-            .signupWithWebAuthn(webauthnSignupCredential: webauthnSignupCredential)
-            .flatMap({ self.loginCallback(tkn: $0.tkn, scopes: scopes) })
-    }
-    
-    private func onLoginWithWebAuthnResult(authenticationPublicKeyCredential: AuthenticationPublicKeyCredential, scopes: [String]?) -> Future<AuthToken, ReachFiveError> {
-        reachFiveApi
-            .authenticateWithWebAuthn(authenticationPublicKeyCredential: authenticationPublicKeyCredential)
-            .flatMap({ self.loginCallback(tkn: $0.tkn, scopes: scopes) })
-    }
-    
-    internal func listWebAuthnDevices(authToken: AuthToken) -> Future<[DeviceCredential], ReachFiveError> {
-        reachFiveApi.getWebAuthnRegistrations(authorization: buildAuthorization(authToken: authToken))
-    }
-    
-    private func buildAuthorization(authToken: AuthToken) -> String {
-        authToken.tokenType! + " " + authToken.accessToken
     }
 }
