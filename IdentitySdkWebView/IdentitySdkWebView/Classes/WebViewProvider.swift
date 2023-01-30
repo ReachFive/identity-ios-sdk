@@ -102,8 +102,8 @@ class ConfiguredWebViewProvider: NSObject, Provider {
         }
         
         // Set an appropriate context provider instance that determines the window that acts as a presentation anchor for the session
-        session.presentationContextProvider = (viewController as? ASWebAuthenticationPresentationContextProviding)
-        
+        session.presentationContextProvider = viewController as? ASWebAuthenticationPresentationContextProviding
+    
         // Start the Authentication Flow
         session.start()
         return promise.future

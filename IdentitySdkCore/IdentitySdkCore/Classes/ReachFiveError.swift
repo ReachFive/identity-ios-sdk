@@ -20,7 +20,7 @@ public enum ReachFiveError: Error, CustomStringConvertible {
             return apiError.errorUserMsg ?? "no message"
         case .AuthFailure(reason: let reason, apiError: let apiError):
             let eum = apiError.flatMap({ $0.errorUserMsg })
-            if (reason.isEmpty) {
+            if reason.isEmpty {
                 return eum ?? "no message"
             } else {
                 return eum.map { m in "\(reason): \(m)" } ?? reason
@@ -29,7 +29,7 @@ public enum ReachFiveError: Error, CustomStringConvertible {
             return "Auth Canceled"
         case .TechnicalError(reason: let reason, apiError: let apiError):
             let eum = apiError.flatMap({ $0.errorUserMsg })
-            if (reason.isEmpty) {
+            if reason.isEmpty {
                 return eum ?? "no message"
             } else {
                 return eum.map { m in "\(reason): \(m)" } ?? reason

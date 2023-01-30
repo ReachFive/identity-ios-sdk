@@ -20,7 +20,7 @@ public class SecureStorage: Storage {
         
         let status = SecItemAdd(query as CFDictionary, nil)
         guard status == errSecSuccess else {
-            if (status == errSecDuplicateItem) { // duplicate detected (code -25299). User did not log out before logging again
+            if status == errSecDuplicateItem { // duplicate detected (code -25299). User did not log out before logging again
                 print("duplicate detected, updating data instead")
                 return update(key: key, value: value)
             } else {

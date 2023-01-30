@@ -70,7 +70,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
                 promise.failure(.TechnicalError(reason: reason))
                 return
             }
-            if (result.isCancelled) {
+            if result.isCancelled {
                 promise.failure(.AuthCanceled)
             } else {
                 let loginProviderRequest = self.createLoginRequest(token: result.token, origin: origin, scope: scope)
