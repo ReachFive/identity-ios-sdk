@@ -48,7 +48,7 @@ public extension ReachFive {
         credentialManager.login(withNonDiscoverableUsername: username, forRequest: adapt(request), usingModalAuthorizationFor: requestTypes, display: mode)
             .flatMap({ self.loginCallback(tkn: $0.tkn, scopes: request.scopes) })
     }
-    
+    //TODO doc
     @available(iOS 16.0, *)
     func registerNewPasskey(withRequest request: NewPasskeyRequest, authToken: AuthToken) -> Future<(), ReachFiveError> {
         let domain = reachFiveApi.sdkConfig.domain
@@ -84,7 +84,6 @@ public enum NonDiscoverableAuthorization: Equatable {
 }
 
 public enum AutoFillAuthorization: Equatable {
-    @available(iOS 16.0, *)
     case Passkey
 }
 

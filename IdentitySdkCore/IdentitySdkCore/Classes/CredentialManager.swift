@@ -148,19 +148,19 @@ public class CredentialManager: NSObject {
         
         return signInWith(webAuthnLoginRequest, withMode: mode, authorizing: authzs) { assertionRequestOptions in
             guard #available(iOS 16.0, *) else { // can't happen, because this is called from a >= iOS 16 context
-                return Result(value: nil)
+                return .success(nil)
             }
             return self.createCredentialAssertionRequest(assertionRequestOptions)
                 .flatMap { assertionRequest -> Result<ASAuthorizationRequest, ReachFiveError> in
                     
                     guard let allowedCredentials = assertionRequestOptions.publicKey.allowCredentials else {
-                        return Result(error: .AuthFailure(reason: "no allowCredentials returned"))
+                        return .failure(.AuthFailure(reason: "no allowCredentials returned"))
                     }
                     
                     let credentialIDs = allowedCredentials.compactMap { $0.id.decodeBase64Url() }
                     assertionRequest.allowedCredentials = credentialIDs.map(ASAuthorizationPlatformPublicKeyCredentialDescriptor.init(credentialID:))
                     
-                    return Result(value: assertionRequest)
+                    return .success(assertionRequest)
                 }
                 .map { $0 }
         }
@@ -177,7 +177,7 @@ public class CredentialManager: NSObject {
         
         return signInWith(webAuthnLoginRequest, withMode: mode, authorizing: requestTypes) { authenticationOptions in
             guard #available(iOS 16.0, *) else { // can't happen, because this is called from a >= iOS 15 context
-                return Result(value: nil)
+                return .success(nil)
             }
             return self.createCredentialAssertionRequest(authenticationOptions).map { $0 }
         }
@@ -232,12 +232,12 @@ public class CredentialManager: NSObject {
     @available(iOS 16.0, *)
     private func createCredentialAssertionRequest(_ assertionRequestOptions: AuthenticationOptions) -> Result<ASAuthorizationPlatformPublicKeyCredentialAssertionRequest, ReachFiveError> {
         guard let challenge = assertionRequestOptions.publicKey.challenge.decodeBase64Url() else {
-            return Result(error: .TechnicalError(reason: "unreadable challenge: \(assertionRequestOptions.publicKey.challenge)"))
+            return .failure(.TechnicalError(reason: "unreadable challenge: \(assertionRequestOptions.publicKey.challenge)"))
         }
         
         //FIXME utiliser domain ou origin (sans le https) tel que passée en param ?
         let publicKeyCredentialProvider = ASAuthorizationPlatformPublicKeyCredentialProvider(relyingPartyIdentifier: reachFiveApi.sdkConfig.domain)
-        return Result(value: publicKeyCredentialProvider.createCredentialAssertionRequest(challenge: challenge))
+        return .success(publicKeyCredentialProvider.createCredentialAssertionRequest(challenge: challenge))
     }
     
     private func adaptAuthz(_ nda: NonDiscoverableAuthorization) -> ModalAuthorization? {
@@ -280,15 +280,14 @@ extension CredentialManager: ASAuthorizationControllerDelegate {
             promise.completeWith(reachFiveApi.loginWithPassword(loginRequest: LoginRequest(
                 email: email,
                 phoneNumber: phoneNumber,
-                customIdentifier: nil,
+                customIdentifier: nil, // No custom identifier for login because no custom identifier can be used for signup
                 password: passwordCredential.password,
                 grantType: "password",
                 clientId: reachFiveApi.sdkConfig.clientId,
                 scope: scope ?? ""
             )))
         } else if #available(iOS 16.0, *), let credentialRegistration = authorization.credential as? ASAuthorizationPlatformPublicKeyCredentialRegistration {
-            // The attestationObject contains the user's new public key to store and use for subsequent sign-ins.
-            
+            // A new passkey was registered
             guard let attestationObject = credentialRegistration.rawAttestationObject else {
                 promise.tryFailure(.TechnicalError(reason: "no attestationObject"))
                 registrationPromise.tryFailure(.TechnicalError(reason: "no attestationObject"))
@@ -301,21 +300,25 @@ extension CredentialManager: ASAuthorizationControllerDelegate {
             let id = credentialRegistration.credentialID.toBase64Url()
             let registrationPublicKeyCredential = RegistrationPublicKeyCredential(id: id, rawId: id, type: "public-key", response: r5AuthenticatorAttestationResponse)
             
-            if let signupOptions = signupOptions {
+            // the same path is used for signup and registration
+            // here we have a signup
+            if let signupOptions {
                 let webauthnSignupCredential = WebauthnSignupCredential(webauthnId: signupOptions.options.publicKey.user.id, publicKeyCredential: registrationPublicKeyCredential)
                 
                 promise.completeWith(reachFiveApi.signupWithWebAuthn(webauthnSignupCredential: webauthnSignupCredential))
                 return
             }
             
-            if let token = authToken {
-                registrationPromise.completeWith(reachFiveApi.registerWithWebAuthn(authToken: token, publicKeyCredential: registrationPublicKeyCredential))
+            // and here a registration
+            if let authToken {
+                registrationPromise.completeWith(reachFiveApi.registerWithWebAuthn(authToken: authToken, publicKeyCredential: registrationPublicKeyCredential))
                 return
             }
             
             promise.tryFailure(.TechnicalError(reason: "no signupOptions"))
             registrationPromise.tryFailure(.TechnicalError(reason: "no token"))
         } else if #available(iOS 16.0, *), let credentialAssertion = authorization.credential as? ASAuthorizationPlatformPublicKeyCredentialAssertion {
+            // A passkey was used to sign in
             let signature = credentialAssertion.signature.toBase64Url()
             let clientDataJSON = credentialAssertion.rawClientDataJSON.toBase64Url()
             let userID = credentialAssertion.userID.toBase64Url()
