@@ -16,6 +16,8 @@ public enum ReachFiveError: Error {
     
     case RequestError(apiError: ApiError)
     case AuthFailure(reason: String, apiError: ApiError? = nil)
+    /// Returned after signin requests. Either the system doesn't find any credentials and the authentification ends silently, or the user cancels the request.
+    /// This is a good time to show a traditional login form, or ask the user to create an account.
     case AuthCanceled
     case TechnicalError(reason: String, apiError: ApiError? = nil)
 }

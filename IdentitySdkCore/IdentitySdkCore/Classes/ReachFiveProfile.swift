@@ -76,10 +76,12 @@ public extension ReachFive {
         )
     }
     
+    /// Lists all passkeys and other webauthn credentials the user has registered
     func listWebAuthnCredentials(authToken: AuthToken) -> Future<[DeviceCredential], ReachFiveError> {
         reachFiveApi.getWebAuthnRegistrations(authToken: authToken)
     }
     
+    /// Deletes a passkey or other webauthn credentials the user has registered
     func deleteWebAuthnRegistration(id: String, authToken: AuthToken) -> Future<(), ReachFiveError> {
         reachFiveApi.deleteWebAuthnRegistration(id: id, authToken: authToken)
     }

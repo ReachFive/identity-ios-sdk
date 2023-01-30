@@ -3,6 +3,7 @@ import AuthenticationServices
 
 public class NewPasskeyRequest {
     public let origin: String?
+    /// The name that will be displayed by the system when presenting the passkey for login
     public let friendlyName: String
     public let anchor: ASPresentationAnchor
     
