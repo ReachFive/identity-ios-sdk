@@ -17,10 +17,14 @@ public class CredentialManager: NSObject {
     // four fields that should be memorized between performRequests and didCompleteWithAuthorization
     // indicates whether the query is modal or inline, in order to show a special error when the modal is canceled by the user
     var isPerformingModalReqest = false
-    // for signup
-    var signupOptions: RegistrationOptions?
-    // for registrating new key
-    var authToken: AuthToken?
+    
+    enum SignupOrAddPasskey {
+        case Signup(signupOptions: RegistrationOptions)
+        case AddPasskey(authToken: AuthToken)
+    }
+    
+    var signupOrAddPasskey: SignupOrAddPasskey?
+    
     var scope: String?
     
     public init(reachFiveApi: ReachFiveApi) {
@@ -37,7 +41,7 @@ public class CredentialManager: NSObject {
         
         reachFiveApi.createWebAuthnSignupOptions(webAuthnSignupOptions: request)
             .flatMap { options -> Result<ASAuthorizationRequest, ReachFiveError> in
-                self.signupOptions = options
+                self.signupOrAddPasskey = .Signup(signupOptions: options)
                 
                 guard let challenge = options.options.publicKey.challenge.decodeBase64Url() else {
                     return .failure(.TechnicalError(reason: "unreadable challenge: \(options.options.publicKey.challenge)"))
@@ -72,7 +76,7 @@ public class CredentialManager: NSObject {
         
         reachFiveApi.createWebAuthnRegistrationOptions(authToken: authToken, registrationRequest: RegistrationRequest(origin: request.origin!, friendlyName: request.friendlyName))
             .flatMap { options -> Result<ASAuthorizationRequest, ReachFiveError> in
-                self.authToken = authToken
+                self.signupOrAddPasskey = .AddPasskey(authToken: authToken)
                 
                 guard let challenge = options.options.publicKey.challenge.decodeBase64Url() else {
                     return .failure(.TechnicalError(reason: "unreadable challenge: \(options.options.publicKey.challenge)"))
@@ -260,8 +264,7 @@ extension CredentialManager: ASAuthorizationControllerDelegate {
         defer {
             authController = nil
             isPerformingModalReqest = false
-            signupOptions = nil
-            authToken = nil
+            signupOrAddPasskey = nil
             scope = nil
         }
         
@@ -300,21 +303,18 @@ extension CredentialManager: ASAuthorizationControllerDelegate {
             let id = credentialRegistration.credentialID.toBase64Url()
             let registrationPublicKeyCredential = RegistrationPublicKeyCredential(id: id, rawId: id, type: "public-key", response: r5AuthenticatorAttestationResponse)
             
-            // the same path is used for signup and registration
-            // here we have a signup
-            if let signupOptions {
-                let webauthnSignupCredential = WebauthnSignupCredential(webauthnId: signupOptions.options.publicKey.user.id, publicKeyCredential: registrationPublicKeyCredential)
-                
-                promise.completeWith(reachFiveApi.signupWithWebAuthn(webauthnSignupCredential: webauthnSignupCredential))
-                return
+            if let signupOrAddPasskey {
+                switch signupOrAddPasskey {
+                case .Signup(signupOptions: let signupOptions):
+                    let webauthnSignupCredential = WebauthnSignupCredential(webauthnId: signupOptions.options.publicKey.user.id, publicKeyCredential: registrationPublicKeyCredential)
+                    
+                    promise.completeWith(reachFiveApi.signupWithWebAuthn(webauthnSignupCredential: webauthnSignupCredential))
+                    return
+                case .AddPasskey(authToken: let authToken):
+                    registrationPromise.completeWith(reachFiveApi.registerWithWebAuthn(authToken: authToken, publicKeyCredential: registrationPublicKeyCredential))
+                    return
+                }
             }
-            
-            // and here a registration
-            if let authToken {
-                registrationPromise.completeWith(reachFiveApi.registerWithWebAuthn(authToken: authToken, publicKeyCredential: registrationPublicKeyCredential))
-                return
-            }
-            
             promise.tryFailure(.TechnicalError(reason: "no signupOptions"))
             registrationPromise.tryFailure(.TechnicalError(reason: "no token"))
         } else if #available(iOS 16.0, *), let credentialAssertion = authorization.credential as? ASAuthorizationPlatformPublicKeyCredentialAssertion {
@@ -337,8 +337,7 @@ extension CredentialManager: ASAuthorizationControllerDelegate {
         defer {
             authController = nil
             isPerformingModalReqest = false
-            signupOptions = nil
-            authToken = nil
+            signupOrAddPasskey = nil
             scope = nil
         }
         
