@@ -14,18 +14,19 @@ public class CredentialManager: NSObject {
     // the controller for the current request, to cancel it before starting a new request (mainly to cancel AutoFillAssistedRequests when starting modal requests)
     var authController: ASAuthorizationController?
     
-    // four fields that should be memorized between performRequests and didCompleteWithAuthorization
+    // Below are three fields that should be memorized between performRequests and didCompleteWithAuthorization
+    
     // indicates whether the query is modal or inline, in order to show a special error when the modal is canceled by the user
     var isPerformingModalReqest = false
+    // indicates whether the request is a signup or for a new passkey
+    var signupOrAddPasskey: SignupOrAddPasskey?
+    // the scope when logging in with a password
+    var scope: String?
     
     enum SignupOrAddPasskey {
         case Signup(signupOptions: RegistrationOptions)
         case AddPasskey(authToken: AuthToken)
     }
-    
-    var signupOrAddPasskey: SignupOrAddPasskey?
-    
-    var scope: String?
     
     public init(reachFiveApi: ReachFiveApi) {
         promise = Promise()
@@ -269,8 +270,7 @@ extension CredentialManager: ASAuthorizationControllerDelegate {
         }
         
         if let passwordCredential = authorization.credential as? ASPasswordCredential {
-            // Verify the userName and password with your service.
-            
+            // a password was selected to sign in
             let email: String?
             let phoneNumber: String?
             if passwordCredential.user.contains("@") {
@@ -318,7 +318,7 @@ extension CredentialManager: ASAuthorizationControllerDelegate {
             promise.tryFailure(.TechnicalError(reason: "no signupOptions"))
             registrationPromise.tryFailure(.TechnicalError(reason: "no token"))
         } else if #available(iOS 16.0, *), let credentialAssertion = authorization.credential as? ASAuthorizationPlatformPublicKeyCredentialAssertion {
-            // A passkey was used to sign in
+            // A passkey was selected to sign in
             let signature = credentialAssertion.signature.toBase64Url()
             let clientDataJSON = credentialAssertion.rawClientDataJSON.toBase64Url()
             let userID = credentialAssertion.userID.toBase64Url()
@@ -356,7 +356,10 @@ extension CredentialManager: ASAuthorizationControllerDelegate {
         } else {
             // Another ASAuthorization error.
             // Note: The userInfo dictionary contains useful information.
-            print("Error: \((error as NSError).userInfo)")
+            let userInfo = (error as NSError).userInfo
+            print("Error: \(userInfo)")
+            promise.tryFailure(.TechnicalError(reason: "Error: \(userInfo)"))
+            registrationPromise.tryFailure(.TechnicalError(reason: "Error: \(userInfo)"))
         }
     }
 }
