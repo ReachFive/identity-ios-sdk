@@ -13,7 +13,7 @@ public extension ReachFive {
         let options = [
             "client_id": sdkConfig.clientId,
             "redirect_uri": sdkConfig.scheme,
-            "response_type": codeResponseType,
+            "response_type": "code",
             "scope": scope,
             "code_challenge": pkce.codeChallenge,
             "code_challenge_method": pkce.codeChallengeMethod

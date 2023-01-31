@@ -1,5 +1,4 @@
 import Foundation
-import BrightFutures
 
 enum State {
     case NotInitialized
@@ -10,7 +9,6 @@ public typealias PasswordlessCallback = (_ result: Result<AuthToken, ReachFiveEr
 
 /// ReachFive identity SDK
 public class ReachFive: NSObject {
-    let notificationPasswordlessName = Notification.Name("PasswordlessNotification")
     var passwordlessCallback: PasswordlessCallback? = nil
     var state: State = .NotInitialized
     let sdkConfig: SdkConfig
@@ -19,7 +17,6 @@ public class ReachFive: NSObject {
     var providers: [Provider] = []
     internal var scope: [String] = []
     internal let storage: Storage
-    let codeResponseType = "code"
     let credentialManager: CredentialManager
     
     public init(sdkConfig: SdkConfig, providersCreators: Array<ProviderCreator>, storage: Storage?) {
@@ -30,49 +27,11 @@ public class ReachFive: NSObject {
         self.credentialManager = CredentialManager(reachFiveApi: reachFiveApi)
     }
     
-    public func logout() -> Future<(), ReachFiveError> {
-        providers
-            .map { $0.logout() }
-            .sequence()
-            .flatMap { _ in self.reachFiveApi.logout() }
-    }
-    
-    public func refreshAccessToken(authToken: AuthToken) -> Future<AuthToken, ReachFiveError> {
-        let refreshRequest = RefreshRequest(
-            clientId: sdkConfig.clientId,
-            refreshToken: authToken.refreshToken ?? "",
-            redirectUri: sdkConfig.scheme
-        )
-        return reachFiveApi
-            .refreshAccessToken(refreshRequest)
-            .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) })
-    }
-    
     public override var description: String {
         """
         Config: domain=\(sdkConfig.domain), clientId=\(sdkConfig.clientId)
         Providers: \(providers)
         Scope: \(scope.joined(separator: " "))
         """
-    }
-    
-    public func loginCallback(tkn: String, scopes: [String]?) -> Future<AuthToken, ReachFiveError> {
-        let pkce = Pkce.generate()
-        let scope = (scopes ?? scope).joined(separator: " ")
-        
-        return reachFiveApi.loginCallback(loginCallback: LoginCallback(sdkConfig: sdkConfig, scope: scope, pkce: pkce, tkn: tkn))
-            .flatMap({ self.authWithCode(code: $0, pkce: pkce) })
-    }
-    
-    internal func authWithCode(code: String, pkce: Pkce) -> Future<AuthToken, ReachFiveError> {
-        let authCodeRequest = AuthCodeRequest(
-            clientId: sdkConfig.clientId,
-            code: code,
-            redirectUri: sdkConfig.scheme,
-            pkce: pkce
-        )
-        return reachFiveApi
-            .authWithCode(authCodeRequest: authCodeRequest)
-            .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) })
     }
 }
