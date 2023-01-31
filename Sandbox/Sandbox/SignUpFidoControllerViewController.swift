@@ -43,16 +43,6 @@ class SignUpFidoControllerViewController: UIViewController {
     */
     }
     
-    func goToProfile(_ authToken: AuthToken) {
-        AppDelegate.storage.save(key: AppDelegate.authKey, value: authToken)
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let profileController = storyBoard.instantiateViewController(
-            withIdentifier: "ProfileScene"
-        ) as! ProfileController
-        profileController.authToken = authToken
-        navigationController?.pushViewController(profileController, animated: true)
-    }
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
         super.touchesBegan(touches, with: event)

@@ -1,6 +1,8 @@
 import IdentitySdkCore
 
 public class SecureStorage: Storage {
+    public static let authKey = "AUTH_TOKEN"
+    
     private let serviceName: String
     
     public init() {
@@ -27,6 +29,10 @@ public class SecureStorage: Storage {
                 print(KeychainError.unhandledError(status: status))
                 return
             }
+        }
+        if key == SecureStorage.authKey {
+            print("send SecureStorage.save.DidSetAuthToken")
+            NotificationCenter.default.post(name: .DidSetAuthToken, object: nil)
         }
         print("SecureStorage.save success")
     }
@@ -55,6 +61,10 @@ public class SecureStorage: Storage {
             return
         }
         
+        if key == SecureStorage.authKey {
+            print("send SecureStorage.update.DidSetAuthToken")
+            NotificationCenter.default.post(name: .DidSetAuthToken, object: nil)
+        }
         print("SecureStorage.update success")
     }
     
@@ -109,6 +119,9 @@ public class SecureStorage: Storage {
             print(KeychainError.unhandledError(status: status))
             return
         }
+        if key == SecureStorage.authKey {
+            NotificationCenter.default.post(name: .DidClearAuthToken, object: nil)
+        }
         print("SecureStorage.clear success")
     }
 }
@@ -119,4 +132,9 @@ enum KeychainError: Error {
     case jsonSerializationError
     case jsonDeserializationError(error: Error)
     case unhandledError(status: OSStatus)
+}
+
+extension NSNotification.Name {
+    static let DidSetAuthToken = Notification.Name("DidSetAuthToken")
+    static let DidClearAuthToken = Notification.Name("DidClearAuthToken")
 }

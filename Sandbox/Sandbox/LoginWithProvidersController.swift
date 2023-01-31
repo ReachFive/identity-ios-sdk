@@ -45,19 +45,11 @@ class LoginWithProvidersController: UIViewController, UITableViewDataSource, UIT
     func handleResult(result: Result<AuthToken, ReachFiveError>) {
         switch result {
         case .success(let authToken):
-            AppDelegate.storage.save(key: AppDelegate.authKey, value: authToken)
+            AppDelegate.storage.save(key: SecureStorage.authKey, value: authToken)
             goToProfile(authToken)
         case .failure(let error):
             print(error)
         }
-    }
-    
-    func goToProfile(_ authToken: AuthToken) {
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let profileController = storyBoard.instantiateViewController(
-            withIdentifier: "ProfileScene"
-        ) as! ProfileController
-        navigationController?.pushViewController(profileController, animated: true)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

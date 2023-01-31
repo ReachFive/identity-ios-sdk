@@ -2,7 +2,7 @@ import UIKit
 import IdentitySdkCore
 
 class UpdatePhoneNumberController: UIViewController {
-    let authToken: AuthToken? = AppDelegate.storage.get(key: AppDelegate.authKey)
+    let authToken: AuthToken? = AppDelegate.storage.get(key: SecureStorage.authKey)
     
     @IBOutlet weak var phoneNumberInput: UITextField!
     

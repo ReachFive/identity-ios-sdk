@@ -35,14 +35,4 @@ class LoginWithFidoViewController: UIViewController {
         }
     */
     }
-    
-    func goToProfile(_ authToken: AuthToken) {
-        AppDelegate.storage.save(key: AppDelegate.authKey, value: authToken)
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let profileController = storyBoard.instantiateViewController(
-            withIdentifier: "ProfileScene"
-        ) as! ProfileController
-        profileController.authToken = authToken
-        navigationController?.pushViewController(profileController, animated: true)
-    }
 }
