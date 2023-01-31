@@ -11,53 +11,49 @@ extension DataRequest {
         return status >= 200 && status < 300
     }
     
-    private func parseJson<T: Decodable>(json: Data, type: T.Type, decoder: JSONDecoder) -> Swift.Result<T, ReachFiveError> {
+    private func parseJson<T: Decodable>(json: Data, type: T.Type, decoder: JSONDecoder) -> Result<T, ReachFiveError> {
         do {
             let value = try decoder.decode(type, from: json)
             return .success(value)
         } catch {
-            return .failure(ReachFiveError.TechnicalError(reason: error.localizedDescription))
+            return .failure(.TechnicalError(reason: error.localizedDescription))
         }
     }
     
-    private func handleResponseStatus<T>(status: Int?, apiError: ApiError?, promise: Promise<T, ReachFiveError>) {
+    private func handleResponseStatus(status: Int?, apiError: ApiError) -> ReachFiveError {
         guard let status else {
-            promise.failure(ReachFiveError.TechnicalError(
+            return .TechnicalError(
                 reason: "Technical error: Request without error code",
-                apiError: apiError
-            ))
-            return
+                apiError: apiError)
         }
-        if let apiError, status == 400 {
-            promise.failure(ReachFiveError.RequestError(apiError: apiError))
-        } else if status == 400 {
-            promise.failure(ReachFiveError.TechnicalError(reason: "Bad Request"))
-        } else if status == 401 {
-            promise.failure(ReachFiveError.AuthFailure(reason: "Unauthorized", apiError: apiError))
-        } else {
-            promise.failure(ReachFiveError.TechnicalError(
-                reason: "Technical error: Request with \(status) error code",
-                apiError: apiError
-            ))
+        if status == 400 {
+            return .RequestError(apiError: apiError)
         }
+        if status == 401 {
+            return .AuthFailure(reason: "Unauthorized", apiError: apiError)
+        }
+        return .TechnicalError(
+            reason: "Technical error: Request with \(status) error code",
+            apiError: apiError
+        )
     }
     
     func responseJson(decoder: JSONDecoder) -> Future<(), ReachFiveError> {
-        let promise = BrightFutures.Promise<(), ReachFiveError>()
-        responseString { responseData in
-            let status = responseData.response?.statusCode
-            if self.isSuccess(status) {
-                promise.success(())
-            } else {
-                if let data = responseData.data {
-                    switch self.parseJson(json: data, type: ApiError.self, decoder: decoder) {
-                    case .success(let apiError):
-                        self.handleResponseStatus(status: status, apiError: apiError, promise: promise)
-                    case .failure(let error):
-                        promise.failure(ReachFiveError.TechnicalError(reason: error.message()))
-                    }
+        let promise = Promise<(), ReachFiveError>()
+        responseData { responseData in
+            switch responseData.result {
+            case let .failure(error):
+                promise.failure(.TechnicalError(reason: error.localizedDescription))
+            
+            case let .success(data):
+                let status = responseData.response?.statusCode
+                if self.isSuccess(status) {
+                    promise.success(())
                 } else {
-                    self.handleResponseStatus(status: status, apiError: nil, promise: promise)
+                    switch self.parseJson(json: data, type: ApiError.self, decoder: decoder) {
+                    case .success(let value): promise.failure(self.handleResponseStatus(status: status, apiError: value))
+                    case .failure(let error): promise.failure(error)
+                    }
                 }
             }
         }
@@ -65,31 +61,22 @@ extension DataRequest {
     }
     
     func responseJson<T: Decodable>(type: T.Type, decoder: JSONDecoder) -> Future<T, ReachFiveError> {
-        let promise = BrightFutures.Promise<T, ReachFiveError>()
+        let promise = Promise<T, ReachFiveError>()
         
-        responseString { responseData in
-            let status = responseData.response?.statusCode
-            if self.isSuccess(status) {
-                if let data = responseData.data {
-                    switch self.parseJson(json: data, type: T.self, decoder: decoder) {
-                    case .success(let value):
-                        promise.success(value)
-                    case .failure(let error):
-                        promise.failure(ReachFiveError.TechnicalError(reason: error.message()))
-                    }
+        responseData { responseData in
+            switch responseData.result {
+            case let .failure(error):
+                promise.failure(.TechnicalError(reason: error.localizedDescription))
+            
+            case let .success(data):
+                let status = responseData.response?.statusCode
+                if self.isSuccess(status) {
+                    promise.tryComplete(self.parseJson(json: data, type: T.self, decoder: decoder))
                 } else {
-                    promise.failure(ReachFiveError.TechnicalError(reason: "No data from server"))
-                }
-            } else {
-                if let data = responseData.data {
                     switch self.parseJson(json: data, type: ApiError.self, decoder: decoder) {
-                    case .success(let apiError):
-                        self.handleResponseStatus(status: status, apiError: apiError, promise: promise)
-                    case .failure(let error):
-                        promise.failure(ReachFiveError.TechnicalError(reason: error.message()))
+                    case .success(let value): promise.failure(self.handleResponseStatus(status: status, apiError: value))
+                    case .failure(let error): promise.failure(error)
                     }
-                } else {
-                    self.handleResponseStatus(status: status, apiError: nil, promise: promise)
                 }
             }
         }
