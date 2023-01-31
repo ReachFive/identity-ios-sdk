@@ -60,7 +60,7 @@ public class AuthToken: Codable {
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         let parts = idToken.components(separatedBy: ".")
         if parts.count == 3 {
-            let data = Base64.base64UrlSafeDecode(parts[1])
+            let data = parts[1].decodeBase64Url()
             let user = Result.init(catching: {
                 try decoder.decode(OpenIdUser.CodingData.self, from: data!).openIdUser
             })

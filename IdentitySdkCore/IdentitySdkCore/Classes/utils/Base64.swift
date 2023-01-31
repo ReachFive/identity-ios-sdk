@@ -1,35 +1,21 @@
 import Foundation
 
-public class Base64 {
-    public static func base64UrlSafeDecode(_ input: String) -> Data? {
-        let rem = input.count % 4
-        
-        var ending = ""
-        if rem > 0 {
-            let amount = 4 - rem
-            ending = String(repeating: "=", count: amount)
+extension String {
+    func decodeBase64Url() -> Data? {
+        var base64 = self
+            .replacingOccurrences(of: "-", with: "+")
+            .replacingOccurrences(of: "_", with: "/")
+        let rem = base64.count % 4
+        if rem != 0 {
+            base64.append(String(repeating: "=", count: 4 - rem))
         }
-        
-        let base64 = input.replacingOccurrences(of: "-", with: "+", options: NSString.CompareOptions(rawValue: 0), range: nil)
-            .replacingOccurrences(of: "_", with: "/", options: NSString.CompareOptions(rawValue: 0), range: nil) + ending
-        
-        return Data(base64Encoded: base64, options: NSData.Base64DecodingOptions(rawValue: 0))
+        return Data(base64Encoded: base64)
     }
-    
-    public static func encodeBase64(_ bytes: [UInt8]) -> String {
-        encodeBase64(Data(_: bytes))
-    }
-    
-    public static func encodeBase64(_ data: Data) -> String {
-        data.base64EncodedString()
-    }
-    
-    public static func encodeBase64URL(_ bytes: [UInt8]) -> String {
-        encodeBase64URL(Data(_: bytes))
-    }
-    
-    public static func encodeBase64URL(_ data: Data) -> String {
-        data.base64EncodedString()
+}
+
+extension Data {
+    func toBase64Url() -> String {
+        base64EncodedString()
             .replacingOccurrences(of: "+", with: "-")
             .replacingOccurrences(of: "/", with: "_")
             .replacingOccurrences(of: "=", with: "")

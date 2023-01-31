@@ -9,10 +9,7 @@ public class Pkce: NSObject, Codable {
     init(codeVerifier: String) {
         self.codeVerifier = codeVerifier
         codeChallenge = Data(Digest.sha256(Array(codeVerifier.utf8)))
-            .base64EncodedString()
-            .replacingOccurrences(of: "+", with: "-")
-            .replacingOccurrences(of: "/", with: "_")
-            .replacingOccurrences(of: "=", with: "")
+            .toBase64Url()
             .trimmingCharacters(in: .whitespaces)
         codeChallengeMethod = "S256"
     }
