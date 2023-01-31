@@ -9,7 +9,6 @@ import IdentitySdkGoogle
 // - Paramétrage : scopes, origin, utilisation du refresh au démarage ?
 // Voir pour utiliser les scènes : 1 par que c'est plus moderne, deux par qu'il faut peut-être adapter certaines interface pour les app clients qui utilisent les scènes
 // cf. wireframe de JC pour d'autres idées : https://miro.com/app/board/uXjVOMB0pG4=/
-// faire le ménage de toutes les anciennes choses (genre FIDO) qui ne sont pas/plus utilisées
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
