@@ -24,7 +24,6 @@
 		3417FF7022FB11CD0009EC84 /* LoginWithPasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3417FF6F22FB11CD0009EC84 /* LoginWithPasswordController.swift */; };
 		34797ABD22A9607D00ED093C /* SignupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34797ABC22A9607D00ED093C /* SignupController.swift */; };
 		349E16EC230BEBBF002EA06B /* UpdatePasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349E16EB230BEBBF002EA06B /* UpdatePasswordController.swift */; };
-		8496EB4825DEB764005098DD /* LoginWithFidoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496EB4625DEB764005098DD /* LoginWithFidoViewController.swift */; };
 		D5915500A22E4272486BFD1C /* Pods_Sandbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E55CD881F31583F8D3480D8 /* Pods_Sandbox.framework */; };
 		EA91A0276CEFFE580E9C24DD /* SignupPasskeyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA91A17236291622417196AE /* SignupPasskeyController.swift */; };
 		EA91A44398415C17C88BD067 /* LoginPasskeyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA91AFCB7679A47D752EA6B3 /* LoginPasskeyController.swift */; };
@@ -68,7 +67,6 @@
 		34797ABC22A9607D00ED093C /* SignupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupController.swift; sourceTree = "<group>"; };
 		349E16EB230BEBBF002EA06B /* UpdatePasswordController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePasswordController.swift; sourceTree = "<group>"; };
 		842A9EB52590AAF1004A58E5 /* IdentitySdkCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = IdentitySdkCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8496EB4625DEB764005098DD /* LoginWithFidoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginWithFidoViewController.swift; sourceTree = "<group>"; };
 		84E69687258A53AD003AF19B /* IdentitySdkCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = IdentitySdkCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E6968B258A5534003AF19B /* IdentitySdkCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = IdentitySdkCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E6968F258A5661003AF19B /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
@@ -112,7 +110,6 @@
 			isa = PBXGroup;
 			children = (
 				2A18F2C4293E6C6F007C824C /* Sandbox.entitlements */,
-				8496EB4625DEB764005098DD /* LoginWithFidoViewController.swift */,
 				341731FD229D6B6400681CFD /* AppDelegate.swift */,
 				341731FF229D6B6400681CFD /* LoginWithProvidersController.swift */,
 				3414A7CC22DDD39C00CF393A /* ProfileController.swift */,
@@ -287,7 +284,6 @@
 				2A0757FB296F69E30072869F /* PasskeyNonDiscoverableController.swift in Sources */,
 				2A0757F9296F49B10072869F /* PasskeyAutoFillController.swift in Sources */,
 				2A1079E929721DAC00431655 /* NativePasswordController.swift in Sources */,
-				8496EB4825DEB764005098DD /* LoginWithFidoViewController.swift in Sources */,
 				341731FE229D6B6400681CFD /* AppDelegate.swift in Sources */,
 				3417FF6822F846610009EC84 /* UpdatePhoneNumberController.swift in Sources */,
 				3414A7CD22DDD39C00CF393A /* ProfileController.swift in Sources */,
