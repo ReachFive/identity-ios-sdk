@@ -83,7 +83,7 @@ class LoginPasskeyController: UIViewController {
     }
     
     @IBAction func createAccount(_ sender: Any) {
-        guard ((usernameField.text?.isEmpty) == false), let username = usernameField.text else {
+        guard let username = usernameField.text, !username.isEmpty else {
             print("No username provided")
             usernameField.backgroundColor = .red
             usernameField.placeholder = "enter username"

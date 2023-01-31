@@ -7,8 +7,8 @@ class SandboxTabBarController: UITabBarController {
     // there are multiple ways to navigate betweeen the different views and they require different treatment
     // when the profile controller is pushed onto the stack of views programmatically
     // when the user touch the different tabs
-    // when the app is relaunched directly in te profile tab...
-    // also the notifications are not always available, especially in the profile controller
+    // when the app is relaunched directly in the profile tab...
+    // also the notifications are not always available, especially in the profile controller, because the view is not yet loaded
     public static let profileCheck = UIImage(systemName: "person.crop.circle.badge.checkmark")
     public static let profileCheckFill = UIImage(systemName: "person.crop.circle.fill.badge.checkmark")
     public static let profileX = UIImage(systemName: "person.crop.circle.badge.xmark")

@@ -17,6 +17,7 @@ class DemoController: UIViewController {
         print("DemoController.viewDidLoad")
         super.viewDidLoad()
         
+        // set delegates to manage the keyboard Return/Done button behavior
         usernameField.delegate = self
         passwordField.delegate = self
     }
@@ -166,13 +167,16 @@ class DemoController: UIViewController {
 }
 
 extension DemoController: UITextFieldDelegate {
+    // this is called when the Return/Done key is tapped on the keyboard
     public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // usernameField has tag 0 and passwordField has tag 1
         let nextTag = textField.tag + 1
         let nextTF = textField.superview?.viewWithTag(nextTag) as? UIResponder
         if nextTF != nil {
+            // the username field was focused, put focus on the password field
             nextTF?.becomeFirstResponder()
         } else {
+            // the password field was focused, defocus it and login
             textField.resignFirstResponder()
             loginWithPassword()
         }

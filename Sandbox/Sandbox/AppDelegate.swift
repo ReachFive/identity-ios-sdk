@@ -4,13 +4,10 @@ import IdentitySdkFacebook
 import IdentitySdkWebView
 import IdentitySdkGoogle
 
-//TODO application en tab view
-// 4 tabs:
-// - 1 fonctions individuelles ✔︎
-// - 2 Démo connexion complète ✔︎
-// - 3 Profile (si possible avec une icône différente si connecté ou pas connecté) ✔︎
-// - 4 Paramétrage : (origine, domaine, client id, scheme), utilisation du refresh au démarage ?
-// Utiliser les scènes : 1 par que c'est plus moderne, deux par qu'il faut peut-être adapter certaines interface pour les app clients qui utilisent les scènes
+//TODO
+// Mettre une quatrième tabs:
+// - Paramétrage : scopes, origin, utilisation du refresh au démarage ?
+// Voir pour utiliser les scènes : 1 par que c'est plus moderne, deux par qu'il faut peut-être adapter certaines interface pour les app clients qui utilisent les scènes
 // cf. wireframe de JC pour d'autres idées : https://miro.com/app/board/uXjVOMB0pG4=/
 // faire le ménage de toutes les anciennes choses (genre FIDO) qui ne sont pas/plus utilisées
 @UIApplicationMain

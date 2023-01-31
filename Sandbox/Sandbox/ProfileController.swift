@@ -3,6 +3,7 @@ import IdentitySdkCore
 import BrightFutures
 
 //TODO
+//      - déplacer le bouton login with refresh ici pour que, même logué, on puisse afficher les passkey (qui sont expirées )
 //      - ajouter une option convertion vers un mdp fort automatique et vers SIWA
 //      - voir les SLO liés et bouton pour les délier
 class ProfileController: UIViewController {
@@ -12,10 +13,10 @@ class ProfileController: UIViewController {
             print("devices \(devices)")
             if devices.isEmpty {
                 listPasskeyLabel.isHidden = true
-                deviceFidoTableview.isHidden = true
+                credentialTableview.isHidden = true
             } else {
                 listPasskeyLabel.isHidden = false
-                deviceFidoTableview.isHidden = false
+                credentialTableview.isHidden = false
             }
         }
     }
@@ -32,7 +33,7 @@ class ProfileController: UIViewController {
     @IBOutlet weak var methodLabel: UILabel!
     
     @IBOutlet weak var listPasskeyLabel: UILabel!
-    @IBOutlet weak var deviceFidoTableview: UITableView!
+    @IBOutlet weak var credentialTableview: UITableView!
     
     @IBOutlet weak var profileTabBarItem: UITabBarItem!
     
@@ -44,8 +45,8 @@ class ProfileController: UIViewController {
         print("ProfileController.viewDidLoad")
         super.viewDidLoad()
         
-        deviceFidoTableview.delegate = self
-        deviceFidoTableview.dataSource = self
+        credentialTableview.delegate = self
+        credentialTableview.dataSource = self
         
         clearTokenObserver = NotificationCenter.default.addObserver(forName: .DidClearAuthToken, object: nil, queue: nil) { _ in
             self.didLogout()
@@ -56,7 +57,7 @@ class ProfileController: UIViewController {
         }
         
         authToken = AppDelegate.storage.get(key: SecureStorage.authKey)
-        if let _ = authToken {
+        if authToken != nil {
             profileTabBarItem.image = SandboxTabBarController.profileCheck
             profileTabBarItem.selectedImage = SandboxTabBarController.profileCheckFill
         }
@@ -65,7 +66,7 @@ class ProfileController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         print("ProfileController.viewWillAppear")
         authToken = AppDelegate.storage.get(key: SecureStorage.authKey)
-        guard let authToken = authToken else {
+        guard let authToken else {
             print("not logged in")
             return
         }
@@ -88,7 +89,7 @@ class ProfileController: UIViewController {
                     self.phoneNumberLabel.text?.append(profile.phoneNumberVerified == true ? " ✔︎" : " ✘")
                 }
                 self.customIdentifierLabel.text = profile.customIdentifier
-                if let loginSummary = profile.loginSummary, let lastLogin: Int = loginSummary.lastLogin {
+                if let loginSummary = profile.loginSummary, let lastLogin = loginSummary.lastLogin {
                     self.loginLabel.text = self.format(date: lastLogin)
                     self.methodLabel.text = loginSummary.lastProvider
                 }
@@ -120,7 +121,7 @@ class ProfileController: UIViewController {
         loginLabel.text = nil
         methodLabel.text = nil
         devices = []
-        deviceFidoTableview.reloadData()
+        credentialTableview.reloadData()
         
         updatePasswordButton.isHidden = true
         registerPasskeyButton.isHidden = true
@@ -131,9 +132,10 @@ class ProfileController: UIViewController {
         // Beware that a valid token for profile might not be fresh enough to retrieve the credentials
         AppDelegate.reachfive().listWebAuthnCredentials(authToken: authToken).onSuccess { listCredentials in
                 self.devices = listCredentials
-                
+        
+                //TODO comprendre pourquoi on fait un async. En a-t-on vraiment besoin ?
                 DispatchQueue.main.async {
-                    self.deviceFidoTableview.reloadData()
+                    self.credentialTableview.reloadData()
                 }
             }
             .onFailure { error in
@@ -146,7 +148,7 @@ class ProfileController: UIViewController {
     @IBAction func registerNewPasskey(_ sender: Any) {
         print("registerNewPasskey")
         guard let window = view.window else { fatalError("The view was not in the app's view hierarchy!") }
-        guard let authToken = authToken else {
+        guard let authToken else {
             print("not logged in")
             return
         }
@@ -155,6 +157,7 @@ class ProfileController: UIViewController {
             .onSuccess { profile in
                 
                 let friendlyName: String
+                // here the priority for phone number over email follows the backend rule
                 if let phone = profile.phoneNumber {
                     friendlyName = phone
                 } else if let email = profile.email {
@@ -168,10 +171,11 @@ class ProfileController: UIViewController {
                     message: "Name the passkey",
                     preferredStyle: .alert
                 )
+                // init the text field with the profile's identifier
                 alert.addTextField { field in
                     field.text = friendlyName
                 }
-                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
                 let registerAction = UIAlertAction(title: "Add", style: .default) { [unowned alert] (_) in
                     let textField = alert.textFields?[0]
                     
@@ -195,14 +199,13 @@ class ProfileController: UIViewController {
     }
     
     private func format(date: Int) -> String {
-        let lastLogin = Date(timeIntervalSince1970: TimeInterval.init(date / 1000))
+        let lastLogin = Date(timeIntervalSince1970: TimeInterval(date / 1000))
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .medium
         
         dateFormatter.locale = Locale(identifier: "en_GB")
-        let string = dateFormatter.string(from: lastLogin)
-        return string
+        return dateFormatter.string(from: lastLogin)
     }
     
     @IBAction func logoutAction(_ sender: Any) {
@@ -227,8 +230,8 @@ extension ProfileController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = deviceFidoTableview.dequeueReusableCell(withIdentifier: "credentialCell") else {
-            fatalError("No deviceFidoCell cell")
+        guard let cell = credentialTableview.dequeueReusableCell(withIdentifier: "credentialCell") else {
+            fatalError("No credentialCell cell")
         }
         
         let friendlyName = devices[indexPath.row].friendlyName
@@ -244,11 +247,11 @@ extension ProfileController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            guard let authToken = authToken else { return }
+            guard let authToken else { return }
             let element = devices[indexPath.row]
-            devices.remove(at: indexPath.row)
             AppDelegate.reachfive().deleteWebAuthnRegistration(id: element.id, authToken: authToken)
                 .onSuccess { _ in
+                    self.devices.remove(at: indexPath.row)
                     print("did remove passkey \(element.friendlyName)")
                     tableView.deleteRows(at: [indexPath], with: .fade)
                 }
