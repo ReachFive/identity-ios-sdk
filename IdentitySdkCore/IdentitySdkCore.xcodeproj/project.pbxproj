@@ -54,7 +54,6 @@
 		8496EB2425DEAFCF005098DD /* R5AuthenticatorAssertionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496EB1B25DEAFCF005098DD /* R5AuthenticatorAssertionResponse.swift */; };
 		8496EB2525DEAFCF005098DD /* AuthenticationPublicKeyCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496EB1C25DEAFCF005098DD /* AuthenticationPublicKeyCredential.swift */; };
 		8496EB2625DEAFCF005098DD /* RegistrationPublicKeyCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496EB1D25DEAFCF005098DD /* RegistrationPublicKeyCredential.swift */; };
-		8496EB2725DEAFCF005098DD /* EmailWebAuthnLoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496EB1E25DEAFCF005098DD /* EmailWebAuthnLoginRequest.swift */; };
 		8496EB2825DEAFCF005098DD /* R5PublicKeyCredentialRequestOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496EB1F25DEAFCF005098DD /* R5PublicKeyCredentialRequestOptions.swift */; };
 		8496EB2925DEAFCF005098DD /* R5AuthenticatorAttestationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496EB2025DEAFCF005098DD /* R5AuthenticatorAttestationResponse.swift */; };
 		8496EB2A25DEAFCF005098DD /* WebAuthnRegistrationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496EB2125DEAFCF005098DD /* WebAuthnRegistrationRequest.swift */; };
@@ -123,7 +122,6 @@
 		8496EB1B25DEAFCF005098DD /* R5AuthenticatorAssertionResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R5AuthenticatorAssertionResponse.swift; sourceTree = "<group>"; };
 		8496EB1C25DEAFCF005098DD /* AuthenticationPublicKeyCredential.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationPublicKeyCredential.swift; sourceTree = "<group>"; };
 		8496EB1D25DEAFCF005098DD /* RegistrationPublicKeyCredential.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationPublicKeyCredential.swift; sourceTree = "<group>"; };
-		8496EB1E25DEAFCF005098DD /* EmailWebAuthnLoginRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailWebAuthnLoginRequest.swift; sourceTree = "<group>"; };
 		8496EB1F25DEAFCF005098DD /* R5PublicKeyCredentialRequestOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R5PublicKeyCredentialRequestOptions.swift; sourceTree = "<group>"; };
 		8496EB2025DEAFCF005098DD /* R5AuthenticatorAttestationResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R5AuthenticatorAttestationResponse.swift; sourceTree = "<group>"; };
 		8496EB2125DEAFCF005098DD /* WebAuthnRegistrationRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebAuthnRegistrationRequest.swift; sourceTree = "<group>"; };
@@ -270,7 +268,6 @@
 			isa = PBXGroup;
 			children = (
 				8496EB1C25DEAFCF005098DD /* AuthenticationPublicKeyCredential.swift */,
-				8496EB1E25DEAFCF005098DD /* EmailWebAuthnLoginRequest.swift */,
 				8496EB1B25DEAFCF005098DD /* R5AuthenticatorAssertionResponse.swift */,
 				8496EB2025DEAFCF005098DD /* R5AuthenticatorAttestationResponse.swift */,
 				8496EB1F25DEAFCF005098DD /* R5PublicKeyCredentialRequestOptions.swift */,
@@ -425,7 +422,6 @@
 				8496EB4125DEB141005098DD /* AuthenticationOptions.swift in Sources */,
 				34BDDA3822E5BE8C00D16DAE /* LoginSummary.swift in Sources */,
 				340AF1F7232A9A2B00AA114D /* QueryString.swift in Sources */,
-				8496EB2725DEAFCF005098DD /* EmailWebAuthnLoginRequest.swift in Sources */,
 				347FDB69229C04C200660687 /* ProviderConfig.swift in Sources */,
 				8496EB2925DEAFCF005098DD /* R5AuthenticatorAttestationResponse.swift in Sources */,
 				3417FF6C22FAD6CB0009EC84 /* StartPasswordlessRequest.swift in Sources */,
