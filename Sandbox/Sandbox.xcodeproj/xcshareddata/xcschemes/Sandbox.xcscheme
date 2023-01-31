@@ -37,26 +37,6 @@
          </BuildableReference>
       </MacroExpansion>
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "84E69696258AE152003AF19B"
-               BuildableName = "SandboxUITests.xctest"
-               BlueprintName = "SandboxUITests"
-               ReferencedContainer = "container:Sandbox.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8496EB9525DEC1DB005098DD"
-               BuildableName = "RNWebAuthnKitTests.xctest"
-               BlueprintName = "RNWebAuthnKitTests"
-               ReferencedContainer = "container:Sandbox.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
