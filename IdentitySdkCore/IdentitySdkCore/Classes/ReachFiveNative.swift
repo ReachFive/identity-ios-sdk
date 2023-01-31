@@ -7,7 +7,7 @@ public extension ReachFive {
 // On naming and signature for methods:
 // first argument indicates modality to distinguish the two primary way UI is shown to user: Modal and AutoFill
 // first argument label contains "with" instead of the method name in conformance to https://www.swift.org/documentation/api-design-guidelines/#give-prepositional-phrase-argument-label
-// autoFill and non-discoverable methods also take a requestType parameter even though there is only one such type:
+// non-discoverable methods also take a requestType parameter even though there is only one such type:
 //      1. to make it very clear that we are using passkeys
 //      2. to be future proof. For non-discoverable, there is already Security Keys that exist and that we could support.
 // AutoFill is @available(iOS 16.0, *) because ASAuthorizationController.performAutoFillAssistedRequests() itself is
