@@ -104,6 +104,7 @@ public class CredentialManager: NSObject {
         return registrationPromise.future
     }
     
+    @available(macCatalyst, unavailable)
     @available(iOS 16.0, *)
     func beginAutoFillAssistedPasskeySignIn(request: NativeLoginRequest) -> Future<AuthenticationToken, ReachFiveError> {
         authController?.cancel()

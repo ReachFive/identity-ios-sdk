@@ -53,7 +53,7 @@ class DemoController: UIViewController {
         AppDelegate.reachfive().login(withRequest: NativeLoginRequest(anchor: window), usingModalAuthorizationFor: types, display: mode)
             .onSuccess(callback: goToProfile)
             .onFailure { error in
-    
+                
                 self.usernameField.isHidden = false
                 self.usernameLabel.isHidden = false
                 self.loginButton.isHidden = false
@@ -61,16 +61,19 @@ class DemoController: UIViewController {
                 self.passwordField.isHidden = false
                 self.passwordLabel.isHidden = false
                 self.loginProviderStackView.isHidden = false
-
+                
                 switch error {
                 case .AuthCanceled:
-                    if #available(iOS 16.0, *) {
-                        AppDelegate.reachfive().beginAutoFillAssistedPasskeyLogin(withRequest: NativeLoginRequest(anchor: window))
-                            .onSuccess(callback: self.goToProfile)
-                            .onFailure { error in
-                                print("error: \(error) \(error.message())")
-                            }
-                    }
+                    #if targetEnvironment(macCatalyst)
+                    #else
+                        if #available(iOS 16.0, *) {
+                            AppDelegate.reachfive().beginAutoFillAssistedPasskeyLogin(withRequest: NativeLoginRequest(anchor: window))
+                                .onSuccess(callback: self.goToProfile)
+                                .onFailure { error in
+                                    print("error: \(error) \(error.message())")
+                                }
+                        }
+                    #endif
                 default: return
                 }
             }
@@ -126,7 +129,7 @@ class DemoController: UIViewController {
         
         if #available(iOS 16.0, *) {
             let request = NativeLoginRequest(anchor: window)
-    
+            
             (username.isEmpty ?
                 // this is optional, but a good way to present a modal with a fallback to QR code for loging using a nearby device
                 AppDelegate.reachfive().login(withRequest: request, usingModalAuthorizationFor: [.Passkey], display: .Always) :
@@ -136,11 +139,15 @@ class DemoController: UIViewController {
                 .onFailure { error in
                     switch error {
                     case .AuthCanceled:
-                        AppDelegate.reachfive().beginAutoFillAssistedPasskeyLogin(withRequest: request)
-                            .onSuccess(callback: self.goToProfile)
-                            .onFailure { error in
-                                print("error: \(error) \(error.message())")
-                            }
+                        #if targetEnvironment(macCatalyst)
+                            fallthrough
+                        #else
+                            AppDelegate.reachfive().beginAutoFillAssistedPasskeyLogin(withRequest: request)
+                                .onSuccess(callback: self.goToProfile)
+                                .onFailure { error in
+                                    print("error: \(error) \(error.message())")
+                                }
+                        #endif
                     default:
                         let alert = AppDelegate.createAlert(title: "Login", message: "Error: \(error.message())")
                         self.present(alert, animated: true, completion: nil)

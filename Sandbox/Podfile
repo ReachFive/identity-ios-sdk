@@ -7,6 +7,5 @@ target 'Sandbox' do
   pod 'IdentitySdkCore', :path => '../IdentitySdkCore.podspec'
   pod 'IdentitySdkWebView', :path => '../IdentitySdkWebView.podspec'
   pod 'IdentitySdkGoogle', :path => '../IdentitySdkGoogle.podspec'
-  pod 'IdentitySdkFacebook', :path => '../IdentitySdkFacebook.podspec'
 
 end

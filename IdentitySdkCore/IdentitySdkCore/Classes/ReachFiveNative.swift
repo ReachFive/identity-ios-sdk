@@ -39,6 +39,7 @@ public extension ReachFive {
     /// - Parameters:
     ///   - request: the anchor for the QuickType bar, plus scope and origin configuration
     /// - Returns: an AuthToken when the user was successfully logged in, or a ReachFiveError
+    @available(macCatalyst, unavailable)
     @available(iOS 16.0, *)
     func beginAutoFillAssistedPasskeyLogin(withRequest request: NativeLoginRequest) -> Future<AuthToken, ReachFiveError> {
         credentialManager.beginAutoFillAssistedPasskeySignIn(request: adapt(request))
@@ -67,7 +68,7 @@ public extension ReachFive {
         credentialManager.login(withNonDiscoverableUsername: username, forRequest: adapt(request), usingModalAuthorizationFor: requestTypes, display: mode)
             .flatMap({ self.loginCallback(tkn: $0.tkn, scopes: request.scopes) })
     }
-
+    
     /// Registers a new passkey for an existing user which currently has none in the keychain, or replace the existing passkey by a new one
     /// - Parameters:
     ///   - request: the anchor for the modal sheet, the friendlyName under which the passkey will be saved, and origin

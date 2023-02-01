@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             scheme: ProcessInfo.processInfo.environment["SCHEME"]!
         ),
         providersCreators: [
-            FacebookProvider(),
+            // we can add back Facebook when we migrate to Swift Package Manager, or try this crazy fix : https://betterprogramming.pub/macos-catalyst-debugging-problems-using-catalyst-and-cocoapods-579679150fa9
             GoogleProvider(),
             WebViewProvider()
         ],

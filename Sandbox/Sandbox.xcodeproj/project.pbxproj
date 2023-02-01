@@ -11,6 +11,7 @@
 		2A0757FB296F69E30072869F /* PasskeyNonDiscoverableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0757FA296F69E30072869F /* PasskeyNonDiscoverableController.swift */; };
 		2A1079E929721DAC00431655 /* NativePasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1079E829721DAC00431655 /* NativePasswordController.swift */; };
 		2A52203B297F187D00815558 /* SandboxTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A52203A297F187D00815558 /* SandboxTabBarController.swift */; };
+		2A9C6BCA298AC2CE00BBD80F /* Pods_Sandbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E55CD881F31583F8D3480D8 /* Pods_Sandbox.framework */; };
 		2AA4B5902975B3920001747C /* DemoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA4B58F2975B3920001747C /* DemoController.swift */; };
 		2AFF7DE9296F1EB900514B47 /* ActionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFF7DE8296F1EB900514B47 /* ActionController.swift */; };
 		3414A7CD22DDD39C00CF393A /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3414A7CC22DDD39C00CF393A /* ProfileController.swift */; };
@@ -24,24 +25,10 @@
 		3417FF7022FB11CD0009EC84 /* LoginWithPasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3417FF6F22FB11CD0009EC84 /* LoginWithPasswordController.swift */; };
 		34797ABD22A9607D00ED093C /* SignupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34797ABC22A9607D00ED093C /* SignupController.swift */; };
 		349E16EC230BEBBF002EA06B /* UpdatePasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349E16EB230BEBBF002EA06B /* UpdatePasswordController.swift */; };
-		D5915500A22E4272486BFD1C /* Pods_Sandbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E55CD881F31583F8D3480D8 /* Pods_Sandbox.framework */; };
 		EA91A0276CEFFE580E9C24DD /* SignupPasskeyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA91A17236291622417196AE /* SignupPasskeyController.swift */; };
 		EA91A44398415C17C88BD067 /* LoginPasskeyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA91AFCB7679A47D752EA6B3 /* LoginPasskeyController.swift */; };
 		EA91ACDEBA85D43349D63550 /* SecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA91A294C5DD405D6A38ADCC /* SecureStorage.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		8496EBA525DEC1DB005098DD /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1B4336D32015A6A13AA1DB17 /* Pods-Sandbox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sandbox.release.xcconfig"; path = "Target Support Files/Pods-Sandbox/Pods-Sandbox.release.xcconfig"; sourceTree = "<group>"; };
@@ -81,7 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5915500A22E4272486BFD1C /* Pods_Sandbox.framework in Frameworks */,
+				2A9C6BCA298AC2CE00BBD80F /* Pods_Sandbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,7 +154,6 @@
 				341731F6229D6B6400681CFD /* Sources */,
 				341731F7229D6B6400681CFD /* Frameworks */,
 				341731F8229D6B6400681CFD /* Resources */,
-				8496EBA525DEC1DB005098DD /* Embed Frameworks */,
 				A514CE717C81A5C4759D5906 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -460,7 +446,7 @@
 					"\"${PODS_ROOT}/GoogleSignIn/Frameworks\"",
 				);
 				INFOPLIST_FILE = Sandbox/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Sandbox";
+				INFOPLIST_KEY_CFBundleDisplayName = Sandbox;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -470,6 +456,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "me.og4.local-full";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -485,7 +474,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2SHU255SWF;
 				INFOPLIST_FILE = Sandbox/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Sandbox";
+				INFOPLIST_KEY_CFBundleDisplayName = Sandbox;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -495,6 +484,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "me.og4.local-full";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

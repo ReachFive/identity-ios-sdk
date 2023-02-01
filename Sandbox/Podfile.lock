@@ -8,14 +8,6 @@ PODS:
     - AppAuth/Core
   - BrightFutures (8.2.0)
   - CryptoSwift (1.5.1)
-  - FBAEMKit (14.1.0):
-    - FBSDKCoreKit_Basics (= 14.1.0)
-  - FBSDKCoreKit (14.1.0):
-    - FBAEMKit (= 14.1.0)
-    - FBSDKCoreKit_Basics (= 14.1.0)
-  - FBSDKCoreKit_Basics (14.1.0)
-  - FBSDKLoginKit (14.1.0):
-    - FBSDKCoreKit (= 14.1.0)
   - GoogleSignIn (6.2.4):
     - AppAuth (~> 1.5)
     - GTMAppAuth (~> 1.3)
@@ -28,10 +20,6 @@ PODS:
     - Alamofire (~> 5.6.1)
     - BrightFutures (~> 8.2.0)
     - CryptoSwift (~> 1.5.1)
-  - IdentitySdkFacebook (5.8.0):
-    - FBSDKCoreKit (~> 14.1.0)
-    - FBSDKLoginKit (~> 14.1.0)
-    - IdentitySdkCore (~> 5)
   - IdentitySdkGoogle (5.8.0):
     - GoogleSignIn (~> 6)
     - IdentitySdkCore (~> 5)
@@ -40,7 +28,6 @@ PODS:
 
 DEPENDENCIES:
   - IdentitySdkCore (from `../IdentitySdkCore.podspec`)
-  - IdentitySdkFacebook (from `../IdentitySdkFacebook.podspec`)
   - IdentitySdkGoogle (from `../IdentitySdkGoogle.podspec`)
   - IdentitySdkWebView (from `../IdentitySdkWebView.podspec`)
 
@@ -50,10 +37,6 @@ SPEC REPOS:
     - AppAuth
     - BrightFutures
     - CryptoSwift
-    - FBAEMKit
-    - FBSDKCoreKit
-    - FBSDKCoreKit_Basics
-    - FBSDKLoginKit
     - GoogleSignIn
     - GTMAppAuth
     - GTMSessionFetcher
@@ -61,8 +44,6 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   IdentitySdkCore:
     :path: "../IdentitySdkCore.podspec"
-  IdentitySdkFacebook:
-    :path: "../IdentitySdkFacebook.podspec"
   IdentitySdkGoogle:
     :path: "../IdentitySdkGoogle.podspec"
   IdentitySdkWebView:
@@ -73,18 +54,13 @@ SPEC CHECKSUMS:
   AppAuth: 8fca6b5563a5baef2c04bee27538025e4ceb2add
   BrightFutures: 67e0e8cd974ab9f6c04650cc64153f7adf1ec489
   CryptoSwift: c4f2debceb38bf44c80659afe009f71e23e4a082
-  FBAEMKit: a899515e45476027f73aef377b5cffadcd56ca3a
-  FBSDKCoreKit: 24f8bc8d3b5b2a8c5c656a1329492a12e8efa792
-  FBSDKCoreKit_Basics: 6e578c9bdc7aa1365dbbbde633c9ebb536bcaa98
-  FBSDKLoginKit: 787de205d524c3a4b17d527916f1d066e4361660
   GoogleSignIn: 5651ce3a61e56ca864160e79b484cd9ed3f49b7a
   GTMAppAuth: 0ff230db599948a9ad7470ca667337803b3fc4dd
   GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
   IdentitySdkCore: 95424c1016824eb9a92b3f570b1c10085b6af5de
-  IdentitySdkFacebook: baf3a7e666dc0cd3499e309f1a311b9aa12d05bc
   IdentitySdkGoogle: 05b3864d0b67e5e188b7f88a1e3049cd0fb69c9b
   IdentitySdkWebView: ff21f55603ec190346e159c6939a77132fc6ed6b
 
-PODFILE CHECKSUM: f693e93a5f01f5edbdb7ab2ad033b3c84351b61f
+PODFILE CHECKSUM: 1bac6f4290c5b26132595a3367435d0153178098
 
 COCOAPODS: 1.11.3
