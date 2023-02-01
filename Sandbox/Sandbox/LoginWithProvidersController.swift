@@ -1,6 +1,5 @@
 import UIKit
 import IdentitySdkCore
-import GoogleSignIn
 import AuthenticationServices
 
 class LoginWithProvidersController: UIViewController, UITableViewDataSource, UITableViewDelegate, ASWebAuthenticationPresentationContextProviding {
