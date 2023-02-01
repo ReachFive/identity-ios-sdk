@@ -460,6 +460,8 @@
 					"\"${PODS_ROOT}/GoogleSignIn/Frameworks\"",
 				);
 				INFOPLIST_FILE = Sandbox/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Sandbox";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -483,6 +485,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2SHU255SWF;
 				INFOPLIST_FILE = Sandbox/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Sandbox";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
