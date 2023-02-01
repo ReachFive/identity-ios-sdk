@@ -96,6 +96,7 @@ class ProfileController: UIViewController {
             }
             .onFailure { error in
                 // probably the token is expired so remove it
+                //TODO ne pas faire ça et proposer un refresh
                 AppDelegate.storage.clear(key: SecureStorage.authKey)
                 print("getProfile error = \(error.message())")
             }

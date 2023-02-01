@@ -68,6 +68,7 @@ public class SecureStorage: Storage {
         print("SecureStorage.update success")
     }
     
+    //TODO implémenter un fonction spécifique pour AuthToken pour ne pas à avoir le problème de type et pour y mettre les notifs
     public func get<D: Codable>(key: String) -> D? {
         let query: [String: Any] = [kSecClass as String: kSecClassGenericPassword,
                                     kSecAttrAccount as String: key,
