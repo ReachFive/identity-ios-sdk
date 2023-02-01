@@ -261,7 +261,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="85m-7Z-vSr">
-                                <rect key="frame" x="-21" y="-7" width="429" height="930"/>
+                                <rect key="frame" x="0" y="0" width="429" height="930"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
@@ -1521,7 +1521,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="o6E-CP-l6n"/>
+        <segue reference="793-jg-Aas"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Reach5" width="821.427978515625" height="321.42800903320312"/>
