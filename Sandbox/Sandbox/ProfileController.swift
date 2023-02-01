@@ -58,8 +58,8 @@ class ProfileController: UIViewController {
         
         authToken = AppDelegate.storage.get(key: SecureStorage.authKey)
         if authToken != nil {
-            profileTabBarItem.image = SandboxTabBarController.profileCheck
-            profileTabBarItem.selectedImage = SandboxTabBarController.profileCheckFill
+            profileTabBarItem.image = SandboxTabBarController.tokenPresent
+            profileTabBarItem.selectedImage = profileTabBarItem.image
         }
     }
     
@@ -93,15 +93,16 @@ class ProfileController: UIViewController {
                     self.loginLabel.text = self.format(date: lastLogin)
                     self.methodLabel.text = loginSummary.lastProvider
                 }
+                
+                self.reloadCredentials(authToken: authToken)
             }
             .onFailure { error in
-                // probably the token is expired so remove it
-                //TODO ne pas faire ça et proposer un refresh
-                AppDelegate.storage.clear(key: SecureStorage.authKey)
+                // the token is probably expired, but it is still possible that it can be refreshed
+                self.didLogout()
+                self.profileTabBarItem.image = SandboxTabBarController.tokenExpiredButRefreshable
+                self.profileTabBarItem.selectedImage = self.profileTabBarItem.image
                 print("getProfile error = \(error.message())")
             }
-        
-        reloadCredentials(authToken: authToken)
         
         super.viewWillAppear(animated)
     }
@@ -133,7 +134,10 @@ class ProfileController: UIViewController {
         // Beware that a valid token for profile might not be fresh enough to retrieve the credentials
         AppDelegate.reachfive().listWebAuthnCredentials(authToken: authToken).onSuccess { listCredentials in
                 self.devices = listCredentials
-        
+                
+                self.profileTabBarItem.image = SandboxTabBarController.loggedIn
+                self.profileTabBarItem.selectedImage = self.profileTabBarItem.image
+                
                 //TODO comprendre pourquoi on fait un async. En a-t-on vraiment besoin ?
                 DispatchQueue.main.async {
                     self.credentialTableview.reloadData()
@@ -141,6 +145,9 @@ class ProfileController: UIViewController {
             }
             .onFailure { error in
                 self.devices = []
+                self.profileTabBarItem.image = SandboxTabBarController.loggedInButNoPasskey
+                self.profileTabBarItem.selectedImage = self.profileTabBarItem.image
+                
                 print("getCredentials error = \(error.message())")
             }
     }
@@ -196,6 +203,13 @@ class ProfileController: UIViewController {
                 alert.addAction(registerAction)
                 alert.preferredAction = registerAction
                 self.present(alert, animated: true)
+            }
+            .onFailure { error in
+                // the token is probably expired, but it is still possible that it can be refreshed
+                self.didLogout()
+                self.profileTabBarItem.image = SandboxTabBarController.tokenExpiredButRefreshable
+                self.profileTabBarItem.selectedImage = self.profileTabBarItem.image
+                print("getProfile error = \(error.message())")
             }
     }
     

@@ -9,10 +9,29 @@ class SandboxTabBarController: UITabBarController {
     // when the user touch the different tabs
     // when the app is relaunched directly in the profile tab...
     // also the notifications are not always available, especially in the profile controller, because the view is not yet loaded
-    public static let profileCheck = UIImage(systemName: "person.crop.circle.badge.checkmark")
-    public static let profileCheckFill = UIImage(systemName: "person.crop.circle.fill.badge.checkmark")
-    public static let profileX = UIImage(systemName: "person.crop.circle.badge.xmark")
-    public static let profileXFill = UIImage(systemName: "person.crop.circle.fill.badge.xmark")
+    public static let loggedIn = UIImage(systemName: "person.crop.circle.badge.checkmark")
+    public static let loggedOut = UIImage(systemName: "person.crop.circle.badge.xmark")
+    
+    public static var tokenExpiredButRefreshable: UIImage? {
+        guard #available(iOS 15, *) else {
+            return UIImage(systemName: "person.crop.circle.badge.minus")
+        }
+        return UIImage(systemName: "person.crop.circle.badge.moon")
+    }
+    
+    public static var tokenPresent: UIImage? {
+        guard #available(iOS 14, *) else {
+            return UIImage(systemName: "person.crop.circle")
+        }
+        return UIImage(systemName: "person.crop.circle.badge.questionmark")
+    }
+    
+    public static var loggedInButNoPasskey: UIImage? {
+        guard #available(iOS 15, *) else {
+            return UIImage(systemName: "person.crop.circle.badge.plus")
+        }
+        return UIImage(systemName: "person.crop.circle.badge")
+    }
     
     @IBOutlet weak var sandboxTabBar: UITabBar?
     
@@ -36,20 +55,20 @@ class SandboxTabBarController: UITabBarController {
         }
         
         if let _: AuthToken = AppDelegate.storage.get(key: SecureStorage.authKey) {
-            sandboxTabBar?.items?[2].image = SandboxTabBarController.profileCheck
-            sandboxTabBar?.items?[2].selectedImage = SandboxTabBarController.profileCheckFill
+            sandboxTabBar?.items?[2].image = SandboxTabBarController.tokenPresent
+            sandboxTabBar?.items?[2].selectedImage = SandboxTabBarController.tokenPresent
         }
     }
     
     func didLogout() {
         print("SandboxTabBarController.didLogout")
-        sandboxTabBar?.items?[2].image = SandboxTabBarController.profileX
-        sandboxTabBar?.items?[2].selectedImage = SandboxTabBarController.profileXFill
+        sandboxTabBar?.items?[2].image = SandboxTabBarController.loggedOut
+        sandboxTabBar?.items?[2].selectedImage = SandboxTabBarController.loggedOut
     }
     
     func didLogin() {
         print("SandboxTabBarController.didLogin")
-        sandboxTabBar?.items?[2].image = SandboxTabBarController.profileCheck
-        sandboxTabBar?.items?[2].selectedImage = SandboxTabBarController.profileCheckFill
+        sandboxTabBar?.items?[2].image = SandboxTabBarController.loggedIn
+        sandboxTabBar?.items?[2].selectedImage = SandboxTabBarController.loggedIn
     }
 }
