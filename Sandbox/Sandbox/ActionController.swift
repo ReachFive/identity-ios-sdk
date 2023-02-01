@@ -3,7 +3,7 @@ import UIKit
 import IdentitySdkCore
 import AuthenticationServices
 
-class ActionController: UITableViewController, ASWebAuthenticationPresentationContextProviding {
+class ActionController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
@@ -14,8 +14,6 @@ class ActionController: UITableViewController, ASWebAuthenticationPresentationCo
         // Section Password
         if indexPath.section == 0 {
             if indexPath.row == 2 {
-                //TODO l'API aurait du demander une anchor comme je fais maintenant. Voir si on peut mettre à jour
-                // déprécier la méthode avec presentationContextProvider et en créer une nouvelle avec une anchor
                 AppDelegate.reachfive()
                     .webviewLogin(WebviewLoginRequest(state: "state", nonce: "nonce", scope: ["email", "profile"], presentationContextProvider: self))
                     .onComplete { self.handleResult(result: $0) }
@@ -76,7 +74,9 @@ class ActionController: UITableViewController, ASWebAuthenticationPresentationCo
             present(alert, animated: true, completion: nil)
         }
     }
-    
+}
+
+extension ActionController: ASWebAuthenticationPresentationContextProviding {
     func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
         view.window!
     }

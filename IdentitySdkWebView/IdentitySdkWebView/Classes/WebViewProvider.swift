@@ -105,7 +105,9 @@ class ConfiguredWebViewProvider: NSObject, Provider {
         session.presentationContextProvider = (viewController as! ASWebAuthenticationPresentationContextProviding)
         
         // Start the Authentication Flow
-        session.start()
+        if !session.start() {
+            promise.failure(.TechnicalError(reason: "Failed to start ASWebAuthenticationSession"))
+        }
         return promise.future
     }
     
