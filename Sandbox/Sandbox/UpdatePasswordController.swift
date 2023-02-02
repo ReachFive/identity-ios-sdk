@@ -8,7 +8,7 @@ class UpdatePasswordController: UIViewController {
     @IBOutlet weak var newPassword: UITextField!
     
     @IBAction func update(_ sender: Any) {
-        if (authToken != nil) {
+        if authToken != nil {
             AppDelegate.reachfive()
                 .updatePassword(.AccessTokenParams(authToken: authToken!, password: newPassword.text ?? "", oldPassword: oldPassword.text ?? ""))
                 .onSuccess {

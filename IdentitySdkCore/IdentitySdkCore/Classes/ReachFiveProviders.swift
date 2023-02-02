@@ -29,26 +29,15 @@ public extension ReachFive {
     }
     
     private func createProviders(providersConfigsResult: ProvidersConfigsResult, clientConfigResponse: ClientConfigResponse) -> [Provider] {
-        let webViewProvider = providersCreators.first(where: { $0.name == "webview" })
+        let webViewCreator = providersCreators.first(where: { $0.name == "webview" })
         return providersConfigsResult.items.filter { $0.clientId != nil }.map({ config in
-                let nativeProvider = providersCreators.first(where: { $0.name == config.provider })
-                if (nativeProvider != nil) {
-                    return nativeProvider?.create(
-                        sdkConfig: sdkConfig,
-                        providerConfig: config,
-                        reachFiveApi: reachFiveApi,
-                        clientConfigResponse: clientConfigResponse
-                    )
-                } else if (webViewProvider != nil) {
-                    return webViewProvider?.create(
-                        sdkConfig: sdkConfig,
-                        providerConfig: config,
-                        reachFiveApi: reachFiveApi,
-                        clientConfigResponse: clientConfigResponse
-                    )
-                } else {
-                    return nil
-                }
+                let nativeCreator = providersCreators.first(where: { $0.name == config.provider })
+                return (nativeCreator ?? webViewCreator)?.create(
+                    sdkConfig: sdkConfig,
+                    providerConfig: config,
+                    reachFiveApi: reachFiveApi,
+                    clientConfigResponse: clientConfigResponse
+                )
             })
             .compactMap { $0 }
     }
