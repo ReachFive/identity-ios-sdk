@@ -35,14 +35,14 @@ public extension ReachFive {
                 return
             }
             
-            guard let callbackURL = callbackURL else {
+            guard let callbackURL else {
                 promise.failure(.TechnicalError(reason: "No callback URL"))
                 return
             }
             
             let queryItems = URLComponents(string: callbackURL.absoluteString)?.queryItems
             let code = queryItems?.first(where: { $0.name == "code" })?.value
-            guard let code = code else {
+            guard let code else {
                 promise.failure(.TechnicalError(reason: "No authorization code"))
                 return
             }

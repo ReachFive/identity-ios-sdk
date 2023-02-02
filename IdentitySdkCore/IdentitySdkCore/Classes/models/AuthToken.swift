@@ -28,10 +28,7 @@ public class AuthToken: Codable {
     public static func fromOpenIdTokenResponseFuture(
         _ openIdTokenResponse: AccessTokenResponse
     ) -> Future<AuthToken, ReachFiveError> {
-        let promise = Promise<AuthToken, ReachFiveError>()
-        let authTokenResult = AuthToken.fromOpenIdTokenResponse(openIdTokenResponse: openIdTokenResponse)
-        promise.complete(authTokenResult)
-        return promise.future
+        Future(result: AuthToken.fromOpenIdTokenResponse(openIdTokenResponse: openIdTokenResponse))
     }
     
     static func fromOpenIdTokenResponse(openIdTokenResponse: AccessTokenResponse) -> Result<AuthToken, ReachFiveError> {
