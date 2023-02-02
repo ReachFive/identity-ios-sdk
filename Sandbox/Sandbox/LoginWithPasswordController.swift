@@ -9,12 +9,6 @@ class LoginWithPasswordController: UIViewController {
     @IBOutlet weak var passwordInput: UITextField!
     @IBOutlet weak var error: UILabel!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        AppDelegate.reachfive().initialize().onComplete { _ in
-        }
-    }
-    
     @IBAction func login(_ sender: Any) {
         let email = emailInput.text
         let phoneNumber = phoneNumberInput.text

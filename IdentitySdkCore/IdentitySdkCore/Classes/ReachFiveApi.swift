@@ -126,13 +126,13 @@ public class ReachFiveApi {
             .validate(statusCode: 300...308) //TODO pas de 305/306
             .response { responseData in
                 let callbackURL = responseData.response?.allHeaderFields["Location"] as? String
-                guard let callbackURL = callbackURL else {
+                guard let callbackURL else {
                     promise.failure(.TechnicalError(reason: "No location"))
                     return
                 }
                 let queryItems = URLComponents(string: callbackURL)?.queryItems
                 let code = queryItems?.first(where: { $0.name == "code" })?.value
-                guard let code = code else {
+                guard let code else {
                     promise.failure(.TechnicalError(reason: "No authorization code"))
                     return
                 }

@@ -10,7 +10,6 @@ class SignupController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        AppDelegate.reachfive().initialize().onComplete { _ in }
         emailInput.text = initialEmail
     }
     

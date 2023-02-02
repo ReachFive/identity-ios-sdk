@@ -6,12 +6,6 @@ class LoginWithFidoViewController: UIViewController {
     @IBOutlet weak var emailText: UITextField!
     let scopes = ["openid", "email", "profile", "phone", "full_write", "offline_access"]
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        AppDelegate.reachfive().initialize().onComplete { _ in }
-    }
-    
     @IBAction func loginButton(_ sender: Any) {
 
 /*

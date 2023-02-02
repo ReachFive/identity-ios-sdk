@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 
 public extension UIDevice {
-    
+    //TODO à remplacer par une lib ou mettre à jour
     var modelName: String {
         var systemInfo = utsname()
         uname(&systemInfo)
