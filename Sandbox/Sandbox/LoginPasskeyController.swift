@@ -36,7 +36,7 @@ class LoginPasskeyController: UIViewController {
                 switch error {
                 case .AuthCanceled:
                     #if targetEnvironment(macCatalyst)
-                        fallthrough
+                        return
                     #else
                         AppDelegate.reachfive().beginAutoFillAssistedPasskeyLogin(withRequest: NativeLoginRequest(anchor: window))
                             .onSuccess(callback: self.goToProfile)
@@ -68,7 +68,7 @@ class LoginPasskeyController: UIViewController {
                 switch error {
                 case .AuthCanceled:
                     #if targetEnvironment(macCatalyst)
-                        fallthrough
+                        return
                     #else
                         AppDelegate.reachfive().beginAutoFillAssistedPasskeyLogin(withRequest: request)
                             .onSuccess(callback: self.goToProfile)
