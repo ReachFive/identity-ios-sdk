@@ -114,7 +114,7 @@
                             <constraint firstItem="Y3Y-Pg-QHq" firstAttribute="trailing" secondItem="M7e-ga-cOo" secondAttribute="trailing" id="wiR-fS-wM4"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="96u-bb-pgH"/>
+                    <navigationItem key="navigationItem" title="Login with Password" id="96u-bb-pgH"/>
                     <connections>
                         <outlet property="customIdentifierInput" destination="nqk-1U-HPb" id="5en-zK-SFR"/>
                         <outlet property="emailInput" destination="ljB-cQ-dto" id="Bdh-Qo-d8B"/>
@@ -240,7 +240,7 @@
                             <constraint firstItem="dXD-Kc-6mi" firstAttribute="top" secondItem="w53-Iq-oaM" secondAttribute="bottom" constant="8" id="yG4-PD-qmi"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="LDP-wV-XJT"/>
+                    <navigationItem key="navigationItem" title="Passwordless" id="LDP-wV-XJT"/>
                     <connections>
                         <outlet property="emailInput" destination="eoo-7E-NMJ" id="a01-mH-9QJ"/>
                         <outlet property="phoneNumberInput" destination="dXD-Kc-6mi" id="LLX-d8-j1g"/>
@@ -347,7 +347,7 @@
                             <constraint firstItem="row-j4-8AG" firstAttribute="top" secondItem="W3K-8i-RYY" secondAttribute="top" id="oSl-pp-FCx"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="5fh-NY-PHH"/>
+                    <navigationItem key="navigationItem" title="Update password" id="5fh-NY-PHH"/>
                     <connections>
                         <outlet property="newPassword" destination="mTK-qf-v8M" id="jyA-Gj-arc"/>
                         <outlet property="oldPassword" destination="Nqs-3R-NMv" id="qlY-we-oSd"/>
@@ -443,7 +443,7 @@
                             <constraint firstItem="ISz-2N-3VB" firstAttribute="leading" secondItem="aQ1-Vf-wGZ" secondAttribute="leading" id="tTD-nr-6H1"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="vmR-MT-LEI"/>
+                    <navigationItem key="navigationItem" title="Signup with Password" id="vmR-MT-LEI"/>
                     <connections>
                         <outlet property="emailInput" destination="ISz-2N-3VB" id="gwp-Lk-Lje"/>
                         <outlet property="nameInput" destination="8vr-zU-Z2f" id="EAJ-lj-rbk"/>
@@ -744,7 +744,7 @@
                             <constraint firstItem="9e8-Az-d4M" firstAttribute="top" secondItem="2zV-kh-fDP" secondAttribute="top" id="ebv-0X-18u"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="KHs-Mp-cEo"/>
+                    <navigationItem key="navigationItem" title="Update phone number" id="KHs-Mp-cEo"/>
                     <connections>
                         <outlet property="phoneNumberInput" destination="CkE-m1-sya" id="4GH-4d-8TN"/>
                     </connections>
