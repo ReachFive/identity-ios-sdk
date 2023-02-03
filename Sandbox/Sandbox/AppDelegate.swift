@@ -1,6 +1,5 @@
 import UIKit
 import IdentitySdkCore
-import IdentitySdkFacebook
 import IdentitySdkWebView
 import IdentitySdkGoogle
 
