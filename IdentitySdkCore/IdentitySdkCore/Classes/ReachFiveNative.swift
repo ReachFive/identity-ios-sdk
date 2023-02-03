@@ -28,7 +28,6 @@ public extension ReachFive {
         )
         
         return credentialManager.signUp(withRequest: signupOptions, anchor: request.anchor)
-            .flatMap({ self.loginCallback(tkn: $0.tkn, scopes: request.scopes) })
     }
     
     // https://developer.apple.com/forums/thread/714608
@@ -43,7 +42,6 @@ public extension ReachFive {
     @available(iOS 16.0, *)
     func beginAutoFillAssistedPasskeyLogin(withRequest request: NativeLoginRequest) -> Future<AuthToken, ReachFiveError> {
         credentialManager.beginAutoFillAssistedPasskeySignIn(request: adapt(request))
-            .flatMap({ self.loginCallback(tkn: $0.tkn, scopes: request.scopes) })
     }
     
     /// Signs in the user using credentials stored in the keychain, letting the system display all credentials available to choose from in a modal sheet.
@@ -54,7 +52,6 @@ public extension ReachFive {
     /// - Returns: an AuthToken when the user was successfully logged in, ReachFiveError.AuthCanceled when the user cancelled the modal sheet or when there was no credentials available, or other kinds of ReachFiveError
     func login(withRequest request: NativeLoginRequest, usingModalAuthorizationFor requestTypes: [ModalAuthorization], display mode: Mode) -> Future<AuthToken, ReachFiveError> {
         credentialManager.login(withRequest: adapt(request), usingModalAuthorizationFor: requestTypes, display: mode)
-            .flatMap({ self.loginCallback(tkn: $0.tkn, scopes: request.scopes) })
     }
     
     /// Signs in the user using credentials stored in the keychain, letting the system display the credentials corresponding to the given username in a modal sheet.
@@ -66,7 +63,6 @@ public extension ReachFive {
     /// - Returns: an AuthToken when the user was successfully logged in, ReachFiveError.AuthCanceled when the user cancelled the modal sheet or when there was no credentials available, or other kinds of ReachFiveError
     func login(withNonDiscoverableUsername username: Username, forRequest request: NativeLoginRequest, usingModalAuthorizationFor requestTypes: [NonDiscoverableAuthorization], display mode: Mode) -> Future<AuthToken, ReachFiveError> {
         credentialManager.login(withNonDiscoverableUsername: username, forRequest: adapt(request), usingModalAuthorizationFor: requestTypes, display: mode)
-            .flatMap({ self.loginCallback(tkn: $0.tkn, scopes: request.scopes) })
     }
     
     /// Registers a new passkey for an existing user which currently has none in the keychain, or replace the existing passkey by a new one
@@ -76,14 +72,14 @@ public extension ReachFive {
     /// - Returns: A ReachFiveError, or nothing when the Registration was successfull.
     @available(iOS 16.0, *)
     func registerNewPasskey(withRequest request: NewPasskeyRequest, authToken: AuthToken) -> Future<(), ReachFiveError> {
-        let domain = reachFiveApi.sdkConfig.domain
+        let domain = sdkConfig.domain
         let origin = request.origin ?? "https://\(domain)"
         //TODO supprimer l'ancienne passkey du server
         return credentialManager.registerNewPasskey(withRequest: NewPasskeyRequest(anchor: request.anchor, friendlyName: request.friendlyName, origin: origin), authToken: authToken)
     }
     
     private func adapt(_ request: NativeLoginRequest) -> NativeLoginRequest {
-        let domain = reachFiveApi.sdkConfig.domain
+        let domain = sdkConfig.domain
         let origin = request.origin ?? "https://\(domain)"
         let scopes = request.scopes ?? scope
         
