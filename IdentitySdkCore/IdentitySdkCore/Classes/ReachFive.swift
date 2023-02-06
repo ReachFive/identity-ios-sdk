@@ -18,6 +18,7 @@ public class ReachFive: NSObject {
     internal var scope: [String] = []
     internal let storage: Storage
     let credentialManager: CredentialManager
+    let registrationManager: RegistrationManager
     
     public init(sdkConfig: SdkConfig, providersCreators: Array<ProviderCreator>, storage: Storage?) {
         self.sdkConfig = sdkConfig
@@ -25,6 +26,7 @@ public class ReachFive: NSObject {
         self.reachFiveApi = ReachFiveApi(sdkConfig: sdkConfig)
         self.storage = storage ?? UserDefaultsStorage()
         self.credentialManager = CredentialManager(reachFiveApi: reachFiveApi)
+        self.registrationManager = RegistrationManager(reachFiveApi: reachFiveApi)
     }
     
     public override var description: String {
