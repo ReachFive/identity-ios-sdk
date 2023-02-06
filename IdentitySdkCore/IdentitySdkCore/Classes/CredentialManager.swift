@@ -3,29 +3,35 @@ import AuthenticationServices
 import BrightFutures
 
 public class CredentialManager: NSObject {
+    let reachFiveApi: ReachFiveApi
+    
+    // MARK: - these fields serve to remember the context between the start of a request and its completion
+    // Do not erase them at the end of a request because requests can be interleaved (modal and auto-fill requests)
+    
     // promise for authentification
     var promise: Promise<AuthToken, ReachFiveError>
-    let reachFiveApi: ReachFiveApi
     
     // anchor for presentationContextProvider
     var authenticationAnchor: ASPresentationAnchor?
-    // the controller for the current request, to cancel it before starting a new request (mainly to cancel AutoFillAssistedRequests when starting modal requests)
+    
+    // the controller for the current request, to cancel it before starting a new request (mainly to cancel an auto-fill request when starting a modal request)
     var authController: ASAuthorizationController?
     
-    // Below are three fields that should be memorized between performRequests and didCompleteWithAuthorization
-    
-    // indicates whether the query is modal or inline, in order to show a special error when the modal is canceled by the user
+    // indicates whether the request is modal or auto-fill, in order to show a special error when the modal is canceled by the user
     var isPerformingModalReqest = false
     // data for signup
     var signupOptions: RegistrationOptions?
     // the scope of the request
     var scope: String?
     
+    // MARK: -
+    
     public init(reachFiveApi: ReachFiveApi) {
         promise = Promise()
         self.reachFiveApi = reachFiveApi
     }
     
+    // MARK: - Signup
     @available(iOS 16.0, *)
     func signUp(withRequest request: SignupOptions, anchor: ASPresentationAnchor) -> Future<AuthToken, ReachFiveError> {
         authController?.cancel()
@@ -62,6 +68,7 @@ public class CredentialManager: NSObject {
         return promise.future
     }
     
+    // MARK: - Auto-fill
     @available(macCatalyst, unavailable)
     @available(iOS 16.0, *)
     func beginAutoFillAssistedPasskeySignIn(request: NativeLoginRequest) -> Future<AuthToken, ReachFiveError> {
@@ -89,6 +96,7 @@ public class CredentialManager: NSObject {
         return promise.future
     }
     
+    // MARK: - Modal
     func login(withNonDiscoverableUsername username: Username, forRequest request: NativeLoginRequest, usingModalAuthorizationFor requestTypes: [NonDiscoverableAuthorization], display mode: Mode) -> Future<AuthToken, ReachFiveError> {
         if #available(iOS 16.0, *) { authController?.cancel() }
         promise = Promise()
@@ -192,42 +200,19 @@ public class CredentialManager: NSObject {
         
         return promise.future
     }
-    
-    @available(iOS 16.0, *)
-    private func createCredentialAssertionRequest(_ assertionRequestOptions: AuthenticationOptions) -> Result<ASAuthorizationPlatformPublicKeyCredentialAssertionRequest, ReachFiveError> {
-        guard let challenge = assertionRequestOptions.publicKey.challenge.decodeBase64Url() else {
-            return .failure(.TechnicalError(reason: "unreadable challenge: \(assertionRequestOptions.publicKey.challenge)"))
-        }
-        
-        //FIXME utiliser domain ou origin (sans le https) tel que passée en param ?
-        let publicKeyCredentialProvider = ASAuthorizationPlatformPublicKeyCredentialProvider(relyingPartyIdentifier: reachFiveApi.sdkConfig.domain)
-        return .success(publicKeyCredentialProvider.createCredentialAssertionRequest(challenge: challenge))
-    }
-    
-    private func adaptAuthz(_ nda: NonDiscoverableAuthorization) -> ModalAuthorization? {
-        if #available(iOS 16.0, *), nda == .Passkey {
-            return ModalAuthorization.Passkey
-        }
-        return nil
-    }
 }
 
+// MARK: - ASAuthorizationControllerPresentationContextProviding
 extension CredentialManager: ASAuthorizationControllerPresentationContextProviding {
     public func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         authenticationAnchor!
     }
 }
 
+// MARK: - ASAuthorizationControllerDelegate
 extension CredentialManager: ASAuthorizationControllerDelegate {
     
     public func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        defer {
-            authController = nil
-            isPerformingModalReqest = false
-            signupOptions = nil
-            scope = nil
-        }
-        
         guard let scope else {
             promise.tryFailure(.TechnicalError(reason: "didCompleteWithAuthorization: no scope"))
             return
@@ -294,17 +279,11 @@ extension CredentialManager: ASAuthorizationControllerDelegate {
     }
     
     public func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        defer {
-            authController = nil
-            isPerformingModalReqest = false
-            signupOptions = nil
-            scope = nil
-        }
-        
         guard let authorizationError = error as? ASAuthorizationError else {
-            promise.tryFailure(.TechnicalError(reason: "Error: \(error.localizedDescription)"))
+            promise.tryFailure(.TechnicalError(reason: "\(error.localizedDescription)"))
             return
         }
+        
         if authorizationError.code == .canceled {
             // Either the system doesn't find any credentials and the request ends silently, or the user cancels the request.
             // This is a good time to show a traditional login form, or ask the user to create an account.
@@ -315,14 +294,31 @@ extension CredentialManager: ASAuthorizationControllerDelegate {
             // Another ASAuthorization error.
             // Note: The userInfo dictionary contains useful information.
             let userInfo = (error as NSError).userInfo
-            print("Error: \(userInfo)")
-            promise.tryFailure(.TechnicalError(reason: "Error: \(userInfo)"))
+            promise.tryFailure(.TechnicalError(reason: "\(userInfo)"))
         }
     }
 }
 
-// code to finish login
+// MARK: - utilities
 extension CredentialManager {
+    @available(iOS 16.0, *)
+    private func createCredentialAssertionRequest(_ assertionRequestOptions: AuthenticationOptions) -> Result<ASAuthorizationPlatformPublicKeyCredentialAssertionRequest, ReachFiveError> {
+        guard let challenge = assertionRequestOptions.publicKey.challenge.decodeBase64Url() else {
+            return .failure(.TechnicalError(reason: "unreadable challenge: \(assertionRequestOptions.publicKey.challenge)"))
+        }
+        
+        //TODO: utiliser domain ou origin (sans le https) tel que passée en param ?
+        let publicKeyCredentialProvider = ASAuthorizationPlatformPublicKeyCredentialProvider(relyingPartyIdentifier: reachFiveApi.sdkConfig.domain)
+        return .success(publicKeyCredentialProvider.createCredentialAssertionRequest(challenge: challenge))
+    }
+    
+    private func adaptAuthz(_ nda: NonDiscoverableAuthorization) -> ModalAuthorization? {
+        if #available(iOS 16.0, *), nda == .Passkey {
+            return ModalAuthorization.Passkey
+        }
+        return nil
+    }
+    
     func loginCallback(tkn: String, scope: String) -> Future<AuthToken, ReachFiveError> {
         let pkce = Pkce.generate()
         
