@@ -56,7 +56,6 @@
 		8496EB2625DEAFCF005098DD /* RegistrationPublicKeyCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496EB1D25DEAFCF005098DD /* RegistrationPublicKeyCredential.swift */; };
 		8496EB2825DEAFCF005098DD /* R5PublicKeyCredentialRequestOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496EB1F25DEAFCF005098DD /* R5PublicKeyCredentialRequestOptions.swift */; };
 		8496EB2925DEAFCF005098DD /* R5AuthenticatorAttestationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496EB2025DEAFCF005098DD /* R5AuthenticatorAttestationResponse.swift */; };
-		8496EB2A25DEAFCF005098DD /* WebAuthnRegistrationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496EB2125DEAFCF005098DD /* WebAuthnRegistrationRequest.swift */; };
 		8496EB2B25DEAFCF005098DD /* WebAuthnLoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496EB2225DEAFCF005098DD /* WebAuthnLoginRequest.swift */; };
 		8496EB2C25DEAFCF005098DD /* WebauthnSignupCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496EB2325DEAFCF005098DD /* WebauthnSignupCredential.swift */; };
 		8496EB3C25DEB141005098DD /* R5PublicKeyCredentialParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496EB3225DEB140005098DD /* R5PublicKeyCredentialParameter.swift */; };
@@ -124,7 +123,6 @@
 		8496EB1D25DEAFCF005098DD /* RegistrationPublicKeyCredential.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationPublicKeyCredential.swift; sourceTree = "<group>"; };
 		8496EB1F25DEAFCF005098DD /* R5PublicKeyCredentialRequestOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R5PublicKeyCredentialRequestOptions.swift; sourceTree = "<group>"; };
 		8496EB2025DEAFCF005098DD /* R5AuthenticatorAttestationResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R5AuthenticatorAttestationResponse.swift; sourceTree = "<group>"; };
-		8496EB2125DEAFCF005098DD /* WebAuthnRegistrationRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebAuthnRegistrationRequest.swift; sourceTree = "<group>"; };
 		8496EB2225DEAFCF005098DD /* WebAuthnLoginRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebAuthnLoginRequest.swift; sourceTree = "<group>"; };
 		8496EB2325DEAFCF005098DD /* WebauthnSignupCredential.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebauthnSignupCredential.swift; sourceTree = "<group>"; };
 		8496EB3225DEB140005098DD /* R5PublicKeyCredentialParameter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R5PublicKeyCredentialParameter.swift; sourceTree = "<group>"; };
@@ -273,7 +271,6 @@
 				8496EB1F25DEAFCF005098DD /* R5PublicKeyCredentialRequestOptions.swift */,
 				8496EB1D25DEAFCF005098DD /* RegistrationPublicKeyCredential.swift */,
 				8496EB2225DEAFCF005098DD /* WebAuthnLoginRequest.swift */,
-				8496EB2125DEAFCF005098DD /* WebAuthnRegistrationRequest.swift */,
 				8496EB2325DEAFCF005098DD /* WebauthnSignupCredential.swift */,
 			);
 			path = webAuthn;
@@ -470,7 +467,6 @@
 				34251C0B232FC13800B0C271 /* RefreshRequest.swift in Sources */,
 				8496EB4325DEB141005098DD /* AuthenticationToken.swift in Sources */,
 				34BDDA4422E5D95B00D16DAE /* ReachFiveProfile.swift in Sources */,
-				8496EB2A25DEAFCF005098DD /* WebAuthnRegistrationRequest.swift in Sources */,
 				34BDDA4022E5D73900D16DAE /* ReachFiveProviders.swift in Sources */,
 				347FDB67229C02FE00660687 /* ReachFive.swift in Sources */,
 				8496EB3F25DEB141005098DD /* RegistrationOptions.swift in Sources */,
