@@ -3,9 +3,12 @@ import IdentitySdkCore
 import BrightFutures
 
 //TODO
-//      - déplacer le bouton login with refresh ici pour que, même logué, on puisse afficher les passkey (qui sont expirées )
-//      - ajouter une option convertion vers un mdp fort automatique et vers SIWA
+//      - déplacer le bouton login with refresh ici pour que, même logué, on puisse afficher les passkey (qui sont expirées)
+//      - faire du pull-to-refresh soit sur la table des clés soit carrément sur tout le profil (déclencher le refresh token)
+//      - ajouter une option conversion vers un mdp fort automatique et vers SIWA
 //      - voir les SLO liés et bouton pour les délier
+//      - ajouter un bouton + dans la table des clés pour en ajouter une (ou carrément supprimer le bouton "register passkey")
+//      - ajouter un bouton modifier à la table pour pouvoir plus visuellement supprimer des clés (et que ça marche sur Mac)
 class ProfileController: UIViewController {
     var authToken: AuthToken?
     var devices: [DeviceCredential] = [] {
@@ -48,6 +51,7 @@ class ProfileController: UIViewController {
         credentialTableview.delegate = self
         credentialTableview.dataSource = self
         
+        //TODO: mieux gérer les notifications pour ne pas en avoir plusieurs qui se déclenche pour le même évènement
         clearTokenObserver = NotificationCenter.default.addObserver(forName: .DidClearAuthToken, object: nil, queue: nil) { _ in
             self.didLogout()
         }

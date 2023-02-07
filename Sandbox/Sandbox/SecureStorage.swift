@@ -63,12 +63,13 @@ public class SecureStorage: Storage {
         
         if key == SecureStorage.authKey {
             print("send SecureStorage.update.DidSetAuthToken")
+            //TODO: passer le token dans la notif pour pouvior le récupérer directement
             NotificationCenter.default.post(name: .DidSetAuthToken, object: nil)
         }
         print("SecureStorage.update success")
     }
     
-    //TODO implémenter un fonction spécifique pour AuthToken pour ne pas à avoir le problème de type et pour y mettre les notifs
+    //TODO: implémenter un fonction spécifique pour AuthToken pour ne pas à avoir le problème de type et pour y mettre les notifs
     public func get<D: Codable>(key: String) -> D? {
         let query: [String: Any] = [kSecClass as String: kSecClassGenericPassword,
                                     kSecAttrAccount as String: key,

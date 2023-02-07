@@ -55,6 +55,7 @@ public class ReachFiveApi {
         "updated_at"
     ]
     
+    //TODO: ajouter la version du SDK
     let deviceInfo: String = "\(UIDevice.current.modelName) \(UIDevice.current.systemName) \(UIDevice.current.systemVersion)"
         .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
     
