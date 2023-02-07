@@ -10,6 +10,8 @@ public class CredentialManager: NSObject {
     
     // promise for authentification
     var promise: Promise<AuthToken, ReachFiveError>
+    // promise for new key registration
+    var registrationPromise: Promise<(), ReachFiveError>
     
     // anchor for presentationContextProvider
     var authenticationAnchor: ASPresentationAnchor?
@@ -19,15 +21,21 @@ public class CredentialManager: NSObject {
     
     // indicates whether the request is modal or auto-fill, in order to show a special error when the modal is canceled by the user
     var isPerformingModalReqest = false
-    // data for signup
-    var signupOptions: RegistrationOptions?
+    // data for signup/register
+    var signupOrAddPasskey: SignupOrAddPasskey?
     // the scope of the request
     var scope: String?
+    
+    enum SignupOrAddPasskey {
+        case Signup(signupOptions: RegistrationOptions)
+        case AddPasskey(authToken: AuthToken)
+    }
     
     // MARK: -
     
     public init(reachFiveApi: ReachFiveApi) {
         promise = Promise()
+        registrationPromise = Promise()
         self.reachFiveApi = reachFiveApi
     }
     
@@ -41,7 +49,7 @@ public class CredentialManager: NSObject {
         
         reachFiveApi.createWebAuthnSignupOptions(webAuthnSignupOptions: request)
             .flatMap { options -> Result<ASAuthorizationRequest, ReachFiveError> in
-                self.signupOptions = options
+                self.signupOrAddPasskey = .Signup(signupOptions: options)
                 
                 guard let challenge = options.options.publicKey.challenge.decodeBase64Url() else {
                     return .failure(.TechnicalError(reason: "unreadable challenge: \(options.options.publicKey.challenge)"))
@@ -66,6 +74,42 @@ public class CredentialManager: NSObject {
             .onFailure { error in self.promise.failure(error) }
         
         return promise.future
+    }
+    
+    // MARK: - Register
+    @available(iOS 16.0, *)
+    func registerNewPasskey(withRequest request: NewPasskeyRequest, authToken: AuthToken) -> Future<(), ReachFiveError> {
+        authController?.cancel()
+        registrationPromise = Promise()
+        authenticationAnchor = request.anchor
+        
+        reachFiveApi.createWebAuthnRegistrationOptions(authToken: authToken, registrationRequest: RegistrationRequest(origin: request.origin!, friendlyName: request.friendlyName))
+            .flatMap { options -> Result<ASAuthorizationRequest, ReachFiveError> in
+                self.signupOrAddPasskey = .AddPasskey(authToken: authToken)
+                
+                guard let challenge = options.options.publicKey.challenge.decodeBase64Url() else {
+                    return .failure(.TechnicalError(reason: "unreadable challenge: \(options.options.publicKey.challenge)"))
+                }
+                
+                guard let userID = options.options.publicKey.user.id.decodeBase64Url() else {
+                    return .failure(.TechnicalError(reason: "unreadable userID from public key: \(options.options.publicKey.user.id)"))
+                }
+                
+                let publicKeyCredentialProvider = ASAuthorizationPlatformPublicKeyCredentialProvider(relyingPartyIdentifier: self.reachFiveApi.sdkConfig.domain)
+                return .success(publicKeyCredentialProvider.createCredentialRegistrationRequest(challenge: challenge, name: request.friendlyName, userID: userID))
+            }
+            .onSuccess { registrationRequest in
+                let authController = ASAuthorizationController(authorizationRequests: [registrationRequest])
+                authController.delegate = self
+                authController.presentationContextProvider = self
+                authController.performRequests()
+                
+                self.authController = authController
+                self.isPerformingModalReqest = true
+            }
+            .onFailure { error in self.registrationPromise.failure(error) }
+        
+        return registrationPromise.future
     }
     
     // MARK: - Auto-fill
@@ -213,12 +257,12 @@ extension CredentialManager: ASAuthorizationControllerPresentationContextProvidi
 extension CredentialManager: ASAuthorizationControllerDelegate {
     
     public func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        guard let scope else {
-            promise.tryFailure(.TechnicalError(reason: "didCompleteWithAuthorization: no scope"))
-            return
-        }
-        
         if let passwordCredential = authorization.credential as? ASPasswordCredential {
+            guard let scope else {
+                promise.tryFailure(.TechnicalError(reason: "didCompleteWithAuthorization: no scope"))
+                return
+            }
+            
             // a password was selected to sign in
             let email: String?
             let phoneNumber: String?
@@ -243,6 +287,7 @@ extension CredentialManager: ASAuthorizationControllerDelegate {
             // A new passkey was registered
             guard let attestationObject = credentialRegistration.rawAttestationObject else {
                 promise.tryFailure(.TechnicalError(reason: "didCompleteWithAuthorization: no attestationObject"))
+                registrationPromise.tryFailure(.TechnicalError(reason: "didCompleteWithAuthorization: no attestationObject"))
                 return
             }
             
@@ -252,16 +297,31 @@ extension CredentialManager: ASAuthorizationControllerDelegate {
             let id = credentialRegistration.credentialID.toBase64Url()
             let registrationPublicKeyCredential = RegistrationPublicKeyCredential(id: id, rawId: id, type: "public-key", response: r5AuthenticatorAttestationResponse)
             
-            guard let signupOptions else {
-                promise.tryFailure(.TechnicalError(reason: "didCompleteWithAuthorization: no signupOptions"))
-                return
+            if let signupOrAddPasskey {
+                switch signupOrAddPasskey {
+                case .Signup(signupOptions: let signupOptions):
+                    guard let scope else {
+                        promise.tryFailure(.TechnicalError(reason: "didCompleteWithAuthorization: no scope"))
+                        return
+                    }
+                    
+                    let webauthnSignupCredential = WebauthnSignupCredential(webauthnId: signupOptions.options.publicKey.user.id, publicKeyCredential: registrationPublicKeyCredential)
+                    promise.completeWith(reachFiveApi.signupWithWebAuthn(webauthnSignupCredential: webauthnSignupCredential)
+                        .flatMap({ self.loginCallback(tkn: $0.tkn, scope: scope) }))
+                    return
+                case .AddPasskey(authToken: let authToken):
+                    registrationPromise.completeWith(reachFiveApi.registerWithWebAuthn(authToken: authToken, publicKeyCredential: registrationPublicKeyCredential))
+                    return
+                }
             }
-            
-            let webauthnSignupCredential = WebauthnSignupCredential(webauthnId: signupOptions.options.publicKey.user.id, publicKeyCredential: registrationPublicKeyCredential)
-            promise.completeWith(reachFiveApi.signupWithWebAuthn(webauthnSignupCredential: webauthnSignupCredential)
-                .flatMap({ self.loginCallback(tkn: $0.tkn, scope: scope) }))
+            promise.tryFailure(.TechnicalError(reason: "didCompleteWithAuthorization: no signupOptions"))
+            registrationPromise.tryFailure(.TechnicalError(reason: "didCompleteWithAuthorization: no token"))
         } else if #available(iOS 16.0, *), let credentialAssertion = authorization.credential as? ASAuthorizationPlatformPublicKeyCredentialAssertion {
             // A passkey was selected to sign in
+            guard let scope else {
+                promise.tryFailure(.TechnicalError(reason: "didCompleteWithAuthorization: no scope"))
+                return
+            }
             
             let signature = credentialAssertion.signature.toBase64Url()
             let clientDataJSON = credentialAssertion.rawClientDataJSON.toBase64Url()
@@ -275,12 +335,14 @@ extension CredentialManager: ASAuthorizationControllerDelegate {
                 .flatMap({ self.loginCallback(tkn: $0.tkn, scope: scope) }))
         } else {
             promise.tryFailure(.TechnicalError(reason: "didCompleteWithAuthorization: Received unknown authorization type."))
+            registrationPromise.tryFailure(.TechnicalError(reason: "didCompleteWithAuthorization: Received unknown authorization type."))
         }
     }
     
     public func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         guard let authorizationError = error as? ASAuthorizationError else {
             promise.tryFailure(.TechnicalError(reason: "\(error.localizedDescription)"))
+            registrationPromise.tryFailure(.TechnicalError(reason: "\(error.localizedDescription)"))
             return
         }
         
@@ -289,12 +351,14 @@ extension CredentialManager: ASAuthorizationControllerDelegate {
             // This is a good time to show a traditional login form, or ask the user to create an account.
             if isPerformingModalReqest {
                 promise.tryFailure(.AuthCanceled)
+                registrationPromise.tryFailure(.AuthCanceled)
             }
         } else {
             // Another ASAuthorization error.
             // Note: The userInfo dictionary contains useful information.
             let userInfo = (error as NSError).userInfo
             promise.tryFailure(.TechnicalError(reason: "\(userInfo)"))
+            registrationPromise.tryFailure(.TechnicalError(reason: "\(userInfo)"))
         }
     }
 }
