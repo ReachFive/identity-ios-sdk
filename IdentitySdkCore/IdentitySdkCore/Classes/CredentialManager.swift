@@ -79,6 +79,8 @@ public class CredentialManager: NSObject {
     // MARK: - Register
     @available(iOS 16.0, *)
     func registerNewPasskey(withRequest request: NewPasskeyRequest, authToken: AuthToken) -> Future<(), ReachFiveError> {
+        // Here it is very important to cancel a running auti-fill request, otherwise it will fail like other modal requests
+        // so can't separate this method from the rest of the class
         authController?.cancel()
         registrationPromise = Promise()
         authenticationAnchor = request.anchor
@@ -297,25 +299,26 @@ extension CredentialManager: ASAuthorizationControllerDelegate {
             let id = credentialRegistration.credentialID.toBase64Url()
             let registrationPublicKeyCredential = RegistrationPublicKeyCredential(id: id, rawId: id, type: "public-key", response: r5AuthenticatorAttestationResponse)
             
-            if let signupOrAddPasskey {
-                switch signupOrAddPasskey {
-                case .Signup(signupOptions: let signupOptions):
-                    guard let scope else {
-                        promise.tryFailure(.TechnicalError(reason: "didCompleteWithAuthorization: no scope"))
-                        return
-                    }
-                    
-                    let webauthnSignupCredential = WebauthnSignupCredential(webauthnId: signupOptions.options.publicKey.user.id, publicKeyCredential: registrationPublicKeyCredential)
-                    promise.completeWith(reachFiveApi.signupWithWebAuthn(webauthnSignupCredential: webauthnSignupCredential)
-                        .flatMap({ self.loginCallback(tkn: $0.tkn, scope: scope) }))
-                    return
-                case .AddPasskey(authToken: let authToken):
-                    registrationPromise.completeWith(reachFiveApi.registerWithWebAuthn(authToken: authToken, publicKeyCredential: registrationPublicKeyCredential))
+            guard let signupOrAddPasskey else {
+                promise.tryFailure(.TechnicalError(reason: "didCompleteWithAuthorization: no signupOptions"))
+                registrationPromise.tryFailure(.TechnicalError(reason: "didCompleteWithAuthorization: no token"))
+                return
+            }
+            
+            switch signupOrAddPasskey {
+            case let .AddPasskey(authToken):
+                registrationPromise.completeWith(reachFiveApi.registerWithWebAuthn(authToken: authToken, publicKeyCredential: registrationPublicKeyCredential))
+            
+            case let .Signup(signupOptions):
+                guard let scope else {
+                    promise.tryFailure(.TechnicalError(reason: "didCompleteWithAuthorization: no scope"))
                     return
                 }
+                
+                let webauthnSignupCredential = WebauthnSignupCredential(webauthnId: signupOptions.options.publicKey.user.id, publicKeyCredential: registrationPublicKeyCredential)
+                promise.completeWith(reachFiveApi.signupWithWebAuthn(webauthnSignupCredential: webauthnSignupCredential)
+                    .flatMap({ self.loginCallback(tkn: $0.tkn, scope: scope) }))
             }
-            promise.tryFailure(.TechnicalError(reason: "didCompleteWithAuthorization: no signupOptions"))
-            registrationPromise.tryFailure(.TechnicalError(reason: "didCompleteWithAuthorization: no token"))
         } else if #available(iOS 16.0, *), let credentialAssertion = authorization.credential as? ASAuthorizationPlatformPublicKeyCredentialAssertion {
             // A passkey was selected to sign in
             guard let scope else {
