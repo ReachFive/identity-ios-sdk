@@ -12,7 +12,6 @@ import IdentitySdkGoogle
 // Essayer d'améliorer la navigation pour qu'il n'y ait pas tous ces retours en arrière inutiles quand on navigue les onglets à la main
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    var window: UIWindow?
     
     public static let storage = SecureStorage()
     
@@ -33,20 +32,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     static func reachfive() -> ReachFive {
         let app = UIApplication.shared.delegate as! AppDelegate
         return app.reachfive
-    }
-    
-    static func shared() -> AppDelegate {
-        UIApplication.shared.delegate as! AppDelegate
-    }
-    
-    static func createAlert(title: String, message: String) -> UIAlertController {
-        let alert = UIAlertController(
-            title: title,
-            message: message,
-            preferredStyle: UIAlertController.Style.alert
-        )
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        return alert
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -100,6 +85,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationProtectedDataDidBecomeAvailable(_ application: UIApplication) {
         print("applicationProtectedDataDidBecomeAvailable")
+    }
+}
+
+extension AppDelegate {
+    static func createAlert(title: String, message: String) -> UIAlertController {
+        let alert = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: UIAlertController.Style.alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default))
+        return alert
     }
 }
 
