@@ -161,7 +161,6 @@
 		8496EB3925DEB141005098DD /* AuthenticationToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationToken.swift; sourceTree = "<group>"; };
 		8496EB3A25DEB141005098DD /* R5PublicKeyCredentialRpEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R5PublicKeyCredentialRpEntity.swift; sourceTree = "<group>"; };
 		8496EB3B25DEB141005098DD /* R5PublicKeyCredentialUserEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R5PublicKeyCredentialUserEntity.swift; sourceTree = "<group>"; };
-		84C353CD25E47238006978E5 /* PromiseKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PromiseKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		92974ED6A8B2D1CEADE0BFF5 /* Pods-IdentitySdkCore.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IdentitySdkCore.debug.xcconfig"; path = "Target Support Files/Pods-IdentitySdkCore/Pods-IdentitySdkCore.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -289,7 +288,6 @@
 		74FB8B4B94CB262BEC297380 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				84C353CD25E47238006978E5 /* PromiseKit.framework */,
 				2B722D997B32FEE8753D77AB /* Pods_IdentitySdkCore.framework */,
 			);
 			name = Frameworks;
@@ -677,7 +675,6 @@
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/CryptoSwift\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/EllipticCurveKeyPair\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/KeychainAccess\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/PromiseKit\"",
 				);
 				INFOPLIST_FILE = IdentitySdkCore/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
