@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2AE533062994629400EF97E0 /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE533052994629400EF97E0 /* StringUtils.swift */; };
 		3404A40822CB9B7E002FFEDB /* ReachFiveError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3404A40722CB9B7E002FFEDB /* ReachFiveError.swift */; };
 		3404A40C22CBA6DD002FFEDB /* AuthCodeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3404A40B22CBA6DD002FFEDB /* AuthCodeRequest.swift */; };
 		340AF1F7232A9A2B00AA114D /* QueryString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 340AF1F6232A9A2B00AA114D /* QueryString.swift */; };
@@ -71,6 +72,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2AE533052994629400EF97E0 /* StringUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringUtils.swift; sourceTree = "<group>"; };
 		2B722D997B32FEE8753D77AB /* Pods_IdentitySdkCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IdentitySdkCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CA6D9263DC2541C548301E9 /* Pods-IdentitySdkCore.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IdentitySdkCore.release.xcconfig"; path = "Target Support Files/Pods-IdentitySdkCore/Pods-IdentitySdkCore.release.xcconfig"; sourceTree = "<group>"; };
 		3404A40722CB9B7E002FFEDB /* ReachFiveError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachFiveError.swift; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 		34689A9A22CE3E34002970F9 /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				2AE533052994629400EF97E0 /* StringUtils.swift */,
 				34689A9B22CE3E57002970F9 /* Base64.swift */,
 				340DA24722CF4CB200864149 /* UIDevice.swift */,
 				34B5295922D376FF00B7B6AA /* Pkce.swift */,
@@ -452,6 +455,7 @@
 				72DDB78E22EF354300048262 /* ClientConfigResponse.swift in Sources */,
 				3417FF6A22FAD1810009EC84 /* ReachFivePasswordLess.swift in Sources */,
 				34689A9722CDFB5F002970F9 /* AuthToken.swift in Sources */,
+				2AE533062994629400EF97E0 /* StringUtils.swift in Sources */,
 				8496EB2525DEAFCF005098DD /* AuthenticationPublicKeyCredential.swift in Sources */,
 				34DD31FF22F3286400279E54 /* CustomField.swift in Sources */,
 				34BDDA3A22E5BF1C00D16DAE /* Consent.swift in Sources */,
