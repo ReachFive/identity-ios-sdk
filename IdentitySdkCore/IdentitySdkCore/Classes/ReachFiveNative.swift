@@ -10,8 +10,8 @@ public extension ReachFive {
 // non-discoverable methods also take a requestType parameter even though there is only one such type:
 //      1. to make it very clear that we are using passkeys
 //      2. to be future proof. For non-discoverable, there is already Security Keys that exist and that we could support.
-// AutoFill is @available(iOS 16.0, *) because ASAuthorizationController.performAutoFillAssistedRequests() itself is
-// the other methods control version availability with their respective Authorization enum to increase flexibility
+// AutoFill is @available(iOS 16.0, *) because ASAuthorizationController.performAutoFillAssistedRequests() itself is.
+// The other methods control version availability with their respective Authorization enum to increase flexibility.
 // For example the non-discoverable cannot be declared @available(iOS 16.0, *)
 // because in the future we could support Security Keys, which are available since iOS 15
     
