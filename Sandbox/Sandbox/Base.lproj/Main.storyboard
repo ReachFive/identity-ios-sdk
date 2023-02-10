@@ -883,12 +883,29 @@
                                             <segue destination="Dnj-th-wgv" kind="show" id="Btu-wY-LR0"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="nativeSignInWithApple" textLabel="vo8-HT-nYT" style="IBUITableViewCellStyleDefault" id="Yc5-Lu-nem" userLabel="nativeSignInWithApple">
+                                        <rect key="frame" x="0.0" y="302.66667175292969" width="430" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Yc5-Lu-nem" id="IXM-Mn-VSy">
+                                            <rect key="frame" x="0.0" y="0.0" width="430" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Sign In With Apple" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vo8-HT-nYT">
+                                                    <rect key="frame" x="20" y="0.0" width="390" height="43.666667938232422"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Passkey" id="b8C-hd-6Dx" userLabel="Passkey">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="signupWithPasskey" textLabel="lLQ-Bw-bBI" style="IBUITableViewCellStyleDefault" id="2TL-BN-Fxk" userLabel="signupWithPasskey">
-                                        <rect key="frame" x="0.0" y="380.66667175292969" width="430" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="424.33333969116211" width="430" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2TL-BN-Fxk" id="HGj-Fb-I79">
                                             <rect key="frame" x="0.0" y="0.0" width="399.66666666666669" height="43.666667938232422"/>
@@ -908,7 +925,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="loginWithPasskeyModalSilent" textLabel="8Yd-gR-g5B" style="IBUITableViewCellStyleDefault" id="aey-Mg-aJ1" userLabel="loginWithPasskeyModalSilent">
-                                        <rect key="frame" x="0.0" y="424.33333969116211" width="430" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="468.00000762939453" width="430" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="aey-Mg-aJ1" id="R09-n7-lQW">
                                             <rect key="frame" x="0.0" y="0.0" width="430" height="43.666667938232422"/>
@@ -925,7 +942,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="loginWithPasskeyModal" textLabel="dxd-xg-SkR" style="IBUITableViewCellStyleDefault" id="xOf-US-tNz" userLabel="loginWithPasskeyModal">
-                                        <rect key="frame" x="0.0" y="468.00000762939453" width="430" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="511.66667556762695" width="430" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xOf-US-tNz" id="wRZ-DX-gxd">
                                             <rect key="frame" x="0.0" y="0.0" width="430" height="43.666667938232422"/>
@@ -942,7 +959,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="loginWithPasskeyAutoFill" textLabel="5gR-vr-iZc" style="IBUITableViewCellStyleDefault" id="27m-dm-5Q5" userLabel="loginWithPasskeyAutoFill">
-                                        <rect key="frame" x="0.0" y="511.66667556762695" width="430" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="555.33334350585938" width="430" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="27m-dm-5Q5" id="bV8-cZ-vmj">
                                             <rect key="frame" x="0.0" y="0.0" width="399.66666666666669" height="43.666667938232422"/>
@@ -962,7 +979,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="loginWithPasskeyNonDiscoverable" textLabel="rh7-Kd-reD" style="IBUITableViewCellStyleDefault" id="a0w-jd-IsY" userLabel="loginWithPasskeyNonDiscoverable">
-                                        <rect key="frame" x="0.0" y="555.33334350585938" width="430" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="599.0000114440918" width="430" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="a0w-jd-IsY" id="i6h-Iz-ODn">
                                             <rect key="frame" x="0.0" y="0.0" width="399.66666666666669" height="43.666667938232422"/>
@@ -982,7 +999,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="loginWithPasskeyCombined" textLabel="SgV-hN-g6Z" style="IBUITableViewCellStyleDefault" id="5cq-vu-Hos" userLabel="loginWithPasskeyCombined">
-                                        <rect key="frame" x="0.0" y="599.0000114440918" width="430" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="642.66667938232422" width="430" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5cq-vu-Hos" id="g85-Zb-KOs">
                                             <rect key="frame" x="0.0" y="0.0" width="399.66666666666669" height="43.666667938232422"/>
@@ -1006,7 +1023,7 @@
                             <tableViewSection headerTitle="Others" id="xgJ-xR-q7F">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="loginWithProviders" textLabel="uHu-wG-7fu" style="IBUITableViewCellStyleDefault" id="YJu-ug-aOr">
-                                        <rect key="frame" x="0.0" y="720.66667938232422" width="430" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="764.33334732055664" width="430" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YJu-ug-aOr" id="dob-ex-Its">
                                             <rect key="frame" x="0.0" y="0.0" width="399.66666666666669" height="43.666667938232422"/>
@@ -1026,7 +1043,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="loginWithPasswordless" textLabel="68T-r2-ue4" style="IBUITableViewCellStyleDefault" id="OLE-ka-CFV">
-                                        <rect key="frame" x="0.0" y="764.33334732055664" width="430" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="808.00001525878906" width="430" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OLE-ka-CFV" id="gtI-pt-q22">
                                             <rect key="frame" x="0.0" y="0.0" width="399.66666666666669" height="43.666667938232422"/>
@@ -1046,14 +1063,14 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="loginWithPasswordless" textLabel="5mP-sr-WWF" style="IBUITableViewCellStyleDefault" id="hqN-k4-F74" userLabel="loginWithRefresh">
-                                        <rect key="frame" x="0.0" y="808.00001525878906" width="430" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="851.66668319702148" width="430" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hqN-k4-F74" id="bKJ-Je-CSn">
                                             <rect key="frame" x="0.0" y="0.0" width="430" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Login with refresh token" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5mP-sr-WWF">
-                                                    <rect key="frame" x="20" y="0.0" width="390" height="43.666667938232422"/>
+                                                    <rect key="frame" x="8" y="0.0" width="414" height="43.666667938232422"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>

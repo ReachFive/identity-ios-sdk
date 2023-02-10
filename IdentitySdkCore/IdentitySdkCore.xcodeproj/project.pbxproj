@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A3979B22996CAC500EDCC3F /* AppleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3979B12996CAC500EDCC3F /* AppleProvider.swift */; };
 		2AE533062994629400EF97E0 /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE533052994629400EF97E0 /* StringUtils.swift */; };
 		2AE5330B299462DD00EF97E0 /* ReachFiveWebviewLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE53307299462DD00EF97E0 /* ReachFiveWebviewLogin.swift */; };
 		2AE5330C299462DD00EF97E0 /* ReachFiveLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE53308299462DD00EF97E0 /* ReachFiveLogin.swift */; };
@@ -84,6 +85,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2A3979B12996CAC500EDCC3F /* AppleProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppleProvider.swift; sourceTree = "<group>"; };
 		2AE533052994629400EF97E0 /* StringUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringUtils.swift; sourceTree = "<group>"; };
 		2AE53307299462DD00EF97E0 /* ReachFiveWebviewLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachFiveWebviewLogin.swift; sourceTree = "<group>"; };
 		2AE53308299462DD00EF97E0 /* ReachFiveLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachFiveLogin.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				34E18B8D22A6C13100952EBD /* models */,
+				2A3979B12996CAC500EDCC3F /* AppleProvider.swift */,
 				347FDB53229BE8F800660687 /* Provider.swift */,
 				347FDB66229C02FE00660687 /* ReachFive.swift */,
 				2AE53309299462DD00EF97E0 /* CredentialManager.swift */,
@@ -477,6 +480,7 @@
 				34BDDA3C22E5BF3600D16DAE /* Emails.swift in Sources */,
 				8496EB3E25DEB141005098DD /* R5PublicKeyCredentialDescriptor.swift in Sources */,
 				34689A9C22CE3E57002970F9 /* Base64.swift in Sources */,
+				2A3979B22996CAC500EDCC3F /* AppleProvider.swift in Sources */,
 				34BDDA3622E5BE6000D16DAE /* ProfileAddress.swift in Sources */,
 				8496EB2825DEAFCF005098DD /* R5PublicKeyCredentialRequestOptions.swift in Sources */,
 				3474D28B22D32F3A005112C1 /* RequestPasswordResetRequest.swift in Sources */,

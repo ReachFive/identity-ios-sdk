@@ -30,7 +30,17 @@ public extension ReachFive {
     
     private func createProviders(providersConfigsResult: ProvidersConfigsResult, clientConfigResponse: ClientConfigResponse) -> [Provider] {
         let webViewCreator = providersCreators.first(where: { $0.name == "webview" })
-        return providersConfigsResult.items.filter { $0.clientId != nil }.map({ config in
+        let appleCreator = providersCreators.first(where: { $0.name == "apple" })
+        return providersConfigsResult.items.filter { $0.clientId != nil }
+            .map { config in
+                if config.provider == AppleProvider.NAME, let appleCreator {
+                    return ConfiguredAppleProvider(
+                        sdkConfig: sdkConfig,
+                        providerConfig: config,
+                        clientConfigResponse: clientConfigResponse,
+                        credentialManager: credentialManager
+                    )
+                }
                 let nativeCreator = providersCreators.first(where: { $0.name == config.provider })
                 return (nativeCreator ?? webViewCreator)?.create(
                     sdkConfig: sdkConfig,
@@ -38,7 +48,7 @@ public extension ReachFive {
                     reachFiveApi: reachFiveApi,
                     clientConfigResponse: clientConfigResponse
                 )
-            })
+            }
             .compactMap { $0 }
     }
     

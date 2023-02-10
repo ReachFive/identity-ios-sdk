@@ -17,6 +17,8 @@ class DemoController: UIViewController {
         print("DemoController.viewDidLoad")
         super.viewDidLoad()
         
+        setupProviderLoginView()
+        
         // set delegates to manage the keyboard Return/Done button behavior
         usernameField.delegate = self
         passwordField.delegate = self
@@ -40,7 +42,7 @@ class DemoController: UIViewController {
         super.viewDidAppear(animated)
         
         guard let window = view.window else { fatalError("The view was not in the app's view hierarchy!") }
-        var types: [ModalAuthorization] = [.Password]
+        var types: [ModalAuthorization] = [.Password, .SignInWithApple]
         if #available(iOS 16.0, *) {
             types.append(.Passkey)
         }
@@ -170,6 +172,27 @@ class DemoController: UIViewController {
             .onFailure { error in
                 let alert = AppDelegate.createAlert(title: "Login", message: "Error: \(error.message())")
                 self.present(alert, animated: true, completion: nil)
+            }
+    }
+    
+    func setupProviderLoginView() {
+        let authorizationButton = ASAuthorizationAppleIDButton()
+        authorizationButton.addTarget(self, action: #selector(handleAuthorizationAppleIDButtonPress), for: .touchDown)
+        loginProviderStackView.addArrangedSubview(authorizationButton)
+    }
+    
+    @objc func handleAuthorizationAppleIDButtonPress() {
+        print("handleAuthorizationAppleIDButtonPress")
+        guard let window = view.window else { fatalError("The view was not in the app's view hierarchy!") }
+        AppDelegate.reachfive().login(withRequest: NativeLoginRequest(anchor: window), usingModalAuthorizationFor: [.SignInWithApple], display: .Always)
+            .onSuccess(callback: goToProfile)
+            .onFailure { error in
+                switch error {
+                case .AuthCanceled: return
+                default:
+                    let alert = AppDelegate.createAlert(title: "Signup with Apple", message: "Error: \(error.message())")
+                    self.present(alert, animated: true, completion: nil)
+                }
             }
     }
 }

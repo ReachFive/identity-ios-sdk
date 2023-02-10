@@ -142,6 +142,37 @@ public class ReachFiveApi {
         return promise.future
     }
     
+    internal func authorize(params: [String: String]) -> Future<String, ReachFiveError> {
+        let promise = Promise<String, ReachFiveError>()
+        let queryString = params
+            .map { "\($0)=\($1)" }
+            .compactMap { $0.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) }
+            .joined(separator: "&")
+        
+        AF
+            .request(
+                createUrl(path: "/oauth/authorize?\(queryString)"),
+                method: .get
+            )
+            .redirect(using: Redirector.doNotFollow)
+            .validate(statusCode: 300...308) //TODO pas de 305/306
+            .response { responseData in
+                let callbackURL = responseData.response?.allHeaderFields["Location"] as? String
+                guard let callbackURL else {
+                    promise.failure(.TechnicalError(reason: "No location"))
+                    return
+                }
+                let queryItems = URLComponents(string: callbackURL)?.queryItems
+                let code = queryItems?.first(where: { $0.name == "code" })?.value
+                guard let code else {
+                    promise.failure(.TechnicalError(reason: "No authorization code"))
+                    return
+                }
+                promise.success(code)
+            }
+        return promise.future
+    }
+    
     public func authWithCode(authCodeRequest: AuthCodeRequest) -> Future<AccessTokenResponse, ReachFiveError> {
         AF
             .request(

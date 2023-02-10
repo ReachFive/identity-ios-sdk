@@ -25,6 +25,8 @@ public class CredentialManager: NSObject {
     var signupOrAddPasskey: SignupOrAddPasskey?
     // the scope of the request
     var scope: String?
+    // the nonce for Sign In With Apple
+    var nonce: String?
     
     enum SignupOrAddPasskey {
         case Signup(signupOptions: RegistrationOptions)
@@ -211,6 +213,15 @@ public class CredentialManager: NSObject {
                     let passwordRequest = ASAuthorizationPasswordProvider().createRequest()
                     return Future(value: passwordRequest)
                 
+                case .SignInWithApple:
+                    // Allow the user to use a Sign In With Apple, if they have one.
+                    let appleIDRequest = ASAuthorizationAppleIDProvider().createRequest()
+                    appleIDRequest.requestedScopes = [.fullName, .email]
+                    nonce = Pkce.generate().codeChallenge
+                    appleIDRequest.nonce = nonce
+    
+                    return Future(value: appleIDRequest)
+                    
                 case .Passkey:
                     // Allow the user to use a saved passkey, if they have one.
                     return reachFiveApi.createWebAuthnAuthenticationOptions(webAuthnLoginRequest: webAuthnLoginRequest)
@@ -285,6 +296,30 @@ extension CredentialManager: ASAuthorizationControllerDelegate {
                     scope: scope
                 ))
                 .flatMap({ self.loginCallback(tkn: $0.tkn, scope: scope) }))
+        } else if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+            guard let nonce, let scope else {
+                promise.tryFailure(.TechnicalError(reason: "didCompleteWithAuthorization: no scope, no nonce"))
+                return
+            }
+            
+            guard let identityToken = appleIDCredential.identityToken, let idToken = String(data: identityToken, encoding: .utf8) else {
+                promise.tryFailure(.TechnicalError(reason: "didCompleteWithAuthorization: unreadable id token \(appleIDCredential.identityToken)"))
+                return
+            }
+            
+            let pkce = Pkce.generate()
+            promise.completeWith(reachFiveApi.authorize(params: [
+                "provider": "apple",
+                "client_id": reachFiveApi.sdkConfig.clientId,
+                "id_token": idToken,
+                "response_type": "code",
+                "redirect_uri": reachFiveApi.sdkConfig.scheme,
+                "scope": scope,
+                "platform": "ios",
+                "code_challenge": pkce.codeChallenge,
+                "code_challenge_method": pkce.codeChallengeMethod,
+                "nonce": nonce
+            ]).flatMap({ self.authWithCode(code: $0) }))
         } else if #available(iOS 16.0, *), let credentialRegistration = authorization.credential as? ASAuthorizationPlatformPublicKeyCredentialRegistration {
             // A new passkey was registered
             guard let attestationObject = credentialRegistration.rawAttestationObject else {
@@ -390,7 +425,7 @@ extension CredentialManager {
             .flatMap({ self.authWithCode(code: $0, pkce: pkce) })
     }
     
-    func authWithCode(code: String, pkce: Pkce) -> Future<AuthToken, ReachFiveError> {
+    func authWithCode(code: String, pkce: Pkce? = nil) -> Future<AuthToken, ReachFiveError> {
         let authCodeRequest = AuthCodeRequest(
             clientId: reachFiveApi.sdkConfig.clientId,
             code: code,

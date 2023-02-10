@@ -19,7 +19,17 @@ class ActionController: UITableViewController {
                     .onComplete { self.handleResult(result: $0) }
             }
         }
-        
+    
+        // Section Native
+        if indexPath.section == 1 {
+            // Sign in with Apple
+            if indexPath.row == 1 {
+                AppDelegate.reachfive()
+                    .login(withRequest: loginRequest, usingModalAuthorizationFor: [.SignInWithApple], display: .Always)
+                    .onSuccess(callback: goToProfile)
+            }
+        }
+    
         // Section Passkey
         if #available(iOS 16.0, *), indexPath.section == 2 {
             // Login with passkey: modal non-persistent
