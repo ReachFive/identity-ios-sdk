@@ -14,7 +14,6 @@ class LoginWithPasswordController: UIViewController {
         let phoneNumber = phoneNumberInput.text
         let customIdentifier = customIdentifierInput.text
         let password = passwordInput.text ?? ""
-        guard let window = view.window else { fatalError("The view was not in the app's view hierarchy!") }
         
         AppDelegate.reachfive()
             .loginWithPassword(email: email, phoneNumber: phoneNumber, customIdentifier: customIdentifier, password: password)
