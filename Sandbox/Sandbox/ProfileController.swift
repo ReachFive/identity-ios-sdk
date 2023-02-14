@@ -167,17 +167,8 @@ class ProfileController: UIViewController {
         AppDelegate.reachfive()
             .getProfile(authToken: authToken)
             .onSuccess { profile in
-                
-                let friendlyName: String
-                // here the priority for phone number over email follows the backend rule
-                if let phone = profile.phoneNumber {
-                    friendlyName = phone
-                } else if let email = profile.email {
-                    friendlyName = email
-                } else {
-                    friendlyName = "Should have had an identifier"
-                }
-                
+                let friendlyName = ProfileController.username(profile: profile)
+    
                 let alert = UIAlertController(
                     title: "Register New Passkey",
                     message: "Name the passkey",
@@ -215,6 +206,19 @@ class ProfileController: UIViewController {
                 self.profileTabBarItem.selectedImage = self.profileTabBarItem.image
                 print("getProfile error = \(error.message())")
             }
+    }
+    
+    internal static func username(profile: Profile) -> String {
+        let username: String
+        // here the priority for phone number over email follows the backend rule
+        if let phone = profile.phoneNumber {
+            username = phone
+        } else if let email = profile.email {
+            username = email
+        } else {
+            username = "Should have had an identifier"
+        }
+        return username
     }
     
     private func format(date: Int) -> String {

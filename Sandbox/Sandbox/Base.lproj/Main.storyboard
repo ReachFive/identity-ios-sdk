@@ -266,7 +266,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="providerCell" id="HyK-Am-JUA">
-                                        <rect key="frame" x="0.0" y="50" width="431" height="44"/>
+                                        <rect key="frame" x="0.0" y="80" width="431" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HyK-Am-JUA" id="VRc-NK-UUF">
                                             <rect key="frame" x="0.0" y="0.0" width="431" height="43.666667938232422"/>
@@ -291,35 +291,35 @@
         <!--Update Password-->
         <scene sceneID="Qie-X7-E0X">
             <objects>
-                <viewController title="Update Password" id="GDD-43-cxV" customClass="UpdatePasswordController" customModule="Sandbox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UpdatePasswordController" title="Update Password" id="GDD-43-cxV" customClass="UpdatePasswordController" customModule="Sandbox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="oh4-V5-P11">
                         <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Old password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="row-j4-8AG">
-                                <rect key="frame" x="20.000000000000007" y="103" width="104.66666666666669" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WtW-hM-MYq" userLabel="Username label">
+                                <rect key="frame" x="20" y="123" width="78.333333333333329" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" restorationIdentifier="oldPassword" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Nqs-3R-NMv" userLabel="OldPassword">
-                                <rect key="frame" x="20" y="113" width="390" height="34"/>
+                            <textField opaque="NO" contentMode="scaleToFill" restorationIdentifier="username" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="L7g-Ud-DNd" userLabel="Username field">
+                                <rect key="frame" x="20" y="154" width="390" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
+                                <textInputTraits key="textInputTraits" textContentType="username"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qmz-jb-Bep">
-                                <rect key="frame" x="20" y="155" width="112" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qmz-jb-Bep" userLabel="New Password label">
+                                <rect key="frame" x="20" y="198" width="112" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mTK-qf-v8M" userLabel="NewPassword">
-                                <rect key="frame" x="20" y="184" width="390" height="34"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mTK-qf-v8M" userLabel="New Password field">
+                                <rect key="frame" x="20" y="229" width="390" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="new-password"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kzo-Al-lH7">
-                                <rect key="frame" x="20" y="226" width="51" height="30"/>
+                                <rect key="frame" x="20" y="283" width="51" height="30"/>
                                 <state key="normal" title="Update"/>
                                 <connections>
                                     <action selector="update:" destination="GDD-43-cxV" eventType="touchUpInside" id="gwV-pT-Pte"/>
@@ -330,26 +330,26 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="W3K-8i-RYY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Kzo-Al-lH7" secondAttribute="trailing" symbolic="YES" id="0vR-R9-6bO"/>
-                            <constraint firstItem="Qmz-jb-Bep" firstAttribute="top" secondItem="oh4-V5-P11" secondAttribute="top" constant="155" id="1kN-FV-pLv"/>
+                            <constraint firstItem="L7g-Ud-DNd" firstAttribute="leading" secondItem="WtW-hM-MYq" secondAttribute="leading" id="6oH-BQ-qoG"/>
+                            <constraint firstItem="WtW-hM-MYq" firstAttribute="top" secondItem="W3K-8i-RYY" secondAttribute="top" constant="20" id="AA2-74-GPz"/>
                             <constraint firstItem="Qmz-jb-Bep" firstAttribute="leading" secondItem="oh4-V5-P11" secondAttribute="leadingMargin" id="AEB-dL-ykr"/>
-                            <constraint firstItem="Qmz-jb-Bep" firstAttribute="leading" secondItem="Nqs-3R-NMv" secondAttribute="leading" id="EsR-OL-CYC"/>
+                            <constraint firstItem="WtW-hM-MYq" firstAttribute="leading" secondItem="W3K-8i-RYY" secondAttribute="leading" constant="20" id="GGJ-QD-eS5"/>
                             <constraint firstItem="mTK-qf-v8M" firstAttribute="trailing" secondItem="oh4-V5-P11" secondAttribute="trailingMargin" id="K9e-yX-lIz"/>
-                            <constraint firstItem="Kzo-Al-lH7" firstAttribute="top" secondItem="mTK-qf-v8M" secondAttribute="bottom" constant="8" symbolic="YES" id="MzI-cN-Atw"/>
+                            <constraint firstItem="Kzo-Al-lH7" firstAttribute="top" secondItem="mTK-qf-v8M" secondAttribute="bottom" constant="20" id="MzI-cN-Atw"/>
                             <constraint firstItem="W3K-8i-RYY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Qmz-jb-Bep" secondAttribute="trailing" symbolic="YES" id="NwV-KQ-K3G"/>
+                            <constraint firstItem="L7g-Ud-DNd" firstAttribute="top" secondItem="WtW-hM-MYq" secondAttribute="bottom" constant="10" id="V9Q-gP-uqJ"/>
                             <constraint firstItem="mTK-qf-v8M" firstAttribute="leading" secondItem="Qmz-jb-Bep" secondAttribute="leading" id="dEY-uH-36r"/>
-                            <constraint firstItem="Qmz-jb-Bep" firstAttribute="top" secondItem="Nqs-3R-NMv" secondAttribute="bottom" constant="8" symbolic="YES" id="evd-sg-0Pl"/>
-                            <constraint firstItem="W3K-8i-RYY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="row-j4-8AG" secondAttribute="trailing" symbolic="YES" id="fOS-SI-5F1"/>
-                            <constraint firstItem="mTK-qf-v8M" firstAttribute="top" secondItem="Qmz-jb-Bep" secondAttribute="bottom" constant="8" symbolic="YES" id="gBT-RD-gAb"/>
-                            <constraint firstItem="Qmz-jb-Bep" firstAttribute="leading" secondItem="row-j4-8AG" secondAttribute="leading" id="gW4-fW-Pfn"/>
-                            <constraint firstItem="mTK-qf-v8M" firstAttribute="trailing" secondItem="Nqs-3R-NMv" secondAttribute="trailing" id="l3H-ss-dOU"/>
+                            <constraint firstItem="Qmz-jb-Bep" firstAttribute="top" secondItem="L7g-Ud-DNd" secondAttribute="bottom" constant="10" id="fbb-2y-PyT"/>
+                            <constraint firstItem="L7g-Ud-DNd" firstAttribute="trailing" secondItem="mTK-qf-v8M" secondAttribute="trailing" id="ffj-TP-AiO"/>
+                            <constraint firstItem="mTK-qf-v8M" firstAttribute="top" secondItem="Qmz-jb-Bep" secondAttribute="bottom" constant="10" id="gBT-RD-gAb"/>
                             <constraint firstItem="Kzo-Al-lH7" firstAttribute="leading" secondItem="mTK-qf-v8M" secondAttribute="leading" id="nGE-9Y-A4c"/>
-                            <constraint firstItem="row-j4-8AG" firstAttribute="top" secondItem="W3K-8i-RYY" secondAttribute="top" id="oSl-pp-FCx"/>
+                            <constraint firstItem="W3K-8i-RYY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="WtW-hM-MYq" secondAttribute="trailing" id="veT-oz-bFo"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Update password" id="5fh-NY-PHH"/>
                     <connections>
                         <outlet property="newPassword" destination="mTK-qf-v8M" id="jyA-Gj-arc"/>
-                        <outlet property="oldPassword" destination="Nqs-3R-NMv" id="qlY-we-oSd"/>
+                        <outlet property="username" destination="L7g-Ud-DNd" id="5bA-iS-nJu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mM7-to-ugn" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -3,14 +3,29 @@ import Foundation
 import IdentitySdkCore
 
 class UpdatePasswordController: UIViewController {
-    var authToken: AuthToken? = AppDelegate.storage.get(key: SecureStorage.authKey)
-    @IBOutlet weak var oldPassword: UITextField!
+    var authToken: AuthToken?
     @IBOutlet weak var newPassword: UITextField!
+    @IBOutlet weak var username: UITextField!
+    
+    override func viewWillAppear(_ animated: Bool) {
+        authToken = AppDelegate.storage.get(key: SecureStorage.authKey)
+        if let authToken {
+            AppDelegate.reachfive()
+                .getProfile(authToken: authToken)
+                .onSuccess { profile in
+                    DispatchQueue.main.async {
+                        self.username.text = ProfileController.username(profile: profile)
+                    }
+                }
+        }
+        
+        super.viewWillAppear(animated)
+    }
     
     @IBAction func update(_ sender: Any) {
-        if authToken != nil {
+        if let authToken {
             AppDelegate.reachfive()
-                .updatePassword(.AccessTokenParams(authToken: authToken!, password: newPassword.text ?? "", oldPassword: oldPassword.text ?? ""))
+                .updatePassword(.FreshAccessTokenParams(authToken: authToken, password: newPassword.text ?? ""))
                 .onSuccess {
                     let alert = AppDelegate.createAlert(title: "Update Password", message: "Success")
                     self.present(alert, animated: true, completion: nil)
