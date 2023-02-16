@@ -358,10 +358,8 @@ extension CredentialManager: ASAuthorizationControllerDelegate {
             }
         } else {
             // Another ASAuthorization error.
-            // Note: The userInfo dictionary contains useful information.
-            let userInfo = (error as NSError).userInfo
-            promise.tryFailure(.TechnicalError(reason: "\(userInfo)"))
-            registrationPromise.tryFailure(.TechnicalError(reason: "\(userInfo)"))
+            promise.tryFailure(.TechnicalError(reason: "\(error)"))
+            registrationPromise.tryFailure(.TechnicalError(reason: "\(error)"))
         }
     }
 }
