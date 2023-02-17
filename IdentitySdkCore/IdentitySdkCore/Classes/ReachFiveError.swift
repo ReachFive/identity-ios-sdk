@@ -19,23 +19,38 @@ public enum ReachFiveError: Error, CustomStringConvertible {
     public func message() -> String {
         switch self {
         case .RequestError(apiError: let apiError):
-            return apiError.errorUserMsg ?? "no message"
+            return createMessage(reason: "", apiError: apiError)
         case .AuthFailure(reason: let reason, apiError: let apiError):
-            let eum = apiError.flatMap({ $0.errorUserMsg })
-            if reason.isEmpty {
-                return eum ?? "no message"
-            } else {
-                return eum.map { m in "\(reason): \(m)" } ?? reason
-            }
+            return createMessage(reason: reason, apiError: apiError)
         case .AuthCanceled:
             return "Auth Canceled"
         case .TechnicalError(reason: let reason, apiError: let apiError):
-            let eum = apiError.flatMap({ $0.errorUserMsg })
-            if reason.isEmpty {
-                return eum ?? "no message"
-            } else {
-                return eum.map { m in "\(reason): \(m)" } ?? reason
+            return createMessage(reason: reason, apiError: apiError)
+        }
+    }
+    
+    private func createMessage(reason: String, apiError: ApiError? = nil) -> String {
+        let allMessages: String? = apiError.flatMap { error in
+            let eum = error.errorUserMsg
+            var ff: [String] = error.errorDetails.flatMap { fieldErrors in fieldErrors.compactMap { $0.message } } ?? []
+            print("field messages \(ff)")
+            
+            eum.map { eee in ff.insert(eee, at: 0) }
+            print("all messages \(ff)")
+            
+            if !ff.isEmpty {
+                let string = mkString(start: "", sep: "\n", end: "", fields: ff)
+                print("formatted \(string)")
+                return string
             }
+            
+            return nil
+        }
+        print("reason \(reason). allMessages \(allMessages)")
+        if reason.isEmpty {
+            return allMessages ?? "no message"
+        } else {
+            return allMessages.map { m in "\(reason): \(m)" } ?? reason
         }
     }
     

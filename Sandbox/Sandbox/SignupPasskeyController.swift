@@ -29,8 +29,12 @@ class SignupPasskeyController: UIViewController {
             AppDelegate.reachfive().signup(withRequest: PasskeySignupRequest(passkeyPofile: profile, friendlyName: username, anchor: window))
                 .onSuccess(callback: goToProfile)
                 .onFailure { error in
-                    let alert = AppDelegate.createAlert(title: "Signup with Passkey", message: "Error: \(error.message())")
-                    self.present(alert, animated: true)
+                    switch (error) {
+                    case .AuthCanceled: return
+                    default:
+                        let alert = AppDelegate.createAlert(title: "Signup with Passkey", message: "Error: \(error.message())")
+                        self.present(alert, animated: true)
+                    }
                 }
         } else {
             let alert = AppDelegate.createAlert(title: "Signup with Passkey", message: "Passkey requires iOS 16")
