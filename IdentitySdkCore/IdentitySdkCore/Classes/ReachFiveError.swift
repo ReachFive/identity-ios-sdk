@@ -31,22 +31,20 @@ public enum ReachFiveError: Error, CustomStringConvertible {
     
     private func createMessage(reason: String, apiError: ApiError? = nil) -> String {
         let allMessages: String? = apiError.flatMap { error in
-            let eum = error.errorUserMsg
-            var ff: [String] = error.errorDetails.flatMap { fieldErrors in fieldErrors.compactMap { $0.message } } ?? []
-            print("field messages \(ff)")
+            let topLevelMessage = error.errorUserMsg
+            var fieldMessages = error.errorDetails.flatMap { fieldErrors in fieldErrors.compactMap { $0.message } } ?? []
             
-            eum.map { eee in ff.insert(eee, at: 0) }
-            print("all messages \(ff)")
+            if let topLevelMessage {
+                fieldMessages.insert(topLevelMessage, at: 0)
+            }
             
-            if !ff.isEmpty {
-                let string = mkString(start: "", sep: "\n", end: "", fields: ff)
-                print("formatted \(string)")
-                return string
+            if !fieldMessages.isEmpty {
+                return mkString(start: "", sep: "\n", end: "", fields: fieldMessages)
             }
             
             return nil
         }
-        print("reason \(reason). allMessages \(allMessages)")
+        
         if reason.isEmpty {
             return allMessages ?? "no message"
         } else {
