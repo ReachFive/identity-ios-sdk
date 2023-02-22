@@ -7,7 +7,10 @@ func mkString(start: String, fields: (field: Any?, name: String)...) -> String {
 func mkString(start: String, sep: String, end: String, fields: [(field: Any?, name: String)]) -> String {
     let nonNilFields = fields.compactMap { field, name in
         if let field {
-            return "\(name): \"\(field)\""
+            switch field {
+            case is String: return "\(name): \"\(field)\""
+            default: return "\(name): \(field)"
+            }
         } else {
             return nil
         }
