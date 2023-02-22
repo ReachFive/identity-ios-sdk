@@ -22,7 +22,7 @@ func mkString(start: String, sep: String, end: String, fields: [String]) -> Stri
     var iter = fields.makeIterator()
     var s = start
     var first = true
-    while let next: String = iter.next() {
+    while let next = iter.next() {
         if first {
             first = false
         } else {
