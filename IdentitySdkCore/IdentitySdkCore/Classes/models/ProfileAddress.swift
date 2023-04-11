@@ -5,6 +5,7 @@ public class ProfileAddress: Codable, DictionaryEncodable {
     public let isDefault: Bool?
     public let addressType: String?
     public let streetAddress: String?
+    public let addressComplement: String?
     public let locality: String?
     public let region: String?
     public let postalCode: String?
@@ -20,6 +21,7 @@ public class ProfileAddress: Codable, DictionaryEncodable {
         case isDefault = "default"
         case addressType
         case streetAddress
+        case addressComplement
         case locality
         case region
         case postalCode
@@ -36,6 +38,7 @@ public class ProfileAddress: Codable, DictionaryEncodable {
         isDefault: Bool?,
         addressType: String?,
         streetAddress: String?,
+        addressComplement: String?,
         locality: String?,
         region: String?,
         postalCode: String?,
@@ -50,6 +53,7 @@ public class ProfileAddress: Codable, DictionaryEncodable {
         self.isDefault = isDefault
         self.addressType = addressType
         self.streetAddress = streetAddress
+        self.addressComplement = addressComplement
         self.locality = locality
         self.region = region
         self.postalCode = postalCode
