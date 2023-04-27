@@ -1,10 +1,10 @@
 PODS:
-  - Alamofire (5.6.2)
-  - AppAuth (1.6.0):
-    - AppAuth/Core (= 1.6.0)
-    - AppAuth/ExternalUserAgent (= 1.6.0)
-  - AppAuth/Core (1.6.0)
-  - AppAuth/ExternalUserAgent (1.6.0):
+  - Alamofire (5.6.4)
+  - AppAuth (1.6.2):
+    - AppAuth/Core (= 1.6.2)
+    - AppAuth/ExternalUserAgent (= 1.6.2)
+  - AppAuth/Core (1.6.2)
+  - AppAuth/ExternalUserAgent (1.6.2):
     - AppAuth/Core
   - BrightFutures (8.2.0)
   - CryptoSwift (1.5.1)
@@ -23,19 +23,19 @@ PODS:
   - GTMAppAuth (1.3.1):
     - AppAuth/Core (~> 1.6)
     - GTMSessionFetcher/Core (< 3.0, >= 1.5)
-  - GTMSessionFetcher/Core (2.1.0)
-  - IdentitySdkCore (5.7.1):
+  - GTMSessionFetcher/Core (2.3.0)
+  - IdentitySdkCore (5.7.2):
     - Alamofire (~> 5.6.1)
     - BrightFutures (~> 8.2.0)
     - CryptoSwift (~> 1.5.1)
-  - IdentitySdkFacebook (5.7.1):
+  - IdentitySdkFacebook (5.7.2):
     - FBSDKCoreKit (~> 14.1.0)
     - FBSDKLoginKit (~> 14.1.0)
     - IdentitySdkCore (~> 5)
-  - IdentitySdkGoogle (5.7.1):
+  - IdentitySdkGoogle (5.7.2):
     - GoogleSignIn (~> 6)
     - IdentitySdkCore (~> 5)
-  - IdentitySdkWebView (5.7.1):
+  - IdentitySdkWebView (5.7.2):
     - IdentitySdkCore (~> 5)
 
 DEPENDENCIES:
@@ -69,8 +69,8 @@ EXTERNAL SOURCES:
     :path: "../IdentitySdkWebView.podspec"
 
 SPEC CHECKSUMS:
-  Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
-  AppAuth: 8fca6b5563a5baef2c04bee27538025e4ceb2add
+  Alamofire: 4e95d97098eacb88856099c4fc79b526a299e48c
+  AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
   BrightFutures: 67e0e8cd974ab9f6c04650cc64153f7adf1ec489
   CryptoSwift: c4f2debceb38bf44c80659afe009f71e23e4a082
   FBAEMKit: a899515e45476027f73aef377b5cffadcd56ca3a
@@ -79,12 +79,12 @@ SPEC CHECKSUMS:
   FBSDKLoginKit: 787de205d524c3a4b17d527916f1d066e4361660
   GoogleSignIn: 5651ce3a61e56ca864160e79b484cd9ed3f49b7a
   GTMAppAuth: 0ff230db599948a9ad7470ca667337803b3fc4dd
-  GTMSessionFetcher: ffbb25ec00ebcb5201adab0a56d808f6f1902d9f
-  IdentitySdkCore: 1fa8c4cac0c951bb37bf94f479f7b193d8f138a0
-  IdentitySdkFacebook: 75fc9b89a12dced7291733f96c00934c9c5af63e
-  IdentitySdkGoogle: 8156ddd5f789769d4febcb3ee28f3356fc4337a3
-  IdentitySdkWebView: 0314bc8805bbb9d84f77250923f659bbbca627ee
+  GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
+  IdentitySdkCore: db2a8dbf1c40afe5f2a594257799a9d030261840
+  IdentitySdkFacebook: e0c4081fec9e0ffb6d16ac75b878f011f4faf3f4
+  IdentitySdkGoogle: a8a2ff7c57ec00b284967b34ef78d6e5926bae0c
+  IdentitySdkWebView: 88930f74d695b2276604d2e87b607c30831aa684
 
-PODFILE CHECKSUM: f693e93a5f01f5edbdb7ab2ad033b3c84351b61f
+PODFILE CHECKSUM: d208f2db8cd2b1ad968f0f0dffa64dc150022aef
 
 COCOAPODS: 1.11.3
