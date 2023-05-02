@@ -21,7 +21,7 @@ public extension ReachFive {
         let authURL = reachFiveApi.buildAuthorizeURL(queryParams: options)
         
         // Initialize the session.
-        let session = ASWebAuthenticationSession(url: authURL, callbackURLScheme: "reachfive-\(reachFiveApi.sdkConfig.clientId)") { callbackURL, error in
+        let session = ASWebAuthenticationSession(url: authURL, callbackURLScheme: reachFiveApi.sdkConfig.baseScheme) { callbackURL, error in
             guard error == nil else {
                 let r5Error: ReachFiveError
                 switch error!._code {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2AE18CDB29FC1DAF00258D2B /* LoginWKWebview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE18CDA29FC1DAF00258D2B /* LoginWKWebview.swift */; };
 		3404A40822CB9B7E002FFEDB /* ReachFiveError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3404A40722CB9B7E002FFEDB /* ReachFiveError.swift */; };
 		3404A40C22CBA6DD002FFEDB /* AuthCodeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3404A40B22CBA6DD002FFEDB /* AuthCodeRequest.swift */; };
 		340AF1F7232A9A2B00AA114D /* QueryString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 340AF1F6232A9A2B00AA114D /* QueryString.swift */; };
@@ -76,6 +77,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2AE18CDA29FC1DAF00258D2B /* LoginWKWebview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWKWebview.swift; sourceTree = "<group>"; };
 		2B722D997B32FEE8753D77AB /* Pods_IdentitySdkCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IdentitySdkCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CA6D9263DC2541C548301E9 /* Pods-IdentitySdkCore.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IdentitySdkCore.release.xcconfig"; path = "Target Support Files/Pods-IdentitySdkCore/Pods-IdentitySdkCore.release.xcconfig"; sourceTree = "<group>"; };
 		3404A40722CB9B7E002FFEDB /* ReachFiveError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachFiveError.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				848D86C725DD4968003F1D80 /* RedirectionSafari.swift */,
 				34689A9A22CE3E34002970F9 /* utils */,
 				84DB8B9E25E45B8900238991 /* ReachFiveFidoClient.swift */,
+				2AE18CDA29FC1DAF00258D2B /* LoginWKWebview.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -485,6 +488,7 @@
 				34251C0B232FC13800B0C271 /* RefreshRequest.swift in Sources */,
 				8496EB4325DEB141005098DD /* AuthenticationToken.swift in Sources */,
 				34BDDA4422E5D95B00D16DAE /* ReachFiveProfile.swift in Sources */,
+				2AE18CDB29FC1DAF00258D2B /* LoginWKWebview.swift in Sources */,
 				8496EB2A25DEAFCF005098DD /* WebAuthnRegistrationRequest.swift in Sources */,
 				34BDDA4022E5D73900D16DAE /* ReachFiveProviders.swift in Sources */,
 				848D86C825DD4968003F1D80 /* RedirectionSafari.swift in Sources */,
