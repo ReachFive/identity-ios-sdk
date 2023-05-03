@@ -13,13 +13,14 @@ public class ReachFive: NSObject {
     let notificationPasswordlessName = Notification.Name("PasswordlessNotification")
     var passwordlessCallback: PasswordlessCallback? = nil
     var state: State = .NotInitialized
-    let sdkConfig: SdkConfig
+    public let sdkConfig: SdkConfig
     let providersCreators: Array<ProviderCreator>
     let reachFiveApi: ReachFiveApi
     var providers: [Provider] = []
     internal var scope: [String] = []
-    internal let storage: Storage
+    public let storage: Storage
     let codeResponseType = "code"
+    public let pkceKey = "PASSWORDLESS_PKCE"
     
     public init(sdkConfig: SdkConfig, providersCreators: Array<ProviderCreator>, storage: Storage?) {
         self.sdkConfig = sdkConfig
@@ -92,5 +93,27 @@ public class ReachFive: NSObject {
     
     private func buildAuthorization(authToken: AuthToken) -> String {
         authToken.tokenType! + " " + authToken.accessToken
+    }
+    
+    public func buildAuthorizeURL(pkce: Pkce, state: String? = nil, nonce: String? = nil, scope: [String]? = nil) -> URL {
+        let scope = (scope ?? self.scope).joined(separator: " ")
+        var options = [
+            "client_id": sdkConfig.clientId,
+            "redirect_uri": sdkConfig.redirectUri,
+            "response_type": codeResponseType,
+            "scope": scope,
+            "code_challenge": pkce.codeChallenge,
+            "code_challenge_method": pkce.codeChallengeMethod
+        ]
+        if let state {
+            options["state"] = state
+        }
+        if let nonce {
+            options["nonce"] = nonce
+        }
+        
+        let url = reachFiveApi.buildAuthorizeURL(queryParams: options)
+        print(url)
+        return url
     }
 }
