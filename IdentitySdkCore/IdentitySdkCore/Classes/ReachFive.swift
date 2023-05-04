@@ -63,7 +63,7 @@ public class ReachFive: NSObject {
             .flatMap({ self.authWithCode(code: $0, pkce: pkce) })
     }
     
-    internal func authWithCode(code: String, pkce: Pkce) -> Future<AuthToken, ReachFiveError> {
+    public func authWithCode(code: String, pkce: Pkce) -> Future<AuthToken, ReachFiveError> {
         let authCodeRequest = AuthCodeRequest(
             clientId: sdkConfig.clientId,
             code: code,
