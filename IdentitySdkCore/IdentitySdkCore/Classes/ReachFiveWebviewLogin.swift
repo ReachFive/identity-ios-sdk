@@ -9,16 +9,7 @@ public extension ReachFive {
         let promise = Promise<AuthToken, ReachFiveError>()
         
         let pkce = Pkce.generate()
-        let scope = (request.scope ?? scope).joined(separator: " ")
-        let options = [
-            "client_id": sdkConfig.clientId,
-            "redirect_uri": sdkConfig.scheme,
-            "response_type": codeResponseType,
-            "scope": scope,
-            "code_challenge": pkce.codeChallenge,
-            "code_challenge_method": pkce.codeChallengeMethod
-        ]
-        let authURL = reachFiveApi.buildAuthorizeURL(queryParams: options)
+        let authURL = buildAuthorizeURL(pkce: pkce, state: request.state, nonce: request.nonce, scope: scope)
         
         // Initialize the session.
         let session = ASWebAuthenticationSession(url: authURL, callbackURLScheme: reachFiveApi.sdkConfig.baseScheme) { callbackURL, error in
@@ -40,7 +31,7 @@ public extension ReachFive {
                 return
             }
             
-            let queryItems = URLComponents(string: callbackURL.absoluteString)?.queryItems
+            let queryItems = URLComponents(url: callbackURL, resolvingAgainstBaseURL: true)?.queryItems
             let code = queryItems?.first(where: { $0.name == "code" })?.value
             guard let code = code else {
                 promise.failure(.TechnicalError(reason: "No authorization code"))

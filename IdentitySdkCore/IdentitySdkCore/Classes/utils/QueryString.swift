@@ -1,5 +1,6 @@
 import Foundation
 
+//TODO à supprimer
 public class QueryString {
     public static func parseQueriesStrings(query: String) -> Dictionary<String, String?> {
         query.split(separator: "&").reduce(Dictionary<String, String?>(), { (acc, param) in

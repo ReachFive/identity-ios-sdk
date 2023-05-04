@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             GoogleProvider(),
             WebViewProvider()
         ],
-        storage: UserDefaultsStorage()
+        storage: storage
     )
     
     static func reachfive() -> ReachFive {
@@ -50,6 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("application:didFinishLaunchingWithOptions")
         reachfive.addPasswordlessCallback { result in
             print("addPasswordlessCallback \(result)")
+            NotificationCenter.default.post(name: .DidReceiveLoginCallback, object: nil, userInfo: ["result": result])
         }
         
         return reachfive.application(application, didFinishLaunchingWithOptions: launchOptions)
@@ -112,4 +113,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationProtectedDataDidBecomeAvailable(_ application: UIApplication) {
         print("applicationProtectedDataDidBecomeAvailable")
     }
+}
+
+extension NSNotification.Name {
+    static let DidReceiveLoginCallback = Notification.Name("DidReceiveLoginCallback")
 }
