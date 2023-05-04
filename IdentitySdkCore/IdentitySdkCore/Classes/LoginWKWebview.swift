@@ -4,7 +4,7 @@ import Alamofire
 import BrightFutures
 
 public class LoginWKWebview: UIView {
-    var webView: WKWebView!
+    var webView: WKWebView?
     var reachfive: ReachFive?
     var promise: Promise<AuthToken, ReachFiveError>?
     var pkce: Pkce?
@@ -21,7 +21,8 @@ public class LoginWKWebview: UIView {
         self.pkce = pkce
         
         let rect = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: frame.width, height: frame.height))
-        webView = WKWebView(frame: rect, configuration: WKWebViewConfiguration())
+        let webView = WKWebView(frame: rect, configuration: WKWebViewConfiguration())
+        self.webView = webView
         webView.navigationDelegate = self
         addSubview(webView)
         webView.load(URLRequest(url: reachfive.buildAuthorizeURL(pkce: pkce, state: state, nonce: nonce, scope: scope)))
