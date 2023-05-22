@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2A33F30B2A016B1D00D05EB1 /* LoginWKWebviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A33F30A2A016B1D00D05EB1 /* LoginWKWebviewController.swift */; };
 		2A33F30D2A01740600D05EB1 /* LoginCustomWebviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A33F30C2A01740600D05EB1 /* LoginCustomWebviewController.swift */; };
+		2A7D66CF2A0CE7FE0065C59C /* SiteWebview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A7D66CE2A0CE7FE0065C59C /* SiteWebview.swift */; };
 		2A9D190728904A9F00B8A4B9 /* WebviewLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9D190628904A9F00B8A4B9 /* WebviewLoginController.swift */; };
 		3414A7CD22DDD39C00CF393A /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3414A7CC22DDD39C00CF393A /* ProfileController.swift */; };
 		341731FE229D6B6400681CFD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341731FD229D6B6400681CFD /* AppDelegate.swift */; };
@@ -45,6 +46,7 @@
 		1B4336D32015A6A13AA1DB17 /* Pods-Sandbox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sandbox.release.xcconfig"; path = "Target Support Files/Pods-Sandbox/Pods-Sandbox.release.xcconfig"; sourceTree = "<group>"; };
 		2A33F30A2A016B1D00D05EB1 /* LoginWKWebviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWKWebviewController.swift; sourceTree = "<group>"; };
 		2A33F30C2A01740600D05EB1 /* LoginCustomWebviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCustomWebviewController.swift; sourceTree = "<group>"; };
+		2A7D66CE2A0CE7FE0065C59C /* SiteWebview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteWebview.swift; sourceTree = "<group>"; };
 		2A9D190628904A9F00B8A4B9 /* WebviewLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebviewLoginController.swift; sourceTree = "<group>"; };
 		2E55CD881F31583F8D3480D8 /* Pods_Sandbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sandbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3414A7CC22DDD39C00CF393A /* ProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 				34173209229D6B6400681CFD /* Info.plist */,
 				EA91A294C5DD405D6A38ADCC /* SecureStorage.swift */,
 				8433EA3B25F13D0A00329358 /* DevicesFidoCell.swift */,
+				2A7D66CE2A0CE7FE0065C59C /* SiteWebview.swift */,
 			);
 			path = Sandbox;
 			sourceTree = "<group>";
@@ -277,6 +280,7 @@
 				2A33F30B2A016B1D00D05EB1 /* LoginWKWebviewController.swift in Sources */,
 				341731FE229D6B6400681CFD /* AppDelegate.swift in Sources */,
 				3417FF6822F846610009EC84 /* UpdatePhoneNumberController.swift in Sources */,
+				2A7D66CF2A0CE7FE0065C59C /* SiteWebview.swift in Sources */,
 				8496EB4925DEB764005098DD /* SignUpFidoControllerViewController.swift in Sources */,
 				2A33F30D2A01740600D05EB1 /* LoginCustomWebviewController.swift in Sources */,
 				3414A7CD22DDD39C00CF393A /* ProfileController.swift in Sources */,

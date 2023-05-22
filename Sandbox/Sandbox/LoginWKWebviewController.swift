@@ -7,12 +7,17 @@ class LoginWKWebviewController: UIViewController {
     
     @IBOutlet weak var loginWebview: LoginWKWebview!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        print("LoginWKWebviewController.viewDidLoad")
+    override func viewWillAppear(_ animated: Bool) {
+        print("LoginWKWebviewController.viewWillAppear")
+        super.viewWillAppear(animated)
         let promise = Promise<AuthToken, ReachFiveError>()
         loginWebview.loadLoginWebview(reachfive: AppDelegate.reachfive(), promise: promise)
         promise.future.onComplete { self.handleResult(result: $0) }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        print("LoginWKWebviewController.viewDidLoad")
     }
     
     // same as login with providers

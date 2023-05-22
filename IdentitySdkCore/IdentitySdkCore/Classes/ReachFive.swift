@@ -112,8 +112,6 @@ public class ReachFive: NSObject {
             options["nonce"] = nonce
         }
         
-        let url = reachFiveApi.buildAuthorizeURL(queryParams: options)
-        print(url)
-        return url
+        return reachFiveApi.buildAuthorizeURL(queryParams: options)
     }
 }
