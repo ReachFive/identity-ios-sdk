@@ -29,7 +29,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.20987199831-rhdm7eji4ctus4ufg6a4froha2pdoc5f</string>
+				<string>com.googleusercontent.apps.188556846346-u43frvituh5k9nore8aggnue1j1679h9</string>
 			</array>
 		</dict>
 		<dict>
@@ -49,6 +49,8 @@
 	<string>1a774a90e2e5ec97b21afcd93ce69909</string>
 	<key>FacebookDisplayName</key>
 	<string>Reach5 SDK Mobile</string>
+    <key>GIDClientID</key>
+    <string>188556846346-u43frvituh5k9nore8aggnue1j1679h9.apps.googleusercontent.com</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>

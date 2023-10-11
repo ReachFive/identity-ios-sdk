@@ -53,8 +53,8 @@ public class ConfiguredGoogleProvider: NSObject, Provider {
         }
         
         let configuration = GIDConfiguration(clientID: providerConfig.clientId!)
-        GIDSignIn.sharedInstance.signIn(with: configuration, presenting: viewController, hint: nil, additionalScopes: providerConfig.scope) { user, error in
-            guard let user else {
+        GIDSignIn.sharedInstance.signIn(withPresenting: viewController, hint: nil, additionalScopes: providerConfig.scope) { result, error in
+            guard let result else {
                 let reason = error?.localizedDescription ?? "No user"
                 promise.failure(.AuthFailure(reason: reason))
                 return
@@ -62,7 +62,7 @@ public class ConfiguredGoogleProvider: NSObject, Provider {
             
             let loginProviderRequest = LoginProviderRequest(
                 provider: self.providerConfig.provider,
-                providerToken: user.authentication.accessToken,
+                providerToken: result.user.accessToken.tokenString,
                 code: nil,
                 origin: origin,
                 clientId: self.sdkConfig.clientId,

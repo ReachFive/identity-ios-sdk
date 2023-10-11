@@ -24,5 +24,5 @@ Pod::Spec.new do |spec|
   spec.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64'}
 
   spec.dependency 'IdentitySdkCore', '~> 5'
-  spec.dependency 'GoogleSignIn', '~> 6'
+  spec.dependency 'GoogleSignIn', '~> 7'
 end
