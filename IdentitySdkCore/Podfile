@@ -8,8 +8,8 @@ target 'IdentitySdkCore' do
   use_frameworks!
 
   # Pods for IdentitySdkCore
-  pod 'Alamofire', '~> 5.6.1'
+  pod 'Alamofire', '~> 5.8'
   pod 'BrightFutures', '~> 8.2.0'
-  pod 'CryptoSwift', '~> 1.5.1'
+  pod 'CryptoSwift', '~> 1.8'
 
 end
