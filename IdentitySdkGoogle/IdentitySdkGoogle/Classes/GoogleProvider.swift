@@ -52,7 +52,6 @@ public class ConfiguredGoogleProvider: NSObject, Provider {
             return promise.future
         }
         
-        let configuration = GIDConfiguration(clientID: providerConfig.clientId!)
         GIDSignIn.sharedInstance.signIn(withPresenting: viewController, hint: nil, additionalScopes: providerConfig.scope) { result, error in
             guard let result else {
                 let reason = error?.localizedDescription ?? "No user"
