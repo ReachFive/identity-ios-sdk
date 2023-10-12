@@ -11,5 +11,6 @@ target 'IdentitySdkCore' do
   pod 'Alamofire', '~> 5.6.1'
   pod 'BrightFutures', '~> 8.2.0'
   pod 'CryptoSwift', '~> 1.5.1'
+  pod 'DeviceKit', '~> 5.1'
 
 end
