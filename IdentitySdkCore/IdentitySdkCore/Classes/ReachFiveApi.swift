@@ -1,5 +1,6 @@
 import Alamofire
 import BrightFutures
+import DeviceKit
 
 public class ReachFiveApi {
     let decoder = JSONDecoder()
@@ -55,7 +56,7 @@ public class ReachFiveApi {
         "updated_at"
     ]
     
-    let deviceInfo: String = "\(UIDevice.current.modelName) \(UIDevice.current.systemName) \(UIDevice.current.systemVersion)"
+    let deviceInfo: String = "\(Device.current.safeDescription) \(Device.current.systemName ?? "") \(Device.current.systemVersion ?? "")"
         .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
     
     //TODO read from the version.rb. Either directly or indirectly from IdentitySdkCore.h, Info.plist...

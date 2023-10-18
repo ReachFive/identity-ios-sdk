@@ -1,23 +1,25 @@
 PODS:
-  - Alamofire (5.8.0)
+  - Alamofire (5.6.4)
   - BrightFutures (8.2.0)
-  - CryptoSwift (1.8.0)
-  - FBAEMKit (16.2.0):
-    - FBSDKCoreKit_Basics (= 16.2.0)
-  - FBSDKCoreKit (16.2.0):
-    - FBAEMKit (= 16.2.0)
-    - FBSDKCoreKit_Basics (= 16.2.0)
-  - FBSDKCoreKit_Basics (16.2.0)
-  - FBSDKLoginKit (16.2.0):
-    - FBSDKCoreKit (= 16.2.0)
+  - CryptoSwift (1.5.1)
+  - DeviceKit (5.1.0)
+  - FBAEMKit (14.1.0):
+    - FBSDKCoreKit_Basics (= 14.1.0)
+  - FBSDKCoreKit (14.1.0):
+    - FBAEMKit (= 14.1.0)
+    - FBSDKCoreKit_Basics (= 14.1.0)
+  - FBSDKCoreKit_Basics (14.1.0)
+  - FBSDKLoginKit (14.1.0):
+    - FBSDKCoreKit (= 14.1.0)
   - IdentitySdkCore (5.9.0):
-    - Alamofire (~> 5.8)
+    - Alamofire (~> 5.6.1)
     - BrightFutures (~> 8.2.0)
-    - CryptoSwift (~> 1.8)
+    - CryptoSwift (~> 1.5.1)
+    - DeviceKit (~> 5.1)
 
 DEPENDENCIES:
-  - FBSDKCoreKit (~> 16.2.0)
-  - FBSDKLoginKit (~> 16.2.0)
+  - FBSDKCoreKit (~> 14.1.0)
+  - FBSDKLoginKit (~> 14.1.0)
   - IdentitySdkCore (from `../IdentitySdkCore.podspec`)
 
 SPEC REPOS:
@@ -25,6 +27,7 @@ SPEC REPOS:
     - Alamofire
     - BrightFutures
     - CryptoSwift
+    - DeviceKit
     - FBAEMKit
     - FBSDKCoreKit
     - FBSDKCoreKit_Basics
@@ -35,15 +38,16 @@ EXTERNAL SOURCES:
     :path: "../IdentitySdkCore.podspec"
 
 SPEC CHECKSUMS:
-  Alamofire: 0e92e751b3e9e66d7982db43919d01f313b8eb91
+  Alamofire: 4e95d97098eacb88856099c4fc79b526a299e48c
   BrightFutures: 67e0e8cd974ab9f6c04650cc64153f7adf1ec489
-  CryptoSwift: 52aaf3fce7337552863b1d952e408085f0e65030
-  FBAEMKit: 5facf4292bff062963f563d68fd5c0cdd6c90d63
-  FBSDKCoreKit: f94e107ae84a6f4c0d9edfd06ed989b084bfa5bb
-  FBSDKCoreKit_Basics: 8123411ba15df07f9a8da760630f4cdfeeaea6a7
-  FBSDKLoginKit: ae454ceaeb9ee753caf78242bdad1b5226968358
-  IdentitySdkCore: 97babb3055653acfc535eace5f797fd7745dbbf3
+  CryptoSwift: c4f2debceb38bf44c80659afe009f71e23e4a082
+  DeviceKit: bcce5c26d9502e77e3a9fa5d1282877db388d922
+  FBAEMKit: a899515e45476027f73aef377b5cffadcd56ca3a
+  FBSDKCoreKit: 24f8bc8d3b5b2a8c5c656a1329492a12e8efa792
+  FBSDKCoreKit_Basics: 6e578c9bdc7aa1365dbbbde633c9ebb536bcaa98
+  FBSDKLoginKit: 787de205d524c3a4b17d527916f1d066e4361660
+  IdentitySdkCore: 685860fc9ac3a78e4253c655fe3caa285bb2dbe1
 
-PODFILE CHECKSUM: 1bdaebb7f8a686a6ceb6829d8ca7c763fb1f6873
+PODFILE CHECKSUM: 43759688747cfc22b195a09dab78d21d04a91a53
 
 COCOAPODS: 1.11.3
