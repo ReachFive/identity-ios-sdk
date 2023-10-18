@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (5.6.4)
+  - Alamofire (5.8.0)
   - AppAuth (1.6.2):
     - AppAuth/Core (= 1.6.2)
     - AppAuth/ExternalUserAgent (= 1.6.2)
@@ -7,23 +7,23 @@ PODS:
   - AppAuth/ExternalUserAgent (1.6.2):
     - AppAuth/Core
   - BrightFutures (8.2.0)
-  - CryptoSwift (1.5.1)
+  - CryptoSwift (1.8.0)
   - DeviceKit (5.1.0)
-  - GoogleSignIn (6.2.4):
+  - GoogleSignIn (7.0.0):
     - AppAuth (~> 1.5)
-    - GTMAppAuth (~> 1.3)
-    - GTMSessionFetcher/Core (< 3.0, >= 1.1)
-  - GTMAppAuth (1.3.1):
+    - GTMAppAuth (< 3.0, >= 1.3)
+    - GTMSessionFetcher/Core (< 4.0, >= 1.1)
+  - GTMAppAuth (2.0.0):
     - AppAuth/Core (~> 1.6)
-    - GTMSessionFetcher/Core (< 3.0, >= 1.5)
-  - GTMSessionFetcher/Core (2.3.0)
+    - GTMSessionFetcher/Core (< 4.0, >= 1.5)
+  - GTMSessionFetcher/Core (3.1.1)
   - IdentitySdkCore (5.9.0):
-    - Alamofire (~> 5.6.1)
+    - Alamofire (~> 5.8)
     - BrightFutures (~> 8.2.0)
-    - CryptoSwift (~> 1.5.1)
+    - CryptoSwift (~> 1.8)
     - DeviceKit (~> 5.1)
   - IdentitySdkGoogle (5.9.0):
-    - GoogleSignIn (~> 6)
+    - GoogleSignIn (~> 7)
     - IdentitySdkCore (~> 5)
   - IdentitySdkWebView (5.9.0):
     - IdentitySdkCore (~> 5)
@@ -53,16 +53,16 @@ EXTERNAL SOURCES:
     :path: "../IdentitySdkWebView.podspec"
 
 SPEC CHECKSUMS:
-  Alamofire: 4e95d97098eacb88856099c4fc79b526a299e48c
+  Alamofire: 0e92e751b3e9e66d7982db43919d01f313b8eb91
   AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
   BrightFutures: 67e0e8cd974ab9f6c04650cc64153f7adf1ec489
-  CryptoSwift: c4f2debceb38bf44c80659afe009f71e23e4a082
+  CryptoSwift: 52aaf3fce7337552863b1d952e408085f0e65030
   DeviceKit: bcce5c26d9502e77e3a9fa5d1282877db388d922
-  GoogleSignIn: 5651ce3a61e56ca864160e79b484cd9ed3f49b7a
-  GTMAppAuth: 0ff230db599948a9ad7470ca667337803b3fc4dd
-  GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
-  IdentitySdkCore: 685860fc9ac3a78e4253c655fe3caa285bb2dbe1
-  IdentitySdkGoogle: 4ff67107bb4d2e6597e216c5ea4d8859ab045400
+  GoogleSignIn: b232380cf495a429b8095d3178a8d5855b42e842
+  GTMAppAuth: 99fb010047ba3973b7026e45393f51f27ab965ae
+  GTMSessionFetcher: e8647203b65cee28c5f73d0f473d096653945e72
+  IdentitySdkCore: 1b54462b3fdd028db93e30145978e53398cf6164
+  IdentitySdkGoogle: 6e46cf01c1e235be61f5bf65ad43c10e178eab6b
   IdentitySdkWebView: f3bc4ebf3290c0d208b47d8dda9410a72868a98e
 
 PODFILE CHECKSUM: 9f7ee913b5c6fe3699c0f98337a65ce67572ac27
