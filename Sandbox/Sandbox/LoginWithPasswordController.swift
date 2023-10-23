@@ -16,7 +16,7 @@ class LoginWithPasswordController: UIViewController {
         let password = passwordInput.text ?? ""
         
         AppDelegate.reachfive()
-            .loginWithPassword(email: email, phoneNumber: phoneNumber, customIdentifier: customIdentifier, password: password)
+            .loginWithPassword(email: email, phoneNumber: phoneNumber, customIdentifier: customIdentifier, password: password, origin: "LoginWithPasswordController.loginWithPassword")
             .onSuccess { token in
                 self.error.text = nil
                 self.goToProfile(token)

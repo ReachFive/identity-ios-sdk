@@ -21,11 +21,11 @@ extension ReachFive {
             .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) })
     }
     
-    public func loginCallback(tkn: String, scopes: [String]?) -> Future<AuthToken, ReachFiveError> {
+    public func loginCallback(tkn: String, scopes: [String]?, origin: String? = nil) -> Future<AuthToken, ReachFiveError> {
         let pkce = Pkce.generate()
         let scope = (scopes ?? scope).joined(separator: " ")
         
-        return reachFiveApi.loginCallback(loginCallback: LoginCallback(sdkConfig: sdkConfig, scope: scope, pkce: pkce, tkn: tkn))
+        return reachFiveApi.loginCallback(loginCallback: LoginCallback(sdkConfig: sdkConfig, scope: scope, pkce: pkce, tkn: tkn, origin: origin))
             .flatMap({ self.authWithCode(code: $0, pkce: pkce) })
     }
     
@@ -55,8 +55,7 @@ extension ReachFive {
             clientId: sdkConfig.clientId,
             code: code,
             redirectUri: sdkConfig.scheme,
-            pkce: pkce
-        )
+            pkce: pkce)
         return reachFiveApi
             .authWithCode(authCodeRequest: authCodeRequest)
             .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) })
