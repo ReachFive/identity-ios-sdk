@@ -87,6 +87,7 @@ class DemoController: UIViewController {
         func goToSignup() {
             if let signupController = storyboard?.instantiateViewController(withIdentifier: "SignupController") as? SignupController {
                 signupController.initialEmail = username
+                signupController.origin = "DemoController.createAccount"
                 navigationController?.pushViewController(signupController, animated: true)
             }
         }

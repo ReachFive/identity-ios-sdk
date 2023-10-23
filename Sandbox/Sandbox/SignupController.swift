@@ -3,6 +3,7 @@ import IdentitySdkCore
 
 class SignupController: UIViewController {
     var initialEmail: String?
+    var origin: String = "SignupController.signup"
     
     @IBOutlet weak var emailInput: UITextField!
     @IBOutlet weak var passwordInput: UITextField!
@@ -23,7 +24,7 @@ class SignupController: UIViewController {
             email: email,
             name: name
         )
-        AppDelegate.reachfive().signup(profile: profile)
+        AppDelegate.reachfive().signup(profile: profile, origin: origin)
             .onSuccess(callback: goToProfile)
             .onFailure { error in
                 let alert = AppDelegate.createAlert(title: "Signup", message: "Error: \(error.message())")

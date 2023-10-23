@@ -2,12 +2,13 @@ import Foundation
 import BrightFutures
 
 public extension ReachFive {
-    func signup(profile: ProfileSignupRequest, redirectUrl: String? = nil, scope: [String]? = nil) -> Future<AuthToken, ReachFiveError> {
+    func signup(profile: ProfileSignupRequest, redirectUrl: String? = nil, scope: [String]? = nil, origin: String? = nil) -> Future<AuthToken, ReachFiveError> {
         let signupRequest = SignupRequest(
             clientId: sdkConfig.clientId,
             data: profile,
             scope: (scope ?? self.scope).joined(separator: " "),
-            redirectUrl: redirectUrl
+            redirectUrl: redirectUrl,
+            origin: origin
         )
         return reachFiveApi
             .signupWithPassword(signupRequest: signupRequest)
