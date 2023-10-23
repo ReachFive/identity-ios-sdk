@@ -32,7 +32,7 @@ class ActionController: UITableViewController {
             // standard webview
             if indexPath.row == 0 {
                 AppDelegate.reachfive()
-                    .webviewLogin(WebviewLoginRequest(state: "state", nonce: "nonce", scope: ["email", "profile"], presentationContextProvider: self))
+                    .webviewLogin(WebviewLoginRequest(state: "state", nonce: "nonce", scope: ["email", "profile"], presentationContextProvider: self, origin: "ActionController.webviewLogin"))
                     .onComplete { self.handleResult(result: $0) }
             }
         }
