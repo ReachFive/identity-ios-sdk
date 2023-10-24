@@ -14,7 +14,7 @@ class LoginCustomWebviewController: UIViewController {
         let webView = WKWebView(frame: view.frame, configuration: WKWebViewConfiguration())
         webView.navigationDelegate = self
         view = webView
-        webView.load(URLRequest(url: reachfive.buildAuthorizeURL(pkce: pkce)))
+        webView.load(URLRequest(url: reachfive.buildAuthorizeURL(pkce: pkce, origin: "LoginCustomWebviewController.viewWillAppear")))
     }
 }
 
