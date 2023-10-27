@@ -3,6 +3,5 @@ use_frameworks!
 platform :ios, '13.0'
 
 target 'IdentitySdkWebView' do
-  inherit! :search_paths
   pod 'IdentitySdkCore', :path => '../IdentitySdkCore.podspec'
 end
