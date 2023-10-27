@@ -134,10 +134,10 @@ public class ReachFiveApi {
                     promise.failure(.TechnicalError(reason: "No location"))
                     return
                 }
-                let queryItems = URLComponents(string: callbackURL)?.queryItems
-                let code = queryItems?.first(where: { $0.name == "code" })?.value
+                let params = URLComponents(string: callbackURL)?.queryItems
+                let code = params?.first(where: { $0.name == "code" })?.value
                 guard let code else {
-                    promise.failure(.TechnicalError(reason: "No authorization code"))
+                    promise.failure(.TechnicalError(reason: "No authorization code", apiError: ApiError(fromQueryParams: params)))
                     return
                 }
                 promise.success(code)

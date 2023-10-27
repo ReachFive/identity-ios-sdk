@@ -44,7 +44,7 @@ extension LoginWKWebview: WKNavigationDelegate {
         decisionHandler(.cancel)
         let params = URLComponents(url: url, resolvingAgainstBaseURL: true)?.queryItems
         guard let params, let code = params.first(where: { $0.name == "code" })?.value else {
-            promise.failure(.TechnicalError(reason: "No authorization code"))
+            promise.failure(.TechnicalError(reason: "No authorization code", apiError: ApiError(fromQueryParams: params)))
             return
         }
         
