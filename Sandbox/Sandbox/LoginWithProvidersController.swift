@@ -58,7 +58,7 @@ class LoginWithProvidersController: UIViewController, UITableViewDataSource, UIT
             .getProvider(name: selectedProvider.name)?
             .login(
                 scope: scope,
-                origin: "home",
+                origin: "LoginWithProvidersController.didSelectRowAt",
                 viewController: self
             )
             .onComplete { result in

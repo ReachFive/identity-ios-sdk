@@ -63,8 +63,9 @@ class ConfiguredWebViewProvider: NSObject, Provider {
         let url = buildUrl(
             sdkConfig: sdkConfig,
             providerConfig: providerConfig,
-            scope: scope != nil ? scope!.joined(separator: " ") : clientConfigResponse.scope,
-            pkce: pkce
+            scope: scope?.joined(separator: " ") ?? clientConfigResponse.scope,
+            pkce: pkce,
+            origin: origin
         )
         
         guard let authURL = URL(string: url) else {
@@ -73,9 +74,9 @@ class ConfiguredWebViewProvider: NSObject, Provider {
         }
         
         let session = ASWebAuthenticationSession(url: authURL, callbackURLScheme: sdkConfig.baseScheme) { callbackURL, error in
-            guard error == nil else {
+            if let error {
                 let r5Error: ReachFiveError
-                switch error!._code {
+                switch error._code {
                 case 1: r5Error = .AuthCanceled
                 case 2: r5Error = .TechnicalError(reason: "Presentation Context Not Provided")
                 case 3: r5Error = .TechnicalError(reason: "Presentation Context Invalid")
@@ -103,7 +104,7 @@ class ConfiguredWebViewProvider: NSObject, Provider {
         
         // Set an appropriate context provider instance that determines the window that acts as a presentation anchor for the session
         session.presentationContextProvider = viewController as? ASWebAuthenticationPresentationContextProviding
-    
+        
         // Start the Authentication Flow
         if !session.start() {
             promise.failure(.TechnicalError(reason: "Failed to start ASWebAuthenticationSession"))
@@ -141,7 +142,7 @@ class ConfiguredWebViewProvider: NSObject, Provider {
         Future(value: ())
     }
     
-    func buildUrl(sdkConfig: SdkConfig, providerConfig: ProviderConfig, scope: String, pkce: Pkce) -> String {
+    func buildUrl(sdkConfig: SdkConfig, providerConfig: ProviderConfig, scope: String, pkce: Pkce, origin: String) -> String {
         let params = [
             "provider": providerConfig.provider,
             "client_id": sdkConfig.clientId,
@@ -151,6 +152,7 @@ class ConfiguredWebViewProvider: NSObject, Provider {
             "platform": "ios",
             "code_challenge": pkce.codeChallenge,
             "code_challenge_method": pkce.codeChallengeMethod,
+            "origin": origin
         ]
         let queryStrings = params
             .map { "\($0)=\($1)" }
