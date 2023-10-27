@@ -111,7 +111,7 @@ public class ApiError: Codable, CustomStringConvertible {
             errorId: errorId,
             errorUserMsg: userMsg,
             errorMessageKey: key,
-            errorDescription: desc.map { s in s.replacingOccurrences(of: "+", with: " ") }
+            errorDescription: desc?.replacingOccurrences(of: "+", with: " ")
         )
     }
 }
