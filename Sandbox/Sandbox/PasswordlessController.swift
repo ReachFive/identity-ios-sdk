@@ -14,7 +14,8 @@ class PasswordlessController: UIViewController {
             .startPasswordless(
                 .Email(
                     email: emailInput.text ?? "",
-                    redirectUri: redirectUriInput.text != "" ? redirectUriInput.text : nil
+                    redirectUri: redirectUriInput.text != "" ? redirectUriInput.text : nil,
+                    origin: "PasswordlessController.loginWithEmail"
                 )
             )
             .onSuccess {
@@ -35,7 +36,8 @@ class PasswordlessController: UIViewController {
             .startPasswordless(
                 .PhoneNumber(
                     phoneNumber: phoneNumberInput.text ?? "",
-                    redirectUri: redirectUriInput.text != "" ? redirectUriInput.text : nil
+                    redirectUri: redirectUriInput.text != "" ? redirectUriInput.text : nil,
+                    origin: "PasswordlessController.loginWithPhoneNumber"
                 )
             )
             .onSuccess {
