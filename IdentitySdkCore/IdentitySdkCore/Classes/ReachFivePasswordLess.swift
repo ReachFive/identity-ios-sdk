@@ -43,14 +43,10 @@ public extension ReachFive {
     
     func verifyPasswordlessCode(verifyAuthCodeRequest: VerifyAuthCodeRequest) -> Future<AuthToken, ReachFiveError> {
         let pkce: Pkce? = storage.take(key: pkceKey)
-        guard let pkce else {
-            return Future(error: .TechnicalError(reason: "Pkce not found"))
-        }
         return reachFiveApi
             .verifyAuthCode(verifyAuthCodeRequest: verifyAuthCodeRequest)
-            .flatMap { _ in
+            .flatMap { _ -> Future<AuthToken, ReachFiveError> in
                 let verifyPasswordlessRequest = VerifyPasswordlessRequest(
-                    email: verifyAuthCodeRequest.email,
                     phoneNumber: verifyAuthCodeRequest.phoneNumber,
                     verificationCode: verifyAuthCodeRequest.verificationCode,
                     state: "passwordless",
@@ -60,12 +56,12 @@ public extension ReachFive {
                 )
                 return self.reachFiveApi
                     .verifyPasswordless(verifyPasswordlessRequest: verifyPasswordlessRequest)
-                    .flatMap { response in
+                    .flatMap { response -> Future<AuthToken, ReachFiveError> in
                         let authCodeRequest = AuthCodeRequest(
                             clientId: self.sdkConfig.clientId,
                             code: response.code ?? "",
                             redirectUri: self.sdkConfig.scheme,
-                            pkce: pkce
+                            pkce: pkce!
                         )
                         return self.reachFiveApi.authWithCode(authCodeRequest: authCodeRequest)
                             .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) })
