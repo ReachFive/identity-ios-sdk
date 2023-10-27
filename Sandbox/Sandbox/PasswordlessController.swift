@@ -9,6 +9,23 @@ class PasswordlessController: UIViewController {
     @IBOutlet weak var phoneNumberInput: UITextField!
     @IBOutlet weak var verificationCodeInput: UITextField!
     
+    var tokenNotification: NSObjectProtocol?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tokenNotification = NotificationCenter.default.addObserver(forName: .DidReceiveLoginCallback, object: nil, queue: nil) { (note) in
+            if let result = note.userInfo?["result"], let result = result as? Result<AuthToken, ReachFiveError> {
+                switch result {
+                case .success(let authToken):
+                    self.goToProfile(authToken)
+                case .failure(let error):
+                    let alert = AppDelegate.createAlert(title: "Passwordless failed", message: "Error: \(error.message())")
+                    self.present(alert, animated: true)
+                }
+            }
+        }
+    }
+    
     @IBAction func loginWithEmail(_ sender: Any) {
         AppDelegate.reachfive()
             .startPasswordless(
@@ -59,16 +76,10 @@ class PasswordlessController: UIViewController {
         )
         AppDelegate.reachfive()
             .verifyPasswordlessCode(verifyAuthCodeRequest: verifyAuthCodeRequest)
-            .onSuccess { success in
-                let alert = AppDelegate.createAlert(title: "Verify code", message: "Success: \(success)")
-                self.present(alert, animated: true, completion: nil)
-            }
+            .onSuccess(callback: goToProfile)
             .onFailure { error in
                 let alert = AppDelegate.createAlert(title: "Verify code", message: "Error: \(error.message())")
-                self.present(alert, animated: true, completion: nil)
-            }
-            .onComplete { result in
-                print("verifyPasswordless \(result)")
+                self.present(alert, animated: true)
             }
     }
 }
