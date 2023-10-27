@@ -74,19 +74,35 @@ public extension ReachFive {
             passwordlessCallback?(.failure(.TechnicalError(reason: "Pkce not found")))
             return
         }
-        if let params, let code = params.first(where: { $0.name == "code" })?.value {
-            let authCodeRequest = AuthCodeRequest(
-                clientId: sdkConfig.clientId,
-                code: code,
-                redirectUri: sdkConfig.scheme,
-                pkce: pkce
-            )
+        guard let params, let code = params.first(where: { $0.name == "code" })?.value else {
+            let error = params?.first(where: { $0.name == "error" })?.value
+            let errorId = params?.first(where: { $0.name == "error_id" })?.value
+            let userMsg = params?.first(where: { $0.name == "error_user_msg" })?.value
+            let key = params?.first(where: { $0.name == "error_message_key" })?.value
+            let desc = params?.first(where: { $0.name == "error_description" })?.value
             
-            reachFiveApi.authWithCode(authCodeRequest: authCodeRequest)
-                .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) })
-                .onComplete { result in
-                    self.passwordlessCallback?(result)
-                }
+            let apiError = ApiError(
+                error: error,
+                errorId: errorId,
+                errorUserMsg: userMsg,
+                errorMessageKey: key,
+                errorDescription: desc.map { s in s.replacingOccurrences(of: "+", with: " ") }
+            )
+            passwordlessCallback?(.failure(.TechnicalError(reason: "No authorization code", apiError: apiError)))
+            return
         }
+        
+        let authCodeRequest = AuthCodeRequest(
+            clientId: sdkConfig.clientId,
+            code: code,
+            redirectUri: sdkConfig.scheme,
+            pkce: pkce
+        )
+        
+        reachFiveApi.authWithCode(authCodeRequest: authCodeRequest)
+            .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) })
+            .onComplete { result in
+                self.passwordlessCallback?(result)
+            }
     }
 }
