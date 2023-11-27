@@ -27,11 +27,14 @@ PODS:
     - IdentitySdkCore (~> 5)
   - IdentitySdkWebView (5.9.0):
     - IdentitySdkCore (~> 5)
+  - IdentitySdkWeChat (5.9.0):
+    - IdentitySdkCore (~> 5)
 
 DEPENDENCIES:
   - IdentitySdkCore (from `../IdentitySdkCore.podspec`)
   - IdentitySdkGoogle (from `../IdentitySdkGoogle.podspec`)
   - IdentitySdkWebView (from `../IdentitySdkWebView.podspec`)
+  - IdentitySdkWeChat (from `../IdentitySdkWeChat.podspec`)
 
 SPEC REPOS:
   trunk:
@@ -51,6 +54,8 @@ EXTERNAL SOURCES:
     :path: "../IdentitySdkGoogle.podspec"
   IdentitySdkWebView:
     :path: "../IdentitySdkWebView.podspec"
+  IdentitySdkWeChat:
+    :path: "../IdentitySdkWeChat.podspec"
 
 SPEC CHECKSUMS:
   Alamofire: 0e92e751b3e9e66d7982db43919d01f313b8eb91
@@ -64,7 +69,8 @@ SPEC CHECKSUMS:
   IdentitySdkCore: 1b54462b3fdd028db93e30145978e53398cf6164
   IdentitySdkGoogle: 6e46cf01c1e235be61f5bf65ad43c10e178eab6b
   IdentitySdkWebView: f3bc4ebf3290c0d208b47d8dda9410a72868a98e
+  IdentitySdkWeChat: 9d706bedb8698b6c6b8fd7ac5474960a4ed8d85f
 
-PODFILE CHECKSUM: 9f7ee913b5c6fe3699c0f98337a65ce67572ac27
+PODFILE CHECKSUM: 585774ef69f849db40a72a5a5a7667bb0306f2ba
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.14.3
