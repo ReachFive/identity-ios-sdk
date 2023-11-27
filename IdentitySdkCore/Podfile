@@ -6,11 +6,6 @@ platform :ios, '13.0'
 target 'IdentitySdkCore' do
   # Comment the next line if you do not want to use dynamic frameworks
   use_frameworks!
-
-  # Pods for IdentitySdkCore
-  pod 'Alamofire', '~> 5.8'
-  pod 'BrightFutures', '~> 8.2.0'
-  pod 'CryptoSwift', '~> 1.8'
-  pod 'DeviceKit', '~> 5.1'
+  pod 'IdentitySdkCore', :path => '../'
 
 end
