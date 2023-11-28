@@ -135,6 +135,10 @@ class ConfiguredWebViewProvider: NSObject, Provider {
         true
     }
     
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        true
+    }
+    
     public func applicationDidBecomeActive(_ application: UIApplication) {
     }
     

@@ -43,6 +43,8 @@ class LoginWithProvidersController: UIViewController, UITableViewDataSource, UIT
             goToProfile(authToken)
         case .failure(let error):
             print(error)
+            let alert = AppDelegate.createAlert(title: "Login with provider", message: "Error: \(error.message())")
+            self.present(alert, animated: true)
         }
     }
     

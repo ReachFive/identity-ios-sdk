@@ -2,6 +2,7 @@ import UIKit
 import IdentitySdkCore
 import IdentitySdkWebView
 import IdentitySdkGoogle
+import IdentitySdkWeChat
 
 //TODO
 // Mettre une quatrième tabs:
@@ -24,7 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         providersCreators: [
             // we can add back Facebook when we migrate to Swift Package Manager, or try this crazy fix : https://betterprogramming.pub/macos-catalyst-debugging-problems-using-catalyst-and-cocoapods-579679150fa9
             GoogleProvider(),
-            WebViewProvider()
+            WebViewProvider(),
+            WeChatProvider()
         ],
         storage: storage
     )
@@ -42,6 +44,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         return reachfive.application(application, didFinishLaunchingWithOptions: launchOptions)
+    }
+    
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        return reachfive.application(application, continue: userActivity, restorationHandler: restorationHandler)
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {

@@ -17,5 +17,9 @@ Pod::Spec.new do |spec|
   spec.platform              = :ios
   spec.ios.deployment_target = $IOS_DEPLOYMENT_TARGET
 
+  spec.static_framework = true
+
   spec.dependency 'IdentitySdkCore', '~> 5'
+  spec.dependency 'WechatSwiftPod'
+
 end

@@ -16,7 +16,7 @@ PODS:
   - GTMAppAuth (2.0.0):
     - AppAuth/Core (~> 1.6)
     - GTMSessionFetcher/Core (< 4.0, >= 1.5)
-  - GTMSessionFetcher/Core (3.1.1)
+  - GTMSessionFetcher/Core (3.2.0)
   - IdentitySdkCore (5.9.0):
     - Alamofire (~> 5.8)
     - BrightFutures (~> 8.2.0)
@@ -29,6 +29,8 @@ PODS:
     - IdentitySdkCore (~> 5)
   - IdentitySdkWeChat (5.9.0):
     - IdentitySdkCore (~> 5)
+    - WechatSwiftPod
+  - WechatSwiftPod (1.9.2.1)
 
 DEPENDENCIES:
   - IdentitySdkCore (from `../IdentitySdkCore.podspec`)
@@ -46,6 +48,7 @@ SPEC REPOS:
     - GoogleSignIn
     - GTMAppAuth
     - GTMSessionFetcher
+    - WechatSwiftPod
 
 EXTERNAL SOURCES:
   IdentitySdkCore:
@@ -65,11 +68,12 @@ SPEC CHECKSUMS:
   DeviceKit: bcce5c26d9502e77e3a9fa5d1282877db388d922
   GoogleSignIn: b232380cf495a429b8095d3178a8d5855b42e842
   GTMAppAuth: 99fb010047ba3973b7026e45393f51f27ab965ae
-  GTMSessionFetcher: e8647203b65cee28c5f73d0f473d096653945e72
+  GTMSessionFetcher: 41b9ef0b4c08a6db4b7eb51a21ae5183ec99a2c8
   IdentitySdkCore: 1b54462b3fdd028db93e30145978e53398cf6164
   IdentitySdkGoogle: 6e46cf01c1e235be61f5bf65ad43c10e178eab6b
   IdentitySdkWebView: f3bc4ebf3290c0d208b47d8dda9410a72868a98e
-  IdentitySdkWeChat: 5fe53bc6686a84f44e2807bfde2c63f2286a3ad1
+  IdentitySdkWeChat: a3069b4623c4dd2944d26859bd80ad0d765350e6
+  WechatSwiftPod: cc83e0f2ce9d310eb277d4309c948fc3532be57a
 
 PODFILE CHECKSUM: 585774ef69f849db40a72a5a5a7667bb0306f2ba
 
