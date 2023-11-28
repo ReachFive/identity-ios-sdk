@@ -13,6 +13,7 @@
 - [IdentitySdkWebView](https://cocoapods.org/pods/IdentitySdkWebView)
 - [IdentitySdkFacebook](https://cocoapods.org/pods/IdentitySdkFacebook)
 - [IdentitySdkGoogle](https://cocoapods.org/pods/IdentitySdkGoogle)
+- [IdentitySdkWeChat](https://cocoapods.org/pods/IdentitySdkWeChat)
 
 ## Installation
 

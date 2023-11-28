@@ -69,7 +69,7 @@ SPEC CHECKSUMS:
   IdentitySdkCore: 1b54462b3fdd028db93e30145978e53398cf6164
   IdentitySdkGoogle: 6e46cf01c1e235be61f5bf65ad43c10e178eab6b
   IdentitySdkWebView: f3bc4ebf3290c0d208b47d8dda9410a72868a98e
-  IdentitySdkWeChat: 9d706bedb8698b6c6b8fd7ac5474960a4ed8d85f
+  IdentitySdkWeChat: 5fe53bc6686a84f44e2807bfde2c63f2286a3ad1
 
 PODFILE CHECKSUM: 585774ef69f849db40a72a5a5a7667bb0306f2ba
 
