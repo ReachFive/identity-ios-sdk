@@ -25,5 +25,4 @@ Pod::Spec.new do |spec|
 
   spec.dependency 'IdentitySdkCore', '~> 5'
   spec.dependency 'GoogleSignIn', '~> 7'
-
 end
