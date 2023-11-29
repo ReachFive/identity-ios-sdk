@@ -2,7 +2,6 @@ import UIKit
 import IdentitySdkCore
 import IdentitySdkWebView
 import IdentitySdkGoogle
-import IdentitySdkWeChat
 
 //TODO
 // Mettre une quatrième tabs:
@@ -23,10 +22,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             clientId: "EGYEKPe5RFpaweVzKmNv"
         ),
         providersCreators: [
-            // we can add back Facebook when we migrate to Swift Package Manager, or try this crazy fix : https://betterprogramming.pub/macos-catalyst-debugging-problems-using-catalyst-and-cocoapods-579679150fa9
+            // we don't add WeChat and Facebook by default in order to be able to launch the app on mac Catalyst in order to test on local (more easily than with a simulator)
+            // we can add back Facebook when we migrate to Swift Package Manager, or try this crazy fix: https://betterprogramming.pub/macos-catalyst-debugging-problems-using-catalyst-and-cocoapods-579679150fa9
             GoogleProvider(),
-            WebViewProvider(),
-            WeChatProvider()
+            WebViewProvider()
         ],
         storage: storage
     )
