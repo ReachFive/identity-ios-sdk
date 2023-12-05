@@ -20,7 +20,7 @@ public extension ReachFive {
     func signup(withRequest request: PasskeySignupRequest) -> Future<AuthToken, ReachFiveError> {
         let domain = sdkConfig.domain
         let signupOptions = SignupOptions(
-            origin: request.origin ?? "https://\(domain)",
+            origin: request.originWebAuthn ?? "https://\(domain)",
             friendlyName: request.friendlyName,
             profile: request.passkeyPofile,
             clientId: sdkConfig.clientId,
