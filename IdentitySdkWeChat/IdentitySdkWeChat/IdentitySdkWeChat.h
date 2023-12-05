@@ -1,10 +1,3 @@
-//
-//  IdentitySdkWeChat.h
-//  IdentitySdkWeChat
-//
-//  Created by François Devémy on 27/11/2023.
-//
-
 #import <Foundation/Foundation.h>
 
 //! Project version number for IdentitySdkWeChat.
