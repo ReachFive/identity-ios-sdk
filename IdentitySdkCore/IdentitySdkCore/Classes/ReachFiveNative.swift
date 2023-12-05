@@ -78,10 +78,10 @@ public extension ReachFive {
     
     private func adapt(_ request: NativeLoginRequest) -> NativeLoginRequest {
         let domain = sdkConfig.domain
-        let origin = request.origin ?? "https://\(domain)"
+        let originWebAuthn = request.originWebAuthn ?? "https://\(domain)"
         let scopes = request.scopes ?? scope
         
-        return NativeLoginRequest(anchor: request.anchor, origin: origin, scopes: scopes)
+        return NativeLoginRequest(anchor: request.anchor, originWebAuthn: originWebAuthn, scopes: scopes)
     }
 }
 

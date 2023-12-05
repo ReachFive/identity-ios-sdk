@@ -122,7 +122,7 @@ public class CredentialManager: NSObject {
         promise = Promise()
         authenticationAnchor = request.anchor
         
-        let webAuthnLoginRequest = WebAuthnLoginRequest(clientId: reachFiveApi.sdkConfig.clientId, origin: request.origin!, scope: request.scopes)
+        let webAuthnLoginRequest = WebAuthnLoginRequest(clientId: reachFiveApi.sdkConfig.clientId, origin: request.originWebAuthn!, scope: request.scopes)
         scope = webAuthnLoginRequest.scope
         
         reachFiveApi.createWebAuthnAuthenticationOptions(webAuthnLoginRequest: webAuthnLoginRequest)
@@ -148,7 +148,7 @@ public class CredentialManager: NSObject {
         promise = Promise()
         authenticationAnchor = request.anchor
         
-        let webAuthnLoginRequest = WebAuthnLoginRequest(clientId: reachFiveApi.sdkConfig.clientId, origin: request.origin!, scope: request.scopes)
+        let webAuthnLoginRequest = WebAuthnLoginRequest(clientId: reachFiveApi.sdkConfig.clientId, origin: request.originWebAuthn!, scope: request.scopes)
         switch username {
         
         case .Unspecified(username: let username):
@@ -190,7 +190,7 @@ public class CredentialManager: NSObject {
         promise = Promise()
         authenticationAnchor = request.anchor
         
-        let webAuthnLoginRequest = WebAuthnLoginRequest(clientId: reachFiveApi.sdkConfig.clientId, origin: request.origin!, scope: request.scopes)
+        let webAuthnLoginRequest = WebAuthnLoginRequest(clientId: reachFiveApi.sdkConfig.clientId, origin: request.originWebAuthn!, scope: request.scopes)
         
         return signInWith(webAuthnLoginRequest, withMode: mode, authorizing: requestTypes) { authenticationOptions in
             guard #available(iOS 16.0, *) else { // can't happen, because this is called from a >= iOS 15 context
