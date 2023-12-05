@@ -25,6 +25,8 @@ public class CredentialManager: NSObject {
     var signupOrAddPasskey: SignupOrAddPasskey?
     // the scope of the request
     var scope: String?
+    // optional origin for user events
+    var originR5: String?
     
     enum SignupOrAddPasskey {
         case Signup(signupOptions: RegistrationOptions)
@@ -190,6 +192,7 @@ public class CredentialManager: NSObject {
         promise = Promise()
         authenticationAnchor = request.anchor
         
+        originR5 = request.origin
         let webAuthnLoginRequest = WebAuthnLoginRequest(clientId: reachFiveApi.sdkConfig.clientId, origin: request.originWebAuthn!, scope: request.scopes)
         
         return signInWith(webAuthnLoginRequest, withMode: mode, authorizing: requestTypes) { authenticationOptions in
@@ -335,7 +338,7 @@ extension CredentialManager: ASAuthorizationControllerDelegate {
             let response = R5AuthenticatorAssertionResponse(authenticatorData: authenticatorData, clientDataJSON: clientDataJSON, signature: signature, userHandle: userID)
             
             promise.completeWith(reachFiveApi.authenticateWithWebAuthn(authenticationPublicKeyCredential: AuthenticationPublicKeyCredential(id: id, rawId: id, type: "public-key", response: response))
-                .flatMap({ self.loginCallback(tkn: $0.tkn, scope: scope) }))
+                .flatMap({ self.loginCallback(tkn: $0.tkn, scope: scope, origin: self.originR5) }))
         } else {
             promise.tryFailure(.TechnicalError(reason: "didCompleteWithAuthorization: Received unknown authorization type."))
             registrationPromise.tryFailure(.TechnicalError(reason: "didCompleteWithAuthorization: Received unknown authorization type."))
@@ -383,10 +386,10 @@ extension CredentialManager {
         return nil
     }
     
-    func loginCallback(tkn: String, scope: String) -> Future<AuthToken, ReachFiveError> {
+    func loginCallback(tkn: String, scope: String, origin: String? = nil) -> Future<AuthToken, ReachFiveError> {
         let pkce = Pkce.generate()
         
-        return reachFiveApi.loginCallback(loginCallback: LoginCallback(sdkConfig: reachFiveApi.sdkConfig, scope: scope, pkce: pkce, tkn: tkn))
+        return reachFiveApi.loginCallback(loginCallback: LoginCallback(sdkConfig: reachFiveApi.sdkConfig, scope: scope, pkce: pkce, tkn: tkn, origin: origin))
             .flatMap({ self.authWithCode(code: $0, pkce: pkce) })
     }
     

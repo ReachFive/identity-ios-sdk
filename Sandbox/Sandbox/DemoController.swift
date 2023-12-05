@@ -50,7 +50,7 @@ class DemoController: UIViewController {
         } else {
             mode = .Always
         }
-        AppDelegate.reachfive().login(withRequest: NativeLoginRequest(anchor: window), usingModalAuthorizationFor: types, display: mode)
+        AppDelegate.reachfive().login(withRequest: NativeLoginRequest(anchor: window, origin: "DemoController.viewDidAppear"), usingModalAuthorizationFor: types, display: mode)
             .onSuccess(callback: goToProfile)
             .onFailure { error in
                 
@@ -130,7 +130,7 @@ class DemoController: UIViewController {
         }
         
         if #available(iOS 16.0, *) {
-            let request = NativeLoginRequest(anchor: window)
+            let request = NativeLoginRequest(anchor: window, origin: "DemoController.login")
             
             (username.isEmpty ?
                 // this is optional, but a good way to present a modal with a fallback to QR code for loging using a nearby device

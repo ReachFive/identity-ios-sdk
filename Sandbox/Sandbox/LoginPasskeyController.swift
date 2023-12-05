@@ -24,7 +24,7 @@ class LoginPasskeyController: UIViewController {
         print("viewDidAppear")
         
         guard let window = view.window else { fatalError("The view was not in the app's view hierarchy!") }
-        AppDelegate.reachfive().login(withRequest: NativeLoginRequest(anchor: window), usingModalAuthorizationFor: [.Passkey], display: .IfImmediatelyAvailableCredentials)
+        AppDelegate.reachfive().login(withRequest: NativeLoginRequest(anchor: window, origin: "LoginPasskeyController.viewDidAppear"), usingModalAuthorizationFor: [.Passkey], display: .IfImmediatelyAvailableCredentials)
             .onSuccess(callback: goToProfile)
             .onFailure { error in
                 
@@ -55,7 +55,7 @@ class LoginPasskeyController: UIViewController {
     @IBAction func nonDiscoverableLogin(_ sender: Any) {
         guard let window = view.window else { fatalError("The view was not in the app's view hierarchy!") }
         let fut: Future<AuthToken, ReachFiveError>
-        let request = NativeLoginRequest(anchor: window)
+        let request = NativeLoginRequest(anchor: window, origin: "LoginPasskeyController.nonDiscoverableLogin")
         switch (usernameField.text) {
         case .none, .some(""):
             // this is optional, but a good way to present a modal with a fallback to QR code for loging using a nearby device

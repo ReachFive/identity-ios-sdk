@@ -81,7 +81,7 @@ public extension ReachFive {
         let originWebAuthn = request.originWebAuthn ?? "https://\(domain)"
         let scopes = request.scopes ?? scope
         
-        return NativeLoginRequest(anchor: request.anchor, originWebAuthn: originWebAuthn, scopes: scopes)
+        return NativeLoginRequest(anchor: request.anchor, originWebAuthn: originWebAuthn, scopes: scopes, origin: request.origin)
     }
 }
 

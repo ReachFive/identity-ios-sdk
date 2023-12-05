@@ -31,7 +31,7 @@ class NativePasswordController: UIViewController {
         guard let window = view.window else { fatalError("The view was not in the app's view hierarchy!") }
         
         AppDelegate.reachfive()
-            .login(withRequest: NativeLoginRequest(anchor: window), usingModalAuthorizationFor: [.Password], display: .Always)
+            .login(withRequest: NativeLoginRequest(anchor: window, origin: "NativePasswordController.viewDidAppear"), usingModalAuthorizationFor: [.Password], display: .Always)
             .onSuccess(callback: goToProfile)
             .onFailure { error in
                 switch error {
