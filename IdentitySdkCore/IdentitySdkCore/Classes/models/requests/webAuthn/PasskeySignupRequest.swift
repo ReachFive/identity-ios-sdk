@@ -8,12 +8,14 @@ public class PasskeySignupRequest {
     public let originWebAuthn: String?
     public let scopes: [String]?
     public let anchor: ASPresentationAnchor
+    public let origin: String?
     
-    public init(passkeyPofile: ProfilePasskeySignupRequest, friendlyName: String, anchor: ASPresentationAnchor, originWebAuthn: String? = nil, scopes: [String]? = nil) {
+    public init(passkeyPofile: ProfilePasskeySignupRequest, friendlyName: String, anchor: ASPresentationAnchor, originWebAuthn: String? = nil, scopes: [String]? = nil, origin: String? = nil) {
         self.passkeyPofile = passkeyPofile
         self.friendlyName = friendlyName
         self.originWebAuthn = originWebAuthn
         self.scopes = scopes
         self.anchor = anchor
+        self.origin = origin
     }
 }

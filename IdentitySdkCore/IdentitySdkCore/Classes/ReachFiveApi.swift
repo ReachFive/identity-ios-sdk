@@ -354,9 +354,14 @@ public class ReachFiveApi {
     }
     
     public func signupWithWebAuthn(webauthnSignupCredential: WebauthnSignupCredential) -> Future<AuthenticationToken, ReachFiveError> {
-        AF
+        var path = "/identity/v1/webauthn/signup?platform=ios&sdk=\(sdk)&device=\(deviceInfo)"
+        if let originR5 = webauthnSignupCredential.originR5 {
+            path += "&origin=\(originR5)"
+        }
+        
+        return AF
             .request(
-                createUrl(path: "/identity/v1/webauthn/signup?platform=ios&sdk=\(sdk)&device=\(deviceInfo)"),
+                createUrl(path: path),
                 method: .post,
                 parameters: webauthnSignupCredential.dictionary(),
                 encoding: JSONEncoding.default

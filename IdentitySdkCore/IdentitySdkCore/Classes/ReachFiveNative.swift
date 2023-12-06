@@ -27,7 +27,7 @@ public extension ReachFive {
             scope: request.scopes ?? scope
         )
         
-        return credentialManager.signUp(withRequest: signupOptions, anchor: request.anchor)
+        return credentialManager.signUp(withRequest: signupOptions, anchor: request.anchor, originR5: request.origin)
     }
     
     /// Starts an auto-fill assisted passkey login request.

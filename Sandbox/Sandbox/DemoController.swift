@@ -100,7 +100,7 @@ class DemoController: UIViewController {
                 profile = ProfilePasskeySignupRequest(phoneNumber: username)
             }
             
-            AppDelegate.reachfive().signup(withRequest: PasskeySignupRequest(passkeyPofile: profile, friendlyName: username, anchor: window))
+            AppDelegate.reachfive().signup(withRequest: PasskeySignupRequest(passkeyPofile: profile, friendlyName: username, anchor: window, origin: "DemoController.createAccount"))
                 .onSuccess(callback: goToProfile)
                 .onFailure { error in
                     switch error {

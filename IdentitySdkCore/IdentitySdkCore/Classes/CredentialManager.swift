@@ -43,11 +43,12 @@ public class CredentialManager: NSObject {
     
     // MARK: - Signup
     @available(iOS 16.0, *)
-    func signUp(withRequest request: SignupOptions, anchor: ASPresentationAnchor) -> Future<AuthToken, ReachFiveError> {
+    func signUp(withRequest request: SignupOptions, anchor: ASPresentationAnchor, originR5: String? = nil) -> Future<AuthToken, ReachFiveError> {
         authController?.cancel()
         promise = Promise()
         authenticationAnchor = anchor
         scope = request.scope
+        self.originR5 = originR5
         
         reachFiveApi.createWebAuthnSignupOptions(webAuthnSignupOptions: request)
             .flatMap { options -> Result<ASAuthorizationRequest, ReachFiveError> in
@@ -318,9 +319,9 @@ extension CredentialManager: ASAuthorizationControllerDelegate {
                     return
                 }
                 
-                let webauthnSignupCredential = WebauthnSignupCredential(webauthnId: signupOptions.options.publicKey.user.id, publicKeyCredential: registrationPublicKeyCredential)
+                let webauthnSignupCredential = WebauthnSignupCredential(webauthnId: signupOptions.options.publicKey.user.id, publicKeyCredential: registrationPublicKeyCredential, originR5: self.originR5)
                 promise.completeWith(reachFiveApi.signupWithWebAuthn(webauthnSignupCredential: webauthnSignupCredential)
-                    .flatMap({ self.loginCallback(tkn: $0.tkn, scope: scope) }))
+                    .flatMap({ self.loginCallback(tkn: $0.tkn, scope: scope, origin: self.originR5) }))
             }
         } else if #available(iOS 16.0, *), let credentialAssertion = authorization.credential as? ASAuthorizationPlatformPublicKeyCredentialAssertion {
             // A passkey was selected to sign in

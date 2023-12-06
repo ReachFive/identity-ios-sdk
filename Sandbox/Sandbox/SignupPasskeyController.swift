@@ -26,7 +26,7 @@ class SignupPasskeyController: UIViewController {
         
         if #available(iOS 16.0, *) {
             let window: UIWindow = view.window!
-            AppDelegate.reachfive().signup(withRequest: PasskeySignupRequest(passkeyPofile: profile, friendlyName: username, anchor: window))
+            AppDelegate.reachfive().signup(withRequest: PasskeySignupRequest(passkeyPofile: profile, friendlyName: username, anchor: window, origin: "SignupPasskeyController.signup"))
                 .onSuccess(callback: goToProfile)
                 .onFailure { error in
                     switch (error) {
