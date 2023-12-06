@@ -73,4 +73,11 @@ public extension ReachFive {
             let _ = provider.applicationDidBecomeActive(application)
         }
     }
+    
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        for provider in providers {
+            let _ = provider.application(application, continue: userActivity, restorationHandler: restorationHandler)
+        }
+        return true
+    }
 }

@@ -9,6 +9,7 @@
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>webcredentials:integ-qa-fonctionnelle-pr3421.reach5.dev</string>
+		<string>applinks:integ-qa-fonctionnelle-pr3421.reach5.dev</string>
 	</array>
 	<key>com.apple.security.app-sandbox</key>
 	<true/>

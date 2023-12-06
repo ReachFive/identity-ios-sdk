@@ -22,7 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             clientId: "EGYEKPe5RFpaweVzKmNv"
         ),
         providersCreators: [
-            // we can add back Facebook when we migrate to Swift Package Manager, or try this crazy fix : https://betterprogramming.pub/macos-catalyst-debugging-problems-using-catalyst-and-cocoapods-579679150fa9
+            // we don't add WeChat and Facebook by default in order to be able to launch the app on mac Catalyst in order to test on local (more easily than with a simulator)
+            // we can add back Facebook when we migrate to Swift Package Manager, or try this crazy fix: https://betterprogramming.pub/macos-catalyst-debugging-problems-using-catalyst-and-cocoapods-579679150fa9
             GoogleProvider(),
             WebViewProvider()
         ],
@@ -42,6 +43,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         return reachfive.application(application, didFinishLaunchingWithOptions: launchOptions)
+    }
+    
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        return reachfive.application(application, continue: userActivity, restorationHandler: restorationHandler)
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
