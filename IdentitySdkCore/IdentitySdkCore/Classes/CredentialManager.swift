@@ -88,7 +88,7 @@ public class CredentialManager: NSObject {
         registrationPromise = Promise()
         authenticationAnchor = request.anchor
         
-        reachFiveApi.createWebAuthnRegistrationOptions(authToken: authToken, registrationRequest: RegistrationRequest(origin: request.origin!, friendlyName: request.friendlyName))
+        reachFiveApi.createWebAuthnRegistrationOptions(authToken: authToken, registrationRequest: RegistrationRequest(origin: request.originWebAuthn!, friendlyName: request.friendlyName))
             .flatMap { options -> Result<ASAuthorizationRequest, ReachFiveError> in
                 self.signupOrAddPasskey = .AddPasskey(authToken: authToken)
                 
