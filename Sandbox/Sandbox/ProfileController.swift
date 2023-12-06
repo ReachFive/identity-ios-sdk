@@ -182,7 +182,7 @@ class ProfileController: UIViewController {
                 let registerAction = UIAlertAction(title: "Add", style: .default) { [unowned alert] (_) in
                     let textField = alert.textFields?[0]
                     
-                    AppDelegate.reachfive().registerNewPasskey(withRequest: NewPasskeyRequest(anchor: window, friendlyName: textField?.text ?? friendlyName), authToken: authToken)
+                    AppDelegate.reachfive().registerNewPasskey(withRequest: NewPasskeyRequest(anchor: window, friendlyName: textField?.text ?? friendlyName, origin: "ProfileController.registerNewPasskey"), authToken: authToken)
                         .onSuccess { _ in
                             self.reloadCredentials(authToken: authToken)
                         }

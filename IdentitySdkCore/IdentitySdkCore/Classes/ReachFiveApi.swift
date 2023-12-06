@@ -407,10 +407,15 @@ public class ReachFiveApi {
             .responseJson(type: RegistrationOptions.self, decoder: decoder)
     }
     
-    public func registerWithWebAuthn(authToken: AuthToken, publicKeyCredential: RegistrationPublicKeyCredential) -> Future<(), ReachFiveError> {
-        AF
+    public func registerWithWebAuthn(authToken: AuthToken, publicKeyCredential: RegistrationPublicKeyCredential, originR5: String? = nil) -> Future<(), ReachFiveError> {
+        var path = "/identity/v1/webauthn/registration?platform=ios&sdk=\(sdk)&device=\(deviceInfo)"
+        if let originR5 {
+            path += "&origin=\(originR5)"
+        }
+        
+        return AF
             .request(
-                createUrl(path: "/identity/v1/webauthn/registration?platform=ios&sdk=\(sdk)&device=\(deviceInfo)"),
+                createUrl(path: path),
                 method: .post,
                 parameters: publicKeyCredential.dictionary(),
                 encoding: JSONEncoding.default,

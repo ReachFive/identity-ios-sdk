@@ -73,7 +73,7 @@ public extension ReachFive {
         let domain = sdkConfig.domain
         let originWebAuthn = request.originWebAuthn ?? "https://\(domain)"
         //TODO supprimer l'ancienne passkey du server
-        return credentialManager.registerNewPasskey(withRequest: NewPasskeyRequest(anchor: request.anchor, friendlyName: request.friendlyName, originWebAuthn: originWebAuthn), authToken: authToken)
+        return credentialManager.registerNewPasskey(withRequest: NewPasskeyRequest(anchor: request.anchor, friendlyName: request.friendlyName, originWebAuthn: originWebAuthn, origin: request.origin), authToken: authToken)
     }
     
     private func adapt(_ request: NativeLoginRequest) -> NativeLoginRequest {

@@ -87,6 +87,7 @@ public class CredentialManager: NSObject {
         authController?.cancel()
         registrationPromise = Promise()
         authenticationAnchor = request.anchor
+        self.originR5 = request.origin
         
         reachFiveApi.createWebAuthnRegistrationOptions(authToken: authToken, registrationRequest: RegistrationRequest(origin: request.originWebAuthn!, friendlyName: request.friendlyName))
             .flatMap { options -> Result<ASAuthorizationRequest, ReachFiveError> in
@@ -311,7 +312,7 @@ extension CredentialManager: ASAuthorizationControllerDelegate {
             
             switch signupOrAddPasskey {
             case let .AddPasskey(authToken):
-                registrationPromise.completeWith(reachFiveApi.registerWithWebAuthn(authToken: authToken, publicKeyCredential: registrationPublicKeyCredential))
+                registrationPromise.completeWith(reachFiveApi.registerWithWebAuthn(authToken: authToken, publicKeyCredential: registrationPublicKeyCredential, originR5: self.originR5))
             
             case let .Signup(signupOptions):
                 guard let scope else {
