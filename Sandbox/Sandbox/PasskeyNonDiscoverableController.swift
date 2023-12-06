@@ -18,7 +18,7 @@ class PasskeyNonDiscoverableController: UIViewController {
         guard let window = view.window else { fatalError("The view was not in the app's view hierarchy!") }
         guard let username = username.text, !username.isEmpty else { return }
         
-        let request = NativeLoginRequest(anchor: window)
+        let request = NativeLoginRequest(anchor: window, origin: "PasskeyNonDiscoverableController.login")
         AppDelegate.reachfive().login(withNonDiscoverableUsername: .Unspecified(username), forRequest: request, usingModalAuthorizationFor: [.Passkey], display: mode)
             .onSuccess(callback: goToProfile)
             .onFailure { error in

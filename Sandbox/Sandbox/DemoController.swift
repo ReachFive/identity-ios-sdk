@@ -68,7 +68,7 @@ class DemoController: UIViewController {
                         return
                     #else
                         if #available(iOS 16.0, *) {
-                            AppDelegate.reachfive().beginAutoFillAssistedPasskeyLogin(withRequest: NativeLoginRequest(anchor: window))
+                            AppDelegate.reachfive().beginAutoFillAssistedPasskeyLogin(withRequest: NativeLoginRequest(anchor: window, origin: "DemoController.viewDidAppear.AuthCanceled"))
                                 .onSuccess(callback: self.goToProfile)
                                 .onFailure { error in
                                     print("error: \(error) \(error.message())")
@@ -144,7 +144,7 @@ class DemoController: UIViewController {
                         #if targetEnvironment(macCatalyst)
                             return
                         #else
-                            AppDelegate.reachfive().beginAutoFillAssistedPasskeyLogin(withRequest: request)
+                            AppDelegate.reachfive().beginAutoFillAssistedPasskeyLogin(withRequest: NativeLoginRequest(anchor: window, origin: "DemoController.login.AuthCanceled"))
                                 .onSuccess(callback: self.goToProfile)
                                 .onFailure { error in
                                     print("error: \(error) \(error.message())")

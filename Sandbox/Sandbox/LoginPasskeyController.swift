@@ -38,7 +38,7 @@ class LoginPasskeyController: UIViewController {
                     #if targetEnvironment(macCatalyst)
                         return
                     #else
-                        AppDelegate.reachfive().beginAutoFillAssistedPasskeyLogin(withRequest: NativeLoginRequest(anchor: window))
+                        AppDelegate.reachfive().beginAutoFillAssistedPasskeyLogin(withRequest: NativeLoginRequest(anchor: window, origin: "LoginPasskeyController.viewDidAppear.AuthCanceled"))
                             .onSuccess(callback: self.goToProfile)
                             .onFailure { error in
                                 let alert = AppDelegate.createAlert(title: "Login", message: "Error: \(error.message())")
@@ -70,7 +70,7 @@ class LoginPasskeyController: UIViewController {
                     #if targetEnvironment(macCatalyst)
                         return
                     #else
-                        AppDelegate.reachfive().beginAutoFillAssistedPasskeyLogin(withRequest: request)
+                        AppDelegate.reachfive().beginAutoFillAssistedPasskeyLogin(withRequest: NativeLoginRequest(anchor: window, origin: "LoginPasskeyController.nonDiscoverableLogin.AuthCanceled"))
                             .onSuccess(callback: self.goToProfile)
                             .onFailure { error in
                                 let alert = AppDelegate.createAlert(title: "Login", message: "Error: \(error.message())")

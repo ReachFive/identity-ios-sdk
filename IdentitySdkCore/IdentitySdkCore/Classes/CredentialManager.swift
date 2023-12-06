@@ -125,6 +125,7 @@ public class CredentialManager: NSObject {
         authController?.cancel()
         promise = Promise()
         authenticationAnchor = request.anchor
+        originR5 = request.origin
         
         let webAuthnLoginRequest = WebAuthnLoginRequest(clientId: reachFiveApi.sdkConfig.clientId, origin: request.originWebAuthn!, scope: request.scopes)
         scope = webAuthnLoginRequest.scope
@@ -151,6 +152,7 @@ public class CredentialManager: NSObject {
         if #available(iOS 16.0, *) { authController?.cancel() }
         promise = Promise()
         authenticationAnchor = request.anchor
+        originR5 = request.origin
         
         let webAuthnLoginRequest = WebAuthnLoginRequest(clientId: reachFiveApi.sdkConfig.clientId, origin: request.originWebAuthn!, scope: request.scopes)
         switch username {
@@ -193,8 +195,8 @@ public class CredentialManager: NSObject {
         if #available(iOS 16.0, *) { authController?.cancel() }
         promise = Promise()
         authenticationAnchor = request.anchor
-        
         originR5 = request.origin
+        
         let webAuthnLoginRequest = WebAuthnLoginRequest(clientId: reachFiveApi.sdkConfig.clientId, origin: request.originWebAuthn!, scope: request.scopes)
         
         return signInWith(webAuthnLoginRequest, withMode: mode, authorizing: requestTypes) { authenticationOptions in
