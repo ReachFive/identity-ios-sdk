@@ -19,7 +19,7 @@ Pod::Spec.new do |spec|
 
   spec.static_framework = true
 
-  spec.dependency 'IdentitySdkCore', '~> 5'
+  spec.dependency 'IdentitySdkCore', '~> 6'
   spec.dependency 'WechatSwiftPod', '~> 1'
 
 end
