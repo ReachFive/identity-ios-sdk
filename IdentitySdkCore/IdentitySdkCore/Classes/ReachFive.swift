@@ -25,7 +25,7 @@ public class ReachFive: NSObject {
     let credentialManager: CredentialManager
     public let pkceKey = "PASSWORDLESS_PKCE"
     
-    public init(sdkConfig: SdkConfig, providersCreators: Array<ProviderCreator>, storage: Storage?) {
+    public init(sdkConfig: SdkConfig, providersCreators: Array<ProviderCreator> = [], storage: Storage? = nil) {
         self.sdkConfig = sdkConfig
         self.providersCreators = providersCreators
         self.reachFiveApi = ReachFiveApi(sdkConfig: sdkConfig)
@@ -39,5 +39,44 @@ public class ReachFive: NSObject {
         Providers: \(providers)
         Scope: \(scope.joined(separator: " "))
         """
+    }
+    
+    public func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        interceptPasswordless(url)
+        for provider in providers {
+            let _ = provider.application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
+        }
+        return true
+    }
+    
+    public func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
+        interceptPasswordless(url)
+        for provider in providers {
+            let _ = provider.application(app, open: url, options: options)
+        }
+        return true
+    }
+    
+    public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        initialize().onSuccess { providers in
+            for provider in providers {
+                let _ = provider.application(application, didFinishLaunchingWithOptions: launchOptions)
+            }
+        }
+        
+        return true
+    }
+    
+    public func applicationDidBecomeActive(_ application: UIApplication) {
+        for provider in providers {
+            let _ = provider.applicationDidBecomeActive(application)
+        }
+    }
+    
+    public func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        for provider in providers {
+            let _ = provider.application(application, continue: userActivity, restorationHandler: restorationHandler)
+        }
+        return true
     }
 }
