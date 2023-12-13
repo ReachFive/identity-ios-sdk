@@ -55,9 +55,9 @@
 		3404A3EF22C2522A002FFEDB /* IdentitySdkGoogle */ = {
 			isa = PBXGroup;
 			children = (
-				3404A3F822C252C0002FFEDB /* Classes */,
 				3404A3F022C2522A002FFEDB /* IdentitySdkGoogle.h */,
 				3404A3F122C2522A002FFEDB /* Info.plist */,
+				3404A3F822C252C0002FFEDB /* Classes */,
 			);
 			path = IdentitySdkGoogle;
 			sourceTree = "<group>";
