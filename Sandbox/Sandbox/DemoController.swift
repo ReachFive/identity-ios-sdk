@@ -160,12 +160,13 @@ class DemoController: UIViewController {
     
     func loginWithPassword() {
         guard let pass = passwordField.text, !pass.isEmpty, let user = usernameField.text, !user.isEmpty else { return }
+        let origin = "DemoController.loginWithPassword"
         
         let fut: Future<AuthToken, ReachFiveError>
         if (user.contains("@")) {
-            fut = AppDelegate.reachfive().loginWithPassword(email: user, password: pass)
+            fut = AppDelegate.reachfive().loginWithPassword(email: user, password: pass, origin: origin)
         } else {
-            fut = AppDelegate.reachfive().loginWithPassword(phoneNumber: user, password: pass)
+            fut = AppDelegate.reachfive().loginWithPassword(phoneNumber: user, password: pass, origin: origin)
         }
         fut.onSuccess(callback: goToProfile)
             .onFailure { error in
