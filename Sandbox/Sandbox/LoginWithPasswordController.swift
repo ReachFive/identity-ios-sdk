@@ -2,6 +2,7 @@ import Foundation
 import UIKit
 import IdentitySdkCore
 
+//TODO faire que la complétion soit sur email et pas custom identifier par défaut
 class LoginWithPasswordController: UIViewController {
     @IBOutlet weak var emailInput: UITextField!
     @IBOutlet weak var phoneNumberInput: UITextField!

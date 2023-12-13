@@ -63,7 +63,7 @@ public class SecureStorage: Storage {
         
         if key == SecureStorage.authKey {
             print("send SecureStorage.update.DidSetAuthToken")
-            //TODO: passer le token dans la notif pour pouvior le récupérer directement
+            //TODO: passer le token dans la notif pour pouvoir le récupérer directement
             NotificationCenter.default.post(name: .DidSetAuthToken, object: nil)
         }
         print("SecureStorage.update success")

@@ -3,12 +3,18 @@ import IdentitySdkCore
 import IdentitySdkGoogle
 
 //TODO
-// Mettre une quatrième tabs:
+// Mettre une nouvelle page dans une quatrième tabs ou dans l'app réglages:
 // - Paramétrage : scopes, origin, utilisation du refresh au démarage ?
 // Voir pour utiliser les scènes : 1 par que c'est plus moderne, deux par qu'il faut peut-être adapter certaines interface pour les app clients qui utilisent les scènes
 // cf. wireframe de JC pour d'autres idées : https://miro.com/app/board/uXjVOMB0pG4=/
-// Essayer de mettre tous les config du SDK dans le code et en choisir une avec Xcode Custom Environment Variables : https://derrickho328.medium.com/xcode-custom-environment-variables-681b5b8674ec
+// Pouvoir sélectionner entre plusieurs confs ReachFive
+// - d'abord en dur ici et dans les entitlements. Sélectionner la bonne dans le let reachfive: ReachFive =
+// - ensuite en choisir une avec Xcode Custom Environment Variables : https://derrickho328.medium.com/xcode-custom-environment-variables-681b5b8674ec
+// - voir à la volée directement dans l'app ou dans une section de l'app réglages
+// - Indiquer sur quel environnement on est connecté en l'affichant en titre de la page des fonctions
 // Essayer d'améliorer la navigation pour qu'il n'y ait pas tous ces retours en arrière inutiles quand on navigue les onglets à la main
+// Mettre la version des SDK en tant que version de la Sandbox (vérif : User Agent Alamofire des user events)
+// Mettre un bouton recharger conf (lancer initialize) pour si la conf backend a changé
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
@@ -16,6 +22,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     public static let storage = SecureStorage()
     
     let reachfive: ReachFive = ReachFive(
+        ///
+        /// La reco pour la redirectURI de [https://datatracker.ietf.org/doc/html/rfc8252#section-7.1](RFC 8252) est:
+        /// - apps MUST use a URI scheme based on a domain name under their control, expressed in reverse order, as recommended by Section 3.8 of [RFC7595] for private-use URI schemes
+        /// - Following the requirements of Section 3.2 of [RFC3986], as there is no naming authority for private-use URI scheme redirects, only a single slash ("/") appears after the scheme component.
+        ///
+        /// A complete example of a redirect URI utilizing a private-use URI scheme is:
+        ///
+        ///     com.example.app:/oauth2redirect/example-provider
         sdkConfig: SdkConfig(
             domain: "integ-qa-fonctionnelle-pr3421.reach5.dev",
             clientId: "EGYEKPe5RFpaweVzKmNv"
@@ -44,7 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-        return reachfive.application(application, continue: userActivity, restorationHandler: restorationHandler)
+        reachfive.application(application, continue: userActivity, restorationHandler: restorationHandler)
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
