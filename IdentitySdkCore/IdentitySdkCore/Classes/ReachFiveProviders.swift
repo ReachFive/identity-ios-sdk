@@ -10,21 +10,25 @@ public extension ReachFive {
         providers
     }
     
+    func reinitialize() -> Future<[Provider], ReachFiveError> {
+        reachFiveApi.clientConfig().flatMap({ clientConfig -> Future<[Provider], ReachFiveError> in
+            self.scope = clientConfig.scope.components(separatedBy: " ")
+            return self.reachFiveApi.providersConfigs().map { providersConfigs in
+                let providers = self.createProviders(providersConfigsResult: providersConfigs, clientConfigResponse: clientConfig)
+                self.providers = providers
+                self.state = .Initialized
+                return providers
+            }
+        })
+    }
+    
     func initialize() -> Future<[Provider], ReachFiveError> {
         switch state {
         case .NotInitialized:
-            return reachFiveApi.clientConfig().flatMap({ clientConfig -> Future<[Provider], ReachFiveError> in
-                self.scope = clientConfig.scope.components(separatedBy: " ")
-                return self.reachFiveApi.providersConfigs().map { providersConfigs in
-                    let providers = self.createProviders(providersConfigsResult: providersConfigs, clientConfigResponse: clientConfig)
-                    self.providers = providers
-                    self.state = .Initialized
-                    return providers
-                }
-            })
+            return reinitialize()
         
         case .Initialized:
-            return Future.init(value: providers)
+            return Future(value: providers)
         }
     }
     
