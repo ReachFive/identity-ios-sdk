@@ -80,10 +80,6 @@ public class ConfiguredWeChatProvider: NSObject, Provider {
         WXApi.handleOpen(url, delegate: self)
     }
     
-    public func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        return true
-    }
-    
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         if let clientId = providerConfig.clientId, let link = providerConfig.universalLink {
             isRegistered = WXApi.registerApp(clientId, universalLink: link)

@@ -80,14 +80,6 @@ public class ConfiguredGoogleProvider: NSObject, Provider {
         GIDSignIn.sharedInstance.handle(url)
     }
     
-    public func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        var _: [String: AnyObject] = [
-            UIApplication.OpenURLOptionsKey.sourceApplication.rawValue: sourceApplication as AnyObject,
-            UIApplication.OpenURLOptionsKey.annotation.rawValue: annotation as AnyObject
-        ]
-        return GIDSignIn.sharedInstance.handle(url)
-    }
-    
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         true
     }
