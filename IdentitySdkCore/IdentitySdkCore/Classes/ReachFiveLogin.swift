@@ -31,27 +31,18 @@ extension ReachFive {
     
     public func buildAuthorizeURL(pkce: Pkce, state: String? = nil, nonce: String? = nil, scope: [String]? = nil, origin: String? = nil, provider: String? = nil) -> URL {
         let scope = (scope ?? self.scope).joined(separator: " ")
-        var options = [
+        let options = [
+            "provider": provider,
             "client_id": sdkConfig.clientId,
             "redirect_uri": sdkConfig.redirectUri,
             "response_type": "code",
             "scope": scope,
             "code_challenge": pkce.codeChallenge,
-            "code_challenge_method": pkce.codeChallengeMethod
+            "code_challenge_method": pkce.codeChallengeMethod,
+            "state": state,
+            "nonce": nonce,
+            "origin": origin,
         ]
-        
-        if let provider {
-            options["provider"] = provider
-        }
-        if let state {
-            options["state"] = state
-        }
-        if let nonce {
-            options["nonce"] = nonce
-        }
-        if let origin {
-            options["origin"] = origin
-        }
         
         return reachFiveApi.buildAuthorizeURL(queryParams: options)
     }
