@@ -1,5 +1,33 @@
 # Changelog
 
+## v6.0.0
+
+Warning: There are Breaking Changes
+
+### New features
+- New module [IdentitySdkWeChat](IdentitySdkWeChat) for native WeChat Login integration 
+- Add optional `origin` parameters to most authentification functions to help categorize your inbound traffic
+
+### Bug fix
+- Fix passwordless flow with email
+
+### Breaking changes
+- The functionality of module `IdentitySdkWebView` has been integrated into the main `IdentitySdkCore` module. Therefore `IdentitySdkWebView` has been deprecated.
+- The `origin` parameter in `NativeLoginRequest`, `NewPasskeyRequest`, `PasskeySignupRequest` has changed meaning.
+  - Up to now it meant the origin of the webauthn call. There is a new parameter `originWebAuthn` for this
+  - Now `origin` has the same meaning as in all other authentification functions: to help categorize your inbound traffic
+- Add a new method in `Provider` and `ReachFive`: `application(_:continue:restorationHandler:)` to handle universal links
+- Remove an obsolete method in `Provider` and `ReachFive`: `application(_:open:sourceApplication:annotation:)`
+- New required property `GIDClientID` in property list to use Google SignIn
+- `loadLoginWebview(reachfive:state:nonce:scope:origin:)` now returns a `Future` and instead of taking a `Promise` as argument
+
+### Dependencies
+- New dependency in Core: DeviceKit
+- Updated GoogleSignIn from 6 to 7
+- Updated Facebook from 14.1 to 16.2
+- Updated Alamofire to 5.8
+- Updated CryptoSwift to 1.8
+
 ## v5.8.0
 ### New features
 
