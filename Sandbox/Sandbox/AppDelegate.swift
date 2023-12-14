@@ -2,6 +2,19 @@ import UIKit
 import IdentitySdkCore
 import IdentitySdkGoogle
 
+#if targetEnvironment(macCatalyst)
+// we don't add WeChat and Facebook by default in order to be able to launch the app on mac Catalyst in order to test on local (more easily than with a simulator)
+// we can add back Facebook when we migrate to Swift Package Manager, or try this crazy fix: https://betterprogramming.pub/macos-catalyst-debugging-problems-using-catalyst-and-cocoapods-579679150fa9
+// WeChat appears to just not be able to run on Catalyst at all
+#else
+// Peut-être qu'un jour je serai capable de modifier les dépendance cocoapods par plateforme
+// https://betterprogramming.pub/why-dont-my-pods-compile-with-mac-catalyst-and-how-can-i-solve-it-ffc3fbec824e
+// Ce lien suggère une solution mais je ne vois pas les même choses dans Build Phases, je ne vois pas les dépendances Facebook et WeChat
+//import IdentitySdkFacebook
+//import IdentitySdkWeChat
+#endif
+
+
 //TODO
 // Mettre une nouvelle page dans une quatrième tabs ou dans l'app réglages:
 // - Paramétrage : scopes, origin, utilisation du refresh au démarage ?
@@ -21,26 +34,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     public static let storage = SecureStorage()
     
-    let reachfive: ReachFive = ReachFive(
-        ///
-        /// La reco pour la redirectURI de [https://datatracker.ietf.org/doc/html/rfc8252#section-7.1](RFC 8252) est:
-        /// - apps MUST use a URI scheme based on a domain name under their control, expressed in reverse order, as recommended by Section 3.8 of [RFC7595] for private-use URI schemes
-        /// - Following the requirements of Section 3.2 of [RFC3986], as there is no naming authority for private-use URI scheme redirects, only a single slash ("/") appears after the scheme component.
-        ///
-        /// A complete example of a redirect URI utilizing a private-use URI scheme is:
-        ///
-        ///     com.example.app:/oauth2redirect/example-provider
-        sdkConfig: SdkConfig(
-            domain: "integ-qa-fonctionnelle-pr3421.reach5.dev",
-            clientId: "EGYEKPe5RFpaweVzKmNv"
-        ),
-        providersCreators: [
-            // we don't add WeChat and Facebook by default in order to be able to launch the app on mac Catalyst in order to test on local (more easily than with a simulator)
-            // we can add back Facebook when we migrate to Swift Package Manager, or try this crazy fix: https://betterprogramming.pub/macos-catalyst-debugging-problems-using-catalyst-and-cocoapods-579679150fa9
-            GoogleProvider()
-        ],
-        storage: storage
+    /// La reco pour la redirectURI de [https://datatracker.ietf.org/doc/html/rfc8252#section-7.1](RFC 8252) est:
+    /// - apps MUST use a URI scheme based on a domain name under their control, expressed in reverse order, as recommended by Section 3.8 of [RFC7595] for private-use URI schemes
+    /// - Following the requirements of Section 3.2 of [RFC3986], as there is no naming authority for private-use URI scheme redirects, only a single slash ("/") appears after the scheme component.
+    ///
+    /// A complete example of a redirect URI utilizing a private-use URI scheme is:
+    ///
+    ///     com.example.app:/oauth2redirect/example-provider
+    static let sdkLocal = SdkConfig(
+        domain: "local-sandbox.og4.me",
+        clientId: "9DKRdQyDLpaJqQQQAR9K"
     )
+    
+    static let sdkRemote = SdkConfig(
+        domain: "integ-qa-fonctionnelle-pr3970.reach5.dev",
+        clientId: "9DKRdQyDLpaJqQQQAR9K"
+    )
+    
+    #if targetEnvironment(macCatalyst)
+    static let macProviders: [ProviderCreator] = [GoogleProvider()]
+    static let macLocal: ReachFive = ReachFive(sdkConfig: sdkLocal, providersCreators: macProviders, storage: storage)
+    // app-site-association does not seem to work
+    static let macRemote: ReachFive = ReachFive(sdkConfig: sdkRemote, providersCreators: macProviders, storage: storage)
+    let reachfive = macLocal
+    #else
+//    static let providers: [ProviderCreator] = [GoogleProvider(), FacebookProvider(), WeChatProvider()]
+    static let providers: [ProviderCreator] = [GoogleProvider()]
+    static let local: ReachFive = ReachFive(sdkConfig: sdkLocal, providersCreators: providers, storage: storage)
+    static let remote: ReachFive = ReachFive(sdkConfig: sdkRemote, providersCreators: providers, storage: storage)
+    #if targetEnvironment(simulator)
+    let reachfive = local
+    #else
+    let reachfive = remote
+    #endif
+    #endif
+    
     
     static func reachfive() -> ReachFive {
         let app = UIApplication.shared.delegate as! AppDelegate
@@ -48,7 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        print("application:didFinishLaunchingWithOptions")
+        print("application:didFinishLaunchingWithOptions:\(launchOptions ?? [:])")
         reachfive.addPasswordlessCallback { result in
             print("addPasswordlessCallback \(result)")
             NotificationCenter.default.post(name: .DidReceiveLoginCallback, object: nil, userInfo: ["result": result])

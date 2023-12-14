@@ -3,8 +3,7 @@ import IdentitySdkCore
 
 class PasskeyAutoFillControler: UIViewController {
     
-    #if targetEnvironment(macCatalyst)
-    #else
+    #if !targetEnvironment(macCatalyst)
         override func viewDidAppear(_ animated: Bool) {
             super.viewDidAppear(animated)
             print("viewDidAppear")

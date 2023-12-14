@@ -7,5 +7,7 @@ target 'Sandbox' do
   # Dev mode
   pod 'IdentitySdkCore', :path => '../IdentitySdkCore.podspec'
   pod 'IdentitySdkGoogle', :path => '../IdentitySdkGoogle.podspec'
+  # pod 'IdentitySdkFacebook', :path => '../IdentitySdkFacebook.podspec'
+  # pod 'IdentitySdkWeChat', :path => '../IdentitySdkWeChat.podspec'
 
 end

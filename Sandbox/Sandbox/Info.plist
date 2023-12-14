@@ -29,7 +29,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.188556846346-u43frvituh5k9nore8aggnue1j1679h9</string>
+				<string>com.googleusercontent.apps.997770110811-ej532u1vj10tm450p0oge13ahaeoi00e</string>
 			</array>
 		</dict>
 		<dict>
@@ -37,7 +37,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>reachfive-EGYEKPe5RFpaweVzKmNv</string>
+				<string>reachfive-9DKRdQyDLpaJqQQQAR9K</string>
 			</array>
 		</dict>
 	</array>
@@ -50,7 +50,7 @@
 	<key>FacebookDisplayName</key>
 	<string>Reach5 SDK Mobile</string>
     <key>GIDClientID</key>
-    <string>188556846346-u43frvituh5k9nore8aggnue1j1679h9.apps.googleusercontent.com</string>
+    <string>997770110811-ej532u1vj10tm450p0oge13ahaeoi00e.apps.googleusercontent.com</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
         <string>weixin</string>
@@ -58,8 +58,6 @@
         <string>weixinURLParamsAPI</string>
 		<string>fbapi</string>
 		<string>fb-messenger-share-api</string>
-		<string>fbauth2</string>
-		<string>fbshareextension</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
