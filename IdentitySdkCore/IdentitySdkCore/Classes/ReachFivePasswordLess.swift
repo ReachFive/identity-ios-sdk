@@ -61,14 +61,12 @@ public extension ReachFive {
                 return self.reachFiveApi
                     .verifyPasswordless(verifyPasswordlessRequest: verifyPasswordlessRequest)
                     .flatMap { response in
-                        let authCodeRequest = AuthCodeRequest(
-                            clientId: self.sdkConfig.clientId,
-                            code: response.code ?? "",
-                            redirectUri: self.sdkConfig.scheme,
-                            pkce: pkce
-                        )
-                        return self.reachFiveApi.authWithCode(authCodeRequest: authCodeRequest)
-                            .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) })
+                        
+                        guard let code = response.code else {
+                            return Future(error: .TechnicalError(reason: "No authorization code"))
+                        }
+                        
+                        return self.authWithCode(code: code, pkce: pkce)
                     }
             }
     }
@@ -86,15 +84,7 @@ public extension ReachFive {
             return
         }
         
-        let authCodeRequest = AuthCodeRequest(
-            clientId: sdkConfig.clientId,
-            code: code,
-            redirectUri: sdkConfig.scheme,
-            pkce: pkce
-        )
-        
-        reachFiveApi.authWithCode(authCodeRequest: authCodeRequest)
-            .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) })
+        authWithCode(code: code, pkce: pkce)
             .onComplete { result in
                 self.passwordlessCallback?(result)
             }
