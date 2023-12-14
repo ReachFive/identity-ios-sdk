@@ -91,7 +91,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
             origin: origin,
             clientId: sdkConfig.clientId,
             responseType: "token",
-            scope: scope != nil ? scope!.joined(separator: " ") : self.clientConfigResponse.scope
+            scope: scope?.joined(separator: " ") ?? self.clientConfigResponse.scope
         )
     }
     

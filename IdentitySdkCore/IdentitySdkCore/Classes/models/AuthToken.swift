@@ -32,8 +32,8 @@ public class AuthToken: Codable {
     }
     
     static func fromOpenIdTokenResponse(openIdTokenResponse: AccessTokenResponse) -> Result<AuthToken, ReachFiveError> {
-        if openIdTokenResponse.idToken != nil {
-            return fromIdToken(openIdTokenResponse.idToken!).flatMap { user in
+        if let token = openIdTokenResponse.idToken {
+            return fromIdToken(token).flatMap { user in
                 .success(withUser(openIdTokenResponse, user))
             }
         } else {

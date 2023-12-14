@@ -65,7 +65,7 @@ public class ConfiguredGoogleProvider: NSObject, Provider {
                 origin: origin,
                 clientId: self.sdkConfig.clientId,
                 responseType: "token",
-                scope: scope != nil ? scope!.joined(separator: " ") : self.clientConfigResponse.scope
+                scope: scope?.joined(separator: " ") ?? self.clientConfigResponse.scope
             )
             promise.completeWith(
                 self.reachFiveApi
