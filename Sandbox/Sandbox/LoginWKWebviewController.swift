@@ -9,9 +9,7 @@ class LoginWKWebviewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let promise = Promise<AuthToken, ReachFiveError>()
-        loginWebview.loadLoginWebview(reachfive: AppDelegate.reachfive(), promise: promise, origin: "LoginWKWebviewController.viewWillAppear")
-        promise.future
+        loginWebview.loadLoginWebview(reachfive: AppDelegate.reachfive(), origin: "LoginWKWebviewController.viewWillAppear")
             .onSuccess(callback: goToProfile)
             .onFailure { error in
                 let alert = AppDelegate.createAlert(title: "Login failed", message: "Error: \(error.message())")

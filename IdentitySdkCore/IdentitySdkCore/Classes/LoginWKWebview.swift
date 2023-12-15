@@ -8,19 +8,17 @@ public class LoginWKWebview: UIView {
     var reachfive: ReachFive?
     var promise: Promise<AuthToken, ReachFiveError>?
     var pkce: Pkce?
-    var origin: String?
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
     
-    public func loadLoginWebview(reachfive: ReachFive, promise: Promise<AuthToken, ReachFiveError>, state: String? = nil, nonce: String? = nil, scope: [String]? = nil, origin: String? = nil) {
+    public func loadLoginWebview(reachfive: ReachFive, state: String? = nil, nonce: String? = nil, scope: [String]? = nil, origin: String? = nil) -> Future<AuthToken, ReachFiveError> {
         let pkce = Pkce.generate()
-        
         self.reachfive = reachfive
+        let promise = Promise<AuthToken, ReachFiveError>()
         self.promise = promise
         self.pkce = pkce
-        self.origin = origin
         
         let rect = CGRect(origin: .zero, size: frame.size)
         let webView = WKWebView(frame: rect, configuration: WKWebViewConfiguration())
@@ -28,6 +26,7 @@ public class LoginWKWebview: UIView {
         webView.navigationDelegate = self
         addSubview(webView)
         webView.load(URLRequest(url: reachfive.buildAuthorizeURL(pkce: pkce, state: state, nonce: nonce, scope: scope, origin: origin)))
+        return promise.future
     }
 }
 
