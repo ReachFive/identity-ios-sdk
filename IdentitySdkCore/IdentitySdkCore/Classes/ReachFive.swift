@@ -21,6 +21,7 @@ public class ReachFive: NSObject {
     let reachFiveApi: ReachFiveApi
     var providers: [Provider] = []
     internal var scope: [String] = []
+    internal var clientConfig: ClientConfigResponse? = nil
     public let storage: Storage
     let credentialManager: CredentialManager
     public let pkceKey = "PASSWORDLESS_PKCE"

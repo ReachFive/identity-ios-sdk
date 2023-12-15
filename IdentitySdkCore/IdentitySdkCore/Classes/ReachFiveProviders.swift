@@ -12,6 +12,7 @@ public extension ReachFive {
     
     func reinitialize() -> Future<[Provider], ReachFiveError> {
         reachFiveApi.clientConfig().flatMap({ clientConfig -> Future<[Provider], ReachFiveError> in
+            self.clientConfig = clientConfig
             self.scope = clientConfig.scope.components(separatedBy: " ")
             return self.reachFiveApi.providersConfigs().map { providersConfigs in
                 let providers = self.createProviders(providersConfigsResult: providersConfigs, clientConfigResponse: clientConfig)
