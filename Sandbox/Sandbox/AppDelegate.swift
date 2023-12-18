@@ -1,6 +1,5 @@
 import UIKit
 import IdentitySdkCore
-import IdentitySdkWebView
 import IdentitySdkGoogle
 
 //TODO
@@ -24,8 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         providersCreators: [
             // we don't add WeChat and Facebook by default in order to be able to launch the app on mac Catalyst in order to test on local (more easily than with a simulator)
             // we can add back Facebook when we migrate to Swift Package Manager, or try this crazy fix: https://betterprogramming.pub/macos-catalyst-debugging-problems-using-catalyst-and-cocoapods-579679150fa9
-            GoogleProvider(),
-            WebViewProvider()
+            GoogleProvider()
         ],
         storage: storage
     )

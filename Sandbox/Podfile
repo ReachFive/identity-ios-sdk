@@ -6,7 +6,6 @@ target 'Sandbox' do
   project 'Sandbox.xcodeproj'
   # Dev mode
   pod 'IdentitySdkCore', :path => '../IdentitySdkCore.podspec'
-  pod 'IdentitySdkWebView', :path => '../IdentitySdkWebView.podspec'
   pod 'IdentitySdkGoogle', :path => '../IdentitySdkGoogle.podspec'
 
 end
