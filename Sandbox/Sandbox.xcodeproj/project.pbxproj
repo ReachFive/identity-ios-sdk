@@ -450,7 +450,6 @@
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/IdentitySdkCore\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/IdentitySdkFacebook\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/IdentitySdkGoogle\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/IdentitySdkWebView\"",
 					"\"${PODS_ROOT}/GoogleSignIn/Frameworks\"",
 				);
 				INFOPLIST_FILE = Sandbox/Info.plist;

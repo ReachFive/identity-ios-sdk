@@ -34,13 +34,6 @@ jobs:
             cd ../
             pod lib lint IdentitySdkGoogle.podspec --allow-warnings
       - run:
-          name: Check IdentitySdkWebView
-          command: |
-            cd IdentitySdkWebView
-            pod install
-            cd ../
-            pod lib lint IdentitySdkWebView.podspec --allow-warnings
-      - run:
           name: Check IdentitySdkWeChat
           command: |
             cd IdentitySdkWeChat
@@ -77,13 +70,6 @@ jobs:
             cd ../
             pod spec lint IdentitySdkGoogle.podspec --allow-warnings
       - run:
-          name: Check IdentitySdkWebView
-          command: |
-            cd IdentitySdkWebView
-            pod install
-            cd ../
-            pod spec lint IdentitySdkWebView.podspec --allow-warnings
-      - run:
           name: Check IdentitySdkWeChat
           command: |
             cd IdentitySdkWeChat
@@ -102,7 +88,6 @@ jobs:
       - run: pod trunk push IdentitySdkCore.podspec
       - run: pod trunk push IdentitySdkFacebook.podspec
       - run: pod trunk push IdentitySdkGoogle.podspec
-      - run: pod trunk push IdentitySdkWebView.podspec
       - run: pod trunk push IdentitySdkWeChat.podspec
   build-sandbox:
     macos:
