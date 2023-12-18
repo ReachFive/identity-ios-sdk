@@ -29,7 +29,7 @@ extension ReachFive {
             .flatMap({ self.authWithCode(code: $0, pkce: pkce) })
     }
     
-    public func buildAuthorizeURL(pkce: Pkce, state: String? = nil, nonce: String? = nil, scope: [String]? = nil, origin: String? = nil) -> URL {
+    public func buildAuthorizeURL(pkce: Pkce, state: String? = nil, nonce: String? = nil, scope: [String]? = nil, origin: String? = nil, provider: String? = nil) -> URL {
         let scope = (scope ?? self.scope).joined(separator: " ")
         var options = [
             "client_id": sdkConfig.clientId,
@@ -40,6 +40,9 @@ extension ReachFive {
             "code_challenge_method": pkce.codeChallengeMethod
         ]
         
+        if let provider {
+            options["provider"] = provider
+        }
         if let state {
             options["state"] = state
         }

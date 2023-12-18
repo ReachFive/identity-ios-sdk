@@ -9,7 +9,7 @@ public extension ReachFive {
         let promise = Promise<AuthToken, ReachFiveError>()
         
         let pkce = Pkce.generate()
-        let authURL = buildAuthorizeURL(pkce: pkce, state: request.state, nonce: request.nonce, scope: scope, origin: request.origin)
+        let authURL = buildAuthorizeURL(pkce: pkce, state: request.state, nonce: request.nonce, scope: scope, origin: request.origin, provider: request.provider)
         
         // Initialize the session.
         let session = ASWebAuthenticationSession(url: authURL, callbackURLScheme: reachFiveApi.sdkConfig.baseScheme) { callbackURL, error in

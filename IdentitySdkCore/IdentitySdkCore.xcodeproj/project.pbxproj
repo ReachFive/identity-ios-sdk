@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A624FDA2B2BDBC400BF33A7 /* DefaultProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A624FD92B2BDBC400BF33A7 /* DefaultProvider.swift */; };
 		2AE18CDB29FC1DAF00258D2B /* LoginWKWebview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE18CDA29FC1DAF00258D2B /* LoginWKWebview.swift */; };
 		2AE533062994629400EF97E0 /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE533052994629400EF97E0 /* StringUtils.swift */; };
 		2AE5330B299462DD00EF97E0 /* ReachFiveWebviewLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE53307299462DD00EF97E0 /* ReachFiveWebviewLogin.swift */; };
@@ -83,6 +84,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2A624FD92B2BDBC400BF33A7 /* DefaultProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultProvider.swift; sourceTree = "<group>"; };
 		2AE18CDA29FC1DAF00258D2B /* LoginWKWebview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWKWebview.swift; sourceTree = "<group>"; };
 		2AE533052994629400EF97E0 /* StringUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringUtils.swift; sourceTree = "<group>"; };
 		2AE53307299462DD00EF97E0 /* ReachFiveWebviewLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachFiveWebviewLogin.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 				347FDB53229BE8F800660687 /* Provider.swift */,
 				347FDB66229C02FE00660687 /* ReachFive.swift */,
 				2AE53309299462DD00EF97E0 /* CredentialManager.swift */,
+				2A624FD92B2BDBC400BF33A7 /* DefaultProvider.swift */,
 				2AE18CDA29FC1DAF00258D2B /* LoginWKWebview.swift */,
 				2AE53308299462DD00EF97E0 /* ReachFiveLogin.swift */,
 				2AE5330A299462DD00EF97E0 /* ReachFiveNative.swift */,
@@ -499,6 +502,7 @@
 				34689A9522CDFB39002970F9 /* OpenIdUser.swift in Sources */,
 				8496EB2B25DEAFCF005098DD /* WebAuthnLoginRequest.swift in Sources */,
 				2AE5331D2994638000EF97E0 /* NativeLoginRequest.swift in Sources */,
+				2A624FDA2B2BDBC400BF33A7 /* DefaultProvider.swift in Sources */,
 				8496EB3C25DEB141005098DD /* R5PublicKeyCredentialParameter.swift in Sources */,
 				2AE533222994638100EF97E0 /* PasskeySignupRequest.swift in Sources */,
 				2AE5331F2994638100EF97E0 /* SignupOptions.swift in Sources */,

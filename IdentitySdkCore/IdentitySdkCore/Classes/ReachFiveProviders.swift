@@ -29,17 +29,17 @@ public extension ReachFive {
     }
     
     private func createProviders(providersConfigsResult: ProvidersConfigsResult, clientConfigResponse: ClientConfigResponse) -> [Provider] {
-        let webViewCreator = providersCreators.first(where: { $0.name == "webview" })
         return providersConfigsResult.items.filter { $0.clientId != nil }.map({ config in
-                let nativeCreator = providersCreators.first(where: { $0.name == config.provider })
-                return (nativeCreator ?? webViewCreator)?.create(
+            if let nativeCreator = providersCreators.first(where: { $0.name == config.provider }) {
+                return nativeCreator.create(
                     sdkConfig: sdkConfig,
                     providerConfig: config,
                     reachFiveApi: reachFiveApi,
                     clientConfigResponse: clientConfigResponse
                 )
-            })
-            .compactMap { $0 }
+            }
+            return DefaultProvider(reachfive: self, providerConfig: config)
+        })
     }
     
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
