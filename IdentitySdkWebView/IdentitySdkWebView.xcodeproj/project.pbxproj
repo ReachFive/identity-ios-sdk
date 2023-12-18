@@ -6,20 +6,8 @@
 	objectVersion = 50;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		3404A3DA22C24E7B002FFEDB /* IdentitySdkWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3404A3D822C24E7B002FFEDB /* IdentitySdkWebView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3404A3E222C24F31002FFEDB /* WebViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3404A3E122C24F31002FFEDB /* WebViewProvider.swift */; };
-		F8C182D7543CAD1709F2AC71 /* Pods_IdentitySdkWebView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 446C10DF194B6596A7B168B7 /* Pods_IdentitySdkWebView.framework */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXFileReference section */
 		3404A3D522C24E7B002FFEDB /* IdentitySdkWebView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IdentitySdkWebView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3404A3D822C24E7B002FFEDB /* IdentitySdkWebView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IdentitySdkWebView.h; sourceTree = "<group>"; };
-		3404A3D922C24E7B002FFEDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3404A3E122C24F31002FFEDB /* WebViewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewProvider.swift; sourceTree = "<group>"; };
-		446C10DF194B6596A7B168B7 /* Pods_IdentitySdkWebView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IdentitySdkWebView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6B2E2D1E8DE485576D20DFE6 /* Pods-IdentitySdkWebView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IdentitySdkWebView.debug.xcconfig"; path = "Target Support Files/Pods-IdentitySdkWebView/Pods-IdentitySdkWebView.debug.xcconfig"; sourceTree = "<group>"; };
-		C1AFDDFB3063945DDB7B82E0 /* Pods-IdentitySdkWebView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IdentitySdkWebView.release.xcconfig"; path = "Target Support Files/Pods-IdentitySdkWebView/Pods-IdentitySdkWebView.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,7 +15,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F8C182D7543CAD1709F2AC71 /* Pods_IdentitySdkWebView.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,7 +27,6 @@
 				3404A3D722C24E7B002FFEDB /* IdentitySdkWebView */,
 				3404A3D622C24E7B002FFEDB /* Products */,
 				4DD507E8DCB0D82C91744289 /* Pods */,
-				A629ACB36ECA064D092D75C0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -55,36 +41,15 @@
 		3404A3D722C24E7B002FFEDB /* IdentitySdkWebView */ = {
 			isa = PBXGroup;
 			children = (
-				3404A3E022C24F08002FFEDB /* Classes */,
-				3404A3D822C24E7B002FFEDB /* IdentitySdkWebView.h */,
-				3404A3D922C24E7B002FFEDB /* Info.plist */,
 			);
 			path = IdentitySdkWebView;
-			sourceTree = "<group>";
-		};
-		3404A3E022C24F08002FFEDB /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				3404A3E122C24F31002FFEDB /* WebViewProvider.swift */,
-			);
-			path = Classes;
 			sourceTree = "<group>";
 		};
 		4DD507E8DCB0D82C91744289 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				6B2E2D1E8DE485576D20DFE6 /* Pods-IdentitySdkWebView.debug.xcconfig */,
-				C1AFDDFB3063945DDB7B82E0 /* Pods-IdentitySdkWebView.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		A629ACB36ECA064D092D75C0 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				446C10DF194B6596A7B168B7 /* Pods_IdentitySdkWebView.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -94,7 +59,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3404A3DA22C24E7B002FFEDB /* IdentitySdkWebView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,7 +69,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3404A3DD22C24E7B002FFEDB /* Build configuration list for PBXNativeTarget "IdentitySdkWebView" */;
 			buildPhases = (
-				BDB6FF057FB228189D84C547 /* [CP] Check Pods Manifest.lock */,
 				3404A3D022C24E7B002FFEDB /* Headers */,
 				3404A3D122C24E7B002FFEDB /* Sources */,
 				3404A3D222C24E7B002FFEDB /* Frameworks */,
@@ -162,37 +125,11 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		BDB6FF057FB228189D84C547 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-IdentitySdkWebView-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		3404A3D122C24E7B002FFEDB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3404A3E222C24F31002FFEDB /* WebViewProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,7 +262,6 @@
 		};
 		3404A3DE22C24E7B002FFEDB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6B2E2D1E8DE485576D20DFE6 /* Pods-IdentitySdkWebView.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -355,7 +291,6 @@
 		};
 		3404A3DF22C24E7B002FFEDB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C1AFDDFB3063945DDB7B82E0 /* Pods-IdentitySdkWebView.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
