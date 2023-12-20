@@ -11,7 +11,6 @@ public typealias PasswordlessCallback = (_ result: Result<AuthToken, ReachFiveEr
 // Tester One-tap account upgrade : https://developer.apple.com/videos/play/wwdc2020/10666/
 // Tester le MFA avec "Securing Logins with iCloud Keychain Verification Codes" https://developer.apple.com/documentation/authenticationservices/securing_logins_with_icloud_keychain_verification_codes
 // Apparemment les custom scheme sont dépréciés et il faudrait utiliser les "Universal Links" : https://developer.apple.com/ios/universal-links/
-// Je ne vois pas pourquoi le SDK WebView est séparé. Sans lui les provider sont inutilisables. https://reach5.atlassian.net/browse/CA-3307
 /// ReachFive identity SDK
 public class ReachFive: NSObject {
     var passwordlessCallback: PasswordlessCallback? = nil
