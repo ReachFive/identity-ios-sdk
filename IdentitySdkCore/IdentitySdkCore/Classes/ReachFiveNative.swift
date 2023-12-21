@@ -105,8 +105,9 @@ public enum NonDiscoverableAuthorization: Equatable {
 /// The behavior of the modal sheet when there are no credential available
 public enum Mode: Equatable {
     /// If credentials are available, presents a modal sign-in sheet.
-    /// If there are no locally saved credentials, if the authorization is for .Passkey, the system presents a QR code to allow signing in with a passkey from a nearby device.
-    /// You can start this request in response to a user interaction
+    /// If there are no locally saved credentials and the authorization is for .Passkey, the system presents a QR code to allow signing in with a passkey from a nearby device.
+    /// If there are no locally saved credentials and the authorization is for .Password, no UI appears.
+    /// You can start this request in response to a user interaction.
     /// Corresponds to `AuthController.performRequests()`
     case Always
     /// If credentials are available, presents a modal sign-in sheet.
