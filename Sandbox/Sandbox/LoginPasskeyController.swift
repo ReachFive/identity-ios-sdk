@@ -105,7 +105,7 @@ class LoginPasskeyController: UIViewController {
         }
         
         let window: UIWindow = view.window!
-        AppDelegate.reachfive().signup(withRequest: PasskeySignupRequest(passkeyPofile: profile, friendlyName: username, anchor: window, origin: "LoginPasskeyController.createAccount"))
+        AppDelegate.reachfive().signup(withRequest: PasskeySignupRequest(passkeyProfile: profile, friendlyName: username, anchor: window, origin: "LoginPasskeyController.createAccount"))
             .onSuccess(callback: goToProfile)
             .onFailure { error in
                 let alert = AppDelegate.createAlert(title: "Signup", message: "Error: \(error.message())")

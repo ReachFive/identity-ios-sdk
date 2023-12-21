@@ -22,7 +22,7 @@ public extension ReachFive {
         let signupOptions = SignupOptions(
             origin: request.originWebAuthn ?? "https://\(domain)",
             friendlyName: request.friendlyName,
-            profile: request.passkeyPofile,
+            profile: request.passkeyProfile,
             clientId: sdkConfig.clientId,
             scope: request.scopes ?? scope
         )

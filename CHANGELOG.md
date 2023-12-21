@@ -20,6 +20,7 @@ Warning: There are Breaking Changes
 - Remove an obsolete method in `Provider` and `ReachFive`: `application(_:open:sourceApplication:annotation:)`
 - New required property `GIDClientID` in property list to use Google SignIn
 - `loadLoginWebview(reachfive:state:nonce:scope:origin:)` now returns a `Future` and instead of taking a `Promise` as argument
+- `PasskeySignupRequest` now has its first parameter renamed from `passkeyPofile` to `passkeyProfile`
 
 ### Dependencies
 - New dependency in Core: DeviceKit

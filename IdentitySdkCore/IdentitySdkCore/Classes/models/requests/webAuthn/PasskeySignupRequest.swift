@@ -2,7 +2,7 @@ import Foundation
 import AuthenticationServices
 
 public class PasskeySignupRequest {
-    public let passkeyPofile: ProfilePasskeySignupRequest
+    public let passkeyProfile: ProfilePasskeySignupRequest
     /// The name that will be displayed by the system when presenting the passkey for login
     public let friendlyName: String
     public let originWebAuthn: String?
@@ -10,8 +10,8 @@ public class PasskeySignupRequest {
     public let anchor: ASPresentationAnchor
     public let origin: String?
     
-    public init(passkeyPofile: ProfilePasskeySignupRequest, friendlyName: String, anchor: ASPresentationAnchor, originWebAuthn: String? = nil, scopes: [String]? = nil, origin: String? = nil) {
-        self.passkeyPofile = passkeyPofile
+    public init(passkeyProfile: ProfilePasskeySignupRequest, friendlyName: String, anchor: ASPresentationAnchor, originWebAuthn: String? = nil, scopes: [String]? = nil, origin: String? = nil) {
+        self.passkeyProfile = passkeyProfile
         self.friendlyName = friendlyName
         self.originWebAuthn = originWebAuthn
         self.scopes = scopes
