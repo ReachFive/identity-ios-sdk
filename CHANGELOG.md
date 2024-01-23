@@ -2,7 +2,7 @@
 
 ## v6.1.0
 ### New features
-- Add custom fields in ProfileAddress entity.
+- Add custom fields in `ProfileAddress` entity.
 
 ## v6.0.0
 
