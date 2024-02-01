@@ -291,6 +291,71 @@ public class ReachFiveApi {
             .responseJson(type: Profile.self, decoder: decoder)
     }
     
+    public func startMfaPhoneRegistration(
+        authToken: AuthToken,
+        mfaStartPhoneRegistrationRequest: MfaStartPhoneRegistrationRequest
+    ) -> Future<(), ReachFiveError> {
+        AF
+            .request(
+                createUrl(path: "/identity/v1/mfa/credentials/phone-numbers"),
+                method: .post,
+                parameters: mfaStartPhoneRegistrationRequest.dictionary(),
+                encoding: JSONEncoding.default,
+                headers: tokenHeader(authToken)
+            )
+            .validate(contentType: ["application/json"])
+            .responseJson(decoder: decoder)
+    }
+    
+    public func startMfaEmailRegistration(
+        authToken: AuthToken,
+        mfaStartEmailRegistrationRequest: MfaStartEmailRegistrationRequest
+    ) -> Future<(), ReachFiveError> {
+        AF
+            .request(
+                createUrl(path: "/identity/v1/mfa/credentials/emails"),
+                method: .post,
+                parameters: mfaStartEmailRegistrationRequest.dictionary(),
+                encoding: JSONEncoding.default,
+                headers: tokenHeader(authToken)
+            )
+            .validate(contentType: ["application/json"])
+            .responseJson(decoder: decoder)
+    }
+    
+    public func verifyMfaEmailRegistration(
+        authToken: AuthToken,
+        mfaVerifyEmailRegistrationRequest: MfaVerifyEmailRegistrationRequest
+    ) -> Future<(), ReachFiveError> {
+        AF
+            .request(
+                createUrl(path: "/identity/v1/mfa/credentials/emails/verify"),
+                method: .post,
+                parameters: mfaVerifyEmailRegistrationRequest.dictionary(),
+                encoding: JSONEncoding.default,
+                headers: tokenHeader(authToken)
+                )
+            .validate(contentType: ["application/json"])
+            .responseJson(decoder: decoder)
+    }
+    
+    public func verifyMfaPhoneRegistration(
+        authToken: AuthToken,
+        mfaVerifyPhoneRegistrationRequest: MfaVerifyPhoneRegistrationRequest
+    ) -> Future<(), ReachFiveError> {
+        AF
+            .request(
+                createUrl(path: "/identity/v1/mfa/credentials/phone-numbers/verify"),
+                method: .post,
+                parameters: mfaVerifyPhoneRegistrationRequest.dictionary(),
+                encoding: JSONEncoding.default,
+                headers: tokenHeader(authToken)
+            )
+            .validate(contentType: ["application/json"])
+            .responseJson(decoder: decoder)
+        
+    }
+    
     public func requestPasswordReset(
         requestPasswordResetRequest: RequestPasswordResetRequest
     ) -> Future<(), ReachFiveError> {

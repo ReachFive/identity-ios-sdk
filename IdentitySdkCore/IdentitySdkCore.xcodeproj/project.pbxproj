@@ -81,6 +81,8 @@
 		8496EB4325DEB141005098DD /* AuthenticationToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496EB3925DEB141005098DD /* AuthenticationToken.swift */; };
 		8496EB4425DEB141005098DD /* R5PublicKeyCredentialRpEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496EB3A25DEB141005098DD /* R5PublicKeyCredentialRpEntity.swift */; };
 		8496EB4525DEB141005098DD /* R5PublicKeyCredentialUserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496EB3B25DEB141005098DD /* R5PublicKeyCredentialUserEntity.swift */; };
+		9943B0852B6953C5007AD120 /* ReachFiveMfa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9943B0842B6953C5007AD120 /* ReachFiveMfa.swift */; };
+		9943B0872B6954F1007AD120 /* MfaCredentialsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9943B0862B6954F1007AD120 /* MfaCredentialsRequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -162,6 +164,8 @@
 		8496EB3A25DEB141005098DD /* R5PublicKeyCredentialRpEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R5PublicKeyCredentialRpEntity.swift; sourceTree = "<group>"; };
 		8496EB3B25DEB141005098DD /* R5PublicKeyCredentialUserEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R5PublicKeyCredentialUserEntity.swift; sourceTree = "<group>"; };
 		92974ED6A8B2D1CEADE0BFF5 /* Pods-IdentitySdkCore.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IdentitySdkCore.debug.xcconfig"; path = "Target Support Files/Pods-IdentitySdkCore/Pods-IdentitySdkCore.debug.xcconfig"; sourceTree = "<group>"; };
+		9943B0842B6953C5007AD120 /* ReachFiveMfa.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachFiveMfa.swift; sourceTree = "<group>"; };
+		9943B0862B6954F1007AD120 /* MfaCredentialsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MfaCredentialsRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +191,7 @@
 				34F7D3E322A54AA2003A7BC0 /* ReachFiveApi.swift */,
 				3404A40722CB9B7E002FFEDB /* ReachFiveError.swift */,
 				2AE53308299462DD00EF97E0 /* ReachFiveLogin.swift */,
+				9943B0842B6953C5007AD120 /* ReachFiveMfa.swift */,
 				2AE5330A299462DD00EF97E0 /* ReachFiveNative.swift */,
 				34BDDA4122E5D87E00D16DAE /* ReachFivePassword.swift */,
 				3417FF6922FAD1810009EC84 /* ReachFivePasswordLess.swift */,
@@ -220,6 +225,7 @@
 				2AE533142994632F00EF97E0 /* LoginCallback.swift */,
 				34689A9822CDFC24002970F9 /* LoginProviderRequest.swift */,
 				34E18B8E22A6C32500952EBD /* LoginRequest.swift */,
+				9943B0862B6954F1007AD120 /* MfaCredentialsRequest.swift */,
 				34BDDA3D22E5BFAC00D16DAE /* ProfileSignupRequest.swift */,
 				34251C0A232FC13800B0C271 /* RefreshRequest.swift */,
 				3474D28A22D32F3A005112C1 /* RequestPasswordResetRequest.swift */,
@@ -465,6 +471,7 @@
 				347FDB54229BE8F800660687 /* Provider.swift in Sources */,
 				34E18B8C22A6BEC900952EBD /* AccessTokenResponse.swift in Sources */,
 				2AE533202994638100EF97E0 /* RegistrationRequest.swift in Sources */,
+				9943B0852B6953C5007AD120 /* ReachFiveMfa.swift in Sources */,
 				34689AA122CE5D08002970F9 /* UpdateEmailRequest.swift in Sources */,
 				2AE533162994632F00EF97E0 /* LoginCallback.swift in Sources */,
 				8496EB4525DEB141005098DD /* R5PublicKeyCredentialUserEntity.swift in Sources */,
@@ -517,6 +524,7 @@
 				2AE18CDB29FC1DAF00258D2B /* LoginWKWebview.swift in Sources */,
 				34BDDA4022E5D73900D16DAE /* ReachFiveProviders.swift in Sources */,
 				347FDB67229C02FE00660687 /* ReachFive.swift in Sources */,
+				9943B0872B6954F1007AD120 /* MfaCredentialsRequest.swift in Sources */,
 				2AE5330C299462DD00EF97E0 /* ReachFiveLogin.swift in Sources */,
 				8496EB3F25DEB141005098DD /* RegistrationOptions.swift in Sources */,
 				34E18B8F22A6C32500952EBD /* LoginRequest.swift in Sources */,
@@ -660,14 +668,14 @@
 			baseConfigurationReference = 92974ED6A8B2D1CEADE0BFF5 /* Pods-IdentitySdkCore.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = G2NW23Q25L;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				EXCLUDED_ARCHS = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/Alamofire\"",
@@ -683,10 +691,9 @@
 					"@loader_path/Frameworks",
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.reach5.IdentitySdkCore;
+				PRODUCT_BUNDLE_IDENTIFIER = "me.og4.local-full";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -699,14 +706,14 @@
 			baseConfigurationReference = 2CA6D9263DC2541C548301E9 /* Pods-IdentitySdkCore.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = G2NW23Q25L;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				EXCLUDED_ARCHS = "";
 				INFOPLIST_FILE = IdentitySdkCore/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -715,10 +722,10 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.reach5.IdentitySdkCore;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "me.og4.local-full";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
