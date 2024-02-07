@@ -7,6 +7,8 @@ enum State {
 
 public typealias PasswordlessCallback = (_ result: Result<AuthToken, ReachFiveError>) -> Void
 
+public typealias MfaCredentialRegistrationCallback = (_ result: Result<(), ReachFiveError>) -> Void
+
 //TODO
 // Tester One-tap account upgrade : https://developer.apple.com/videos/play/wwdc2020/10666/
 // Tester le MFA avec "Securing Logins with iCloud Keychain Verification Codes" https://developer.apple.com/documentation/authenticationservices/securing_logins_with_icloud_keychain_verification_codes
@@ -14,6 +16,7 @@ public typealias PasswordlessCallback = (_ result: Result<AuthToken, ReachFiveEr
 /// ReachFive identity SDK
 public class ReachFive: NSObject {
     var passwordlessCallback: PasswordlessCallback? = nil
+    var mfaCredentialRegistrationCallback: MfaCredentialRegistrationCallback? = nil
     var state: State = .NotInitialized
     public let sdkConfig: SdkConfig
     let providersCreators: Array<ProviderCreator>
@@ -43,6 +46,7 @@ public class ReachFive: NSObject {
     
     public func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
         interceptPasswordless(url)
+//        interceptVerifyMfaCredential(url)
         for provider in providers {
             let _ = provider.application(app, open: url, options: options)
         }

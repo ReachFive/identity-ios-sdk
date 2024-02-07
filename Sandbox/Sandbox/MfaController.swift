@@ -9,10 +9,8 @@ class MfaController: UIViewController {
     var setTokenObserver: NSObjectProtocol?
     
     
-    @IBOutlet weak var phoneNumberVerificationCode: UITextField!
-    @IBOutlet weak var phoneNumberVerifyRegistration: UITextField!
-    @IBOutlet weak var phoneNumberStartRegistration: UITextField!
-    
+    @IBOutlet weak var phoneMfaRegistrationCode: UITextField!
+    @IBOutlet weak var phoneNumberMfaRegistration: UITextField!
     
     override func viewDidLoad() {
         print("MfaCredentialsController.viewDidLoad")
@@ -34,9 +32,8 @@ class MfaController: UIViewController {
     func didLogout() {
         print("ProfileController.didLogout")
         authToken = nil
-        phoneNumberStartRegistration.text = nil
-        phoneNumberVerifyRegistration.text = nil
-        phoneNumberVerificationCode.text = nil
+        phoneNumberMfaRegistration.text = nil
+        phoneMfaRegistrationCode.text = nil
     }
     @IBAction func startMfaPhoneRegistration(_ sender: UIButton) {
         print("MfaCredentialsController.startMfaPhoneRegistration")
@@ -44,7 +41,7 @@ class MfaController: UIViewController {
             print("not logged in")
             return
         }
-        let phoneNumber = phoneNumberStartRegistration.text
+        let phoneNumber = phoneNumberMfaRegistration.text
         guard let phoneNumber else {
             print("phone number cannot be empty")
             return
@@ -66,12 +63,12 @@ class MfaController: UIViewController {
             print("not logged in")
             return
         }
-        let verificationCode = phoneNumberVerificationCode.text
+        let verificationCode = phoneMfaRegistrationCode.text
         guard let verificationCode else {
             print("verification code cannot be empty")
             return
         }
-        let phoneNumber = phoneNumberVerifyRegistration.text
+        let phoneNumber = phoneNumberMfaRegistration.text
         guard let phoneNumber else {
             print("phone number verify cannot be empty")
             return

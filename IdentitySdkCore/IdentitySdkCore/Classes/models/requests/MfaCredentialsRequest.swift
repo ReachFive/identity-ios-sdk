@@ -15,7 +15,7 @@ public class MfaStartPhoneRegistrationRequest: Codable, DictionaryEncodable {
         }
 }
 
-public class MfaVerifyEmailRegistrationRequest: Codable, DictionaryEncodable {
+public class MfaVerifyEmailRegistrationPostRequest: Codable, DictionaryEncodable {
     public let verificationCode: String
     
     public init(verificationCode: String) {
@@ -23,6 +23,15 @@ public class MfaVerifyEmailRegistrationRequest: Codable, DictionaryEncodable {
     }
 }
 
+public class MfaVerifyEmailRegistrationGetRequest: Codable, DictionaryEncodable {
+    public let c: String
+    public let t: String
+    
+    public init(c: String, t: String) {
+        self.c = c
+        self.t = t
+    }
+}
 public class MfaVerifyPhoneRegistrationRequest: Codable, DictionaryEncodable {
     public let phoneNumber: String
     public let verificationCode: String
