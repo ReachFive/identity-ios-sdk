@@ -32,6 +32,7 @@ public class MfaVerifyEmailRegistrationGetRequest: Codable, DictionaryEncodable 
         self.t = t
     }
 }
+
 public class MfaVerifyPhoneRegistrationRequest: Codable, DictionaryEncodable {
     public let phoneNumber: String
     public let verificationCode: String
@@ -39,5 +40,19 @@ public class MfaVerifyPhoneRegistrationRequest: Codable, DictionaryEncodable {
     public init(phoneNumber: String, verificationCode: String) {
         self.phoneNumber = phoneNumber
         self.verificationCode = verificationCode
+    }
+}
+
+public enum Status: String {
+    case emailSent = "email_sent"
+    case enabled = "enabled"
+    case smsSent = "sms_sent"
+}
+
+public class MfaStartCredentialRegistrationResponse: Codable, DictionaryEncodable {
+    public let status: String
+    
+    public init(status: String) {
+        self.status = status
     }
 }

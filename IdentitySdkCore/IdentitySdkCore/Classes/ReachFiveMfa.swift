@@ -18,7 +18,7 @@ public extension ReachFive {
         self.mfaCredentialRegistrationCallback = mfaCredentialRegistrationCallback
     }
     
-    func startMfaCredentialRegistration(authToken: AuthToken, request: StartMfaCredentialRegistrationRequest) -> Future<(), ReachFiveError> {
+    func startMfaCredentialRegistration(authToken: AuthToken, request: StartMfaCredentialRegistrationRequest) -> Future<MfaStartCredentialRegistrationResponse, ReachFiveError> {
         switch request {
         case let .Email(redirectUrl):
             let mfaStartEmailRegistrationRequest = MfaStartEmailRegistrationRequest(redirectUrl: redirectUrl ?? sdkConfig.scheme)
@@ -48,21 +48,11 @@ public extension ReachFive {
     internal func interceptVerifyMfaCredential(_ url: URL) {
         let params = URLComponents(url: url, resolvingAgainstBaseURL: true)?.queryItems
         
-        guard let params, let code = params.first(where: { $0.name == "c" })?.value else {
-            mfaCredentialRegistrationCallback?(.failure(.TechnicalError(reason: "No verification code", apiError: ApiError(fromQueryParams: params))))
+        let error = params?.first(where: { $0.name == "error"})
+        guard error?.name == nil else {
+            mfaCredentialRegistrationCallback?(.failure(.TechnicalError(reason: error?.name ?? "", apiError: ApiError(fromQueryParams: params))))
             return
         }
-        
-        let token = params.first(where: { $0.name == "t"})?.value
-        
-        guard let token else {
-            mfaCredentialRegistrationCallback?(.failure(.TechnicalError(reason: "No magic link token", apiError: ApiError(fromQueryParams: params))))
-            return
-        }
-        
-        verifyMfaEmailGetRegistration(verificationCode: code, magicLink: token)
-            .onComplete { result in
-                self.mfaCredentialRegistrationCallback?(result)
-            }
+        self.mfaCredentialRegistrationCallback?(.success(()))
     }
 }

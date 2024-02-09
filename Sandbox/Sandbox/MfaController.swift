@@ -9,8 +9,8 @@ class MfaController: UIViewController {
     var setTokenObserver: NSObjectProtocol?
     
     
-    @IBOutlet weak var phoneMfaRegistrationCode: UITextField!
     @IBOutlet weak var phoneNumberMfaRegistration: UITextField!
+    @IBOutlet weak var phoneMfaRegistrationCode: UITextField!
     
     override func viewDidLoad() {
         print("MfaCredentialsController.viewDidLoad")
@@ -24,6 +24,7 @@ class MfaController: UIViewController {
         }
         authToken = AppDelegate.storage.get(key: SecureStorage.authKey)
     }
+    
     func didLogin() {
         print("ProfileController.didLogin")
         authToken = AppDelegate.storage.get(key: SecureStorage.authKey)
@@ -35,6 +36,7 @@ class MfaController: UIViewController {
         phoneNumberMfaRegistration.text = nil
         phoneMfaRegistrationCode.text = nil
     }
+  
     @IBAction func startMfaPhoneRegistration(_ sender: UIButton) {
         print("MfaCredentialsController.startMfaPhoneRegistration")
         guard let authToken else {
@@ -48,15 +50,20 @@ class MfaController: UIViewController {
         }
         AppDelegate.reachfive()
             .startMfaCredentialRegistration(authToken: authToken, request: StartMfaCredentialRegistrationRequest.PhoneNumber(phoneNumber: phoneNumber))
-            .onSuccess {
-                let alert = AppDelegate.createAlert(title: "Start MFA phone Registration", message: "Success")
-                self.present(alert, animated: true, completion: nil)
+            .onSuccess { result in
+                if(result.status == Status.enabled.rawValue) {
+                    self.present(AppDelegate.createAlert(title: "Phone number \(phoneNumber) added as MFA", message: "Success"), animated: true, completion: nil)
+                }
+                else {
+                    self.present(AppDelegate.createAlert(title: "Start MFA phone Registration", message: "Success"), animated: true, completion: nil)
+                }
             }
             .onFailure { error in
                 let alert = AppDelegate.createAlert(title: "Start MFA phone Registration", message: "Error: \(error.message())")
                 self.present(alert, animated: true, completion: nil)
             }
     }
+    
     @IBAction func verifyMfaPhoneRegistration(_ sender: UIButton) {
         print("MfaCredentialsController.verifyMfaPhoneRegistration")
         guard let authToken else {
@@ -76,11 +83,11 @@ class MfaController: UIViewController {
         AppDelegate.reachfive()
             .verifyMfaCredentialRegistration(authToken: authToken, request: VerifyMfaCredentialRegistrationRequest.PhoneNumber(verificationCode: verificationCode, phoneNumber: phoneNumber))
             .onSuccess {
-                let alert = AppDelegate.createAlert(title: "Verify MFA email Registration", message: "Success")
+                let alert = AppDelegate.createAlert(title: "Verify MFA Phone Registration", message: "Success")
                 self.present(alert, animated: true, completion: nil)
             }
             .onFailure { error in
-                let alert = AppDelegate.createAlert(title: "Verify MFA email Registration", message: "Error: \(error.message())")
+                let alert = AppDelegate.createAlert(title: "Verify MFA Phone Registration", message: "Error: \(error.message())")
                 self.present(alert, animated: true, completion: nil)
             }
     }

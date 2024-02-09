@@ -45,8 +45,7 @@ public class ReachFive: NSObject {
     }
     
     public func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
-        interceptPasswordless(url)
-//        interceptVerifyMfaCredential(url)
+        interceptUrl(url)
         for provider in providers {
             let _ = provider.application(app, open: url, options: options)
         }
@@ -74,5 +73,15 @@ public class ReachFive: NSObject {
             let _ = provider.application(application, continue: userActivity, restorationHandler: restorationHandler)
         }
         return true
+    }
+    
+    public func interceptUrl(_ url: URL) -> () {
+        let params = URLComponents(url: url, resolvingAgainstBaseURL: true)?.queryItems
+        let mfaParam = params?.first(where: { $0.name == "mfa" })
+        if(mfaParam == nil) {
+            interceptPasswordless(url)
+        } else {
+            interceptVerifyMfaCredential(url)
+        }
     }
 }
