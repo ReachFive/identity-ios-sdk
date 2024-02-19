@@ -49,7 +49,7 @@ class MfaController: UIViewController {
             return
         }
         AppDelegate.reachfive()
-            .startMfaCredentialRegistration(authToken: authToken, request: StartMfaCredentialRegistrationRequest.PhoneNumber(phoneNumber: phoneNumber))
+            .mfaStartRegistering(credential: .PhoneNumber(phoneNumber), authToken: authToken)
             .onSuccess { result in
                 if(result.status == Status.enabled.rawValue) {
                     self.present(AppDelegate.createAlert(title: "Phone number \(phoneNumber) added as MFA", message: "Success"), animated: true, completion: nil)
@@ -81,7 +81,7 @@ class MfaController: UIViewController {
             return
         }
         AppDelegate.reachfive()
-            .verifyMfaCredentialRegistration(authToken: authToken, request: VerifyMfaCredentialRegistrationRequest.PhoneNumber(verificationCode: verificationCode, phoneNumber: phoneNumber))
+            .mfaVerifyRegistering(credential: .SMS, verificationCode: verificationCode, authToken: authToken)
             .onSuccess {
                 let alert = AppDelegate.createAlert(title: "Verify MFA Phone Registration", message: "Success")
                 self.present(alert, animated: true, completion: nil)

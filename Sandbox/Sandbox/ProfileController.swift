@@ -36,8 +36,7 @@ class ProfileController: UIViewController {
     @IBOutlet weak var passkeyButton: UIButton!
     @IBOutlet weak var startPhoneRegisteringButton: UIButton!
     @IBOutlet weak var startMfaEmailRegisteringButton: UIButton!
-    @IBOutlet weak var updatePasswordButton: UIButton!
-    @IBOutlet weak var updatePhoneButton: UIButton!
+    @IBOutlet weak var editProfileButton: UIButton!
     @IBOutlet weak var passkey: UIButton!
     @IBOutlet weak var mfa: UIButton!
     
@@ -85,10 +84,8 @@ class ProfileController: UIViewController {
             return
         }
         
-        updatePasswordButton.isHidden = false
-        passkeyButton.isHidden = false
         mfaButton.isHidden = false
-        updatePhoneButton.isHidden = false
+        editProfileButton.isHidden = false
         
         startPhoneRegisteringButton.isHidden = true
         startMfaEmailRegisteringButton.isHidden = true
@@ -142,9 +139,9 @@ class ProfileController: UIViewController {
         methodLabel.text = nil
         passkeyButton.isHidden = true
         mfaButton.isHidden = true
-        
-        updatePasswordButton.isHidden = true
-        updatePhoneButton.isHidden = true
+        editProfileButton.isHidden = true
+//        updatePasswordButton.isHidden = true
+//        updatePhoneButton.isHidden = true
         startMfaEmailRegisteringButton.isHidden = true
         startPhoneRegisteringButton.isHidden = true
     }
@@ -161,9 +158,9 @@ class ProfileController: UIViewController {
             return
         }
         AppDelegate.reachfive()
-            .startMfaCredentialRegistration(authToken: authToken, request: StartMfaCredentialRegistrationRequest.PhoneNumber(phoneNumber: phoneNumber))
+            .mfaStartRegistering(credential: .PhoneNumber(phoneNumber), authToken: authToken)
             .onSuccess { mfaStartCredentialRegistrationResponse in
-                self.handleStartVerificationCode(mfaStartCredentialRegistrationResponse: mfaStartCredentialRegistrationResponse, verificationMode: "SMS", authToken: authToken, request: StartMfaCredentialRegistrationRequest.PhoneNumber(phoneNumber: phoneNumber))
+                self.handleStartVerificationCode(mfaStartCredentialRegistrationResponse: mfaStartCredentialRegistrationResponse, credentialVerification: .SMS, authToken: authToken)
             }
             .onFailure { error in
                 let alert = AppDelegate.createAlert(title: "Start MFA phone Registration", message: "Error: \(error.message())")
@@ -171,22 +168,13 @@ class ProfileController: UIViewController {
             }
     }
     
-    private func handleStartVerificationCode(mfaStartCredentialRegistrationResponse: MfaStartCredentialRegistrationResponse, verificationMode: String, authToken: AuthToken, request: StartMfaCredentialRegistrationRequest) {
+    private func handleStartVerificationCode(mfaStartCredentialRegistrationResponse: MfaStartCredentialRegistrationResponse, credentialVerification: CredentialVerification, authToken: AuthToken) {
         var alertController: UIAlertController
         if(mfaStartCredentialRegistrationResponse.status == Status.enabled.rawValue) {
-            let phoneNumber = (phoneNumberLabel.text ?? "").dropLast(2)
-            let email = (emailLabel.text ?? "").dropLast(2)
-
-            let canal = switch verificationMode {
-            case "SMS":
-                "phone number \(phoneNumber)"
-            default:
-                "email \(email)"
-            }
-             alertController = AppDelegate.createAlert(title: "MFA \(canal) enabled", message: "Success")
+            alertController = AppDelegate.createAlert(title: "MFA \(credentialVerification) enabled", message: "Success")
         }
         else {
-            alertController = UIAlertController(title: "Verification Code", message: "Please enter the verification Code you got by \(verificationMode)", preferredStyle: .alert)
+            alertController = UIAlertController(title: "Verification Code", message: "Please enter the verification Code you got by \(credentialVerification)", preferredStyle: .alert)
             alertController.addTextField { (textField) in
                 textField.placeholder = "Verification code"
             }
@@ -198,12 +186,8 @@ class ProfileController: UIViewController {
                     print("verification code cannot be empty")
                     return
                 }
-                switch request {
-                case let .PhoneNumber(phoneNumber):
-                    self.verifyMfaCredential(request: VerifyMfaCredentialRegistrationRequest.PhoneNumber(verificationCode: verificationCode, phoneNumber: phoneNumber), authToken: authToken)
-                case let .Email(_):
-                    self.verifyMfaCredential(request: VerifyMfaCredentialRegistrationRequest.Email(verificationCode: verificationCode), authToken: authToken)
-                }
+                
+                self.verifyMfaCredential(verificationCode: verificationCode, credentialVerification: credentialVerification, authToken: authToken)
             }
             alertController.addAction(cancelAction)
             alertController.addAction(submitVerificationCode)
@@ -220,12 +204,9 @@ class ProfileController: UIViewController {
             return
         }
         AppDelegate.reachfive()
-            .startMfaCredentialRegistration(
-                authToken: authToken,
-                request: StartMfaCredentialRegistrationRequest.Email(redirectUrl: nil)
-            )
+            .mfaStartRegistering(credential: .Email(), authToken: authToken)
             .onSuccess { mfaStartCredentialRegistrationResponse in
-                self.handleStartVerificationCode(mfaStartCredentialRegistrationResponse: mfaStartCredentialRegistrationResponse, verificationMode: "Email", authToken: authToken, request: StartMfaCredentialRegistrationRequest.Email(redirectUrl: nil))
+                self.handleStartVerificationCode(mfaStartCredentialRegistrationResponse: mfaStartCredentialRegistrationResponse, credentialVerification: .Email, authToken: authToken)
             }
             .onFailure { error in
                 let alert = AppDelegate.createAlert(title: "Start MFA email Registration", message: "Error: \(error.message())")
@@ -233,31 +214,17 @@ class ProfileController: UIViewController {
             }
     }
     
-    private func verifyMfaCredential(request: VerifyMfaCredentialRegistrationRequest, authToken: AuthToken) {
-        switch request {
-        case let .Email(verificationCode):
-            AppDelegate.reachfive()
-                .verifyMfaCredentialRegistration(authToken: authToken, request: VerifyMfaCredentialRegistrationRequest.Email(verificationCode: verificationCode))
-                .onSuccess {
-                    let alert = AppDelegate.createAlert(title: "Verify MFA email Registration", message: "Success")
-                    self.present(alert, animated: true, completion: nil)
-                }
-                .onFailure { error in
-                    let alert = AppDelegate.createAlert(title: "Verify MFA email Registration", message: "Error: \(error.message())")
-                    self.present(alert, animated: true, completion: nil)
-                }
-        case let .PhoneNumber(verificationCode, phoneNumber):
-            AppDelegate.reachfive()
-                .verifyMfaCredentialRegistration(authToken: authToken, request: VerifyMfaCredentialRegistrationRequest.PhoneNumber(verificationCode: verificationCode, phoneNumber: phoneNumber))
-                .onSuccess {
-                    let alert = AppDelegate.createAlert(title: "Verify MFA Phone Number \(phoneNumber) Registration", message: "Success")
-                    self.present(alert, animated: true, completion: nil)
-                }
-                .onFailure { error in
-                    let alert = AppDelegate.createAlert(title: "Verify MFA Phone Number \(phoneNumber) Registration", message: "Error: \(error.message())")
-                    self.present(alert, animated: true, completion: nil)
-                }
-        }
+    private func verifyMfaCredential(verificationCode: String, credentialVerification: CredentialVerification, authToken: AuthToken) {
+        AppDelegate.reachfive()
+            .mfaVerifyRegistering(credential: credentialVerification, verificationCode: verificationCode, authToken: authToken)
+            .onSuccess {
+                let alert = AppDelegate.createAlert(title: "Verify MFA \(credentialVerification) Registration", message: "Success")
+                self.present(alert, animated: true, completion: nil)
+            }
+            .onFailure { error in
+                let alert = AppDelegate.createAlert(title: "Verify MFA \(credentialVerification) Registration", message: "Error: \(error.message())")
+                self.present(alert, animated: true, completion: nil)
+            }
     }
     
     internal static func username(profile: Profile) -> String {

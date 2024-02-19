@@ -27,7 +27,6 @@
 		3417FF7022FB11CD0009EC84 /* LoginWithPasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3417FF6F22FB11CD0009EC84 /* LoginWithPasswordController.swift */; };
 		34797ABD22A9607D00ED093C /* SignupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34797ABC22A9607D00ED093C /* SignupController.swift */; };
 		349E16EC230BEBBF002EA06B /* UpdatePasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349E16EB230BEBBF002EA06B /* UpdatePasswordController.swift */; };
-		99060BF42B713B410005180C /* test.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 99060BF32B713B410005180C /* test.storyboard */; };
 		99B0FBD52B6A782D00A3E490 /* MfaController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B0FBD42B6A782D00A3E490 /* MfaController.swift */; };
 		99FF44322B72884800DDCAAE /* PasskeyCredentialController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FF44312B72884800DDCAAE /* PasskeyCredentialController.swift */; };
 		EA91A0276CEFFE580E9C24DD /* SignupPasskeyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA91A17236291622417196AE /* SignupPasskeyController.swift */; };
@@ -64,7 +63,6 @@
 		84E69687258A53AD003AF19B /* IdentitySdkCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = IdentitySdkCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E6968B258A5534003AF19B /* IdentitySdkCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = IdentitySdkCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E6968F258A5661003AF19B /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
-		99060BF32B713B410005180C /* test.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = test.storyboard; sourceTree = "<group>"; };
 		99B0FBD42B6A782D00A3E490 /* MfaController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MfaController.swift; sourceTree = "<group>"; };
 		99FF44312B72884800DDCAAE /* PasskeyCredentialController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasskeyCredentialController.swift; sourceTree = "<group>"; };
 		C9C16455A16CA84067D7FF45 /* Pods-Sandbox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sandbox.debug.xcconfig"; path = "Target Support Files/Pods-Sandbox/Pods-Sandbox.debug.xcconfig"; sourceTree = "<group>"; };
@@ -131,7 +129,6 @@
 				34173206229D6B6400681CFD /* LaunchScreen.storyboard */,
 				34173201229D6B6400681CFD /* Main.storyboard */,
 				99B0FBD42B6A782D00A3E490 /* MfaController.swift */,
-				99060BF32B713B410005180C /* test.storyboard */,
 				99FF44312B72884800DDCAAE /* PasskeyCredentialController.swift */,
 			);
 			path = Sandbox;
@@ -224,7 +221,6 @@
 			files = (
 				34173208229D6B6400681CFD /* LaunchScreen.storyboard in Resources */,
 				34173205229D6B6400681CFD /* Assets.xcassets in Resources */,
-				99060BF42B713B410005180C /* test.storyboard in Resources */,
 				34173203229D6B6400681CFD /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
