@@ -77,6 +77,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         print("application:didFinishLaunchingWithOptions:\(launchOptions ?? [:])")
+        let shared = SecureStorage(group: Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String + "com.reach5.SharedItems")
+        shared.save(key: "key", value: "external")
+        shared.save(key: "shared", value: "external")
+        shared.save(key: "external", value: "external")
+        
         reachfive.addPasswordlessCallback { result in
             print("addPasswordlessCallback \(result)")
             NotificationCenter.default.post(name: .DidReceiveLoginCallback, object: nil, userInfo: ["result": result])
