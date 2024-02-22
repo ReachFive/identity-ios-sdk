@@ -8,7 +8,7 @@ class UpdatePasswordController: UIViewController {
     @IBOutlet weak var username: UITextField!
     
     override func viewWillAppear(_ animated: Bool) {
-        authToken = AppDelegate.storage.get(key: SecureStorage.authKey)
+        authToken = AppDelegate.storage.getToken()
         if let authToken {
             AppDelegate.reachfive()
                 .getProfile(authToken: authToken)

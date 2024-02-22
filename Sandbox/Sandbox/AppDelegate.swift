@@ -14,7 +14,6 @@ import IdentitySdkGoogle
 //import IdentitySdkWeChat
 #endif
 
-
 //TODO
 // Mettre une nouvelle page dans une quatrième tabs ou dans l'app réglages:
 // - Paramétrage : scopes, origin, utilisation du refresh au démarage ?
@@ -33,6 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     public static let storage = SecureStorage()
+    public static let shared = SecureStorage(group: Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String + "com.reach5.SharedItems")
     
     /// La reco pour la redirectURI de [https://datatracker.ietf.org/doc/html/rfc8252#section-7.1](RFC 8252) est:
     /// - apps MUST use a URI scheme based on a domain name under their control, expressed in reverse order, as recommended by Section 3.8 of [RFC7595] for private-use URI schemes
@@ -69,7 +69,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     #endif
     #endif
     
-    
     static func reachfive() -> ReachFive {
         let app = UIApplication.shared.delegate as! AppDelegate
         return app.reachfive
@@ -77,10 +76,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         print("application:didFinishLaunchingWithOptions:\(launchOptions ?? [:])")
-        let shared = SecureStorage(group: Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String + "com.reach5.SharedItems")
-        shared.save(key: "key", value: "external")
-        shared.save(key: "shared", value: "external")
-        shared.save(key: "external", value: "external")
         
         reachfive.addPasswordlessCallback { result in
             print("addPasswordlessCallback \(result)")
@@ -154,7 +149,8 @@ extension AppDelegate {
 extension UIViewController {
     
     func goToProfile(_ authToken: AuthToken) {
-        AppDelegate.storage.save(key: SecureStorage.authKey, value: authToken)
+        AppDelegate.storage.setToken(authToken)
+        AppDelegate.shared.setToken(authToken)
         
         if let tabBarController = storyboard?.instantiateViewController(withIdentifier: "Tabs") as? UITabBarController {
             tabBarController.selectedIndex = 2 // profile is third from left

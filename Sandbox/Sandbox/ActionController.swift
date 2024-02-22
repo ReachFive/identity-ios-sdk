@@ -41,7 +41,11 @@ class ActionController: UITableViewController {
         if indexPath.section == 4 {
             // Login with refresh
             if indexPath.row == 2 {
-                guard let token: AuthToken = AppDelegate.storage.get(key: SecureStorage.authKey) else {
+                if let token = AppDelegate.shared.getToken() {
+                    goToProfile(token)
+                    return
+                }
+                guard let token = AppDelegate.storage.getToken() else {
                     return
                 }
                 AppDelegate.reachfive()
@@ -65,8 +69,11 @@ class ActionController: UITableViewController {
         }
         #if targetEnvironment(macCatalyst)
             if indexPath.section == 2, indexPath.row == 3 {
-            let alert = AppDelegate.createAlert(title: "Login", message: "AutoFill not available on macOS")
-            present(alert, animated: true, completion: nil)
+                if let token = AppDelegate.shared.getToken() {
+                    goToProfile(token)
+                }
+//            let alert = AppDelegate.createAlert(title: "Login", message: "AutoFill not available on macOS")
+//            present(alert, animated: true, completion: nil)
             return nil
         }
         #endif

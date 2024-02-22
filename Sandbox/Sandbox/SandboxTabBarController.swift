@@ -26,6 +26,10 @@ class SandboxTabBarController: UITabBarController {
         return UIImage(systemName: "person.crop.circle.badge.questionmark")
     }
     
+    public static var tokenShared: UIImage? {
+        return UIImage(systemName: "shared.with.you")
+    }
+    
     public static var loggedInButNoPasskey: UIImage? {
         guard #available(iOS 15, *) else {
             return UIImage(systemName: "person.crop.circle.badge.plus")
@@ -54,9 +58,14 @@ class SandboxTabBarController: UITabBarController {
             sandboxTabBar?.items?[0].image = UIImage(systemName: "list.bullet")
         }
         
-        if let _: AuthToken = AppDelegate.storage.get(key: SecureStorage.authKey) {
+        if let _ = AppDelegate.storage.getToken() {
             sandboxTabBar?.items?[2].image = SandboxTabBarController.tokenPresent
             sandboxTabBar?.items?[2].selectedImage = SandboxTabBarController.tokenPresent
+        }
+        
+        if let _ = AppDelegate.shared.getToken() {
+            sandboxTabBar?.items?[2].image = SandboxTabBarController.tokenShared
+            sandboxTabBar?.items?[2].selectedImage = SandboxTabBarController.tokenShared
         }
     }
     

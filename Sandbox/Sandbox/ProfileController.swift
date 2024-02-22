@@ -65,7 +65,7 @@ class ProfileController: UIViewController {
             self.didLogin()
         }
         
-        authToken = AppDelegate.storage.get(key: SecureStorage.authKey)
+        authToken = AppDelegate.storage.getToken()
         if authToken != nil {
             profileTabBarItem.image = SandboxTabBarController.tokenPresent
             profileTabBarItem.selectedImage = profileTabBarItem.image
@@ -74,7 +74,7 @@ class ProfileController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         print("ProfileController.viewWillAppear")
-        authToken = AppDelegate.storage.get(key: SecureStorage.authKey)
+        authToken = AppDelegate.storage.getToken()
         guard let authToken else {
             print("not logged in")
             return
@@ -118,7 +118,7 @@ class ProfileController: UIViewController {
     
     func didLogin() {
         print("ProfileController.didLogin")
-        authToken = AppDelegate.storage.get(key: SecureStorage.authKey)
+        authToken = AppDelegate.storage.getToken()
     }
     
     func didLogout() {
@@ -173,7 +173,7 @@ class ProfileController: UIViewController {
             .getProfile(authToken: authToken)
             .onSuccess { profile in
                 let friendlyName = ProfileController.username(profile: profile)
-    
+                
                 let alert = UIAlertController(
                     title: "Register New Passkey",
                     message: "Name the passkey",
@@ -237,9 +237,14 @@ class ProfileController: UIViewController {
     }
     
     @IBAction func logoutAction(_ sender: Any) {
-        AppDelegate.reachfive().logout()
-            .onComplete { result in
-                AppDelegate.storage.clear(key: SecureStorage.authKey)
+        print("logoutAction(_:)")
+        AppDelegate.storage.removeToken()
+        AppDelegate.shared.removeToken {
+                AppDelegate.reachfive().logout().onComplete { res in
+                    print("removed last shared token. \(res)")
+                }
+            }
+            .map { _ in
                 self.navigationController?.popViewController(animated: true)
             }
     }
