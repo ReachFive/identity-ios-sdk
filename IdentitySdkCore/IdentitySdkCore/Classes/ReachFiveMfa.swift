@@ -53,7 +53,7 @@ public extension ReachFive {
              let mfaStartEmailRegistrationRequest = MfaStartEmailRegistrationRequest(redirectUrl: redirectUrl ?? sdkConfig.mfaUri)
              return reachFiveApi.startMfaEmailRegistration(mfaStartEmailRegistrationRequest, authToken: authToken).map { resp in
                  switch resp.status {
-                 case "enabled": .Success(resp.credential!)
+                 case "enabled": MfaStartRegistrationResponse.Success(resp.credential!)
                  default: .VerificationNeeded(ContinueRegistration(credentialType: credential.credentialType, verifyCallback: self.mfaVerify, authToken: authToken))
                  }
                  
@@ -62,7 +62,7 @@ public extension ReachFive {
              let mfaStartPhoneRegistrationRequest = MfaStartPhoneRegistrationRequest(phoneNumber: phoneNumber)
              return reachFiveApi.startMfaPhoneRegistration(mfaStartPhoneRegistrationRequest, authToken: authToken).map { resp in
                  switch resp.status {
-                 case "enabled": .Success(resp.credential!)
+                 case "enabled": MfaStartRegistrationResponse.Success(resp.credential!)
                  default: .VerificationNeeded(ContinueRegistration(credentialType: credential.credentialType, verifyCallback: self.mfaVerify, authToken: authToken))
                  }
              }
