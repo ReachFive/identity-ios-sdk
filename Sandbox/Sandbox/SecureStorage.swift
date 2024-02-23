@@ -10,6 +10,7 @@ public class SecureStorage: Storage {
     
     private let sendNotif: Bool
     
+    //TODO pour l'instant s'il y a un group c'est automatiquement considéré comme étant le trousseau partagé donc celui recevant les notifications de dernier jeton
     public init(group: String? = nil) {
         bundleId = Bundle.main.bundleIdentifier!
         serviceName = group ?? bundleId
@@ -18,7 +19,8 @@ public class SecureStorage: Storage {
         self.group = group ?? (Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String) + bundleId
         print("SecureStorage.init(group: \(group ?? "")) serviceName:\(serviceName) accessGroup: \(self.group)")
     }
-
+    
+    //TODO mettre tous les accès à la keychain dasn une queue à part et renvoyer des Futures?
     public func getToken() -> AuthToken? {
         let refs: Set<String>? = get(key: SecureStorage.refKey)
         print("getToken.refs \(refs)")
@@ -26,6 +28,7 @@ public class SecureStorage: Storage {
         return get(key: SecureStorage.authKey)
     }
     
+    //TODO utiliser un couple appareil/app au lieu de juste app pour gérer correctement les cas où la même app est utilisées sur plusieurs appareils connectés au même compte iCloud
     public func setToken(_ token: AuthToken) -> ()? {
         set(token, forKey: SecureStorage.authKey).flatMap { _ in
                 let refs: Set<String>? = get(key: SecureStorage.refKey)
@@ -214,7 +217,6 @@ public class SecureStorage: Storage {
             print("SecureStorage.clear success")
         }
     }
-    
 }
 
 enum KeychainError: Error {
