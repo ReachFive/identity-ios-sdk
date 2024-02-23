@@ -13,8 +13,8 @@ public enum Credential {
     
     var credentialType: CredentialType {
         switch self {
-        case .Email: CredentialType.Email
-        case .PhoneNumber: CredentialType.PhoneNumber
+        case .Email: return CredentialType.Email
+        case .PhoneNumber: return CredentialType.PhoneNumber
         }
     }
 
