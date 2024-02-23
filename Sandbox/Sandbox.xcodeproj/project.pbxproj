@@ -22,12 +22,12 @@
 		34173203229D6B6400681CFD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34173201229D6B6400681CFD /* Main.storyboard */; };
 		34173205229D6B6400681CFD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34173204229D6B6400681CFD /* Assets.xcassets */; };
 		34173208229D6B6400681CFD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34173206229D6B6400681CFD /* LaunchScreen.storyboard */; };
-		3417FF6822F846610009EC84 /* UpdatePhoneNumberController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3417FF6722F846610009EC84 /* UpdatePhoneNumberController.swift */; };
 		3417FF6E22FB06E50009EC84 /* PasswordlessController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3417FF6D22FB06E50009EC84 /* PasswordlessController.swift */; };
 		3417FF7022FB11CD0009EC84 /* LoginWithPasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3417FF6F22FB11CD0009EC84 /* LoginWithPasswordController.swift */; };
 		34797ABD22A9607D00ED093C /* SignupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34797ABC22A9607D00ED093C /* SignupController.swift */; };
 		349E16EC230BEBBF002EA06B /* UpdatePasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349E16EB230BEBBF002EA06B /* UpdatePasswordController.swift */; };
 		99B0FBD52B6A782D00A3E490 /* MfaController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B0FBD42B6A782D00A3E490 /* MfaController.swift */; };
+		99E4472F2B863AB300EC7559 /* ProfileContentTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E4472E2B863AB300EC7559 /* ProfileContentTableView.swift */; };
 		99FF44322B72884800DDCAAE /* PasskeyCredentialController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FF44312B72884800DDCAAE /* PasskeyCredentialController.swift */; };
 		EA91A0276CEFFE580E9C24DD /* SignupPasskeyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA91A17236291622417196AE /* SignupPasskeyController.swift */; };
 		EA91A44398415C17C88BD067 /* LoginPasskeyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA91AFCB7679A47D752EA6B3 /* LoginPasskeyController.swift */; };
@@ -54,7 +54,6 @@
 		34173204229D6B6400681CFD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		34173207229D6B6400681CFD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		34173209229D6B6400681CFD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3417FF6722F846610009EC84 /* UpdatePhoneNumberController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePhoneNumberController.swift; sourceTree = "<group>"; };
 		3417FF6D22FB06E50009EC84 /* PasswordlessController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordlessController.swift; sourceTree = "<group>"; };
 		3417FF6F22FB11CD0009EC84 /* LoginWithPasswordController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWithPasswordController.swift; sourceTree = "<group>"; };
 		34797ABC22A9607D00ED093C /* SignupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupController.swift; sourceTree = "<group>"; };
@@ -64,6 +63,7 @@
 		84E6968B258A5534003AF19B /* IdentitySdkCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = IdentitySdkCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E6968F258A5661003AF19B /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		99B0FBD42B6A782D00A3E490 /* MfaController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MfaController.swift; sourceTree = "<group>"; };
+		99E4472E2B863AB300EC7559 /* ProfileContentTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileContentTableView.swift; sourceTree = "<group>"; };
 		99FF44312B72884800DDCAAE /* PasskeyCredentialController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasskeyCredentialController.swift; sourceTree = "<group>"; };
 		C9C16455A16CA84067D7FF45 /* Pods-Sandbox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sandbox.debug.xcconfig"; path = "Target Support Files/Pods-Sandbox/Pods-Sandbox.debug.xcconfig"; sourceTree = "<group>"; };
 		EA91A17236291622417196AE /* SignupPasskeyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupPasskeyController.swift; sourceTree = "<group>"; };
@@ -124,12 +124,12 @@
 				34797ABC22A9607D00ED093C /* SignupController.swift */,
 				EA91A17236291622417196AE /* SignupPasskeyController.swift */,
 				349E16EB230BEBBF002EA06B /* UpdatePasswordController.swift */,
-				3417FF6722F846610009EC84 /* UpdatePhoneNumberController.swift */,
 				34173204229D6B6400681CFD /* Assets.xcassets */,
 				34173206229D6B6400681CFD /* LaunchScreen.storyboard */,
 				34173201229D6B6400681CFD /* Main.storyboard */,
 				99B0FBD42B6A782D00A3E490 /* MfaController.swift */,
 				99FF44312B72884800DDCAAE /* PasskeyCredentialController.swift */,
+				99E4472E2B863AB300EC7559 /* ProfileContentTableView.swift */,
 			);
 			path = Sandbox;
 			sourceTree = "<group>";
@@ -282,10 +282,10 @@
 				349E16EC230BEBBF002EA06B /* UpdatePasswordController.swift in Sources */,
 				2A0757FB296F69E30072869F /* PasskeyNonDiscoverableController.swift in Sources */,
 				99B0FBD52B6A782D00A3E490 /* MfaController.swift in Sources */,
+				99E4472F2B863AB300EC7559 /* ProfileContentTableView.swift in Sources */,
 				2A0757F9296F49B10072869F /* PasskeyAutoFillController.swift in Sources */,
 				2A1079E929721DAC00431655 /* NativePasswordController.swift in Sources */,
 				341731FE229D6B6400681CFD /* AppDelegate.swift in Sources */,
-				3417FF6822F846610009EC84 /* UpdatePhoneNumberController.swift in Sources */,
 				3414A7CD22DDD39C00CF393A /* ProfileController.swift in Sources */,
 				3417FF6E22FB06E50009EC84 /* PasswordlessController.swift in Sources */,
 				EA91ACDEBA85D43349D63550 /* SecureStorage.swift in Sources */,

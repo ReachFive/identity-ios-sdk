@@ -292,8 +292,8 @@ public class ReachFiveApi {
     }
     
     public func startMfaPhoneRegistration(
-        authToken: AuthToken,
-        mfaStartPhoneRegistrationRequest: MfaStartPhoneRegistrationRequest
+        _ mfaStartPhoneRegistrationRequest: MfaStartPhoneRegistrationRequest,
+        authToken: AuthToken
     ) -> Future<MfaStartCredentialRegistrationResponse, ReachFiveError> {
         AF
             .request(
@@ -308,8 +308,8 @@ public class ReachFiveApi {
     }
     
     public func startMfaEmailRegistration(
-        authToken: AuthToken,
-        mfaStartEmailRegistrationRequest: MfaStartEmailRegistrationRequest
+        _ mfaStartEmailRegistrationRequest: MfaStartEmailRegistrationRequest,
+        authToken: AuthToken
     ) -> Future<MfaStartCredentialRegistrationResponse, ReachFiveError> {
         AF
             .request(
@@ -324,8 +324,8 @@ public class ReachFiveApi {
     }
     
     public func verifyMfaEmailRegistrationPost(
-        authToken: AuthToken,
-        mfaVerifyEmailRegistrationRequest: MfaVerifyEmailRegistrationPostRequest
+        _ mfaVerifyEmailRegistrationRequest: MfaVerifyEmailRegistrationPostRequest,
+        authToken: AuthToken
     ) -> Future<(), ReachFiveError> {
         AF
             .request(
@@ -340,7 +340,7 @@ public class ReachFiveApi {
     }
     
     public func verifyMfaEmailRegistrationGet(
-        request: MfaVerifyEmailRegistrationGetRequest
+        _ request: MfaVerifyEmailRegistrationGetRequest
     ) -> Future<(), ReachFiveError> {
         AF
             .request(
@@ -355,8 +355,8 @@ public class ReachFiveApi {
     }
     
     public func verifyMfaPhoneRegistration(
-        authToken: AuthToken,
-        mfaVerifyPhoneRegistrationRequest: MfaVerifyPhoneRegistrationRequest
+        _ mfaVerifyPhoneRegistrationRequest: MfaVerifyPhoneRegistrationRequest,
+        authToken: AuthToken
     ) -> Future<(), ReachFiveError> {
         AF
             .request(

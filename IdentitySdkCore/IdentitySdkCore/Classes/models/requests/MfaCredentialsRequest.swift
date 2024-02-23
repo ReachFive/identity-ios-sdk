@@ -18,7 +18,7 @@ public class MfaStartPhoneRegistrationRequest: Codable, DictionaryEncodable {
 public class MfaVerifyEmailRegistrationPostRequest: Codable, DictionaryEncodable {
     public let verificationCode: String
     
-    public init(verificationCode: String) {
+    public init(_ verificationCode: String) {
         self.verificationCode = verificationCode
     }
 }
@@ -36,8 +36,18 @@ public class MfaVerifyEmailRegistrationGetRequest: Codable, DictionaryEncodable 
 public class MfaVerifyPhoneRegistrationRequest: Codable, DictionaryEncodable {
     public let verificationCode: String
     
-    public init(verificationCode: String) {
+    public init(_ verificationCode: String) {
         self.verificationCode = verificationCode
+    }
+}
+
+public class MfaStartCredentialRegistrationResponse: Codable, DictionaryEncodable {
+    public let status: String
+    public let credential: MfaRegistrationSuccess?
+    
+    public init(status: String, credential: MfaRegistrationSuccess? = nil) {
+        self.status = status
+        self.credential = credential
     }
 }
 
@@ -47,10 +57,16 @@ public enum Status: String {
     case smsSent = "sms_sent"
 }
 
-public class MfaStartCredentialRegistrationResponse: Codable, DictionaryEncodable {
-    public let status: String
+public class MfaRegistrationSuccess: Codable, DictionaryEncodable {
+    public let type: String
+    public let email: String?
+    public let phoneNumber: String?
+    public let friendlyName: String
     
-    public init(status: String) {
-        self.status = status
+    public init(type: String, friendlyName: String, email: String? = nil, phoneNumber: String? = nil) {
+        self.type = type
+        self.email = email
+        self.phoneNumber = phoneNumber
+        self.friendlyName = friendlyName
     }
 }

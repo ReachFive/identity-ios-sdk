@@ -76,12 +76,11 @@ public class ReachFive: NSObject {
     }   
     
     public func interceptUrl(_ url: URL) -> () {
-        let params = URLComponents(url: url, resolvingAgainstBaseURL: true)?.queryItems
-        let mfaParam = params?.first(where: { $0.name == "mfa" })
-        if mfaParam == nil {
-            interceptPasswordless(url)
-        } else {
-            interceptVerifyMfaCredential(url)
-        }
+            let host = URLComponents(url: url, resolvingAgainstBaseURL: true)?.host
+            if host == "mfa" {
+                interceptVerifyMfaCredential(url)
+            } else {
+                interceptPasswordless(url)
+            }
     }
 }

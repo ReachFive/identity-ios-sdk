@@ -2,6 +2,12 @@ import UIKit
 import IdentitySdkCore
 import BrightFutures
 
+
+protocol ProfileRootController {
+    var rootController: UIViewController? { get }
+}
+
+@available(iOS 14.0, *)
 //TODO
 //      - déplacer le bouton login with refresh ici pour que, même logué, on puisse afficher les passkey (qui sont expirées)
 //      - faire du pull-to-refresh soit sur la table des clés soit carrément sur tout le profil (déclencher le refresh token)
@@ -21,26 +27,22 @@ class ProfileController: UIViewController {
     var setTokenObserver: NSObjectProtocol?
     
     var emailVerifyNotification: NSObjectProtocol?
-    
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var familyNameLabel: UILabel!
-    @IBOutlet weak var emailLabel: UILabel!
-    @IBOutlet weak var phoneNumberLabel: UILabel!
-    @IBOutlet weak var customIdentifierLabel: UILabel!
-    @IBOutlet weak var loginLabel: UILabel!
-    @IBOutlet weak var methodLabel: UILabel!
+    @IBOutlet weak var otherOptions: UITableView!
     
     @IBOutlet weak var profileTabBarItem: UITabBarItem!
-    
+    @IBOutlet weak var profileTableView: ProfileContentTableView!
     @IBOutlet weak var mfaButton: UIButton!
     @IBOutlet weak var passkeyButton: UIButton!
-    @IBOutlet weak var startPhoneRegisteringButton: UIButton!
-    @IBOutlet weak var startMfaEmailRegisteringButton: UIButton!
     @IBOutlet weak var editProfileButton: UIButton!
-    @IBOutlet weak var passkey: UIButton!
-    @IBOutlet weak var mfa: UIButton!
     
+    var profile: Profile = Profile.init() {
+        didSet {
+            profileTableView.update(profile: self.profile, authToken: self.authToken)
+            super.viewWillAppear(true)
+        }
+    }
     
+
     override func viewDidLoad() {
         print("ProfileController.viewDidLoad")
         super.viewDidLoad()
@@ -86,30 +88,12 @@ class ProfileController: UIViewController {
         
         mfaButton.isHidden = false
         editProfileButton.isHidden = false
-        
-        startPhoneRegisteringButton.isHidden = true
-        startMfaEmailRegisteringButton.isHidden = true
-        
+                
         AppDelegate.reachfive()
             .getProfile(authToken: authToken)
             .onSuccess { profile in
-                self.nameLabel.text = profile.givenName
-                self.familyNameLabel.text = profile.familyName
-                if let email = profile.email {
-                    self.emailLabel.text = email
-                    self.emailLabel.text?.append(profile.emailVerified == true ? " ✔︎" : " ✘")
-                    self.startMfaEmailRegisteringButton.isHidden = false
-                }
-                if let phoneNumber = profile.phoneNumber {
-                    self.phoneNumberLabel.text = phoneNumber
-                    self.phoneNumberLabel.text?.append(profile.phoneNumberVerified == true ? " ✔︎" : " ✘")
-                    self.startPhoneRegisteringButton.isHidden = false
-                }
-                self.customIdentifierLabel.text = profile.customIdentifier
-                if let loginSummary = profile.loginSummary, let lastLogin = loginSummary.lastLogin {
-                    self.loginLabel.text = self.format(date: lastLogin)
-                    self.methodLabel.text = loginSummary.lastProvider
-                }
+                self.profile = profile
+                self.profileTableView.reloadData()
             }
             .onFailure { error in
                 // the token is probably expired, but it is still possible that it can be refreshed
@@ -118,8 +102,6 @@ class ProfileController: UIViewController {
                 self.profileTabBarItem.selectedImage = self.profileTabBarItem.image
                 print("getProfile error = \(error.message())")
             }
-        
-        super.viewWillAppear(animated)
     }
     
     func didLogin() {
@@ -130,102 +112,12 @@ class ProfileController: UIViewController {
     func didLogout() {
         print("ProfileController.didLogout")
         authToken = nil
-        nameLabel.text = nil
-        familyNameLabel.text = nil
-        emailLabel.text = nil
-        phoneNumberLabel.text = nil
-        customIdentifierLabel.text = nil
-        loginLabel.text = nil
-        methodLabel.text = nil
+        profile = Profile()
         passkeyButton.isHidden = true
         mfaButton.isHidden = true
         editProfileButton.isHidden = true
-//        updatePasswordButton.isHidden = true
-//        updatePhoneButton.isHidden = true
-        startMfaEmailRegisteringButton.isHidden = true
-        startPhoneRegisteringButton.isHidden = true
     }
     
-    @IBAction func doMfaPhoneRegistration(_ sender: UIButton) {
-        print("ProfileController.startMfaPhoneRegistration")
-        guard let authToken else {
-            print("not logged in")
-            return
-        }
-        let phoneNumber = phoneNumberLabel.text
-        guard let phoneNumber else {
-            print("phone number cannot be empty")
-            return
-        }
-        AppDelegate.reachfive()
-            .mfaStartRegistering(credential: .PhoneNumber(phoneNumber), authToken: authToken)
-            .onSuccess { mfaStartCredentialRegistrationResponse in
-                self.handleStartVerificationCode(mfaStartCredentialRegistrationResponse: mfaStartCredentialRegistrationResponse, credentialVerification: .SMS, authToken: authToken)
-            }
-            .onFailure { error in
-                let alert = AppDelegate.createAlert(title: "Start MFA phone Registration", message: "Error: \(error.message())")
-                self.present(alert, animated: true, completion: nil)
-            }
-    }
-    
-    private func handleStartVerificationCode(mfaStartCredentialRegistrationResponse: MfaStartCredentialRegistrationResponse, credentialVerification: CredentialVerification, authToken: AuthToken) {
-        var alertController: UIAlertController
-        if(mfaStartCredentialRegistrationResponse.status == Status.enabled.rawValue) {
-            alertController = AppDelegate.createAlert(title: "MFA \(credentialVerification) enabled", message: "Success")
-        }
-        else {
-            alertController = UIAlertController(title: "Verification Code", message: "Please enter the verification Code you got by \(credentialVerification)", preferredStyle: .alert)
-            alertController.addTextField { (textField) in
-                textField.placeholder = "Verification code"
-            }
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            
-            let submitVerificationCode = UIAlertAction(title: "submit", style: .default) { _ in
-                let verificationCode = alertController.textFields![0].text
-                guard let verificationCode else {
-                    print("verification code cannot be empty")
-                    return
-                }
-                
-                self.verifyMfaCredential(verificationCode: verificationCode, credentialVerification: credentialVerification, authToken: authToken)
-            }
-            alertController.addAction(cancelAction)
-            alertController.addAction(submitVerificationCode)
-        }
-        
-        self.present(alertController, animated: true, completion: nil)
-        
-    }
-    
-    @IBAction func doMfaEmailRegistration(_ sender: UIButton) {
-        print("ProfileController.startEmailMfaRegistering")
-        guard let authToken else {
-            print("not logged in")
-            return
-        }
-        AppDelegate.reachfive()
-            .mfaStartRegistering(credential: .Email(), authToken: authToken)
-            .onSuccess { mfaStartCredentialRegistrationResponse in
-                self.handleStartVerificationCode(mfaStartCredentialRegistrationResponse: mfaStartCredentialRegistrationResponse, credentialVerification: .Email, authToken: authToken)
-            }
-            .onFailure { error in
-                let alert = AppDelegate.createAlert(title: "Start MFA email Registration", message: "Error: \(error.message())")
-                self.present(alert, animated: true, completion: nil)
-            }
-    }
-    
-    private func verifyMfaCredential(verificationCode: String, credentialVerification: CredentialVerification, authToken: AuthToken) {
-        AppDelegate.reachfive()
-            .mfaVerifyRegistering(credential: credentialVerification, verificationCode: verificationCode, authToken: authToken)
-            .onSuccess {
-                let alert = AppDelegate.createAlert(title: "Verify MFA \(credentialVerification) Registration", message: "Success")
-                self.present(alert, animated: true, completion: nil)
-            }
-            .onFailure { error in
-                let alert = AppDelegate.createAlert(title: "Verify MFA \(credentialVerification) Registration", message: "Error: \(error.message())")
-                self.present(alert, animated: true, completion: nil)
-            }
-    }
     
     internal static func username(profile: Profile) -> String {
         let username: String
@@ -239,14 +131,43 @@ class ProfileController: UIViewController {
         }
         return username
     }
-    
-    private func format(date: Int) -> String {
-        let lastLogin = Date(timeIntervalSince1970: TimeInterval(date / 1000))
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .medium
-        
-        dateFormatter.locale = Locale(identifier: "en_GB")
-        return dateFormatter.string(from: lastLogin)
+}
+
+extension ProfileRootController {
+    func updatePhoneNumber(authToken: AuthToken?) {
+        var alertController: UIAlertController
+        alertController = UIAlertController(title: "New Phone Number", message: "Please enter the new phone number", preferredStyle: .alert)
+        alertController.addTextField { textField in
+            textField.placeholder = "Updated phone number"
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let submitPhoneNumber = UIAlertAction(title: "submit", style: .default) { _ in
+            let phoneNumber = alertController.textFields![0].text
+            guard let phoneNumber else {
+                print("Phone number cannot be empty")
+                return
+            }
+            handleUpdate(phoneNumber: phoneNumber, authToken: authToken)
+        }
+        alertController.addAction(cancelAction)
+        alertController.addAction(submitPhoneNumber)
+        rootController?.present(alertController, animated: true, completion: nil)
     }
+    
+    private func handleUpdate(phoneNumber: String, authToken: AuthToken?) {
+        if let authToken {
+            AppDelegate.reachfive()
+                .updatePhoneNumber(authToken: authToken, phoneNumber: phoneNumber)
+                .onSuccess { profile in
+                    let alert = AppDelegate.createAlert(title: "Update", message: "Update Success")
+                    rootController?.present(alert, animated: true, completion: nil)
+                    rootController?.viewWillAppear(true)
+                }
+                .onFailure { error in
+                    let alert = AppDelegate.createAlert(title: "Update", message: "Update Error: \(error.message())")
+                    rootController?.present(alert, animated: true, completion: nil)
+                }
+        }
+    }
+    
 }

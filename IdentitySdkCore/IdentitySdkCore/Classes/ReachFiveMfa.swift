@@ -2,14 +2,43 @@ import Foundation
 import BrightFutures
 import Alamofire
 
-public enum CredentialVerification {
+public enum CredentialType {
     case Email
-    case SMS
+    case PhoneNumber
 }
 
 public enum Credential {
     case Email(redirectUrl: String? = nil)
     case PhoneNumber(_ phoneNumber: String)
+    
+    var credentialType: CredentialType {
+        switch self {
+        case .Email: CredentialType.Email
+        case .PhoneNumber: CredentialType.PhoneNumber
+        }
+    }
+
+}
+
+public class ContinueRegistration {
+    public let credentialType: CredentialType
+    private let verifyCallback: (CredentialType, String, AuthToken) -> Future<(), ReachFiveError>
+    private let authToken: AuthToken
+        
+    fileprivate init(credentialType: CredentialType, verifyCallback: @escaping (CredentialType, String, AuthToken) -> Future<(), ReachFiveError>, authToken: AuthToken) {
+        self.credentialType = credentialType
+        self.authToken = authToken
+        self.verifyCallback = verifyCallback
+    }
+        
+    public func verify(code: String, freshAuthToken: AuthToken? = nil) -> Future<(), ReachFiveError> {
+        self.verifyCallback(credentialType, code, freshAuthToken ?? authToken)
+    }
+}
+
+public enum MfaStartRegistrationResponse {
+    case Success(_ success: MfaRegistrationSuccess)
+    case VerificationNeeded(_ continueRegistration: ContinueRegistration)
 }
 
 public extension ReachFive {
@@ -18,31 +47,45 @@ public extension ReachFive {
         self.mfaCredentialRegistrationCallback = mfaCredentialRegistrationCallback
     }
     
-    func mfaStartRegistering(credential: Credential, authToken: AuthToken) -> Future<MfaStartCredentialRegistrationResponse, ReachFiveError> {
+    func mfaStart(registering credential: Credential, authToken: AuthToken) -> Future<MfaStartRegistrationResponse, ReachFiveError> {
         switch credential {
-        case let .Email(redirectUrl):
-            let mfaStartEmailRegistrationRequest = MfaStartEmailRegistrationRequest(redirectUrl: redirectUrl ?? sdkConfig.scheme)
-            return reachFiveApi.startMfaEmailRegistration(authToken: authToken, mfaStartEmailRegistrationRequest: mfaStartEmailRegistrationRequest)
-        case let .PhoneNumber(phoneNumber):
-            let mfaStartPhoneRegistrationRequest = MfaStartPhoneRegistrationRequest(phoneNumber: phoneNumber)
-            return reachFiveApi.startMfaPhoneRegistration(authToken: authToken, mfaStartPhoneRegistrationRequest: mfaStartPhoneRegistrationRequest)
-        }
+         case let Credential.Email(redirectUrl):
+             let mfaStartEmailRegistrationRequest = MfaStartEmailRegistrationRequest(redirectUrl: redirectUrl ?? sdkConfig.mfaUri)
+             return reachFiveApi.startMfaEmailRegistration(mfaStartEmailRegistrationRequest, authToken: authToken).map { resp in
+                 switch resp.status {
+                 case "enabled": .Success(resp.credential!)
+                 default: .VerificationNeeded(ContinueRegistration(credentialType: credential.credentialType, verifyCallback: self.mfaVerify, authToken: authToken))
+                 }
+                 
+             }
+         case let Credential.PhoneNumber(phoneNumber):
+             let mfaStartPhoneRegistrationRequest = MfaStartPhoneRegistrationRequest(phoneNumber: phoneNumber)
+             return reachFiveApi.startMfaPhoneRegistration(mfaStartPhoneRegistrationRequest, authToken: authToken).map { resp in
+                 switch resp.status {
+                 case "enabled": .Success(resp.credential!)
+                 default: .VerificationNeeded(ContinueRegistration(credentialType: credential.credentialType, verifyCallback: self.mfaVerify, authToken: authToken))
+                 }
+             }
+         }
     }
     
-    func mfaVerifyRegistering(credential: CredentialVerification, verificationCode: String, authToken: AuthToken) -> Future<(), ReachFiveError> {
-        switch credential {
+    /// Add an mfaStart with stepup argument label to distinguish from mfaStart registration    ///
+    
+    
+    func mfaVerify(_ credentialType: CredentialType, code: String, authToken: AuthToken) -> Future<(), ReachFiveError> {
+        switch credentialType {
         case .Email:
-            let mfaVerifyEmailRegistrationRequest = MfaVerifyEmailRegistrationPostRequest(verificationCode: verificationCode)
-            return reachFiveApi.verifyMfaEmailRegistrationPost(authToken: authToken, mfaVerifyEmailRegistrationRequest: mfaVerifyEmailRegistrationRequest)
-        case .SMS:
-            let mfaVerifyPhoneRegistrationRequest = MfaVerifyPhoneRegistrationRequest(verificationCode: verificationCode)
-            return reachFiveApi.verifyMfaPhoneRegistration(authToken: authToken, mfaVerifyPhoneRegistrationRequest: mfaVerifyPhoneRegistrationRequest)
+            let request = MfaVerifyEmailRegistrationPostRequest(code)
+            return reachFiveApi.verifyMfaEmailRegistrationPost(request, authToken: authToken)
+        case .PhoneNumber:
+            let request = MfaVerifyPhoneRegistrationRequest(code)
+            return reachFiveApi.verifyMfaPhoneRegistration(request, authToken: authToken)
         }
     }
     
     internal func verifyMfaEmailGetRegistration(verificationCode: String, magicLink: String) -> Future<(), ReachFiveError> {
-        let mfaVerifyEmailRegistrationGetRequest = MfaVerifyEmailRegistrationGetRequest(c: verificationCode, t: magicLink)
-        return reachFiveApi.verifyMfaEmailRegistrationGet(request: mfaVerifyEmailRegistrationGetRequest)
+        let request = MfaVerifyEmailRegistrationGetRequest(c: verificationCode, t: magicLink)
+        return reachFiveApi.verifyMfaEmailRegistrationGet(request)
     }
     
     internal func interceptVerifyMfaCredential(_ url: URL) {
