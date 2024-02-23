@@ -2,6 +2,7 @@ import UIKit
 import IdentitySdkCore
 import BrightFutures
 
+import SwiftUI
 
 protocol ProfileRootController {
     var rootController: UIViewController? { get }
@@ -46,7 +47,6 @@ class ProfileController: UIViewController {
     override func viewDidLoad() {
         print("ProfileController.viewDidLoad")
         super.viewDidLoad()
-        
         emailVerifyNotification = NotificationCenter.default.addObserver(forName: .DidReceiveMfaVerifyEmail, object: nil, queue: nil) {
             (note) in
             if let result = note.userInfo?["result"], let result = result as? Result<(), ReachFiveError> {
@@ -118,6 +118,13 @@ class ProfileController: UIViewController {
         editProfileButton.isHidden = true
     }
     
+    @IBAction func logoutAction(_ sender: Any) {
+        AppDelegate.reachfive().logout()
+            .onComplete { result in
+                AppDelegate.storage.clear(key: SecureStorage.authKey)
+                self.navigationController?.popViewController(animated: true)
+            }
+    }
     
     internal static func username(profile: Profile) -> String {
         let username: String

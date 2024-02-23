@@ -24,7 +24,7 @@ class PasskeyCredentialController: UIViewController {
     
     var clearTokenObserver: NSObjectProtocol?
     var setTokenObserver: NSObjectProtocol?
-
+    
     
     override func viewDidLoad() {
         print("PasskeyCredentialController.viewDidLoad")
@@ -32,7 +32,7 @@ class PasskeyCredentialController: UIViewController {
         
         credentialTableview.delegate = self
         credentialTableview.dataSource = self
-
+        
         //TODO: mieux gérer les notifications pour ne pas en avoir plusieurs qui se déclenche pour le même évènement
         clearTokenObserver = NotificationCenter.default.addObserver(forName: .DidClearAuthToken, object: nil, queue: nil) { _ in
             self.didLogout()
@@ -75,17 +75,17 @@ class PasskeyCredentialController: UIViewController {
     private func reloadCredentials(authToken: AuthToken) {
         // Beware that a valid token for profile might not be fresh enough to retrieve the credentials
         AppDelegate.reachfive().listWebAuthnCredentials(authToken: authToken).onSuccess { listCredentials in
-                self.devices = listCredentials
-                
-                //TODO comprendre pourquoi on fait un async. En a-t-on vraiment besoin ?
-                DispatchQueue.main.async {
-                    self.credentialTableview.reloadData()
-                }
+            self.devices = listCredentials
+            
+            //TODO comprendre pourquoi on fait un async. En a-t-on vraiment besoin ?
+            DispatchQueue.main.async {
+                self.credentialTableview.reloadData()
             }
-            .onFailure { error in
-                self.devices = []
-                print("getCredentials error = \(error.message())")
-            }
+        }
+        .onFailure { error in
+            self.devices = []
+            print("getCredentials error = \(error.message())")
+        }
     }
     
     @available(iOS 16.0, *)
@@ -135,24 +135,6 @@ class PasskeyCredentialController: UIViewController {
                 // the token is probably expired, but it is still possible that it can be refreshed
                 self.didLogout()
                 print("getProfile error = \(error.message())")
-            }
-    }
-    
-    private func format(date: Int) -> String {
-        let lastLogin = Date(timeIntervalSince1970: TimeInterval(date / 1000))
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .medium
-        
-        dateFormatter.locale = Locale(identifier: "en_GB")
-        return dateFormatter.string(from: lastLogin)
-    }
-    
-    @IBAction func logoutAction(_ sender: Any) {
-        AppDelegate.reachfive().logout()
-            .onComplete { result in
-                AppDelegate.storage.clear(key: SecureStorage.authKey)
-                self.navigationController?.popViewController(animated: true)
             }
     }
 }
