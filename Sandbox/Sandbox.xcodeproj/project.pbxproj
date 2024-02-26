@@ -13,6 +13,7 @@
 		2A33F30B2A016B1D00D05EB1 /* LoginWKWebviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A33F30A2A016B1D00D05EB1 /* LoginWKWebviewController.swift */; };
 		2A33F30D2A01740600D05EB1 /* LoginCustomWebviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A33F30C2A01740600D05EB1 /* LoginCustomWebviewController.swift */; };
 		2A52203B297F187D00815558 /* SandboxTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A52203A297F187D00815558 /* SandboxTabBarController.swift */; };
+		2A5E005F2B8CF85300585C2E /* BounceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5E005E2B8CF85300585C2E /* BounceButton.swift */; };
 		2A9C6BCA298AC2CE00BBD80F /* Pods_Sandbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E55CD881F31583F8D3480D8 /* Pods_Sandbox.framework */; };
 		2AA4B5902975B3920001747C /* DemoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA4B58F2975B3920001747C /* DemoController.swift */; };
 		2AFF7DE9296F1EB900514B47 /* ActionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFF7DE8296F1EB900514B47 /* ActionController.swift */; };
@@ -41,6 +42,7 @@
 		2A33F30A2A016B1D00D05EB1 /* LoginWKWebviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWKWebviewController.swift; sourceTree = "<group>"; };
 		2A33F30C2A01740600D05EB1 /* LoginCustomWebviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCustomWebviewController.swift; sourceTree = "<group>"; };
 		2A52203A297F187D00815558 /* SandboxTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SandboxTabBarController.swift; sourceTree = "<group>"; };
+		2A5E005E2B8CF85300585C2E /* BounceButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BounceButton.swift; sourceTree = "<group>"; };
 		2AA4B58F2975B3920001747C /* DemoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoController.swift; sourceTree = "<group>"; };
 		2AFF7DE8296F1EB900514B47 /* ActionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionController.swift; sourceTree = "<group>"; };
 		2E55CD881F31583F8D3480D8 /* Pods_Sandbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sandbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -79,6 +81,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2A5E005D2B8CF82500585C2E /* CustomControls */ = {
+			isa = PBXGroup;
+			children = (
+				2A5E005E2B8CF85300585C2E /* BounceButton.swift */,
+			);
+			path = CustomControls;
+			sourceTree = "<group>";
+		};
 		341731F1229D6B6400681CFD = {
 			isa = PBXGroup;
 			children = (
@@ -122,6 +132,7 @@
 				349E16EB230BEBBF002EA06B /* UpdatePasswordController.swift */,
 				3417FF6722F846610009EC84 /* UpdatePhoneNumberController.swift */,
 				34173204229D6B6400681CFD /* Assets.xcassets */,
+				2A5E005D2B8CF82500585C2E /* CustomControls */,
 				34173206229D6B6400681CFD /* LaunchScreen.storyboard */,
 				34173201229D6B6400681CFD /* Main.storyboard */,
 			);
@@ -268,6 +279,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				34797ABD22A9607D00ED093C /* SignupController.swift in Sources */,
+				2A5E005F2B8CF85300585C2E /* BounceButton.swift in Sources */,
 				3417FF7022FB11CD0009EC84 /* LoginWithPasswordController.swift in Sources */,
 				34173200229D6B6400681CFD /* LoginWithProvidersController.swift in Sources */,
 				2A52203B297F187D00815558 /* SandboxTabBarController.swift in Sources */,
