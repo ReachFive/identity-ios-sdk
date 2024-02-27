@@ -61,7 +61,7 @@ class ProfileContentTableView: UITableView, UITableViewDataSource, UITableViewDe
         content.prefersSideBySideTextAndSecondaryText = true
         
         var textProperties = content.textProperties
-        if let customFont = UIFont(name: "Roboto-Regular", size: 12) {
+        if let customFont = UIFont(name: "system", size: 12) {
             textProperties.font = UIFontMetrics(forTextStyle: .body).scaledFont(for:
                 customFont)
             textProperties.adjustsFontForContentSizeCategory = true
@@ -71,7 +71,7 @@ class ProfileContentTableView: UITableView, UITableViewDataSource, UITableViewDe
         content.textProperties = textProperties
         
         var secondaryTextProperties = content.secondaryTextProperties
-        if let secondaryFont = UIFont(name: "Roboto-Regular", size: 20) {
+        if let secondaryFont = UIFont(name: "system", size: 20) {
             textProperties.font = UIFontMetrics(forTextStyle: .body).scaledFont(for: secondaryFont)
             textProperties.adjustsFontForContentSizeCategory = true
             textProperties.numberOfLines = 0
