@@ -8,7 +8,6 @@ struct Field {
 }
 // TODO:
 // - remove enroll MFA identifier in menu when the identifier has already been enrolled. Requires listMfaCredentials
-@available(iOS 14.0, *)
 class ProfileContentTableView: UITableView, UITableViewDataSource, UITableViewDelegate, ProfileRootController {
     var propertiesToDisplay: [Field] = []
     

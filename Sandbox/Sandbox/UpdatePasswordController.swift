@@ -2,7 +2,6 @@ import UIKit
 import Foundation
 import IdentitySdkCore
 
-@available(iOS 14.0, *)
 class UpdatePasswordController: UIViewController {
     var authToken: AuthToken?
     @IBOutlet weak var newPassword: UITextField!
