@@ -41,10 +41,6 @@ class ActionController: UITableViewController {
         if indexPath.section == 4 {
             // Login with refresh
             if indexPath.row == 2 {
-                if let token = AppDelegate.shared.getToken() {
-                    goToProfile(token)
-                    return
-                }
                 guard let token = AppDelegate.storage.getToken() else {
                     return
                 }
@@ -53,7 +49,7 @@ class ActionController: UITableViewController {
                     .onSuccess(callback: goToProfile)
                     .onFailure { error in
                         print("refresh error \(error)")
-                        AppDelegate.storage.clear(key: SecureStorage.authKey)
+                        AppDelegate.storage.removeToken()
                     }
             }
         }
@@ -64,16 +60,13 @@ class ActionController: UITableViewController {
         //TODO voir si on peut à la place carrément ne pas afficher la section
         if indexPath.section == 2, #unavailable(iOS 16.0) {
             let alert = AppDelegate.createAlert(title: "Login", message: "Passkey requires iOS 16")
-            present(alert, animated: true, completion: nil)
+            present(alert, animated: true)
             return nil
         }
         #if targetEnvironment(macCatalyst)
             if indexPath.section == 2, indexPath.row == 3 {
-                if let token = AppDelegate.shared.getToken() {
-                    goToProfile(token)
-                }
-//            let alert = AppDelegate.createAlert(title: "Login", message: "AutoFill not available on macOS")
-//            present(alert, animated: true, completion: nil)
+            let alert = AppDelegate.createAlert(title: "Login", message: "AutoFill not available on macOS")
+            present(alert, animated: true)
             return nil
         }
         #endif
@@ -86,7 +79,7 @@ class ActionController: UITableViewController {
             goToProfile(authToken)
         case .failure(let error):
             let alert = AppDelegate.createAlert(title: "Login failed", message: "Error: \(error.message())")
-            present(alert, animated: true, completion: nil)
+            present(alert, animated: true)
         }
     }
 }

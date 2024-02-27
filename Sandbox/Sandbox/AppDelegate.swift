@@ -32,7 +32,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     public static let storage = SecureStorage()
-    public static let shared = SecureStorage(group: Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String + "com.reach5.SharedItems")
     
     /// La reco pour la redirectURI de [https://datatracker.ietf.org/doc/html/rfc8252#section-7.1](RFC 8252) est:
     /// - apps MUST use a URI scheme based on a domain name under their control, expressed in reverse order, as recommended by Section 3.8 of [RFC7595] for private-use URI schemes
@@ -150,7 +149,6 @@ extension UIViewController {
     
     func goToProfile(_ authToken: AuthToken) {
         AppDelegate.storage.setToken(authToken)
-        AppDelegate.shared.setToken(authToken)
         
         if let tabBarController = storyboard?.instantiateViewController(withIdentifier: "Tabs") as? UITabBarController {
             tabBarController.selectedIndex = 2 // profile is third from left

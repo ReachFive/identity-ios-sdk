@@ -1,6 +1,7 @@
 import IdentitySdkCore
 
 public class SecureStorage: Storage {
+    //TODO à rendre privé, utiliser les fonctions spécifiques au jeton
     public static let authKey = "AUTH_TOKEN"
     private static let refKey = "SHARED_REFS"
     
@@ -10,17 +11,16 @@ public class SecureStorage: Storage {
     
     private let sendNotif: Bool
     
-    //TODO pour l'instant s'il y a un group c'est automatiquement considéré comme étant le trousseau partagé donc celui recevant les notifications de dernier jeton
-    public init(group: String? = nil) {
+    public init(group: String? = nil, sendNotif: Bool? = nil) {
         bundleId = Bundle.main.bundleIdentifier!
         serviceName = group ?? bundleId
-        sendNotif = group == nil
+        self.sendNotif = sendNotif ?? true
         
         self.group = group ?? (Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String) + bundleId
         print("SecureStorage.init(group: \(group ?? "")) serviceName:\(serviceName) accessGroup: \(self.group)")
     }
     
-    //TODO mettre tous les accès à la keychain dasn une queue à part et renvoyer des Futures?
+    //TODO mettre tous les accès à la keychain dans une queue à part et renvoyer des Futures?
     public func getToken() -> AuthToken? {
         let refs: Set<String>? = get(key: SecureStorage.refKey)
         print("getToken.refs \(refs)")
@@ -118,6 +118,11 @@ public class SecureStorage: Storage {
     
     public func save<D: Codable>(key: String, value: D) {
         if let _ = set(value, forKey: key) {
+            //TODO supprimer une fois que tous les usages sont mogrés aux fonctions spécifique des jetons
+            if key == SecureStorage.authKey {
+                print("send SecureStorage.save.DidSetAuthToken")
+                NotificationCenter.default.post(name: .DidSetAuthToken, object: nil)
+            }
             print("SecureStorage.save success")
         }
     }
@@ -214,6 +219,10 @@ public class SecureStorage: Storage {
     
     public func clear(key: String) {
         remove(key: key).map {
+            //TODO supprimer une fois que tous les usages sont mogrés aux fonctions spécifique des jetons
+            if key == SecureStorage.authKey {
+                NotificationCenter.default.post(name: .DidClearAuthToken, object: nil)
+            }
             print("SecureStorage.clear success")
         }
     }

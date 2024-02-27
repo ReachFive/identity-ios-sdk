@@ -62,11 +62,6 @@ class SandboxTabBarController: UITabBarController {
             sandboxTabBar?.items?[2].image = SandboxTabBarController.tokenPresent
             sandboxTabBar?.items?[2].selectedImage = SandboxTabBarController.tokenPresent
         }
-        
-        if let _ = AppDelegate.shared.getToken() {
-            sandboxTabBar?.items?[2].image = SandboxTabBarController.tokenShared
-            sandboxTabBar?.items?[2].selectedImage = SandboxTabBarController.tokenShared
-        }
     }
     
     func didLogout() {

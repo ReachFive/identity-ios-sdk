@@ -65,7 +65,7 @@ class ProfileController: UIViewController {
             self.didLogin()
         }
         
-        authToken = AppDelegate.storage.getToken()
+        authToken = AppDelegate.storage.get(key: SecureStorage.authKey)
         if authToken != nil {
             profileTabBarItem.image = SandboxTabBarController.tokenPresent
             profileTabBarItem.selectedImage = profileTabBarItem.image
@@ -74,7 +74,7 @@ class ProfileController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         print("ProfileController.viewWillAppear")
-        authToken = AppDelegate.storage.getToken()
+        authToken = AppDelegate.storage.get(key: SecureStorage.authKey)
         guard let authToken else {
             print("not logged in")
             return
@@ -118,7 +118,7 @@ class ProfileController: UIViewController {
     
     func didLogin() {
         print("ProfileController.didLogin")
-        authToken = AppDelegate.storage.getToken()
+        authToken = AppDelegate.storage.get(key: SecureStorage.authKey)
     }
     
     func didLogout() {
@@ -173,7 +173,7 @@ class ProfileController: UIViewController {
             .getProfile(authToken: authToken)
             .onSuccess { profile in
                 let friendlyName = ProfileController.username(profile: profile)
-                
+    
                 let alert = UIAlertController(
                     title: "Register New Passkey",
                     message: "Name the passkey",
@@ -237,14 +237,9 @@ class ProfileController: UIViewController {
     }
     
     @IBAction func logoutAction(_ sender: Any) {
-        print("logoutAction(_:)")
-        AppDelegate.storage.removeToken()
-        AppDelegate.shared.removeToken {
-                AppDelegate.reachfive().logout().onComplete { res in
-                    print("removed last shared token. \(res)")
-                }
-            }
-            .map { _ in
+        AppDelegate.reachfive().logout()
+            .onComplete { result in
+                AppDelegate.storage.clear(key: SecureStorage.authKey)
                 self.navigationController?.popViewController(animated: true)
             }
     }
