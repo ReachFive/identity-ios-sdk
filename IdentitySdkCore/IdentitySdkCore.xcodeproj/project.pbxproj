@@ -245,10 +245,10 @@
 		347FDB38229BE84500660687 = {
 			isa = PBXGroup;
 			children = (
-				347FDB44229BE84500660687 /* IdentitySdkCore */,
-				347FDB43229BE84500660687 /* Products */,
-				927803C28AA84ED9FC3390CF /* Pods */,
 				74FB8B4B94CB262BEC297380 /* Frameworks */,
+				347FDB44229BE84500660687 /* IdentitySdkCore */,
+				927803C28AA84ED9FC3390CF /* Pods */,
+				347FDB43229BE84500660687 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -727,7 +727,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
-				SKIP_INSTALL = YES;				
+				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

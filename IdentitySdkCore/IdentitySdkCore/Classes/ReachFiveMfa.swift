@@ -41,8 +41,8 @@ public enum MfaStartRegistrationResponse {
     case VerificationNeeded(_ continueRegistration: ContinueRegistration)
 }
 
+// TODO: Add an mfaStart with stepup argument label to distinguish from mfaStart registration
 public extension ReachFive {
-    
     func addMfaCredentialRegistrationCallback(mfaCredentialRegistrationCallback: @escaping MfaCredentialRegistrationCallback) {
         self.mfaCredentialRegistrationCallback = mfaCredentialRegistrationCallback
     }
@@ -69,9 +69,6 @@ public extension ReachFive {
          }
     }
     
-    /// Add an mfaStart with stepup argument label to distinguish from mfaStart registration    ///
-    
-    
     func mfaVerify(_ credentialType: CredentialType, code: String, authToken: AuthToken) -> Future<(), ReachFiveError> {
         switch credentialType {
         case .Email:
@@ -81,11 +78,6 @@ public extension ReachFive {
             let request = MfaVerifyPhoneRegistrationRequest(code)
             return reachFiveApi.verifyMfaPhoneRegistration(request, authToken: authToken)
         }
-    }
-    
-    internal func verifyMfaEmailGetRegistration(verificationCode: String, magicLink: String) -> Future<(), ReachFiveError> {
-        let request = MfaVerifyEmailRegistrationGetRequest(c: verificationCode, t: magicLink)
-        return reachFiveApi.verifyMfaEmailRegistrationGet(request)
     }
     
     internal func interceptVerifyMfaCredential(_ url: URL) {

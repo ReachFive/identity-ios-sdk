@@ -6,7 +6,8 @@ struct Field {
     var name: String
     var value: String?
 }
-
+// TODO:
+// - remove enroll MFA identifier in menu when the identifier has already been enrolled. Requires listMfaCredentials
 @available(iOS 14.0, *)
 class ProfileContentTableView: UITableView, UITableViewDataSource, UITableViewDelegate, ProfileRootController {
     var propertiesToDisplay: [Field] = []
@@ -61,13 +62,21 @@ class ProfileContentTableView: UITableView, UITableViewDataSource, UITableViewDe
         content.prefersSideBySideTextAndSecondaryText = true
         
         var textProperties = content.textProperties
-        textProperties.font = UIFont.boldSystemFont(ofSize: 10)
+        if let customFont = UIFont(name: "Roboto-Regular", size: 12) {
+            textProperties.font = UIFontMetrics(forTextStyle: .body).scaledFont(for:
+                customFont)
+            textProperties.adjustsFontForContentSizeCategory = true
+            textProperties.numberOfLines = 0
+        }
         textProperties.adjustsFontSizeToFitWidth = true
-        textProperties.adjustsFontForContentSizeCategory = true
         content.textProperties = textProperties
         
         var secondaryTextProperties = content.secondaryTextProperties
-        
+        if let secondaryFont = UIFont(name: "Roboto-Regular", size: 20) {
+            textProperties.font = UIFontMetrics(forTextStyle: .body).scaledFont(for: secondaryFont)
+            textProperties.adjustsFontForContentSizeCategory = true
+            textProperties.numberOfLines = 0
+        }
         secondaryTextProperties.font = UIFont.systemFont(ofSize: 16)
         secondaryTextProperties.adjustsFontSizeToFitWidth = true
         secondaryTextProperties.adjustsFontForContentSizeCategory = true
@@ -85,15 +94,16 @@ class ProfileContentTableView: UITableView, UITableViewDataSource, UITableViewDe
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { actions -> UIMenu? in
             let field = self.propertiesToDisplay[indexPath.row]
             var children: [UIMenuElement] = []
-            let copy = UIAction(title: "Copy", image: UIImage(systemName: "clipboard" )) { action in
-                UIPasteboard.general.string = field.value
-                let dialogMessage = UIAlertController(title: "Content copied", message: "copied", preferredStyle: .alert)
-                let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
-                dialogMessage.addAction(ok)
-                self.rootController?.present(dialogMessage, animated: true)
+            if(field.value != nil) {
+                let copy = UIAction(title: "Copy", image: UIImage(systemName: "clipboard" )) { action in
+                    UIPasteboard.general.string = field.value
+                    let dialogMessage = UIAlertController(title: "Content copied", message: "copied", preferredStyle: .alert)
+                    let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    dialogMessage.addAction(ok)
+                    self.rootController?.present(dialogMessage, animated: true)
+                }
+                children.append(copy)
             }
-            children.append(copy)
-            
             /// MFA registering button
             if (self.mfaRegistrationAvailable.contains(field.name)) {
                 switch field.name {

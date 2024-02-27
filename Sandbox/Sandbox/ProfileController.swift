@@ -2,8 +2,6 @@ import UIKit
 import IdentitySdkCore
 import BrightFutures
 
-import SwiftUI
-
 protocol ProfileRootController {
     var rootController: UIViewController? { get }
 }
@@ -39,7 +37,6 @@ class ProfileController: UIViewController {
     var profile: Profile = Profile.init() {
         didSet {
             profileTableView.update(profile: self.profile, authToken: self.authToken)
-            super.viewWillAppear(true)
         }
     }
     
@@ -55,6 +52,7 @@ class ProfileController: UIViewController {
                 case .success():
                     let alert = AppDelegate.createAlert(title: "Email mfa registering success", message: "Email mfa registering success")
                     self.present(alert, animated: true)
+                    self.fetchProfile()
                 case .failure(let error):
                     let alert = AppDelegate.createAlert(title: "Email mfa registering failed", message: "Error: \(error.message())")
                     self.present(alert, animated: true)
@@ -80,15 +78,21 @@ class ProfileController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         print("ProfileController.viewWillAppear")
+        
+        mfaButton.isHidden = false
+        editProfileButton.isHidden = false
+                
+        fetchProfile()
+    }
+    
+    func fetchProfile() {
+        print("ProfileController.fetchProfile")
+        
         authToken = AppDelegate.storage.get(key: SecureStorage.authKey)
         guard let authToken else {
             print("not logged in")
             return
         }
-        
-        mfaButton.isHidden = false
-        editProfileButton.isHidden = false
-                
         AppDelegate.reachfive()
             .getProfile(authToken: authToken)
             .onSuccess { profile in
