@@ -6,6 +6,7 @@ struct Field {
     var name: String
     var value: String?
 }
+
 // TODO:
 // - remove enroll MFA identifier in menu when the identifier has already been enrolled. Requires listMfaCredentials
 class ProfileContentTableView: UITableView, UITableViewDataSource, UITableViewDelegate, ProfileRootController {
@@ -24,7 +25,7 @@ class ProfileContentTableView: UITableView, UITableViewDataSource, UITableViewDe
         self.delegate = self
         self.dataSource = self
     }
-        
+    
     func update(profile: Profile, authToken: AuthToken?) {
         self.propertiesToDisplay = [
             Field(name: "Given Name", value: profile.givenName),
@@ -54,7 +55,7 @@ class ProfileContentTableView: UITableView, UITableViewDataSource, UITableViewDe
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDisplayCell", for: indexPath)
-
+        
         var content = cell.defaultContentConfiguration()
         content.text = self.propertiesToDisplay[indexPath.row].name
         content.secondaryText = self.propertiesToDisplay[indexPath.row].value
@@ -62,8 +63,7 @@ class ProfileContentTableView: UITableView, UITableViewDataSource, UITableViewDe
         
         var textProperties = content.textProperties
         if let customFont = UIFont(name: "system", size: 12) {
-            textProperties.font = UIFontMetrics(forTextStyle: .body).scaledFont(for:
-                customFont)
+            textProperties.font = UIFontMetrics(forTextStyle: .body).scaledFont(for: customFont)
             textProperties.adjustsFontForContentSizeCategory = true
             textProperties.numberOfLines = 0
         }
@@ -81,7 +81,7 @@ class ProfileContentTableView: UITableView, UITableViewDataSource, UITableViewDe
         secondaryTextProperties.adjustsFontForContentSizeCategory = true
         content.secondaryTextProperties = secondaryTextProperties
         cell.contentConfiguration = content
-                
+        
         return cell
     }
     
@@ -93,8 +93,8 @@ class ProfileContentTableView: UITableView, UITableViewDataSource, UITableViewDe
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { actions -> UIMenu? in
             let field = self.propertiesToDisplay[indexPath.row]
             var children: [UIMenuElement] = []
-            if(field.value != nil) {
-                let copy = UIAction(title: "Copy", image: UIImage(systemName: "clipboard" )) { action in
+            if (field.value != nil) {
+                let copy = UIAction(title: "Copy", image: UIImage(systemName: "clipboard")) { action in
                     UIPasteboard.general.string = field.value
                     let dialogMessage = UIAlertController(title: "Content copied", message: "copied", preferredStyle: .alert)
                     let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
@@ -136,7 +136,7 @@ class ProfileContentTableView: UITableView, UITableViewDataSource, UITableViewDe
                     }
                     children.append(phoneNumberUpdate)
                 }
-            }            
+            }
             return UIMenu(title: "More", children: children)
         }
     }

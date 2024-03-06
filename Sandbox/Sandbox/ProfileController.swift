@@ -39,7 +39,6 @@ class ProfileController: UIViewController {
         }
     }
     
-
     override func viewDidLoad() {
         print("ProfileController.viewDidLoad")
         super.viewDidLoad()
@@ -80,7 +79,7 @@ class ProfileController: UIViewController {
         
         mfaButton.isHidden = false
         editProfileButton.isHidden = false
-                
+        
         fetchProfile()
     }
     

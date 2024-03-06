@@ -12,7 +12,6 @@ class MfaController: UIViewController, ProfileRootController {
         return self
     }
     
-    
     @IBOutlet weak var phoneNumberMfaRegistration: UITextField!
     @IBOutlet weak var phoneMfaRegistrationCode: UITextField!
     
@@ -37,7 +36,7 @@ class MfaController: UIViewController, ProfileRootController {
         phoneNumberMfaRegistration.text = nil
         phoneMfaRegistrationCode.text = nil
     }
-  
+    
     @IBAction func startMfaPhoneRegistration(_ sender: UIButton) {
         print("MfaController.startMfaPhoneRegistration")
         guard let authToken else {
@@ -54,54 +53,51 @@ class MfaController: UIViewController, ProfileRootController {
     }
 }
 
-
-
- extension ProfileRootController {
+extension ProfileRootController {
     func doMfaPhoneRegistration(phoneNumber: String, authToken: AuthToken) {
-            print("MfaController.startMfaPhoneRegistration")
-            AppDelegate.reachfive()
-                .mfaStart(registering: .PhoneNumber(phoneNumber), authToken: authToken)
-                .onSuccess { resp in
-                    self.handleStartVerificationCode(resp, authToken: authToken)
-                }
-                .onFailure { error in
-                    let alert = AppDelegate.createAlert(title: "Start MFA phone Registration", message: "Error: \(error.message())")
-                    rootController?.present(alert, animated: true, completion: nil)
-                }
-        }
+        print("MfaController.startMfaPhoneRegistration")
+        AppDelegate.reachfive()
+            .mfaStart(registering: .PhoneNumber(phoneNumber), authToken: authToken)
+            .onSuccess { resp in
+                self.handleStartVerificationCode(resp, authToken: authToken)
+            }
+            .onFailure { error in
+                let alert = AppDelegate.createAlert(title: "Start MFA phone Registration", message: "Error: \(error.message())")
+                rootController?.present(alert, animated: true, completion: nil)
+            }
+    }
     
-        
     func doMfaEmailRegistration(authToken: AuthToken) {
-            print("MfaController.startEmailMfaRegistering")
-            AppDelegate.reachfive()
-                .mfaStart(registering: .Email(), authToken: authToken)
-                .onSuccess { resp in
-                    self.handleStartVerificationCode(resp, authToken: authToken)
-                }
-                .onFailure { error in
-                    let alert = AppDelegate.createAlert(title: "Start MFA email Registration", message: "Error: \(error.message())")
-                    rootController?.present(alert, animated: true, completion: nil)
-                }
-        }
-        
+        print("MfaController.startEmailMfaRegistering")
+        AppDelegate.reachfive()
+            .mfaStart(registering: .Email(), authToken: authToken)
+            .onSuccess { resp in
+                self.handleStartVerificationCode(resp, authToken: authToken)
+            }
+            .onFailure { error in
+                let alert = AppDelegate.createAlert(title: "Start MFA email Registration", message: "Error: \(error.message())")
+                rootController?.present(alert, animated: true, completion: nil)
+            }
+    }
+    
     private func handleStartVerificationCode(_ resp: MfaStartRegistrationResponse, authToken: AuthToken) {
         var alertController: UIAlertController
         switch resp {
         case let .Success(registeredCredential):
             alertController = AppDelegate.createAlert(title: "MFA \(registeredCredential.type) \(registeredCredential.friendlyName) enabled", message: "Success")
-
+        
         case let .VerificationNeeded(continueRegistration):
             let canal = switch continueRegistration.credentialType {
-            case .Email: "Email"
-            case .PhoneNumber: "SMS"
-            }
-
+        case .Email: "Email"
+        case .PhoneNumber: "SMS"
+        }
+            
             alertController = UIAlertController(title: "Verification Code", message: "Please enter the verification Code you got by \(canal)", preferredStyle: .alert)
             alertController.addTextField { (textField) in
                 textField.placeholder = "Verification code"
             }
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-
+            
             let submitVerificationCode = UIAlertAction(title: "submit", style: .default) { _ in
                 let verificationCode = alertController.textFields![0].text
                 guard let verificationCode else {

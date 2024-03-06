@@ -15,11 +15,11 @@ public class SdkConfig {
     public let mfaUri: String
     
     public init(domain: String, clientId: String, scheme: String? = nil, baseScheme: String? = nil, mfaUri: String? = nil) {
-          self.domain = domain
-          self.clientId = clientId
-          self.baseScheme = baseScheme ?? "reachfive-\(clientId)"
-          self.scheme = scheme ?? "\(self.baseScheme)://callback"
-          self.redirectUri = self.scheme
-          self.mfaUri = mfaUri ?? "\(self.baseScheme)://mfa"
-      }
+        self.domain = domain
+        self.clientId = clientId
+        self.baseScheme = baseScheme ?? "reachfive-\(clientId)"
+        self.scheme = scheme ?? "\(self.baseScheme)://callback"
+        self.redirectUri = self.scheme
+        self.mfaUri = mfaUri ?? "\(self.baseScheme)://mfa"
+    }
 }

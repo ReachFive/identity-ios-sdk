@@ -25,7 +25,6 @@ class PasskeyCredentialController: UIViewController {
     var clearTokenObserver: NSObjectProtocol?
     var setTokenObserver: NSObjectProtocol?
     
-    
     override func viewDidLoad() {
         print("PasskeyCredentialController.viewDidLoad")
         super.viewDidLoad()
@@ -75,17 +74,17 @@ class PasskeyCredentialController: UIViewController {
     private func reloadCredentials(authToken: AuthToken) {
         // Beware that a valid token for profile might not be fresh enough to retrieve the credentials
         AppDelegate.reachfive().listWebAuthnCredentials(authToken: authToken).onSuccess { listCredentials in
-            self.devices = listCredentials
-            
-            //TODO comprendre pourquoi on fait un async. En a-t-on vraiment besoin ?
-            DispatchQueue.main.async {
-                self.credentialTableview.reloadData()
+                self.devices = listCredentials
+                
+                //TODO comprendre pourquoi on fait un async. En a-t-on vraiment besoin ?
+                DispatchQueue.main.async {
+                    self.credentialTableview.reloadData()
+                }
             }
-        }
-        .onFailure { error in
-            self.devices = []
-            print("getCredentials error = \(error.message())")
-        }
+            .onFailure { error in
+                self.devices = []
+                print("getCredentials error = \(error.message())")
+            }
     }
     
     @available(iOS 16.0, *)
@@ -100,7 +99,7 @@ class PasskeyCredentialController: UIViewController {
             .getProfile(authToken: authToken)
             .onSuccess { profile in
                 let friendlyName = ProfileController.username(profile: profile)
-    
+                
                 let alert = UIAlertController(
                     title: "Register New Passkey",
                     message: "Name the passkey",

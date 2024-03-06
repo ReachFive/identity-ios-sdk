@@ -80,7 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("addPasswordlessCallback \(result)")
             NotificationCenter.default.post(name: .DidReceiveLoginCallback, object: nil, userInfo: ["result": result])
         }
-        reachfive.addMfaCredentialRegistrationCallback{ result in
+        reachfive.addMfaCredentialRegistrationCallback { result in
             print("addMfaCredentialRegistrationCallback \(result)")
             NotificationCenter.default.post(name: .DidReceiveMfaVerifyEmail, object: nil, userInfo: ["result": result])
         }

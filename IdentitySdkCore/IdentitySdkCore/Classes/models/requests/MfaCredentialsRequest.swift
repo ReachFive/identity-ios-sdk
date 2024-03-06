@@ -4,15 +4,16 @@ public class MfaStartEmailRegistrationRequest: Codable, DictionaryEncodable {
     public let redirectUrl: String?
     
     public init(redirectUrl: String? = nil) {
-            self.redirectUrl = redirectUrl
-        }
+        self.redirectUrl = redirectUrl
+    }
 }
 
 public class MfaStartPhoneRegistrationRequest: Codable, DictionaryEncodable {
     public let phoneNumber: String
+    
     public init(phoneNumber: String) {
-            self.phoneNumber = phoneNumber
-        }
+        self.phoneNumber = phoneNumber
+    }
 }
 
 public class MfaVerifyEmailRegistrationPostRequest: Codable, DictionaryEncodable {

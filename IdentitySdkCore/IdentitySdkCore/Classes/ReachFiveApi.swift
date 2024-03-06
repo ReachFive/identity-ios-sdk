@@ -334,7 +334,7 @@ public class ReachFiveApi {
                 parameters: mfaVerifyEmailRegistrationRequest.dictionary(),
                 encoding: JSONEncoding.default,
                 headers: tokenHeader(authToken)
-                )
+            )
             .validate(contentType: ["application/json"])
             .responseJson(decoder: decoder)
     }
@@ -351,7 +351,6 @@ public class ReachFiveApi {
             )
             .validate(contentType: ["application/json"])
             .responseJson(decoder: decoder)
-
     }
     
     public func verifyMfaPhoneRegistration(
@@ -449,7 +448,7 @@ public class ReachFiveApi {
             .validate(contentType: ["application/json"])
             .responseJson(type: RegistrationOptions.self, decoder: decoder)
     }
-
+    
     public func signupWithWebAuthn(webauthnSignupCredential: WebauthnSignupCredential, originR5: String? = nil) -> Future<AuthenticationToken, ReachFiveError> {
         AF
             .request(
