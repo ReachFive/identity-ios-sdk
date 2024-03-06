@@ -9,7 +9,7 @@ struct Field {
 
 // TODO:
 // - remove enroll MFA identifier in menu when the identifier has already been enrolled. Requires listMfaCredentials
-class ProfileContentTableView: UITableView, UITableViewDataSource, UITableViewDelegate, ProfileRootController {
+class ProfileContentTableView: UITableView, ProfileRootController {
     var propertiesToDisplay: [Field] = []
     
     var authToken: AuthToken? = nil
@@ -28,11 +28,11 @@ class ProfileContentTableView: UITableView, UITableViewDataSource, UITableViewDe
     
     func update(profile: Profile, authToken: AuthToken?) {
         self.propertiesToDisplay = [
-            Field(name: "Given Name", value: profile.givenName),
-            Field(name: "Family Name", value: profile.familyName),
             Field(name: "Email", value: profile.email?.appending(profile.emailVerified == true ? " ✔︎" : " ✘")),
             Field(name: "Phone Number", value: profile.phoneNumber?.appending(profile.phoneNumberVerified == true ? " ✔︎" : " ✘")),
             Field(name: "Custom Identifier", value: profile.customIdentifier),
+            Field(name: "Given Name", value: profile.givenName),
+            Field(name: "Family Name", value: profile.familyName),
             Field(name: "Last logged In", value: self.format(date: profile.loginSummary?.lastLogin ?? 0)),
             Field(name: "Method", value: profile.loginSummary?.lastProvider)
         ]
@@ -48,7 +48,15 @@ class ProfileContentTableView: UITableView, UITableViewDataSource, UITableViewDe
         dateFormatter.locale = Locale(identifier: "en_GB")
         return dateFormatter.string(from: lastLogin)
     }
-    
+}
+
+extension ProfileContentTableView: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+extension ProfileContentTableView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return propertiesToDisplay.count
     }
@@ -90,20 +98,17 @@ class ProfileContentTableView: UITableView, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let field = self.propertiesToDisplay[indexPath.row]
+        guard let valeur = field.value else {
+            return nil
+        }
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { actions -> UIMenu? in
-            let field = self.propertiesToDisplay[indexPath.row]
             var children: [UIMenuElement] = []
-            if (field.value != nil) {
-                let copy = UIAction(title: "Copy", image: UIImage(systemName: "clipboard")) { action in
-                    UIPasteboard.general.string = field.value
-                    let dialogMessage = UIAlertController(title: "Content copied", message: "copied", preferredStyle: .alert)
-                    let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
-                    dialogMessage.addAction(ok)
-                    self.rootController?.present(dialogMessage, animated: true)
-                }
-                children.append(copy)
+            let copy = UIAction(title: "Copy", image: UIImage(systemName: "clipboard")) { action in
+                UIPasteboard.general.string = valeur
             }
-            /// MFA registering button
+            children.append(copy)
+            // MFA registering button
             if (self.mfaRegistrationAvailable.contains(field.name)) {
                 switch field.name {
                 case "Email":
@@ -121,23 +126,19 @@ class ProfileContentTableView: UITableView, UITableViewDataSource, UITableViewDe
                             print("not logged in")
                             return
                         }
-                        guard let phoneNumber = field.value else {
-                            print("Phone number cannot be empty")
-                            return
-                        }
-                        self.doMfaPhoneRegistration(phoneNumber: phoneNumber, authToken: authToken)
+                        self.doMfaPhoneRegistration(phoneNumber: valeur, authToken: authToken)
                     }
                     
                     children.append(mfaRegister)
                     
-                    /// Update phone number button
+                    // Update phone number button
                     let phoneNumberUpdate = UIAction(title: "Update", image: UIImage(systemName: "phone.badge.plus.fill")) { action in
                         self.updatePhoneNumber(authToken: self.authToken)
                     }
                     children.append(phoneNumberUpdate)
                 }
             }
-            return UIMenu(title: "More", children: children)
+            return UIMenu(title: "Actions", children: children)
         }
     }
 }
