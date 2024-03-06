@@ -63,7 +63,7 @@ extension ProfileRootController {
             }
             .onFailure { error in
                 let alert = AppDelegate.createAlert(title: "Start MFA phone Registration", message: "Error: \(error.message())")
-                rootController?.present(alert, animated: true, completion: nil)
+                rootController?.present(alert, animated: true)
             }
     }
     
@@ -76,7 +76,7 @@ extension ProfileRootController {
             }
             .onFailure { error in
                 let alert = AppDelegate.createAlert(title: "Start MFA email Registration", message: "Error: \(error.message())")
-                rootController?.present(alert, animated: true, completion: nil)
+                rootController?.present(alert, animated: true)
             }
     }
     
@@ -124,6 +124,6 @@ extension ProfileRootController {
             alertController.addAction(cancelAction)
             alertController.addAction(submitVerificationCode)
         }
-        rootController?.present(alertController, animated: true, completion: nil)
+        rootController?.present(alertController, animated: true)
     }
 }

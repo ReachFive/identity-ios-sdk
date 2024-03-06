@@ -21,7 +21,7 @@ class NativePasswordController: UIViewController {
         fut.onSuccess(callback: goToProfile)
             .onFailure { error in
                 let alert = AppDelegate.createAlert(title: "Login", message: "Error: \(error.message())")
-                self.present(alert, animated: true, completion: nil)
+                self.present(alert, animated: true)
             }
     }
     
@@ -38,7 +38,7 @@ class NativePasswordController: UIViewController {
                 case .AuthCanceled: return
                 default:
                     let alert = AppDelegate.createAlert(title: "Login", message: "Error: \(error.message())")
-                    self.present(alert, animated: true, completion: nil)
+                    self.present(alert, animated: true)
                 }
             }
     }

@@ -160,7 +160,7 @@ extension ProfileRootController {
         }
         alertController.addAction(cancelAction)
         alertController.addAction(submitPhoneNumber)
-        rootController?.present(alertController, animated: true, completion: nil)
+        rootController?.present(alertController, animated: true)
     }
     
     private func handleUpdate(phoneNumber: String, authToken: AuthToken?) {
@@ -169,12 +169,12 @@ extension ProfileRootController {
                 .updatePhoneNumber(authToken: authToken, phoneNumber: phoneNumber)
                 .onSuccess { profile in
                     let alert = AppDelegate.createAlert(title: "Update", message: "Update Success")
-                    rootController?.present(alert, animated: true, completion: nil)
+                    rootController?.present(alert, animated: true)
                     rootController?.viewWillAppear(true)
                 }
                 .onFailure { error in
                     let alert = AppDelegate.createAlert(title: "Update", message: "Update Error: \(error.message())")
-                    rootController?.present(alert, animated: true, completion: nil)
+                    rootController?.present(alert, animated: true)
                 }
         }
     }

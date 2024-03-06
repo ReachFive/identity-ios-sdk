@@ -107,7 +107,7 @@ class DemoController: UIViewController {
                     case .AuthCanceled: goToSignup()
                     default:
                         let alert = AppDelegate.createAlert(title: "Signup", message: "Error: \(error.message())")
-                        self.present(alert, animated: true, completion: nil)
+                        self.present(alert, animated: true)
                     }
                 }
         } else {
@@ -152,7 +152,7 @@ class DemoController: UIViewController {
                         #endif
                     default:
                         let alert = AppDelegate.createAlert(title: "Login", message: "Error: \(error.message())")
-                        self.present(alert, animated: true, completion: nil)
+                        self.present(alert, animated: true)
                     }
                 }
         }
@@ -171,7 +171,7 @@ class DemoController: UIViewController {
         fut.onSuccess(callback: goToProfile)
             .onFailure { error in
                 let alert = AppDelegate.createAlert(title: "Login", message: "Error: \(error.message())")
-                self.present(alert, animated: true, completion: nil)
+                self.present(alert, animated: true)
             }
     }
 }

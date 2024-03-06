@@ -28,7 +28,7 @@ class SignupController: UIViewController {
             .onSuccess(callback: goToProfile)
             .onFailure { error in
                 let alert = AppDelegate.createAlert(title: "Signup", message: "Error: \(error.message())")
-                self.present(alert, animated: true, completion: nil)
+                self.present(alert, animated: true)
             }
     }
 }
