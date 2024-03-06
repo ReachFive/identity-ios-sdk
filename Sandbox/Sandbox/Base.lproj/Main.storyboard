@@ -269,7 +269,7 @@
                                         <rect key="frame" x="0.0" y="50" width="432" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HyK-Am-JUA" id="VRc-NK-UUF">
-                                            <rect key="frame" x="0.0" y="0.0" width="432" height="43.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="432" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -509,70 +509,70 @@
                         <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="5Lp-Pi-u4w">
-                                <rect key="frame" x="0.0" y="103" width="430" height="746"/>
-                                <subviews>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="bMR-fb-yg6" customClass="ProfileContentTableView" customModule="Sandbox" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="430" height="603.66666666666663"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ToDisplayCell" id="IEz-c2-YxS" customClass="ToDisplayCell" customModule="Sandbox" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="50" width="430" height="43.666667938232422"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IEz-c2-YxS" id="ugX-BO-dA6">
-                                                    <rect key="frame" x="0.0" y="0.0" width="430" height="43.666667938232422"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                </tableViewCellContentView>
-                                            </tableViewCell>
-                                        </prototypes>
-                                    </tableView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="rdv-lL-dZj">
-                                        <rect key="frame" x="0.0" y="603.66666666666663" width="430" height="39.333333333333371"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="21"/>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" title="Log out"/>
-                                        <buttonConfiguration key="configuration" style="filled" title="Log out">
-                                            <fontDescription key="titleFontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="21"/>
-                                        </buttonConfiguration>
-                                        <connections>
-                                            <action selector="logoutAction:" destination="85A-IF-9ED" eventType="touchUpInside" id="eaC-wu-1hp"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="60P-2D-hb5">
-                                        <rect key="frame" x="0.0" y="643" width="430" height="34.333333333333371"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Edit"/>
-                                        <connections>
-                                            <segue destination="ipV-ei-Nra" kind="show" id="VRD-3a-ISv"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kDa-mS-HRu">
-                                        <rect key="frame" x="0.0" y="677.33333333333337" width="430" height="34.333333333333371"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Passkeys"/>
-                                        <connections>
-                                            <segue destination="dix-k4-nE0" kind="show" id="fHe-aP-gJx"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kej-VG-Gqk">
-                                        <rect key="frame" x="0.0" y="711.66666666666663" width="430" height="34.333333333333371"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="MFA"/>
-                                        <connections>
-                                            <segue destination="oW2-ti-e1U" kind="show" id="Ylf-cg-PIW"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </stackView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="bMR-fb-yg6" customClass="ProfileContentTableView" customModule="Sandbox" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="103" width="430" height="400"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="400" id="fTh-SD-dpK"/>
+                                </constraints>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ToDisplayCell" id="IEz-c2-YxS" customClass="ToDisplayCell" customModule="Sandbox" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="430" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IEz-c2-YxS" id="ugX-BO-dA6">
+                                            <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="60P-2D-hb5">
+                                <rect key="frame" x="162" y="503" width="106" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="tinted" title="Edit Profile"/>
+                                <connections>
+                                    <segue destination="ipV-ei-Nra" kind="show" id="VRD-3a-ISv"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kDa-mS-HRu">
+                                <rect key="frame" x="135.33333333333337" y="553" width="159.66666666666663" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="tinted" title="Manage passkeys"/>
+                                <connections>
+                                    <segue destination="dix-k4-nE0" kind="show" id="fHe-aP-gJx"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kej-VG-Gqk">
+                                <rect key="frame" x="121.66666666666667" y="603" width="186.66666666666663" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="tinted" title="Manage MFA devices"/>
+                                <connections>
+                                    <segue destination="oW2-ti-e1U" kind="show" id="Ylf-cg-PIW"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lsY-vN-hQ5">
+                                <rect key="frame" x="174" y="653" width="82" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Log out"/>
+                                <connections>
+                                    <action selector="logoutAction:" destination="85A-IF-9ED" eventType="touchUpInside" id="eaC-wu-1hp"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ss7-L2-u8Z"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="5Lp-Pi-u4w" firstAttribute="leading" secondItem="ss7-L2-u8Z" secondAttribute="leading" id="C2C-8I-XXP"/>
-                            <constraint firstItem="ss7-L2-u8Z" firstAttribute="trailing" secondItem="5Lp-Pi-u4w" secondAttribute="trailing" id="MH2-ht-xPI"/>
-                            <constraint firstItem="5Lp-Pi-u4w" firstAttribute="top" secondItem="ss7-L2-u8Z" secondAttribute="top" id="VG6-1c-Gjp"/>
-                            <constraint firstItem="ss7-L2-u8Z" firstAttribute="bottom" secondItem="5Lp-Pi-u4w" secondAttribute="bottom" id="wnB-HO-gf8"/>
+                            <constraint firstItem="60P-2D-hb5" firstAttribute="centerX" secondItem="ss7-L2-u8Z" secondAttribute="centerX" id="0MD-q9-pzy"/>
+                            <constraint firstItem="ss7-L2-u8Z" firstAttribute="trailing" secondItem="bMR-fb-yg6" secondAttribute="trailing" id="CBa-WX-6C0"/>
+                            <constraint firstItem="lsY-vN-hQ5" firstAttribute="centerX" secondItem="ss7-L2-u8Z" secondAttribute="centerX" id="HRI-Ay-ObQ"/>
+                            <constraint firstItem="lsY-vN-hQ5" firstAttribute="top" secondItem="kej-VG-Gqk" secondAttribute="bottom" constant="15" id="ItN-qZ-Jkn"/>
+                            <constraint firstItem="bMR-fb-yg6" firstAttribute="leading" secondItem="ss7-L2-u8Z" secondAttribute="leading" id="Sfd-DR-xxK"/>
+                            <constraint firstItem="60P-2D-hb5" firstAttribute="top" secondItem="bMR-fb-yg6" secondAttribute="bottom" id="bpr-7o-Fg7"/>
+                            <constraint firstItem="kej-VG-Gqk" firstAttribute="centerX" secondItem="ss7-L2-u8Z" secondAttribute="centerX" id="dkk-bv-Vkh"/>
+                            <constraint firstItem="kej-VG-Gqk" firstAttribute="top" secondItem="kDa-mS-HRu" secondAttribute="bottom" constant="15" id="fSx-EM-xoy"/>
+                            <constraint firstItem="bMR-fb-yg6" firstAttribute="top" secondItem="ss7-L2-u8Z" secondAttribute="top" id="pGH-Bp-xc0"/>
+                            <constraint firstItem="kDa-mS-HRu" firstAttribute="centerX" secondItem="ss7-L2-u8Z" secondAttribute="centerX" id="qLp-PR-Akq"/>
+                            <constraint firstItem="kDa-mS-HRu" firstAttribute="top" secondItem="60P-2D-hb5" secondAttribute="bottom" constant="15" id="t61-r5-r47"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Profile" image="person.crop.circle.badge.xmark" catalog="system" selectedImage="person.crop.circle.fill.badge.xmark" id="ahA-UT-aB7"/>
@@ -939,11 +939,11 @@
                                         <rect key="frame" x="0.0" y="886.00001525878906" width="430" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="j4J-QU-Hz3" id="Y0w-Hy-f0G">
-                                            <rect key="frame" x="0.0" y="0.0" width="399.66666666666669" height="43.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="411.66666666666669" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Login with passwordless" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="p0b-ch-HOO">
-                                                    <rect key="frame" x="20" y="0.0" width="371.66666666666669" height="23.5"/>
+                                                    <rect key="frame" x="8" y="0.0" width="395.66666666666669" height="43.666667938232422"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -959,11 +959,11 @@
                                         <rect key="frame" x="0.0" y="929.66668319702148" width="430" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pu5-LB-WX8" id="nqJ-30-4Ye">
-                                            <rect key="frame" x="0.0" y="0.0" width="399.66666666666669" height="43.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="411.66666666666669" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Login with providers" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tqo-VF-eV4">
-                                                    <rect key="frame" x="20" y="0.0" width="371.66666666666669" height="23.5"/>
+                                                    <rect key="frame" x="8" y="0.0" width="395.66666666666669" height="43.666667938232422"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -979,11 +979,11 @@
                                         <rect key="frame" x="0.0" y="973.33335113525391" width="430" height="23.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8ne-t0-YIZ" id="9tn-vu-4LS">
-                                            <rect key="frame" x="0.0" y="0.0" width="800" height="23.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="430" height="23.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" text="Login with refresh token" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Xwt-4z-xho">
-                                                    <rect key="frame" x="20" y="0.0" width="390" height="23.5"/>
+                                                    <rect key="frame" x="8" y="0.0" width="414" height="23.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
