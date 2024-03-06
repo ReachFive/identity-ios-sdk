@@ -3,43 +3,15 @@ import UIKit
 import IdentitySdkCore
 
 struct Field {
-    var name: String
-    var value: String?
+    let name: String
+    let value: String?
 }
 
 // TODO:
 // - remove enroll MFA identifier in menu when the identifier has already been enrolled. Requires listMfaCredentials
-class ProfileContentTableView: UITableView, ProfileRootController {
-    var propertiesToDisplay: [Field] = []
+extension ProfileController {
     
-    var authToken: AuthToken? = nil
-    
-    let mfaRegistrationAvailable = ["Email", "Phone Number"]
-    
-    var rootController: UIViewController? {
-        return self.window?.rootViewController
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        self.delegate = self
-        self.dataSource = self
-    }
-    
-    func update(profile: Profile, authToken: AuthToken?) {
-        self.propertiesToDisplay = [
-            Field(name: "Email", value: profile.email?.appending(profile.emailVerified == true ? " ✔︎" : " ✘")),
-            Field(name: "Phone Number", value: profile.phoneNumber?.appending(profile.phoneNumberVerified == true ? " ✔︎" : " ✘")),
-            Field(name: "Custom Identifier", value: profile.customIdentifier),
-            Field(name: "Given Name", value: profile.givenName),
-            Field(name: "Family Name", value: profile.familyName),
-            Field(name: "Last logged In", value: self.format(date: profile.loginSummary?.lastLogin ?? 0)),
-            Field(name: "Method", value: profile.loginSummary?.lastProvider)
-        ]
-        self.authToken = authToken
-    }
-    
-    private func format(date: Int) -> String {
+    func format(date: Int) -> String {
         let lastLogin = Date(timeIntervalSince1970: TimeInterval(date / 1000))
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
@@ -48,20 +20,47 @@ class ProfileContentTableView: UITableView, ProfileRootController {
         dateFormatter.locale = Locale(identifier: "en_GB")
         return dateFormatter.string(from: lastLogin)
     }
+    
+    func updatePhoneNumber(authToken: AuthToken) {
+        let alert = UIAlertController(title: "New Phone Number", message: "Please enter the new phone number", preferredStyle: .alert)
+        alert.addTextField { textField in
+            textField.placeholder = "Updated phone number"
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let submitPhoneNumber = UIAlertAction(title: "submit", style: .default) { _ in
+            guard let phoneNumber = alert.textFields?[0].text else {
+                //TODO alerte
+                print("Phone number cannot be empty")
+                return
+            }
+            AppDelegate.reachfive()
+                .updatePhoneNumber(authToken: authToken, phoneNumber: phoneNumber)
+                .onSuccess { profile in
+                    self.present(AppDelegate.createAlert(title: "Update", message: "Update Success"), animated: true)
+                }
+                .onFailure { error in
+                    self.present(AppDelegate.createAlert(title: "Update", message: "Update Error: \(error.message())"), animated: true)
+                }
+        }
+        alert.addAction(cancelAction)
+        alert.addAction(submitPhoneNumber)
+        present(alert, animated: true)
+    }
 }
 
-extension ProfileContentTableView: UITableViewDelegate {
+extension ProfileController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
-extension ProfileContentTableView: UITableViewDataSource {
+extension ProfileController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return propertiesToDisplay.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        print("tableView:cellForRowAt:\(indexPath)")
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDisplayCell", for: indexPath)
         
         var content = cell.defaultContentConfiguration()
@@ -93,10 +92,6 @@ extension ProfileContentTableView: UITableViewDataSource {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, performPrimaryActionForRowAt indexPath: IndexPath) {
-        UIPasteboard.general.string = propertiesToDisplay[indexPath.row].value
-    }
-    
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         let field = self.propertiesToDisplay[indexPath.row]
         guard let valeur = field.value else {
@@ -117,7 +112,7 @@ extension ProfileContentTableView: UITableViewDataSource {
                             print("not logged in")
                             return
                         }
-                        self.doMfaEmailRegistration(authToken: authToken)
+//                        self.doMfaEmailRegistration(authToken: authToken)
                     }
                     children.append(mfaRegister)
                 default:
@@ -126,14 +121,14 @@ extension ProfileContentTableView: UITableViewDataSource {
                             print("not logged in")
                             return
                         }
-                        self.doMfaPhoneRegistration(phoneNumber: valeur, authToken: authToken)
+//                        self.doMfaPhoneRegistration(phoneNumber: valeur, authToken: authToken)
                     }
                     
                     children.append(mfaRegister)
                     
                     // Update phone number button
                     let phoneNumberUpdate = UIAction(title: "Update", image: UIImage(systemName: "phone.badge.plus.fill")) { action in
-                        self.updatePhoneNumber(authToken: self.authToken)
+                        self.updatePhoneNumber(authToken: self.authToken!)
                     }
                     children.append(phoneNumberUpdate)
                 }

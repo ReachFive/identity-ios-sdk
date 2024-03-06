@@ -49,11 +49,11 @@ class MfaController: UIViewController, ProfileRootController {
             return
         }
         
-        doMfaPhoneRegistration(phoneNumber: phoneNumber, authToken: authToken)
+//        doMfaPhoneRegistration(phoneNumber: phoneNumber, authToken: authToken)
     }
 }
 
-extension ProfileRootController {
+extension ProfileController {
     func doMfaPhoneRegistration(phoneNumber: String, authToken: AuthToken) {
         print("MfaController.startMfaPhoneRegistration")
         AppDelegate.reachfive()
@@ -63,7 +63,7 @@ extension ProfileRootController {
             }
             .onFailure { error in
                 let alert = AppDelegate.createAlert(title: "Start MFA phone Registration", message: "Error: \(error.message())")
-                rootController?.present(alert, animated: true)
+                self.present(alert, animated: true)
             }
     }
     
@@ -76,38 +76,39 @@ extension ProfileRootController {
             }
             .onFailure { error in
                 let alert = AppDelegate.createAlert(title: "Start MFA email Registration", message: "Error: \(error.message())")
-                rootController?.present(alert, animated: true)
+                self.present(alert, animated: true)
             }
     }
     
     private func handleStartVerificationCode(_ resp: MfaStartRegistrationResponse, authToken: AuthToken) {
-        var alertController: UIAlertController
+        var alert: UIAlertController
         switch resp {
         case let .Success(registeredCredential):
-            alertController = AppDelegate.createAlert(title: "MFA \(registeredCredential.type) \(registeredCredential.friendlyName) enabled", message: "Success")
+            alert = AppDelegate.createAlert(title: "MFA \(registeredCredential.type) \(registeredCredential.friendlyName) enabled", message: "Success")
         
         case let .VerificationNeeded(continueRegistration):
-            let canal = switch continueRegistration.credentialType {
-        case .Email: "Email"
-        case .PhoneNumber: "SMS"
-        }
+            let canal =
+            switch continueRegistration.credentialType {
+            case .Email: "Email"
+            case .PhoneNumber: "SMS"
+            }
             
-            alertController = UIAlertController(title: "Verification Code", message: "Please enter the verification Code you got by \(canal)", preferredStyle: .alert)
-            alertController.addTextField { (textField) in
+            alert = UIAlertController(title: "Verification Code", message: "Please enter the verification Code you got by \(canal)", preferredStyle: .alert)
+            alert.addTextField { (textField) in
                 textField.placeholder = "Verification code"
             }
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
             
-            let submitVerificationCode = UIAlertAction(title: "submit", style: .default) { _ in
-                let verificationCode = alertController.textFields![0].text
-                guard let verificationCode else {
+            let submitVerificationCode = UIAlertAction(title: "Submit", style: .default) { _ in
+                guard let verificationCode = alert.textFields?[0].text else {
+                    //TODO alerte
                     print("verification code cannot be empty")
                     return
                 }
                 continueRegistration.verify(code: verificationCode, freshAuthToken: authToken)
                     .onSuccess { succ in
                         let alert = AppDelegate.createAlert(title: "Verify MFA \(continueRegistration.credentialType) registration", message: "Success")
-                        rootController?.present(alert, animated: true)
+                        self.present(alert, animated: true)
                     }
                     .onFailure { error in
                         let toBeRegistered =
@@ -118,12 +119,13 @@ extension ProfileRootController {
                             "email"
                         }
                         let alert = AppDelegate.createAlert(title: "MFA \(toBeRegistered) failure", message: "Error: \(error.message())")
-                        rootController?.present(alert, animated: true)
+                        self.present(alert, animated: true)
                     }
             }
-            alertController.addAction(cancelAction)
-            alertController.addAction(submitVerificationCode)
+            alert.addAction(cancelAction)
+            alert.addAction(submitVerificationCode)
+            alert.preferredAction = submitVerificationCode
         }
-        rootController?.present(alertController, animated: true)
+        present(alert, animated: true)
     }
 }

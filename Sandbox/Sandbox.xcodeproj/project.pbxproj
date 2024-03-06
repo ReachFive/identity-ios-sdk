@@ -114,10 +114,13 @@
 				3417FF6F22FB11CD0009EC84 /* LoginWithPasswordController.swift */,
 				341731FF229D6B6400681CFD /* LoginWithProvidersController.swift */,
 				2A33F30A2A016B1D00D05EB1 /* LoginWKWebviewController.swift */,
+				99B0FBD42B6A782D00A3E490 /* MfaController.swift */,
 				2A1079E829721DAC00431655 /* NativePasswordController.swift */,
 				2A0757F8296F49B10072869F /* PasskeyAutoFillController.swift */,
+				99FF44312B72884800DDCAAE /* PasskeyCredentialController.swift */,
 				2A0757FA296F69E30072869F /* PasskeyNonDiscoverableController.swift */,
 				3417FF6D22FB06E50009EC84 /* PasswordlessController.swift */,
+				99E4472E2B863AB300EC7559 /* ProfileContentTableView.swift */,
 				3414A7CC22DDD39C00CF393A /* ProfileController.swift */,
 				2A52203A297F187D00815558 /* SandboxTabBarController.swift */,
 				EA91A294C5DD405D6A38ADCC /* SecureStorage.swift */,
@@ -127,9 +130,6 @@
 				34173204229D6B6400681CFD /* Assets.xcassets */,
 				34173206229D6B6400681CFD /* LaunchScreen.storyboard */,
 				34173201229D6B6400681CFD /* Main.storyboard */,
-				99B0FBD42B6A782D00A3E490 /* MfaController.swift */,
-				99FF44312B72884800DDCAAE /* PasskeyCredentialController.swift */,
-				99E4472E2B863AB300EC7559 /* ProfileContentTableView.swift */,
 			);
 			path = Sandbox;
 			sourceTree = "<group>";

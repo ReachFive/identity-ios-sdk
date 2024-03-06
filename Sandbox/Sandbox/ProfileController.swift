@@ -20,24 +20,40 @@ protocol ProfileRootController {
 //      - faire en sorte que les textes (nom, prénom...) soient copiable
 class ProfileController: UIViewController {
     var authToken: AuthToken?
+    var profile: Profile? = nil {
+        didSet {
+            guard let profile else {
+                propertiesToDisplay = []
+                return
+            }
+            self.propertiesToDisplay = [
+                Field(name: "Email", value: profile.email?.appending(profile.emailVerified == true ? " ✔︎" : " ✘")),
+                Field(name: "Phone Number", value: profile.phoneNumber?.appending(profile.phoneNumberVerified == true ? " ✔︎" : " ✘")),
+                Field(name: "Custom Identifier", value: profile.customIdentifier),
+                Field(name: "Given Name", value: profile.givenName),
+                Field(name: "Family Name", value: profile.familyName),
+                Field(name: "Last logged In", value: self.format(date: profile.loginSummary?.lastLogin ?? 0)),
+                Field(name: "Method", value: profile.loginSummary?.lastProvider)
+            ]
+        }
+    }
     
     var clearTokenObserver: NSObjectProtocol?
     var setTokenObserver: NSObjectProtocol?
     
     var emailVerifyNotification: NSObjectProtocol?
+    
+    var propertiesToDisplay: [Field] = []
+    let mfaRegistrationAvailable = ["Email", "Phone Number"]
+    
     @IBOutlet weak var otherOptions: UITableView!
     
     @IBOutlet weak var profileTabBarItem: UITabBarItem!
-    @IBOutlet weak var profileTableView: ProfileContentTableView!
+    @IBOutlet var profileData: UITableView!
     @IBOutlet weak var mfaButton: UIButton!
     @IBOutlet weak var passkeyButton: UIButton!
     @IBOutlet weak var editProfileButton: UIButton!
     
-    var profile: Profile = Profile.init() {
-        didSet {
-            profileTableView.update(profile: self.profile, authToken: self.authToken)
-        }
-    }
     
     override func viewDidLoad() {
         print("ProfileController.viewDidLoad")
@@ -72,6 +88,9 @@ class ProfileController: UIViewController {
             profileTabBarItem.image = SandboxTabBarController.tokenPresent
             profileTabBarItem.selectedImage = profileTabBarItem.image
         }
+        
+        self.profileData.delegate = self
+        self.profileData.dataSource = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -95,7 +114,7 @@ class ProfileController: UIViewController {
             .getProfile(authToken: authToken)
             .onSuccess { profile in
                 self.profile = profile
-                self.profileTableView.reloadData()
+                self.profileData.reloadData()
             }
             .onFailure { error in
                 // the token is probably expired, but it is still possible that it can be refreshed
@@ -140,43 +159,4 @@ class ProfileController: UIViewController {
         }
         return username
     }
-}
-
-extension ProfileRootController {
-    func updatePhoneNumber(authToken: AuthToken?) {
-        var alertController: UIAlertController
-        alertController = UIAlertController(title: "New Phone Number", message: "Please enter the new phone number", preferredStyle: .alert)
-        alertController.addTextField { textField in
-            textField.placeholder = "Updated phone number"
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        let submitPhoneNumber = UIAlertAction(title: "submit", style: .default) { _ in
-            let phoneNumber = alertController.textFields![0].text
-            guard let phoneNumber else {
-                print("Phone number cannot be empty")
-                return
-            }
-            handleUpdate(phoneNumber: phoneNumber, authToken: authToken)
-        }
-        alertController.addAction(cancelAction)
-        alertController.addAction(submitPhoneNumber)
-        rootController?.present(alertController, animated: true)
-    }
-    
-    private func handleUpdate(phoneNumber: String, authToken: AuthToken?) {
-        if let authToken {
-            AppDelegate.reachfive()
-                .updatePhoneNumber(authToken: authToken, phoneNumber: phoneNumber)
-                .onSuccess { profile in
-                    let alert = AppDelegate.createAlert(title: "Update", message: "Update Success")
-                    rootController?.present(alert, animated: true)
-                    rootController?.viewWillAppear(true)
-                }
-                .onFailure { error in
-                    let alert = AppDelegate.createAlert(title: "Update", message: "Update Error: \(error.message())")
-                    rootController?.present(alert, animated: true)
-                }
-        }
-    }
-    
 }
