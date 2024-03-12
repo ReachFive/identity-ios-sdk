@@ -151,6 +151,7 @@ class ProfileController: UIViewController {
         passkeyButton.isHidden = true
         mfaButton.isHidden = true
         editProfileButton.isHidden = true
+        self.profileData.reloadData()
     }
     
     @IBAction func logoutAction(_ sender: Any) {
