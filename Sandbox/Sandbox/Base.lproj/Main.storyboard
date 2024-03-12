@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Gi6-Pt-F8W">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Gi6-Pt-F8W">
     <device id="retina6_72" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -269,7 +269,7 @@
                                         <rect key="frame" x="0.0" y="50" width="432" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HyK-Am-JUA" id="VRc-NK-UUF">
-                                            <rect key="frame" x="0.0" y="0.0" width="432" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="432" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -354,7 +354,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mM7-to-ugn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-462" y="864"/>
+            <point key="canvasLocation" x="-318" y="864"/>
         </scene>
         <!--Signup with password-->
         <scene sceneID="H6o-jf-Xhj">
@@ -499,7 +499,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NaA-mY-R45" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1139" y="864"/>
+            <point key="canvasLocation" x="-1066" y="864"/>
         </scene>
         <!--Profile-->
         <scene sceneID="gX4-tg-Rcc">
@@ -547,7 +547,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="tinted" title="Manage MFA devices"/>
                                 <connections>
-                                    <segue destination="oW2-ti-e1U" kind="show" id="Ylf-cg-PIW"/>
+                                    <segue destination="oW2-ti-e1U" kind="show" id="3Fa-Qc-evo"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lsY-vN-hQ5">
@@ -1507,7 +1507,7 @@
                             <constraint firstItem="B7L-SJ-6e3" firstAttribute="top" secondItem="ljz-w1-m4R" secondAttribute="bottom" constant="37" id="mMg-Ns-pPp"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="hhr-Mh-rkc"/>
+                    <navigationItem key="navigationItem" title="Passkeys" id="hhr-Mh-rkc"/>
                     <connections>
                         <outlet property="credentialTableview" destination="J3t-FI-s0I" id="Nk8-TR-07Q"/>
                         <outlet property="listPasskeyLabel" destination="B7L-SJ-6e3" id="7E6-Cw-c55"/>
@@ -1518,36 +1518,30 @@
             </objects>
             <point key="canvasLocation" x="-2467" y="864"/>
         </scene>
-        <!--MFA-->
+        <!--MFA Phone Number Registration-->
         <scene sceneID="g1b-tn-Acw">
             <objects>
-                <viewController id="oW2-ti-e1U" customClass="MfaController" customModule="Sandbox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="oW2-ti-e1U" userLabel="MFA Phone Number Registration" customClass="MfaController" customModule="Sandbox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3J7-ip-0VJ">
                         <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Phone number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pM9-yn-BLG">
-                                <rect key="frame" x="32.000000000000007" y="201" width="111.66666666666669" height="20"/>
+                                <rect key="frame" x="20.000000000000007" y="123" width="111.66666666666669" height="20"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bP6-fJ-u2I">
-                                <rect key="frame" x="129" y="261" width="87" height="34.333333333333314"/>
+                                <rect key="frame" x="20" y="217" width="87" height="34.333333333333343"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Register"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Register"/>
                                 <connections>
                                     <action selector="startMfaPhoneRegistration:" destination="oW2-ti-e1U" eventType="touchUpInside" id="wiB-na-R92"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Phone Number Registration" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0oH-ej-QOq">
-                                <rect key="frame" x="67.666666666666671" y="124" width="209.66666666666663" height="20"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eWw-Lr-dWC">
-                                <rect key="frame" x="174.66666666666663" y="194" width="157.33333333333337" height="34"/>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eWw-Lr-dWC" userLabel="Phone Number field">
+                                <rect key="frame" x="20" y="163" width="390" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -1555,19 +1549,18 @@
                         <viewLayoutGuide key="safeArea" id="d4u-HN-3F3"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="bP6-fJ-u2I" firstAttribute="top" secondItem="eWw-Lr-dWC" secondAttribute="bottom" constant="33" id="29K-3d-CbY"/>
-                            <constraint firstItem="0oH-ej-QOq" firstAttribute="leading" secondItem="d4u-HN-3F3" secondAttribute="leading" constant="67.666666666666686" id="7H4-HV-eSB"/>
-                            <constraint firstItem="pM9-yn-BLG" firstAttribute="leading" secondItem="d4u-HN-3F3" secondAttribute="leading" constant="32" id="9S5-cg-FRL"/>
-                            <constraint firstItem="0oH-ej-QOq" firstAttribute="centerX" secondItem="bP6-fJ-u2I" secondAttribute="centerX" id="G1s-az-JAB"/>
-                            <constraint firstItem="d4u-HN-3F3" firstAttribute="trailing" secondItem="eWw-Lr-dWC" secondAttribute="trailing" constant="98" id="MRD-n6-an3"/>
-                            <constraint firstItem="0oH-ej-QOq" firstAttribute="top" secondItem="d4u-HN-3F3" secondAttribute="top" constant="21" id="Qk6-GS-Fdo"/>
-                            <constraint firstItem="bP6-fJ-u2I" firstAttribute="top" secondItem="pM9-yn-BLG" secondAttribute="bottom" constant="40" id="e9h-fc-PWj"/>
-                            <constraint firstItem="eWw-Lr-dWC" firstAttribute="leading" secondItem="pM9-yn-BLG" secondAttribute="trailing" constant="31" id="fvJ-7r-V09"/>
-                            <constraint firstItem="eWw-Lr-dWC" firstAttribute="centerY" secondItem="pM9-yn-BLG" secondAttribute="centerY" id="h0g-HX-BGt"/>
-                            <constraint firstItem="pM9-yn-BLG" firstAttribute="top" secondItem="0oH-ej-QOq" secondAttribute="bottom" constant="57" id="hBu-Gj-Cp5"/>
+                            <constraint firstItem="pM9-yn-BLG" firstAttribute="top" secondItem="d4u-HN-3F3" secondAttribute="top" constant="20" id="3vF-Bg-N93"/>
+                            <constraint firstItem="d4u-HN-3F3" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="bP6-fJ-u2I" secondAttribute="trailing" id="GAV-3U-EqM"/>
+                            <constraint firstItem="bP6-fJ-u2I" firstAttribute="leading" secondItem="eWw-Lr-dWC" secondAttribute="leading" id="Gpq-an-iPR"/>
+                            <constraint firstItem="eWw-Lr-dWC" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="3J7-ip-0VJ" secondAttribute="trailingMargin" id="JxC-fl-jZI"/>
+                            <constraint firstItem="eWw-Lr-dWC" firstAttribute="top" secondItem="pM9-yn-BLG" secondAttribute="bottom" constant="20" id="R4a-El-h7A"/>
+                            <constraint firstItem="d4u-HN-3F3" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="pM9-yn-BLG" secondAttribute="trailing" id="ZPT-fM-gyS"/>
+                            <constraint firstItem="eWw-Lr-dWC" firstAttribute="leading" secondItem="pM9-yn-BLG" secondAttribute="leading" id="deN-00-389"/>
+                            <constraint firstItem="bP6-fJ-u2I" firstAttribute="top" secondItem="eWw-Lr-dWC" secondAttribute="bottom" constant="20" id="mVG-83-IwB"/>
+                            <constraint firstItem="pM9-yn-BLG" firstAttribute="leading" secondItem="d4u-HN-3F3" secondAttribute="leading" constant="20.000000000000007" id="vba-uP-qtQ"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="MFA" id="zJI-Nr-w8b"/>
+                    <navigationItem key="navigationItem" title="MFA Phone Number Registration" id="zJI-Nr-w8b" userLabel="MFA Phone Number Registration"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="phoneNumberMfaRegistration" destination="eWw-Lr-dWC" id="6r4-rN-rpc"/>

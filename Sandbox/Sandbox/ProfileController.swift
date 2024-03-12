@@ -13,7 +13,6 @@ import BrightFutures
 //      - marquer spécialement l'identifiant principal dans l'UI
 //      - ajouter un bouton + dans la table des clés pour en ajouter une (ou carrément supprimer le bouton "register passkey")
 //      - ajouter un bouton modifier à la table pour pouvoir plus visuellement supprimer des clés
-//      - réparer les icônes de statut de connexion
 //      - Ajouter des infos sur le jeton dans une nouvelle page
 class ProfileController: UIViewController {
     var authToken: AuthToken?
