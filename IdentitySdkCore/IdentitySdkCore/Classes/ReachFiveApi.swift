@@ -80,7 +80,7 @@ public class ReachFiveApi {
         
         components.queryItems = allParams.map { (key, value) in URLQueryItem(name: key, value: value) }
         // safe force-unwrap because the contract is respected:
-        // If the NSURLComponents has an an authority component (user, password, host or port) and a path component, then the path must either begin with "/" or be an empty string.
+        // If the NSURLComponents has an authority component (user, password, host or port) and a path component, then the path must either begin with "/" or be an empty string.
         return components.url!
     }
     
