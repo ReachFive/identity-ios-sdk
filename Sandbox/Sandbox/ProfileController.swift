@@ -14,7 +14,6 @@ import BrightFutures
 //      - ajouter un bouton + dans la table des clés pour en ajouter une (ou carrément supprimer le bouton "register passkey")
 //      - ajouter un bouton modifier à la table pour pouvoir plus visuellement supprimer des clés
 //      - réparer les icônes de statut de connexion
-//      - mettre les nouvelles méthodes dédiés au jeton (storage.setToken...)
 //      - Refaire la page d'ajout d'un nouveau tel au MFA
 //      - Ajouter des infos sur le jeton dans une nouvelle page
 class ProfileController: UIViewController {
@@ -81,7 +80,7 @@ class ProfileController: UIViewController {
             self.didLogin()
         }
         
-        authToken = AppDelegate.storage.get(key: SecureStorage.authKey)
+        authToken = AppDelegate.storage.getToken()
         if authToken != nil {
             profileTabBarItem.image = SandboxTabBarController.tokenPresent
             profileTabBarItem.selectedImage = profileTabBarItem.image
@@ -103,7 +102,7 @@ class ProfileController: UIViewController {
     func fetchProfile() {
         print("ProfileController.fetchProfile")
         
-        authToken = AppDelegate.storage.get(key: SecureStorage.authKey)
+        authToken = AppDelegate.storage.getToken()
         guard let authToken else {
             print("not logged in")
             return
@@ -125,7 +124,7 @@ class ProfileController: UIViewController {
     
     func didLogin() {
         print("ProfileController.didLogin")
-        authToken = AppDelegate.storage.get(key: SecureStorage.authKey)
+        authToken = AppDelegate.storage.getToken()
     }
     
     func didLogout() {
@@ -140,7 +139,7 @@ class ProfileController: UIViewController {
     @IBAction func logoutAction(_ sender: Any) {
         AppDelegate.reachfive().logout()
             .onComplete { result in
-                AppDelegate.storage.clear(key: SecureStorage.authKey)
+                AppDelegate.storage.removeToken()
                 self.navigationController?.popViewController(animated: true)
             }
     }

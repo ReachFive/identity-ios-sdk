@@ -41,7 +41,7 @@ class PasskeyCredentialController: UIViewController {
             self.didLogin()
         }
         
-        authToken = AppDelegate.storage.get(key: SecureStorage.authKey)
+        authToken = AppDelegate.storage.getToken()
     }
     
     func didLogout() {
@@ -55,7 +55,7 @@ class PasskeyCredentialController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         print("PasskeyCredentialController.viewWillAppear")
-        authToken = AppDelegate.storage.get(key: SecureStorage.authKey)
+        authToken = AppDelegate.storage.getToken()
         guard let authToken else {
             print("not logged in")
             return
@@ -68,7 +68,7 @@ class PasskeyCredentialController: UIViewController {
     
     func didLogin() {
         print("PasskeyCredentialController.didLogin")
-        authToken = AppDelegate.storage.get(key: SecureStorage.authKey)
+        authToken = AppDelegate.storage.getToken()
     }
     
     private func reloadCredentials(authToken: AuthToken) {

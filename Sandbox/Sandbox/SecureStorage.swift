@@ -1,8 +1,7 @@
 import IdentitySdkCore
 
 public class SecureStorage: Storage {
-    //TODO à rendre privé, utiliser les fonctions spécifiques au jeton
-    public static let authKey = "AUTH_TOKEN"
+    private static let authKey = "AUTH_TOKEN"
     private static let refKey = "SHARED_REFS"
     
     private let serviceName: String

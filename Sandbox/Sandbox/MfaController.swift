@@ -4,39 +4,12 @@ import IdentitySdkCore
 import BrightFutures
 
 class MfaController: UIViewController {
-    var authToken: AuthToken?
-    
-    var clearTokenObserver: NSObjectProtocol?
-    var setTokenObserver: NSObjectProtocol?
-    
     @IBOutlet weak var phoneNumberMfaRegistration: UITextField!
     @IBOutlet weak var phoneMfaRegistrationCode: UITextField!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        clearTokenObserver = NotificationCenter.default.addObserver(forName: .DidClearAuthToken, object: nil, queue: nil) { _ in
-            self.didLogout()
-        }
-        
-        setTokenObserver = NotificationCenter.default.addObserver(forName: .DidSetAuthToken, object: nil, queue: nil) { _ in
-            self.didLogin()
-        }
-        authToken = AppDelegate.storage.get(key: SecureStorage.authKey)
-    }
-    
-    func didLogin() {
-        authToken = AppDelegate.storage.get(key: SecureStorage.authKey)
-    }
-    
-    func didLogout() {
-        authToken = nil
-        phoneNumberMfaRegistration.text = nil
-        phoneMfaRegistrationCode.text = nil
-    }
-    
     @IBAction func startMfaPhoneRegistration(_ sender: UIButton) {
         print("MfaController.startMfaPhoneRegistration")
-        guard let authToken else {
+        guard let authToken = AppDelegate.storage.getToken() else {
             print("not logged in")
             return
         }
