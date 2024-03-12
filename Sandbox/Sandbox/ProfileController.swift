@@ -13,7 +13,6 @@ import BrightFutures
 //      - marquer spécialement l'identifiant principal dans l'UI
 //      - ajouter un bouton + dans la table des clés pour en ajouter une (ou carrément supprimer le bouton "register passkey")
 //      - ajouter un bouton modifier à la table pour pouvoir plus visuellement supprimer des clés
-//      - Recharger le profil quand un MFA est enregistré
 //      - réparer les icônes de statut de connexion
 //      - mettre les nouvelles méthodes dédiés au jeton (storage.setToken...)
 //      - Refaire la page d'ajout d'un nouveau tel au MFA

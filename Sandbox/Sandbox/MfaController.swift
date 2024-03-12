@@ -58,16 +58,10 @@ class MfaAction {
     }
     
     func mfaStart(registering credential: Credential, authToken: AuthToken) -> Future<(), ReachFiveError> {
-        mfaStart(registering: credential, authToken: authToken, retryIfStaleToken: true)
-    }
-    
-    private func mfaStart(registering credential: Credential, authToken: AuthToken, retryIfStaleToken: Bool) -> Future<(), ReachFiveError> {
-        print("MfaController.startMfaPhoneRegistration")
         let future = AppDelegate.reachfive()
             .mfaStart(registering: credential, authToken: authToken)
             .recoverWith { error in
-                guard retryIfStaleToken,
-                      case let .AuthFailure(reason: _, apiError: apiError) = error,
+                guard case let .AuthFailure(reason: _, apiError: apiError) = error,
                       let key = apiError?.errorMessageKey,
                       key == "error.accessToken.freshness"
                 else {
@@ -77,11 +71,11 @@ class MfaAction {
                 return AppDelegate.reachfive()
                     .refreshAccessToken(authToken: authToken).flatMap { (freshToken: AuthToken) in
                         AppDelegate.storage.setToken(freshToken)
-                        return self.mfaStart(registering: credential, authToken: freshToken, retryIfStaleToken: false)
+                        return AppDelegate.reachfive()
+                            .mfaStart(registering: credential, authToken: freshToken)
                     }
             }
-        future
-            .onSuccess { resp in
+            .flatMap { resp in
                 self.handleStartVerificationCode(resp)
             }
             .onFailure { error in
@@ -97,30 +91,32 @@ class MfaAction {
     }
     
     private func handleStartVerificationCode(_ resp: MfaStartRegistrationResponse) -> Future<(), ReachFiveError> {
+        let promise: Promise<(), ReachFiveError> = Promise()
         switch resp {
         case let .Success(registeredCredential):
             let alert = AppDelegate.createAlert(title: "MFA \(registeredCredential.type) \(registeredCredential.friendlyName) enabled", message: "Success")
             presentationAnchor.present(alert, animated: true)
-            return Future(value: ())
+            promise.success(())
         
         case let .VerificationNeeded(continueRegistration):
-            var promise: Promise<(), ReachFiveError>
             let canal =
             switch continueRegistration.credentialType {
             case .Email: "Email"
             case .PhoneNumber: "SMS"
             }
             
-            alert = UIAlertController(title: "Verification Code", message: "Please enter the verification Code you got by \(canal)", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Verification Code", message: "Please enter the verification Code you got by \(canal)", preferredStyle: .alert)
             alert.addTextField { (textField) in
                 textField.placeholder = "Verification code"
             }
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+                promise.failure(.AuthCanceled)
+            }
             
             let submitVerificationCode = UIAlertAction(title: "Submit", style: .default) { _ in
-                guard let verificationCode = alert.textFields?[0].text else {
-                    //TODO alerte
+                guard let verificationCode = alert.textFields?[0].text, !verificationCode.isEmpty else {
                     print("verification code cannot be empty")
+                    promise.failure(.AuthFailure(reason: "no verification code"))
                     return
                 }
                 let future = continueRegistration.verify(code: verificationCode)
@@ -139,7 +135,7 @@ class MfaAction {
             alert.addAction(submitVerificationCode)
             alert.preferredAction = submitVerificationCode
             presentationAnchor.present(alert, animated: true)
-            return promise.future
         }
+        return promise.future
     }
 }
