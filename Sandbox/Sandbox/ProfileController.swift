@@ -13,7 +13,11 @@ import BrightFutures
 //      - marquer spécialement l'identifiant principal dans l'UI
 //      - ajouter un bouton + dans la table des clés pour en ajouter une (ou carrément supprimer le bouton "register passkey")
 //      - ajouter un bouton modifier à la table pour pouvoir plus visuellement supprimer des clés
-//      - faire en sorte que les textes (nom, prénom...) soient copiable
+//      - Recharger le profil quand un MFA est enregistré
+//      - réparer les icônes de statut de connexion
+//      - mettre les nouvelles méthodes dédiés au jeton (storage.setToken...)
+//      - Refaire la page d'ajout d'un nouveau tel au MFA
+//      - Ajouter des infos sur le jeton dans une nouvelle page
 class ProfileController: UIViewController {
     var authToken: AuthToken?
     var profile: Profile? = nil {
@@ -49,7 +53,6 @@ class ProfileController: UIViewController {
     @IBOutlet weak var mfaButton: UIButton!
     @IBOutlet weak var passkeyButton: UIButton!
     @IBOutlet weak var editProfileButton: UIButton!
-    
     
     override func viewDidLoad() {
         print("ProfileController.viewDidLoad")

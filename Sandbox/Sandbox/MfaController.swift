@@ -50,26 +50,46 @@ class MfaController: UIViewController {
 }
 
 class MfaAction {
-    var presentationAnchor: UIViewController
+    let presentationAnchor: UIViewController
     
     public init(presentationAnchor: UIViewController) {
         self.presentationAnchor = presentationAnchor
     }
     
     func mfaStart(registering credential: Credential, authToken: AuthToken) {
+        mfaStart(registering: credential, authToken: authToken, retryIfStale: true)
+    }
+    
+    private func mfaStart(registering credential: Credential, authToken: AuthToken, retryIfStale: Bool) {
         print("MfaController.startMfaPhoneRegistration")
         AppDelegate.reachfive()
             .mfaStart(registering: credential, authToken: authToken)
             .onSuccess { resp in
-                self.handleStartVerificationCode(resp, authToken: authToken)
+                self.handleStartVerificationCode(resp)
             }
             .onFailure { error in
-                let alert = AppDelegate.createAlert(title: "Start MFA \(credential.credentialType) Registration", message: "Error: \(error.message())")
-                self.presentationAnchor.present(alert, animated: true)
+                if retryIfStale, case let .AuthFailure(reason: _, apiError: apiError) = error,
+                   let key = apiError?.errorMessageKey,
+                   key == "error.accessToken.freshness" {
+                    AppDelegate.reachfive()
+                        .refreshAccessToken(authToken: authToken).onSuccess { (freshToken: AuthToken) in
+                            AppDelegate.storage.setToken(freshToken)
+                            self.mfaStart(registering: credential, authToken: freshToken, retryIfStale: false)
+                        }
+                        .onFailure { error in
+                            self.mfaStart(presentFailure: credential, withError: error)
+                        }
+                }
+                self.mfaStart(presentFailure: credential, withError: error)
             }
     }
     
-    private func handleStartVerificationCode(_ resp: MfaStartRegistrationResponse, authToken: AuthToken) {
+    private func mfaStart(presentFailure credential: Credential, withError error: ReachFiveError) {
+        let alert = AppDelegate.createAlert(title: "Start MFA \(credential.credentialType) Registration", message: "Error: \(error.message())")
+        self.presentationAnchor.present(alert, animated: true)
+    }
+    
+    private func handleStartVerificationCode(_ resp: MfaStartRegistrationResponse) {
         var alert: UIAlertController
         switch resp {
         case let .Success(registeredCredential):
@@ -94,7 +114,7 @@ class MfaAction {
                     print("verification code cannot be empty")
                     return
                 }
-                continueRegistration.verify(code: verificationCode, freshAuthToken: authToken)
+                continueRegistration.verify(code: verificationCode)
                     .onSuccess { succ in
                         let alert = AppDelegate.createAlert(title: "Verify MFA \(continueRegistration.credentialType) registration", message: "Success")
                         self.presentationAnchor.present(alert, animated: true)
