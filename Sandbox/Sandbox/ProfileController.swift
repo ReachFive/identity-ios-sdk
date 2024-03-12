@@ -14,7 +14,6 @@ import BrightFutures
 //      - ajouter un bouton + dans la table des clés pour en ajouter une (ou carrément supprimer le bouton "register passkey")
 //      - ajouter un bouton modifier à la table pour pouvoir plus visuellement supprimer des clés
 //      - réparer les icônes de statut de connexion
-//      - Refaire la page d'ajout d'un nouveau tel au MFA
 //      - Ajouter des infos sur le jeton dans une nouvelle page
 class ProfileController: UIViewController {
     var authToken: AuthToken?
@@ -112,13 +111,32 @@ class ProfileController: UIViewController {
             .onSuccess { profile in
                 self.profile = profile
                 self.profileData.reloadData()
+                self.setStatusImage(authToken: authToken)
             }
             .onFailure { error in
-                // the token is probably expired, but it is still possible that it can be refreshed
                 self.didLogout()
-                self.profileTabBarItem.image = SandboxTabBarController.tokenExpiredButRefreshable
-                self.profileTabBarItem.selectedImage = self.profileTabBarItem.image
+                if authToken.refreshToken != nil {
+                    // the token is probably expired, but it is still possible that it can be refreshed
+                    self.profileTabBarItem.image = SandboxTabBarController.tokenExpiredButRefreshable
+                    self.profileTabBarItem.selectedImage = self.profileTabBarItem.image
+                } else {
+                    self.profileTabBarItem.image = SandboxTabBarController.loggedOut
+                    self.profileTabBarItem.selectedImage = self.profileTabBarItem.image
+                }
                 print("getProfile error = \(error.message())")
+            }
+    }
+    
+    private func setStatusImage(authToken: AuthToken) {
+        // Use listWebAuthnCredentials to test if token is fresh
+        // A fresh token is also needed for updating the profile and registering MFA credentials
+        AppDelegate.reachfive().listWebAuthnCredentials(authToken: authToken).onSuccess { _ in
+                self.profileTabBarItem.image = SandboxTabBarController.loggedIn
+                self.profileTabBarItem.selectedImage = self.profileTabBarItem.image
+            }
+            .onFailure { error in
+                self.profileTabBarItem.image = SandboxTabBarController.loggedInButNotFresh
+                self.profileTabBarItem.selectedImage = self.profileTabBarItem.image
             }
     }
     
@@ -130,7 +148,7 @@ class ProfileController: UIViewController {
     func didLogout() {
         print("ProfileController.didLogout")
         authToken = nil
-        profile = Profile()
+        profile = nil
         passkeyButton.isHidden = true
         mfaButton.isHidden = true
         editProfileButton.isHidden = true
