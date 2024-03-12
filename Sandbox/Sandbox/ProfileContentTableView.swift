@@ -22,10 +22,11 @@ extension ProfileController {
         return dateFormatter.string(from: lastLogin)
     }
     
-    func updatePhoneNumber(authToken: AuthToken) {
-        let alert = UIAlertController(title: "New Phone Number", message: "Please enter the new phone number", preferredStyle: .alert)
+    func addPhoneNumber(shouldReplaceExisting: Bool, authToken: AuthToken) {
+        let titre = if shouldReplaceExisting { "Updated phone number" } else { "New Phone Number" }
+        let alert = UIAlertController(title: titre, message: "Please enter a phone number", preferredStyle: .alert)
         alert.addTextField { textField in
-            textField.placeholder = "Updated phone number"
+            textField.placeholder = titre
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let submitPhoneNumber = UIAlertAction(title: "submit", style: .default) { _ in
@@ -37,10 +38,10 @@ extension ProfileController {
             AppDelegate.reachfive()
                 .updatePhoneNumber(authToken: authToken, phoneNumber: phoneNumber)
                 .onSuccess { profile in
-                    self.present(AppDelegate.createAlert(title: "Update", message: "Update Success"), animated: true)
+                    return self.present(AppDelegate.createAlert(title: titre, message: "Success"), animated: true)
                 }
                 .onFailure { error in
-                    self.present(AppDelegate.createAlert(title: "Update", message: "Update Error: \(error.message())"), animated: true)
+                    self.present(AppDelegate.createAlert(title: titre, message: "Error: \(error.message())"), animated: true)
                 }
         }
         alert.addAction(cancelAction)
@@ -95,47 +96,48 @@ extension ProfileController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         let field = self.propertiesToDisplay[indexPath.row]
-        guard let valeur = field.value else {
+        guard let token = self.authToken else {
             return nil
         }
-        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { actions -> UIMenu? in
-            var children: [UIMenuElement] = []
+        
+        var children: [UIMenuElement] = []
+        if field.name == "Phone Number" {
+            let title = if field.value == nil { "Add" } else { "Update" }
+            let updatePhone = UIAction(title: title, image: UIImage(systemName: "phone.badge.plus.fill")) { action in
+                self.addPhoneNumber(shouldReplaceExisting: field.value != nil, authToken: token)
+            }
+            children.append(updatePhone)
+        }
+        if let valeur = field.value {
             let copy = UIAction(title: "Copy", image: UIImage(systemName: "clipboard")) { action in
                 UIPasteboard.general.string = valeur
             }
             children.append(copy)
+            
             // MFA registering button
             if (self.mfaRegistrationAvailable.contains(field.name)) {
-                switch field.name {
-                case "Email":
-                    let mfaRegister = UIAction(title: "Enroll your Email as MFA", image: UIImage(systemName: "key")) { action in
-                        guard let authToken = self.authToken else {
-                            print("not logged in")
-                            return
-                        }
-                        let mfaAction = MfaAction(presentationAnchor: self)
-                        mfaAction.mfaStart(registering: .Email(), authToken: authToken)
-                        }
-                    children.append(mfaRegister)
-                default:
-                    let mfaRegister = UIAction(title: "Enroll your phone number as MFA", image: UIImage(systemName: "key")) { action in
-                        guard let authToken = self.authToken else {
-                            print("not logged in")
-                            return
-                        }
-                        let mfaAction = MfaAction(presentationAnchor: self)
-                        mfaAction.mfaStart(registering: .PhoneNumber(valeur), authToken: authToken)
-                    }
-                    
-                    children.append(mfaRegister)
-                    
-                    // Update phone number button
-                    let phoneNumberUpdate = UIAction(title: "Update", image: UIImage(systemName: "phone.badge.plus.fill")) { action in
-                        self.updatePhoneNumber(authToken: self.authToken!)
-                    }
-                    children.append(phoneNumberUpdate)
+                let credential: Credential = switch field.name {
+                case "Email": .Email()
+                default: .PhoneNumber(valeur)
                 }
+                
+                let mfaRegister = UIAction(title: "Enroll your \(credential.credentialType) as MFA", image: UIImage(systemName: "key")) { action in
+                    let mfaAction = MfaAction(presentationAnchor: self)
+                    mfaAction.mfaStart(registering: credential, authToken: token)
+                        .onSuccess { _ in
+                            self.fetchProfile()
+                        }
+                }
+                
+                children.append(mfaRegister)
             }
+        }
+        
+        // Do not return an empty menu otherwise on the UI the table will behave as if it about to display a menu but there is nothing to display
+        if children.isEmpty {
+            return nil
+        }
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { actions -> UIMenu? in
             return UIMenu(title: "Actions", children: children)
         }
     }
