@@ -11,7 +11,7 @@ public enum Credential {
     case Email(redirectUrl: String? = nil)
     case PhoneNumber(_ phoneNumber: String)
     
-    var credentialType: CredentialType {
+    public var credentialType: CredentialType {
         switch self {
         case .Email: return CredentialType.Email
         case .PhoneNumber: return CredentialType.PhoneNumber

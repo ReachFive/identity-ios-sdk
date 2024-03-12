@@ -2,10 +2,6 @@ import UIKit
 import IdentitySdkCore
 import BrightFutures
 
-protocol ProfileRootController {
-    var rootController: UIViewController? { get }
-}
-
 //TODO
 //      - déplacer le bouton login with refresh ici pour que, même logué, on puisse afficher les passkey (qui sont expirées)
 //      - faire du pull-to-refresh soit sur la table des clés soit carrément sur tout le profil (déclencher le refresh token)

@@ -9,6 +9,7 @@ struct Field {
 
 // TODO:
 // - remove enroll MFA identifier in menu when the identifier has already been enrolled. Requires listMfaCredentials
+// - refaire la présentation avec une Collection View : https://developer.apple.com/videos/play/wwdc2019/215
 extension ProfileController {
     
     func format(date: Int) -> String {
@@ -112,8 +113,9 @@ extension ProfileController: UITableViewDataSource {
                             print("not logged in")
                             return
                         }
-//                        self.doMfaEmailRegistration(authToken: authToken)
-                    }
+                        let mfaAction = MfaAction(presentationAnchor: self)
+                        mfaAction.mfaStart(registering: .Email(), authToken: authToken)
+                        }
                     children.append(mfaRegister)
                 default:
                     let mfaRegister = UIAction(title: "Enroll your phone number as MFA", image: UIImage(systemName: "key")) { action in
@@ -121,7 +123,8 @@ extension ProfileController: UITableViewDataSource {
                             print("not logged in")
                             return
                         }
-//                        self.doMfaPhoneRegistration(phoneNumber: valeur, authToken: authToken)
+                        let mfaAction = MfaAction(presentationAnchor: self)
+                        mfaAction.mfaStart(registering: .PhoneNumber(valeur), authToken: authToken)
                     }
                     
                     children.append(mfaRegister)
