@@ -11,7 +11,7 @@ class NativePasswordController: UIViewController {
     @IBAction func passwordEditingDidEnd(_ sender: Any) {
         guard let pass = password.text, !pass.isEmpty, let user = username.text, !user.isEmpty else { return }
         let origin = "NativePasswordController.passwordEditingDidEnd"
-    
+        
         let fut: Future<AuthToken, ReachFiveError>
         if (user.contains("@")) {
             fut = AppDelegate.reachfive().loginWithPassword(email: user, password: pass, origin: origin)
