@@ -70,25 +70,13 @@ extension ProfileController: UITableViewDataSource {
         content.secondaryText = self.propertiesToDisplay[indexPath.row].value
         content.prefersSideBySideTextAndSecondaryText = true
         
-        var textProperties = content.textProperties
-        if let customFont = UIFont(name: "system", size: 12) {
-            textProperties.font = UIFontMetrics(forTextStyle: .body).scaledFont(for: customFont)
-            textProperties.adjustsFontForContentSizeCategory = true
-            textProperties.numberOfLines = 0
-        }
-        textProperties.adjustsFontSizeToFitWidth = true
-        content.textProperties = textProperties
+        content.textProperties.font = UIFont.preferredFont(forTextStyle: .body)
+        content.textProperties.adjustsFontForContentSizeCategory = true
+        content.textProperties.adjustsFontSizeToFitWidth = true
         
-        var secondaryTextProperties = content.secondaryTextProperties
-        if let secondaryFont = UIFont(name: "system", size: 20) {
-            textProperties.font = UIFontMetrics(forTextStyle: .body).scaledFont(for: secondaryFont)
-            textProperties.adjustsFontForContentSizeCategory = true
-            textProperties.numberOfLines = 0
-        }
-        secondaryTextProperties.font = UIFont.systemFont(ofSize: 16)
-        secondaryTextProperties.adjustsFontSizeToFitWidth = true
-        secondaryTextProperties.adjustsFontForContentSizeCategory = true
-        content.secondaryTextProperties = secondaryTextProperties
+        content.secondaryTextProperties.font = UIFont.preferredFont(forTextStyle: .body)
+        content.secondaryTextProperties.adjustsFontForContentSizeCategory = true
+        content.secondaryTextProperties.adjustsFontSizeToFitWidth = true
         cell.contentConfiguration = content
         
         return cell
