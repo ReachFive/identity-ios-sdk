@@ -5,7 +5,6 @@ import BrightFutures
 
 class MfaController: UIViewController {
     @IBOutlet weak var phoneNumberMfaRegistration: UITextField!
-    @IBOutlet weak var phoneMfaRegistrationCode: UITextField!
     
     @IBAction func startMfaPhoneRegistration(_ sender: UIButton) {
         print("MfaController.startMfaPhoneRegistration")
@@ -41,6 +40,7 @@ class MfaAction {
                     return Future(error: error)
                 }
                 
+                // Automatically refresh the token if it is stale
                 return AppDelegate.reachfive()
                     .refreshAccessToken(authToken: authToken).flatMap { (freshToken: AuthToken) in
                         AppDelegate.storage.setToken(freshToken)
@@ -52,15 +52,11 @@ class MfaAction {
                 self.handleStartVerificationCode(resp)
             }
             .onFailure { error in
-                self.mfaStart(presentFailure: credential, withError: error)
+                let alert = AppDelegate.createAlert(title: "Start MFA \(credential.credentialType) Registration", message: "Error: \(error.message())")
+                self.presentationAnchor.present(alert, animated: true)
             }
         
         return future
-    }
-    
-    private func mfaStart(presentFailure credential: Credential, withError error: ReachFiveError) {
-        let alert = AppDelegate.createAlert(title: "Start MFA \(credential.credentialType) Registration", message: "Error: \(error.message())")
-        self.presentationAnchor.present(alert, animated: true)
     }
     
     private func handleStartVerificationCode(_ resp: MfaStartRegistrationResponse) -> Future<(), ReachFiveError> {

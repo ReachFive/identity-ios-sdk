@@ -22,6 +22,7 @@ extension ProfileController {
         return dateFormatter.string(from: lastLogin)
     }
     
+    //TODO return a future like mfaStart or directly update the profile info here
     func addPhoneNumber(shouldReplaceExisting: Bool, authToken: AuthToken) {
         let titre = if shouldReplaceExisting { "Updated phone number" } else { "New Phone Number" }
         let alert = UIAlertController(title: titre, message: "Please enter a phone number", preferredStyle: .alert)
@@ -62,7 +63,6 @@ extension ProfileController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("tableView:cellForRowAt:\(indexPath)")
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDisplayCell", for: indexPath)
         
         var content = cell.defaultContentConfiguration()
