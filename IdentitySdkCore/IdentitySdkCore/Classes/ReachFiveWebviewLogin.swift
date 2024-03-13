@@ -44,9 +44,8 @@ public extension ReachFive {
         session.presentationContextProvider = request.presentationContextProvider
         
         // Start the Authentication Flow
-        if !session.start() {
-            promise.failure(.TechnicalError(reason: "Failed to start ASWebAuthenticationSession"))
-        }
+        // if the result of this method is false then the error will already have been processed and the promise failed in the callback
+        session.start()
         return promise.future
     }
 }
