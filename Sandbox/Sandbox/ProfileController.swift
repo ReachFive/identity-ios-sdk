@@ -28,7 +28,7 @@ class ProfileController: UIViewController {
                 Field(name: "Custom Identifier", value: profile.customIdentifier),
                 Field(name: "Given Name", value: profile.givenName),
                 Field(name: "Family Name", value: profile.familyName),
-                Field(name: "Last logged In", value: self.format(date: profile.loginSummary?.lastLogin ?? 0)),
+                Field(name: "Last logged In", value: profile.loginSummary?.lastLogin.map { date in self.format(date: date) } ?? ""),
                 Field(name: "Method", value: profile.loginSummary?.lastProvider)
             ]
         }
@@ -90,10 +90,6 @@ class ProfileController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         print("ProfileController.viewWillAppear")
-        
-        mfaButton.isHidden = false
-        editProfileButton.isHidden = false
-        
         fetchProfile()
     }
     
@@ -111,6 +107,9 @@ class ProfileController: UIViewController {
                 self.profile = profile
                 self.profileData.reloadData()
                 self.setStatusImage(authToken: authToken)
+                self.mfaButton.isHidden = false
+                self.editProfileButton.isHidden = false
+                self.passkeyButton.isHidden = false
             }
             .onFailure { error in
                 self.didLogout()
@@ -147,7 +146,7 @@ class ProfileController: UIViewController {
     func didLogout() {
         print("ProfileController.didLogout")
         authToken = nil
-        profile = nil
+        profile = Profile()
         passkeyButton.isHidden = true
         mfaButton.isHidden = true
         editProfileButton.isHidden = true
