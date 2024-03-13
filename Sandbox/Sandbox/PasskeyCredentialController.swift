@@ -4,7 +4,6 @@ import BrightFutures
 
 class PasskeyCredentialController: UIViewController {
     
-    var authToken: AuthToken?
     var devices: [DeviceCredential] = [] {
         didSet {
             print("devices \(devices)")
@@ -22,53 +21,20 @@ class PasskeyCredentialController: UIViewController {
     @IBOutlet weak var credentialTableview: UITableView!
     @IBOutlet weak var registerPasskeyButton: UIButton!
     
-    var clearTokenObserver: NSObjectProtocol?
-    var setTokenObserver: NSObjectProtocol?
-    
     override func viewDidLoad() {
         print("PasskeyCredentialController.viewDidLoad")
         super.viewDidLoad()
         
         credentialTableview.delegate = self
         credentialTableview.dataSource = self
-        
-        //TODO: mieux gérer les notifications pour ne pas en avoir plusieurs qui se déclenche pour le même évènement
-        clearTokenObserver = NotificationCenter.default.addObserver(forName: .DidClearAuthToken, object: nil, queue: nil) { _ in
-            self.didLogout()
-        }
-        
-        setTokenObserver = NotificationCenter.default.addObserver(forName: .DidSetAuthToken, object: nil, queue: nil) { _ in
-            self.didLogin()
-        }
-        
-        authToken = AppDelegate.storage.getToken()
-    }
-    
-    func didLogout() {
-        print("PasskeyCredentialController.didLogout")
-        authToken = nil
-        devices = []
-        credentialTableview.reloadData()
-        
-        registerPasskeyButton.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         print("PasskeyCredentialController.viewWillAppear")
-        authToken = AppDelegate.storage.getToken()
-        guard let authToken else {
-            print("not logged in")
-            return
-        }
-        
-        registerPasskeyButton.isHidden = false
-        self.reloadCredentials(authToken: authToken)
         super.viewWillAppear(animated)
-    }
-    
-    func didLogin() {
-        print("PasskeyCredentialController.didLogin")
-        authToken = AppDelegate.storage.getToken()
+        if let authToken = AppDelegate.storage.getToken() {
+            self.reloadCredentials(authToken: authToken)
+        }
     }
     
     private func reloadCredentials(authToken: AuthToken) {
@@ -91,7 +57,7 @@ class PasskeyCredentialController: UIViewController {
     @IBAction func registerNewPasskey(_ sender: Any) {
         print("registerNewPasskey")
         guard let window = view.window else { fatalError("The view was not in the app's view hierarchy!") }
-        guard let authToken else {
+        guard let authToken = AppDelegate.storage.getToken() else {
             print("not logged in")
             return
         }
@@ -131,8 +97,6 @@ class PasskeyCredentialController: UIViewController {
                 self.present(alert, animated: true)
             }
             .onFailure { error in
-                // the token is probably expired, but it is still possible that it can be refreshed
-                self.didLogout()
                 print("getProfile error = \(error.message())")
             }
     }
@@ -156,19 +120,15 @@ extension PasskeyCredentialController: UITableViewDataSource {
         }
         
         let friendlyName = devices[indexPath.row].friendlyName
-        if #available(iOS 14.0, *) {
-            var content = cell.defaultContentConfiguration()
-            content.text = friendlyName
-            cell.contentConfiguration = content
-        } else {
-            cell.textLabel?.text = friendlyName
-        }
+        var content = cell.defaultContentConfiguration()
+        content.text = friendlyName
+        cell.contentConfiguration = content
         return cell
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            guard let authToken else { return }
+            guard let authToken = AppDelegate.storage.getToken() else { return }
             let element = devices[indexPath.row]
             AppDelegate.reachfive().deleteWebAuthnRegistration(id: element.id, authToken: authToken)
                 .onSuccess { _ in

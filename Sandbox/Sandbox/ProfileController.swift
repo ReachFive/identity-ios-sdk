@@ -16,12 +16,8 @@ import BrightFutures
 //      - Ajouter des infos sur le jeton dans une nouvelle page
 class ProfileController: UIViewController {
     var authToken: AuthToken?
-    var profile: Profile? = nil {
+    var profile: Profile = Profile() {
         didSet {
-            guard let profile else {
-                propertiesToDisplay = []
-                return
-            }
             self.propertiesToDisplay = [
                 Field(name: "Email", value: profile.email?.appending(profile.emailVerified == true ? " ✔︎" : " ✘")),
                 Field(name: "Phone Number", value: profile.phoneNumber?.appending(profile.phoneNumberVerified == true ? " ✔︎" : " ✘")),
@@ -129,10 +125,12 @@ class ProfileController: UIViewController {
         // Use listWebAuthnCredentials to test if token is fresh
         // A fresh token is also needed for updating the profile and registering MFA credentials
         AppDelegate.reachfive().listWebAuthnCredentials(authToken: authToken).onSuccess { _ in
+                self.passkeyButton.isEnabled = true
                 self.profileTabBarItem.image = SandboxTabBarController.loggedIn
                 self.profileTabBarItem.selectedImage = self.profileTabBarItem.image
             }
             .onFailure { error in
+                self.passkeyButton.isEnabled = false
                 self.profileTabBarItem.image = SandboxTabBarController.loggedInButNotFresh
                 self.profileTabBarItem.selectedImage = self.profileTabBarItem.image
             }
