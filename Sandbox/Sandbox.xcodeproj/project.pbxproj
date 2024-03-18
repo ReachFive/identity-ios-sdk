@@ -58,10 +58,6 @@
 		3417FF6F22FB11CD0009EC84 /* LoginWithPasswordController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWithPasswordController.swift; sourceTree = "<group>"; };
 		34797ABC22A9607D00ED093C /* SignupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupController.swift; sourceTree = "<group>"; };
 		349E16EB230BEBBF002EA06B /* UpdatePasswordController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePasswordController.swift; sourceTree = "<group>"; };
-		842A9EB52590AAF1004A58E5 /* IdentitySdkCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = IdentitySdkCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		84E69687258A53AD003AF19B /* IdentitySdkCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = IdentitySdkCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		84E6968B258A5534003AF19B /* IdentitySdkCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = IdentitySdkCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		84E6968F258A5661003AF19B /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		99B0FBD42B6A782D00A3E490 /* MfaController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MfaController.swift; sourceTree = "<group>"; };
 		99E4472E2B863AB300EC7559 /* ProfileContentTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileContentTableView.swift; sourceTree = "<group>"; };
 		99FF44312B72884800DDCAAE /* PasskeyCredentialController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasskeyCredentialController.swift; sourceTree = "<group>"; };
@@ -146,10 +142,6 @@
 		A19C0883C2C3964994A2A248 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				842A9EB52590AAF1004A58E5 /* IdentitySdkCore.framework */,
-				84E6968F258A5661003AF19B /* AddressBook.framework */,
-				84E6968B258A5534003AF19B /* IdentitySdkCore.framework */,
-				84E69687258A53AD003AF19B /* IdentitySdkCore.framework */,
 				2E55CD881F31583F8D3480D8 /* Pods_Sandbox.framework */,
 			);
 			name = Frameworks;
