@@ -1,12 +1,14 @@
 # iOS CircleCI 2.0 configuration file
+# https://circleci.com/docs/configuration-reference/
 #
-# Check https://circleci.com/docs/2.0/ios-migrating-from-1-2/ for more details
+# For XCode build version available
+# https://circleci.com/docs/using-macos/
 #
 version: 2.1
 jobs:
   build:
     macos:
-      xcode: "14.2.0"
+      xcode: "15.3.0"
     steps:
       - checkout
       - run:
@@ -42,7 +44,7 @@ jobs:
             pod lib lint IdentitySdkWeChat.podspec --allow-warnings
   build-for-release:
     macos:
-      xcode: "14.2.0"
+      xcode: "15.3.0"
     steps:
       - checkout
       - run:
@@ -79,7 +81,7 @@ jobs:
 
   publish:
     macos:
-      xcode: "14.2.0"
+      xcode: "15.3.0"
     steps:
       - checkout
       - run:
@@ -91,7 +93,7 @@ jobs:
       - run: pod trunk push IdentitySdkWeChat.podspec
   build-sandbox:
     macos:
-      xcode: "14.2.0"
+      xcode: "15.3.0"
     working_directory: ~/repo/Sandbox
     steps:
       - checkout:
