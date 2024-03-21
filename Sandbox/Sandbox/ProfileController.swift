@@ -41,7 +41,7 @@ class ProfileController: UIViewController {
     @IBOutlet weak var otherOptions: UITableView!
     
     @IBOutlet weak var profileTabBarItem: UITabBarItem!
-    @IBOutlet var profileData: UITableView!
+    @IBOutlet weak var collection: UICollectionView!
     @IBOutlet weak var mfaButton: UIButton!
     @IBOutlet weak var passkeyButton: UIButton!
     @IBOutlet weak var editProfileButton: UIButton!

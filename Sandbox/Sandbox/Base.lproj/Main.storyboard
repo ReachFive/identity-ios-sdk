@@ -6,6 +6,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -509,25 +510,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="bMR-fb-yg6">
-                                <rect key="frame" x="0.0" y="103" width="430" height="400"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="400" id="fTh-SD-dpK"/>
-                                </constraints>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ToDisplayCell" id="IEz-c2-YxS">
-                                        <rect key="frame" x="0.0" y="50" width="430" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IEz-c2-YxS" id="ugX-BO-dA6">
-                                            <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="60P-2D-hb5">
-                                <rect key="frame" x="162" y="503" width="106" height="35"/>
+                                <rect key="frame" x="162" y="644" width="106" height="35"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="tinted" title="Edit Profile"/>
                                 <connections>
@@ -535,7 +519,7 @@
                                 </connections>
                             </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kDa-mS-HRu">
-                                <rect key="frame" x="135.33333333333337" y="553" width="159.66666666666663" height="35"/>
+                                <rect key="frame" x="135.33333333333337" y="694" width="159.66666666666663" height="35"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="tinted" title="Manage passkeys"/>
                                 <connections>
@@ -543,7 +527,7 @@
                                 </connections>
                             </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kej-VG-Gqk">
-                                <rect key="frame" x="121.66666666666667" y="603" width="186.66666666666663" height="35"/>
+                                <rect key="frame" x="121.66666666666667" y="744" width="186.66666666666663" height="35"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="tinted" title="Manage MFA devices"/>
                                 <connections>
@@ -551,27 +535,48 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lsY-vN-hQ5">
-                                <rect key="frame" x="174" y="653" width="82" height="35"/>
+                                <rect key="frame" x="174" y="794" width="82" height="35"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Log out"/>
                                 <connections>
                                     <action selector="logoutAction:" destination="85A-IF-9ED" eventType="touchUpInside" id="eaC-wu-1hp"/>
                                 </connections>
                             </button>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="KiB-Kw-y0M">
+                                <rect key="frame" x="0.0" y="103" width="430" height="521"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="JAb-CP-Gvz">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="a2b-me-RbB">
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="yAU-ws-ELf">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ss7-L2-u8Z"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="60P-2D-hb5" firstAttribute="centerX" secondItem="ss7-L2-u8Z" secondAttribute="centerX" id="0MD-q9-pzy"/>
-                            <constraint firstItem="ss7-L2-u8Z" firstAttribute="trailing" secondItem="bMR-fb-yg6" secondAttribute="trailing" id="CBa-WX-6C0"/>
                             <constraint firstItem="lsY-vN-hQ5" firstAttribute="centerX" secondItem="ss7-L2-u8Z" secondAttribute="centerX" id="HRI-Ay-ObQ"/>
                             <constraint firstItem="lsY-vN-hQ5" firstAttribute="top" secondItem="kej-VG-Gqk" secondAttribute="bottom" constant="15" id="ItN-qZ-Jkn"/>
-                            <constraint firstItem="bMR-fb-yg6" firstAttribute="leading" secondItem="ss7-L2-u8Z" secondAttribute="leading" id="Sfd-DR-xxK"/>
-                            <constraint firstItem="60P-2D-hb5" firstAttribute="top" secondItem="bMR-fb-yg6" secondAttribute="bottom" id="bpr-7o-Fg7"/>
+                            <constraint firstItem="KiB-Kw-y0M" firstAttribute="leading" secondItem="ss7-L2-u8Z" secondAttribute="leading" id="VHV-9W-Uja"/>
+                            <constraint firstItem="ss7-L2-u8Z" firstAttribute="bottom" secondItem="lsY-vN-hQ5" secondAttribute="bottom" constant="20" id="YfQ-Z2-aWj"/>
                             <constraint firstItem="kej-VG-Gqk" firstAttribute="centerX" secondItem="ss7-L2-u8Z" secondAttribute="centerX" id="dkk-bv-Vkh"/>
+                            <constraint firstItem="ss7-L2-u8Z" firstAttribute="trailing" secondItem="KiB-Kw-y0M" secondAttribute="trailing" id="ezE-EM-TWJ"/>
                             <constraint firstItem="kej-VG-Gqk" firstAttribute="top" secondItem="kDa-mS-HRu" secondAttribute="bottom" constant="15" id="fSx-EM-xoy"/>
-                            <constraint firstItem="bMR-fb-yg6" firstAttribute="top" secondItem="ss7-L2-u8Z" secondAttribute="top" id="pGH-Bp-xc0"/>
+                            <constraint firstItem="KiB-Kw-y0M" firstAttribute="top" secondItem="ss7-L2-u8Z" secondAttribute="top" id="ocb-7g-ZZg"/>
                             <constraint firstItem="kDa-mS-HRu" firstAttribute="centerX" secondItem="ss7-L2-u8Z" secondAttribute="centerX" id="qLp-PR-Akq"/>
+                            <constraint firstItem="60P-2D-hb5" firstAttribute="top" secondItem="KiB-Kw-y0M" secondAttribute="bottom" constant="20" id="rUp-87-nVA"/>
                             <constraint firstItem="kDa-mS-HRu" firstAttribute="top" secondItem="60P-2D-hb5" secondAttribute="bottom" constant="15" id="t61-r5-r47"/>
                         </constraints>
                     </view>
@@ -585,10 +590,10 @@
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="collection" destination="KiB-Kw-y0M" id="cgS-4C-man"/>
                         <outlet property="editProfileButton" destination="60P-2D-hb5" id="gu9-8d-1wM"/>
                         <outlet property="mfaButton" destination="kej-VG-Gqk" id="N4c-tR-2Df"/>
                         <outlet property="passkeyButton" destination="kDa-mS-HRu" id="lAp-cx-LDH"/>
-                        <outlet property="profileData" destination="bMR-fb-yg6" id="iP6-eD-7E1"/>
                         <outlet property="profileTabBarItem" destination="ahA-UT-aB7" id="Tce-zb-ua4"/>
                     </connections>
                 </viewController>
@@ -1573,10 +1578,10 @@
     </scenes>
     <resources>
         <image name="Reach5" width="821.427978515625" height="321.42800903320312"/>
-        <image name="faceid" catalog="system" width="128" height="115"/>
-        <image name="list.bullet.clipboard" catalog="system" width="98" height="128"/>
-        <image name="person.crop.circle.badge.xmark" catalog="system" width="128" height="114"/>
-        <image name="person.crop.circle.fill.badge.xmark" catalog="system" width="128" height="114"/>
+        <image name="faceid" catalog="system" width="32" height="32"/>
+        <image name="list.bullet.clipboard" catalog="system" width="32" height="32"/>
+        <image name="person.crop.circle.badge.xmark" catalog="system" width="32" height="32"/>
+        <image name="person.crop.circle.fill.badge.xmark" catalog="system" width="32" height="32"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
