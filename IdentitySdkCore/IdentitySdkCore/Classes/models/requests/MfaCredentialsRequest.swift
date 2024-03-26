@@ -71,3 +71,31 @@ public class MfaRegistrationSuccess: Codable, DictionaryEncodable {
         self.friendlyName = friendlyName
     }
 }
+
+public enum CredentialItemType: String, Codable {
+    case email
+    case sms
+}
+
+public class CredentialItem: Codable, DictionaryEncodable {
+    public let createdAt: String
+    public let friendlyName: String
+    public let phoneNumber: String?
+    public let email: String?
+    public let type: CredentialItemType
+    
+    public init(createdAt: String, friendlyName: String, type: CredentialItemType, phoneNumber: String? = nil, email: String? = nil) {
+        self.createdAt = createdAt
+        self.friendlyName = friendlyName
+        self.phoneNumber = phoneNumber
+        self.email = email
+        self.type = type
+    }
+}
+public class MfaCredentialsListResponse: Codable, DictionaryEncodable {
+    public let credentials: [CredentialItem]
+    
+    public init(credentials: [CredentialItem]) {
+        self.credentials = credentials
+    }
+}

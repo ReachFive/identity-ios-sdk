@@ -370,6 +370,19 @@ public class ReachFiveApi {
         
     }
     
+    public func listMfaCredentials(
+        authToken: AuthToken
+    ) -> Future<MfaCredentialsListResponse, ReachFiveError> {
+        AF
+            .request(
+                createUrl(path: "/identity/v1/mfa/credentials"),
+                method: .get,
+                headers: tokenHeader(authToken)
+            )
+            .validate(contentType: ["application/json"])
+            .responseJson(type: MfaCredentialsListResponse.self, decoder: decoder)
+    }
+    
     public func requestPasswordReset(
         requestPasswordResetRequest: RequestPasswordResetRequest
     ) -> Future<(), ReachFiveError> {

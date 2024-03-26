@@ -74,6 +74,10 @@ public extension ReachFive {
         }
     }
     
+    func listMfaCredentials(authToken: AuthToken) -> Future<MfaCredentialsListResponse, ReachFiveError> {
+        return reachFiveApi.listMfaCredentials(authToken: authToken)
+    }
+    
     internal func interceptVerifyMfaCredential(_ url: URL) {
         let params = URLComponents(url: url, resolvingAgainstBaseURL: true)?.queryItems
         
