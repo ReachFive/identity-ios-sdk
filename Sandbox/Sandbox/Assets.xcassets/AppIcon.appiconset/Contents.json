@@ -1,100 +1,103 @@
 {
-  "images": [
+  "images" : [
     {
-      "idiom": "iphone",
-      "scale": "2x",
-      "size": "20x20"
+      "idiom" : "iphone",
+      "scale" : "2x",
+      "size" : "20x20"
     },
     {
-      "idiom": "iphone",
-      "scale": "3x",
-      "size": "20x20"
+      "idiom" : "iphone",
+      "scale" : "3x",
+      "size" : "20x20"
     },
     {
-      "idiom": "iphone",
-      "scale": "2x",
-      "size": "29x29"
+      "idiom" : "iphone",
+      "scale" : "2x",
+      "size" : "29x29"
     },
     {
-      "idiom": "iphone",
-      "scale": "3x",
-      "size": "29x29"
+      "idiom" : "iphone",
+      "scale" : "3x",
+      "size" : "29x29"
     },
     {
-      "idiom": "iphone",
-      "scale": "2x",
-      "size": "40x40"
+      "idiom" : "iphone",
+      "scale" : "2x",
+      "size" : "40x40"
     },
     {
-      "idiom": "iphone",
-      "scale": "3x",
-      "size": "40x40"
+      "idiom" : "iphone",
+      "scale" : "3x",
+      "size" : "40x40"
     },
     {
-      "idiom": "iphone",
-      "scale": "2x",
-      "size": "60x60"
+      "filename" : "Reach5 - 120 - sans alpha.png",
+      "idiom" : "iphone",
+      "scale" : "2x",
+      "size" : "60x60"
     },
     {
-      "filename": "Logo Reach5 - 180.png",
-      "idiom": "iphone",
-      "scale": "3x",
-      "size": "60x60"
+      "filename" : "Logo Reach5 - 180.png",
+      "idiom" : "iphone",
+      "scale" : "3x",
+      "size" : "60x60"
     },
     {
-      "idiom": "ipad",
-      "scale": "1x",
-      "size": "20x20"
+      "idiom" : "ipad",
+      "scale" : "1x",
+      "size" : "20x20"
     },
     {
-      "idiom": "ipad",
-      "scale": "2x",
-      "size": "20x20"
+      "idiom" : "ipad",
+      "scale" : "2x",
+      "size" : "20x20"
     },
     {
-      "idiom": "ipad",
-      "scale": "1x",
-      "size": "29x29"
+      "idiom" : "ipad",
+      "scale" : "1x",
+      "size" : "29x29"
     },
     {
-      "idiom": "ipad",
-      "scale": "2x",
-      "size": "29x29"
+      "idiom" : "ipad",
+      "scale" : "2x",
+      "size" : "29x29"
     },
     {
-      "idiom": "ipad",
-      "scale": "1x",
-      "size": "40x40"
+      "idiom" : "ipad",
+      "scale" : "1x",
+      "size" : "40x40"
     },
     {
-      "idiom": "ipad",
-      "scale": "2x",
-      "size": "40x40"
+      "idiom" : "ipad",
+      "scale" : "2x",
+      "size" : "40x40"
     },
     {
-      "idiom": "ipad",
-      "scale": "1x",
-      "size": "76x76"
+      "idiom" : "ipad",
+      "scale" : "1x",
+      "size" : "76x76"
     },
     {
-      "filename": "Logo Reach5 - 152.png",
-      "idiom": "ipad",
-      "scale": "2x",
-      "size": "76x76"
+      "filename" : "Logo Reach5 - 152.png",
+      "idiom" : "ipad",
+      "scale" : "2x",
+      "size" : "76x76"
     },
     {
-      "idiom": "ipad",
-      "scale": "2x",
-      "size": "83.5x83.5"
+      "filename" : "Reach5 - 167 sans alpha.png",
+      "idiom" : "ipad",
+      "scale" : "2x",
+      "size" : "83.5x83.5"
     },
     {
-      "idiom": "ios-marketing",
-      "scale": "1x",
-      "size": "1024x1024"
+      "filename" : "Reach5 - 1024 - sans alpha.png",
+      "idiom" : "ios-marketing",
+      "scale" : "1x",
+      "size" : "1024x1024"
     }
   ],
-  "info": {
-    "author": "xcode",
-    "version": 1
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
   }
 }
