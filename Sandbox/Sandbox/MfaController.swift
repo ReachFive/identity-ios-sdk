@@ -29,7 +29,7 @@ class MfaController: UIViewController {
             return
         }
         AppDelegate.reachfive()
-            .listMfaCredentials(authToken: authToken)
+            .mfaListCredentials(authToken: authToken)
             .onSuccess { response in
                 self.mfaCredentialsToDisplay = response.credentials.map { MfaCredential.convert(from: $0)}
             }
@@ -38,7 +38,6 @@ class MfaController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "Enrolled credentials"
         configureHierarchy()
         configureDataSource()
         fetchMfaCredentials()
@@ -207,7 +206,7 @@ extension MfaController {
         let supplementaryRegistration = UICollectionView.SupplementaryRegistration
         <TitleSupplementaryView>(elementKind: "Mfa credentials") {
             (supplementaryView, string, indexPath) in
-            supplementaryView.label.text = "Mfa Credentials"
+            supplementaryView.label.text = "Enrolled MFA credentials"
         }
         
         listMfaCredentialsDataSource.supplementaryViewProvider = { (view, kind, index) in
@@ -272,14 +271,14 @@ struct MfaCredential: Hashable {
         hasher.combine(identifier)
     }
     
-    static func convert(from credentialItem: CredentialItem) -> MfaCredential {
-        let identifier = switch credentialItem.type {
+    static func convert(from mfaCredentialItem: MfaCredentialItem) -> MfaCredential {
+        let identifier = switch mfaCredentialItem.type {
         case .sms:
-            credentialItem.phoneNumber
+            mfaCredentialItem.phoneNumber
         case .email:
-            credentialItem.email
+            mfaCredentialItem.email
         }
-        return MfaCredential(identifier: identifier!, createdAt: credentialItem.createdAt)
+        return MfaCredential(identifier: identifier!, createdAt: mfaCredentialItem.createdAt)
     }
 }
 

@@ -370,7 +370,7 @@ public class ReachFiveApi {
         
     }
     
-    public func listMfaCredentials(
+    public func mfaListCredentials(
         authToken: AuthToken
     ) -> Future<MfaCredentialsListResponse, ReachFiveError> {
         AF
