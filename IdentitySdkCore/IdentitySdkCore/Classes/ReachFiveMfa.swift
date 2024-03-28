@@ -36,7 +36,7 @@ public class ContinueRegistration {
 }
 
 public enum MfaStartRegistrationResponse {
-    case Success(_ success: MfaRegistrationSuccess)
+    case Success(_ success: MfaCredentialItem)
     case VerificationNeeded(_ continueRegistration: ContinueRegistration)
 }
 
@@ -72,6 +72,10 @@ public extension ReachFive {
             let request = MfaVerifyPhoneRegistrationRequest(code)
             return reachFiveApi.verifyMfaPhoneRegistration(request, authToken: authToken)
         }
+    }
+    
+    func mfaListCredentials(authToken: AuthToken) -> Future<MfaCredentialsListResponse, ReachFiveError> {
+        return reachFiveApi.mfaListCredentials(authToken: authToken)
     }
     
     internal func interceptVerifyMfaCredential(_ url: URL) {
