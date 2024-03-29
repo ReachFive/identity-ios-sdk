@@ -1,10 +1,10 @@
-import Foundation
-import UIKit
-import IdentitySdkCore
 import BrightFutures
+import Foundation
+import IdentitySdkCore
+import UIKit
 
 class MfaController: UIViewController {
-    @IBOutlet weak var phoneNumberMfaRegistration: UITextField!
+    @IBOutlet var phoneNumberMfaRegistration: UITextField!
     
     var listMfaCredentialsView: UICollectionView! = nil
     
@@ -31,9 +31,8 @@ class MfaController: UIViewController {
         AppDelegate.reachfive()
             .mfaListCredentials(authToken: authToken)
             .onSuccess { response in
-                self.mfaCredentialsToDisplay = response.credentials.map { MfaCredential.convert(from: $0)}
+                self.mfaCredentialsToDisplay = response.credentials.map { MfaCredential.convert(from: $0) }
             }
-        
     }
     
     override func viewDidLoad() {
@@ -55,11 +54,10 @@ class MfaController: UIViewController {
         }
         
         let mfaAction = MfaAction(presentationAnchor: self)
-        mfaAction.mfaStart(registering: .PhoneNumber(phoneNumber), authToken: authToken).onSuccess{ res in
+        mfaAction.mfaStart(registering: .PhoneNumber(phoneNumber), authToken: authToken).onSuccess { _ in
             self.fetchMfaCredentials()
         }
     }
-    
 }
 
 class MfaAction {
@@ -69,7 +67,7 @@ class MfaAction {
         self.presentationAnchor = presentationAnchor
     }
     
-    func mfaStart(registering credential: Credential, authToken: AuthToken) -> Future<(), ReachFiveError> {
+    func mfaStart(registering credential: Credential, authToken: AuthToken) -> Future<Void, ReachFiveError> {
         let future = AppDelegate.reachfive()
             .mfaStart(registering: credential, authToken: authToken)
             .recoverWith { error in
@@ -99,8 +97,8 @@ class MfaAction {
         return future
     }
     
-    private func handleStartVerificationCode(_ resp: MfaStartRegistrationResponse) -> Future<(), ReachFiveError> {
-        let promise: Promise<(), ReachFiveError> = Promise()
+    private func handleStartVerificationCode(_ resp: MfaStartRegistrationResponse) -> Future<Void, ReachFiveError> {
+        let promise: Promise<Void, ReachFiveError> = Promise()
         switch resp {
         case let .Success(registeredCredential):
             let alert = AppDelegate.createAlert(title: "MFA \(registeredCredential.type) \(registeredCredential.friendlyName) enabled", message: "Success")
@@ -109,13 +107,13 @@ class MfaAction {
         
         case let .VerificationNeeded(continueRegistration):
             let canal =
-            switch continueRegistration.credentialType {
-            case .Email: "Email"
-            case .PhoneNumber: "SMS"
-            }
+                switch continueRegistration.credentialType {
+                case .Email: "Email"
+                case .PhoneNumber: "SMS"
+                }
             
             let alert = UIAlertController(title: "Verification Code", message: "Please enter the verification Code you got by \(canal)", preferredStyle: .alert)
-            alert.addTextField { (textField) in
+            alert.addTextField { textField in
                 textField.placeholder = "Verification code"
             }
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
@@ -131,7 +129,7 @@ class MfaAction {
                 let future = continueRegistration.verify(code: verificationCode)
                 promise.completeWith(future)
                 future
-                    .onSuccess { succ in
+                    .onSuccess { _ in
                         let alert = AppDelegate.createAlert(title: "Verify MFA \(continueRegistration.credentialType) registration", message: "Success")
                         self.presentationAnchor.present(alert, animated: true)
                     }
@@ -151,28 +149,28 @@ class MfaAction {
 
 extension MfaController {
     func createLayout() -> UICollectionViewLayout {
-        let sectionProvider = { (sectionIndex: Int,
-            layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
-                                                  heightDimension: .fractionalHeight(0.1))
-            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        let sectionProvider = { (_: Int,
+                                 _: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                                      heightDimension: .fractionalHeight(0.1))
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
                     
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.85),
-                                                  heightDimension: .absolute(250))
-            let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.85),
+                                                       heightDimension: .absolute(250))
+                let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
             
-            let section = NSCollectionLayoutSection(group: group)
-            section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+                let section = NSCollectionLayoutSection(group: group)
+                section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
 
-            let titleSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                  heightDimension: .estimated(22))
-            let titleSupplementary = NSCollectionLayoutBoundarySupplementaryItem(
-                layoutSize: titleSize,
-                elementKind: "Mfa credentials",
-                alignment: .top)
-            titleSupplementary.pinToVisibleBounds = true
-            section.boundarySupplementaryItems = [titleSupplementary]
-            return section
+                let titleSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                       heightDimension: .estimated(22))
+                let titleSupplementary = NSCollectionLayoutBoundarySupplementaryItem(
+                    layoutSize: titleSize,
+                    elementKind: "Mfa credentials",
+                    alignment: .top)
+                titleSupplementary.pinToVisibleBounds = true
+                section.boundarySupplementaryItems = [titleSupplementary]
+                return section
         }
 
         let config = UICollectionViewCompositionalLayoutConfiguration()
@@ -196,31 +194,30 @@ extension MfaController {
     }
     
     private func configureDataSource() {
-        let cellRegistration = UICollectionView.CellRegistration<CredentialCollectionViewCell, MfaCredential> { (cell, indexPath, credential) in
+        let cellRegistration = UICollectionView.CellRegistration<CredentialCollectionViewCell, MfaCredential> { cell, _, credential in
             cell.configure(with: credential)
         }
         listMfaCredentialsDataSource = UICollectionViewDiffableDataSource<Section, MfaCredential>(collectionView: listMfaCredentialsView) {
             (collectionView: UICollectionView, indexPath: IndexPath, credential: MfaCredential) -> UICollectionViewCell? in
-            return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: credential)
+            collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: credential)
         }
         let supplementaryRegistration = UICollectionView.SupplementaryRegistration
         <TitleSupplementaryView>(elementKind: "Mfa credentials") {
-            (supplementaryView, string, indexPath) in
+            (supplementaryView, _, _) in
             supplementaryView.label.text = "Enrolled MFA credentials"
         }
         
-        listMfaCredentialsDataSource.supplementaryViewProvider = { (view, kind, index) in
-            return self.listMfaCredentialsView.collectionViewLayout.collectionView?.dequeueConfiguredReusableSupplementary(
+        listMfaCredentialsDataSource.supplementaryViewProvider = { _, _, index in
+            self.listMfaCredentialsView.collectionViewLayout.collectionView?.dequeueConfiguredReusableSupplementary(
                 using: supplementaryRegistration, for: index)
         }
         currentListMfaCredentialSnapshot = NSDiffableDataSourceSnapshot
-            <Section, MfaCredential>()
+        <Section, MfaCredential>()
         currentListMfaCredentialSnapshot.appendSections([.main])
         currentListMfaCredentialSnapshot.appendItems(mfaCredentialsToDisplay)
         listMfaCredentialsDataSource.apply(currentListMfaCredentialSnapshot, animatingDifferences: false)
     }
 }
-
 
 class CredentialCollectionViewCell: UICollectionViewListCell {
     static let identifier = "CredentialCollectionViewCell"
@@ -257,9 +254,8 @@ extension CredentialCollectionViewCell {
     
         NSLayoutConstraint.activate([
             id.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            createdAt.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: spacing),
+            createdAt.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: spacing)
         ])
-
     }
 }
 
@@ -290,6 +286,8 @@ class TitleSupplementaryView: UICollectionReusableView {
         super.init(frame: frame)
         configure()
     }
+
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError()
     }

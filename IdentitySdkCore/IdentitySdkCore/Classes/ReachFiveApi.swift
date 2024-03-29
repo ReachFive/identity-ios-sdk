@@ -53,7 +53,7 @@ public class ReachFiveApi {
         "social_identities",
         "sub",
         "uid",
-        "updated_at"
+        "updated_at",
     ]
     
     public init(sdkConfig: SdkConfig) {
@@ -61,7 +61,7 @@ public class ReachFiveApi {
         decoder.keyDecodingStrategy = .convertFromSnakeCase
     }
     
-    internal func createUrl(path: String, params: [String: String?]? = nil) -> URL {
+    func createUrl(path: String, params: [String: String?]? = nil) -> URL {
         var components = URLComponents()
         components.scheme = "https"
         components.host = sdkConfig.domain
@@ -70,15 +70,15 @@ public class ReachFiveApi {
         let deviceInfo: String = [Device.current.safeDescription, Device.current.systemName, Device.current.systemVersion].compactMap { $0 }.joined(separator: " ")
         let defaultParams: [String: String] = [
             "platform": "ios",
-            //TODO read from the version.rb. Either directly or indirectly from IdentitySdkCore.h, Info.plist...
+            // TODO: read from the version.rb. Either directly or indirectly from IdentitySdkCore.h, Info.plist...
             "sdk": "6.1.0",
             "device": deviceInfo,
         ]
         
         let additionalParams = filter(params: params ?? [:])
-        let allParams: [String: String] = defaultParams.merging(additionalParams) { (current, _) in current }
+        let allParams: [String: String] = defaultParams.merging(additionalParams) { current, _ in current }
         
-        components.queryItems = allParams.map { (key, value) in URLQueryItem(name: key, value: value) }
+        components.queryItems = allParams.map { key, value in URLQueryItem(name: key, value: value) }
         // safe force-unwrap because the contract is respected:
         // If the NSURLComponents has an authority component (user, password, host or port) and a path component, then the path must either begin with "/" or be an empty string.
         return components.url!
@@ -110,9 +110,9 @@ public class ReachFiveApi {
     ) -> Future<AccessTokenResponse, ReachFiveError> {
         AF
             .request(createUrl(path: "/identity/v1/oauth/provider/token"),
-                method: .post,
-                parameters: loginProviderRequest.dictionary(),
-                encoding: JSONEncoding.default)
+                     method: .post,
+                     parameters: loginProviderRequest.dictionary(),
+                     encoding: JSONEncoding.default)
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
             .responseJson(type: AccessTokenResponse.self, decoder: decoder)
@@ -152,7 +152,7 @@ public class ReachFiveApi {
                 parameters: loginCallback.dictionary()
             )
             .redirect(using: Redirector.doNotFollow)
-            .validate(statusCode: 300...308) //TODO pas de 305/306
+            .validate(statusCode: 300 ... 308) // TODO: pas de 305/306
             .response { responseData in
                 let callbackURL = responseData.response?.allHeaderFields["Location"] as? String
                 guard let callbackURL else {
@@ -211,7 +211,7 @@ public class ReachFiveApi {
     public func verifyPhoneNumber(
         authToken: AuthToken,
         verifyPhoneNumberRequest: VerifyPhoneNumberRequest
-    ) -> Future<(), ReachFiveError> {
+    ) -> Future<Void, ReachFiveError> {
         AF
             .request(
                 createUrl(path: "/identity/v1/verify-phone-number"),
@@ -261,7 +261,7 @@ public class ReachFiveApi {
     public func updatePassword(
         authToken: AuthToken?,
         updatePasswordRequest: UpdatePasswordRequest
-    ) -> Future<(), ReachFiveError> {
+    ) -> Future<Void, ReachFiveError> {
         let headers: HTTPHeaders = authToken != nil ? tokenHeader(authToken!) : [:]
         return AF
             .request(
@@ -326,7 +326,7 @@ public class ReachFiveApi {
     public func verifyMfaEmailRegistrationPost(
         _ mfaVerifyEmailRegistrationRequest: MfaVerifyEmailRegistrationPostRequest,
         authToken: AuthToken
-    ) -> Future<(), ReachFiveError> {
+    ) -> Future<Void, ReachFiveError> {
         AF
             .request(
                 createUrl(path: "/identity/v1/mfa/credentials/emails/verify"),
@@ -341,7 +341,7 @@ public class ReachFiveApi {
     
     public func verifyMfaEmailRegistrationGet(
         _ request: MfaVerifyEmailRegistrationGetRequest
-    ) -> Future<(), ReachFiveError> {
+    ) -> Future<Void, ReachFiveError> {
         AF
             .request(
                 createUrl(path: "/identity/v1/mfa/credentials/emails/verify"),
@@ -356,7 +356,7 @@ public class ReachFiveApi {
     public func verifyMfaPhoneRegistration(
         _ mfaVerifyPhoneRegistrationRequest: MfaVerifyPhoneRegistrationRequest,
         authToken: AuthToken
-    ) -> Future<(), ReachFiveError> {
+    ) -> Future<Void, ReachFiveError> {
         AF
             .request(
                 createUrl(path: "/identity/v1/mfa/credentials/phone-numbers/verify"),
@@ -367,7 +367,6 @@ public class ReachFiveApi {
             )
             .validate(contentType: ["application/json"])
             .responseJson(decoder: decoder)
-        
     }
     
     public func mfaListCredentials(
@@ -385,19 +384,18 @@ public class ReachFiveApi {
     
     public func requestPasswordReset(
         requestPasswordResetRequest: RequestPasswordResetRequest
-    ) -> Future<(), ReachFiveError> {
+    ) -> Future<Void, ReachFiveError> {
         AF
             .request(createUrl(
                 path: "/identity/v1/forgot-password"),
-                method: .post,
-                parameters: requestPasswordResetRequest.dictionary(),
-                encoding: JSONEncoding.default
-            )
+            method: .post,
+            parameters: requestPasswordResetRequest.dictionary(),
+            encoding: JSONEncoding.default)
             .validate(contentType: ["application/json"])
             .responseJson(decoder: decoder)
     }
     
-    public func startPasswordless(_ startPasswordlessRequest: StartPasswordlessRequest) -> Future<(), ReachFiveError> {
+    public func startPasswordless(_ startPasswordlessRequest: StartPasswordlessRequest) -> Future<Void, ReachFiveError> {
         AF
             .request(
                 createUrl(path: "/identity/v1/passwordless/start"),
@@ -420,7 +418,7 @@ public class ReachFiveApi {
             .responseJson(type: PasswordlessVerifyResponse.self, decoder: decoder)
     }
     
-    public func verifyAuthCode(verifyAuthCodeRequest: VerifyAuthCodeRequest) -> Future<(), ReachFiveError> {
+    public func verifyAuthCode(verifyAuthCodeRequest: VerifyAuthCodeRequest) -> Future<Void, ReachFiveError> {
         AF
             .request(
                 createUrl(path: "/identity/v1/verify-auth-code"),
@@ -432,7 +430,7 @@ public class ReachFiveApi {
             .responseJson(decoder: decoder)
     }
     
-    public func logout() -> Future<(), ReachFiveError> {
+    public func logout() -> Future<Void, ReachFiveError> {
         AF
             .request(
                 createUrl(path: "/identity/v1/logout"),
@@ -511,7 +509,7 @@ public class ReachFiveApi {
             .responseJson(type: RegistrationOptions.self, decoder: decoder)
     }
     
-    public func registerWithWebAuthn(authToken: AuthToken, publicKeyCredential: RegistrationPublicKeyCredential, originR5: String? = nil) -> Future<(), ReachFiveError> {
+    public func registerWithWebAuthn(authToken: AuthToken, publicKeyCredential: RegistrationPublicKeyCredential, originR5: String? = nil) -> Future<Void, ReachFiveError> {
         AF
             .request(
                 createUrl(path: "/identity/v1/webauthn/registration", params: ["origin": originR5]),
@@ -536,7 +534,7 @@ public class ReachFiveApi {
             .responseJson(type: [DeviceCredential].self, decoder: decoder)
     }
     
-    public func deleteWebAuthnRegistration(id: String, authToken: AuthToken) -> Future<(), ReachFiveError> {
+    public func deleteWebAuthnRegistration(id: String, authToken: AuthToken) -> Future<Void, ReachFiveError> {
         AF
             .request(
                 createUrl(path: "/identity/v1/webauthn/registration/\(id)"),
