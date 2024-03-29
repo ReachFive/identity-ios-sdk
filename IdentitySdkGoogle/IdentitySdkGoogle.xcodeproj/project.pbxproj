@@ -13,6 +13,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2AA7C79A2BB74D1A00BEA7EA /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		3404A3ED22C2522A002FFEDB /* IdentitySdkGoogle.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IdentitySdkGoogle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3404A3F022C2522A002FFEDB /* IdentitySdkGoogle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IdentitySdkGoogle.h; sourceTree = "<group>"; };
 		3404A3F122C2522A002FFEDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -57,6 +58,7 @@
 			children = (
 				3404A3F022C2522A002FFEDB /* IdentitySdkGoogle.h */,
 				3404A3F122C2522A002FFEDB /* Info.plist */,
+				2AA7C79A2BB74D1A00BEA7EA /* PrivacyInfo.xcprivacy */,
 				3404A3F822C252C0002FFEDB /* Classes */,
 			);
 			path = IdentitySdkGoogle;
