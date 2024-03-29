@@ -56,10 +56,17 @@ class ProfileController: UIViewController {
     
     private lazy var menuItems: [OutlineItem] = {
         return [
+            OutlineItem(title: "Email"),
+            OutlineItem(title: "Phone Number"),
+            OutlineItem(title: "Custom Identifier"),
+            OutlineItem(title: "Given Name"),
+            OutlineItem(title: "Family Name"),
+            OutlineItem(title: "Last logged In"),
+            OutlineItem(title: "Method"),
+/*
             OutlineItem(title: "Compositional Layout", subitems: [
                 OutlineItem(title: "Getting Started", subitems: [
                     OutlineItem(title: "PasskeyCredentialController", viewController: PasskeyCredentialController.self),
-/*
                     OutlineItem(title: "Inset Items Grid",
                         viewController: InsetItemsGridViewController.self),
                     OutlineItem(title: "Two-Column Grid", viewController: TwoColumnViewController.self),
@@ -69,8 +76,8 @@ class ProfileController: UIViewController {
                         OutlineItem(title: "Adaptive Sections",
                             viewController: AdaptiveSectionsViewController.self)
                     ])
-*/
                 ]),
+        */
 /*
                 OutlineItem(title: "Advanced Layouts", subitems: [
                     OutlineItem(title: "Supplementary Views", subitems: [
@@ -92,15 +99,15 @@ class ProfileController: UIViewController {
                             viewController: OrthogonalScrollBehaviorViewController.self)
                     ])
                 ]),
-*/
+            */
 /*
                 OutlineItem(title: "Conference App", subitems: [
                     OutlineItem(title: "Videos",
                         viewController: ConferenceVideoSessionsViewController.self),
                     OutlineItem(title: "News", viewController: ConferenceNewsFeedViewController.self)
                 ])
-*/
             ]),
+            */
 /*
             OutlineItem(title: "Diffable Data Source", subitems: [
                 OutlineItem(title: "Mountains Search", viewController: MountainsViewController.self),
@@ -123,29 +130,37 @@ class ProfileController: UIViewController {
             OutlineItem(title: "Cell Configurations", subitems: [
                 OutlineItem(title: "Custom Configurations", viewController: CustomConfigurationViewController.self)
             ])
-*/
+        */
         ]
     }()
     
+    struct LeafItem {
+        let value: String
+//        let actions: [UIAction]
+    }
     
     class OutlineItem: Hashable {
         let title: String
         let subitems: [OutlineItem]
-        let outlineViewController: UIViewController.Type?
+        let leaf: LeafItem?
         
         init(title: String,
-             viewController: UIViewController.Type? = nil,
+             leaf: LeafItem? = nil,
              subitems: [OutlineItem] = []) {
             self.title = title
+            self.leaf = leaf
             self.subitems = subitems
-            self.outlineViewController = viewController
+        
         }
+        
         func hash(into hasher: inout Hasher) {
             hasher.combine(identifier)
         }
-        static func == (lhs: OutlineItem, rhs: OutlineItem) -> Bool {
+        
+        static func ==(lhs: OutlineItem, rhs: OutlineItem) -> Bool {
             return lhs.identifier == rhs.identifier
         }
+        
         private let identifier = UUID()
     }
     
@@ -182,7 +197,7 @@ class ProfileController: UIViewController {
             profileTabBarItem.image = SandboxTabBarController.tokenPresent
             profileTabBarItem.selectedImage = profileTabBarItem.image
         }
-        
+
 //        self.profileData.delegate = self
 //        self.profileData.dataSource = self
         
@@ -191,7 +206,7 @@ class ProfileController: UIViewController {
     }
     
     func configureCollectionView() {
-        let collectionView = UICollectionView(frame: containerView.bounds, collectionViewLayout: generateLayout())
+        let collectionView = UICollectionView(frame: containerView.bounds, collectionViewLayout: twoColumns())
         containerView.addSubview(collectionView)
         collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         collectionView.backgroundColor = .systemGroupedBackground
@@ -201,7 +216,7 @@ class ProfileController: UIViewController {
     
     func configureDataSource() {
         
-        let containerCellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, OutlineItem> { (cell, indexPath, menuItem) in
+        let containerCellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, OutlineItem>{ (cell, indexPath, menuItem) in
             // Populate the cell with our item description.
             var contentConfiguration = cell.defaultContentConfiguration()
             contentConfiguration.text = menuItem.title
@@ -213,7 +228,7 @@ class ProfileController: UIViewController {
             cell.backgroundConfiguration = UIBackgroundConfiguration.clear()
         }
         
-        let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, OutlineItem> { cell, indexPath, menuItem in
+        let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, OutlineItem>{ cell, indexPath, menuItem in
             // Populate the cell with our item description.
             var contentConfiguration = cell.defaultContentConfiguration()
             contentConfiguration.text = menuItem.title
@@ -241,6 +256,53 @@ class ProfileController: UIViewController {
         let layout = UICollectionViewCompositionalLayout.list(using: listConfiguration)
         return layout
     }
+    
+    func twoColumns() -> UICollectionViewLayout {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(44))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
+        let spacing = CGFloat(10)
+        group.interItemSpacing = .fixed(spacing)
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.interGroupSpacing = spacing
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
+        
+        let layout = UICollectionViewCompositionalLayout(section: section)
+        return layout
+    }
+    
+    func nested() -> UICollectionViewLayout {
+        let layout = UICollectionViewCompositionalLayout {
+            (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            
+            let leadingItem = NSCollectionLayoutItem(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.7),
+                    heightDimension: .fractionalHeight(1.0)))
+            leadingItem.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+            
+            let trailingItem = NSCollectionLayoutItem(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                    heightDimension: .fractionalHeight(0.3)))
+            trailingItem.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+            let trailingGroup = NSCollectionLayoutGroup.vertical(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.3),
+                    heightDimension: .fractionalHeight(1.0)),
+                subitem: trailingItem, count: 2)
+            
+            let nestedGroup = NSCollectionLayoutGroup.horizontal(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                    heightDimension: .fractionalHeight(0.4)),
+                subitems: [leadingItem, trailingGroup])
+            let section = NSCollectionLayoutSection(group: nestedGroup)
+            return section
+            
+        }
+        return layout
+    }
+    
     
     func initialSnapshot() -> NSDiffableDataSourceSectionSnapshot<OutlineItem> {
         var snapshot = NSDiffableDataSourceSectionSnapshot<OutlineItem>()
