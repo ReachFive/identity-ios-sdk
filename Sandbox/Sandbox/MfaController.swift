@@ -67,7 +67,7 @@ class MfaAction {
         self.presentationAnchor = presentationAnchor
     }
     
-    func mfaStart(registering credential: Credential, authToken: AuthToken) -> Future<Void, ReachFiveError> {
+    func mfaStart(registering credential: Credential, authToken: AuthToken) -> Future<MfaCredentialItem, ReachFiveError> {
         let future = AppDelegate.reachfive()
             .mfaStart(registering: credential, authToken: authToken)
             .recoverWith { error in
@@ -97,13 +97,13 @@ class MfaAction {
         return future
     }
     
-    private func handleStartVerificationCode(_ resp: MfaStartRegistrationResponse) -> Future<Void, ReachFiveError> {
-        let promise: Promise<Void, ReachFiveError> = Promise()
+    private func handleStartVerificationCode(_ resp: MfaStartRegistrationResponse) -> Future<MfaCredentialItem, ReachFiveError> {
+        let promise: Promise<MfaCredentialItem, ReachFiveError> = Promise()
         switch resp {
         case let .Success(registeredCredential):
             let alert = AppDelegate.createAlert(title: "MFA \(registeredCredential.type) \(registeredCredential.friendlyName) enabled", message: "Success")
             presentationAnchor.present(alert, animated: true)
-            promise.success(())
+            promise.success(registeredCredential)
         
         case let .VerificationNeeded(continueRegistration):
             let canal =
@@ -129,8 +129,8 @@ class MfaAction {
                 let future = continueRegistration.verify(code: verificationCode)
                 promise.completeWith(future)
                 future
-                    .onSuccess { _ in
-                        let alert = AppDelegate.createAlert(title: "Verify MFA \(continueRegistration.credentialType) registration", message: "Success")
+                    .onSuccess { succ in
+                        let alert = AppDelegate.createAlert(title: "Verify MFA \(succ.type) registration", message: "Success")
                         self.presentationAnchor.present(alert, animated: true)
                     }
                     .onFailure { error in

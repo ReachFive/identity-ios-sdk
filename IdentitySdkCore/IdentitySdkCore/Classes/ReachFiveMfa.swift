@@ -30,7 +30,7 @@ public class ContinueRegistration {
         self.reachfive = reachfive
     }
     
-    public func verify(code: String, freshAuthToken: AuthToken? = nil) -> Future<Void, ReachFiveError> {
+    public func verify(code: String, freshAuthToken: AuthToken? = nil) -> Future<MfaCredentialItem, ReachFiveError> {
         reachfive.mfaVerify(credentialType, code: code, authToken: freshAuthToken ?? authToken)
     }
 }
@@ -63,7 +63,7 @@ public extension ReachFive {
         }
     }
     
-    func mfaVerify(_ credentialType: CredentialType, code: String, authToken: AuthToken) -> Future<Void, ReachFiveError> {
+    func mfaVerify(_ credentialType: CredentialType, code: String, authToken: AuthToken) -> Future<MfaCredentialItem, ReachFiveError> {
         switch credentialType {
         case .Email:
             let request = MfaVerifyEmailRegistrationPostRequest(code)
@@ -80,7 +80,6 @@ public extension ReachFive {
     
     internal func interceptVerifyMfaCredential(_ url: URL) {
         let params = URLComponents(url: url, resolvingAgainstBaseURL: true)?.queryItems
-        
         if let error = params?.first(where: { $0.name == "error" })?.value {
             mfaCredentialRegistrationCallback?(.failure(.TechnicalError(reason: error, apiError: ApiError(fromQueryParams: params))))
             return

@@ -326,7 +326,7 @@ public class ReachFiveApi {
     public func verifyMfaEmailRegistrationPost(
         _ mfaVerifyEmailRegistrationRequest: MfaVerifyEmailRegistrationPostRequest,
         authToken: AuthToken
-    ) -> Future<Void, ReachFiveError> {
+    ) -> Future<MfaCredentialItem, ReachFiveError> {
         AF
             .request(
                 createUrl(path: "/identity/v1/mfa/credentials/emails/verify"),
@@ -336,7 +336,7 @@ public class ReachFiveApi {
                 headers: tokenHeader(authToken)
             )
             .validate(contentType: ["application/json"])
-            .responseJson(decoder: decoder)
+            .responseJson(type: MfaCredentialItem.self, decoder: decoder)
     }
     
     public func verifyMfaEmailRegistrationGet(
@@ -356,7 +356,7 @@ public class ReachFiveApi {
     public func verifyMfaPhoneRegistration(
         _ mfaVerifyPhoneRegistrationRequest: MfaVerifyPhoneRegistrationRequest,
         authToken: AuthToken
-    ) -> Future<Void, ReachFiveError> {
+    ) -> Future<MfaCredentialItem, ReachFiveError> {
         AF
             .request(
                 createUrl(path: "/identity/v1/mfa/credentials/phone-numbers/verify"),
@@ -366,7 +366,8 @@ public class ReachFiveApi {
                 headers: tokenHeader(authToken)
             )
             .validate(contentType: ["application/json"])
-            .responseJson(decoder: decoder)
+            .responseJson(type: MfaCredentialItem.self, decoder: decoder)
+        
     }
     
     public func mfaListCredentials(
