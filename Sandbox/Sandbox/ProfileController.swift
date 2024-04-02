@@ -55,6 +55,8 @@ class ProfileController: UIViewController {
     }
     
     private lazy var menuItems: [OutlineItem] = {
+        // voir pour faire une section par élément, avec le titre et la valeur sur deux colonnes
+        // voir comment on peut implémenter les actions
         return [
             OutlineItem(title: "Email"),
             OutlineItem(title: "Phone Number"),
@@ -206,7 +208,7 @@ class ProfileController: UIViewController {
     }
     
     func configureCollectionView() {
-        let collectionView = UICollectionView(frame: containerView.bounds, collectionViewLayout: twoColumns())
+        let collectionView = UICollectionView(frame: containerView.bounds, collectionViewLayout: twoColumnsLayout())
         containerView.addSubview(collectionView)
         collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         collectionView.backgroundColor = .systemGroupedBackground
@@ -257,7 +259,7 @@ class ProfileController: UIViewController {
         return layout
     }
     
-    func twoColumns() -> UICollectionViewLayout {
+    func twoColumnsLayout() -> UICollectionViewLayout {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
@@ -274,7 +276,8 @@ class ProfileController: UIViewController {
         return layout
     }
     
-    func nested() -> UICollectionViewLayout {
+    //voir plutôt les Orthogonal Sections
+    func nestedLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout {
             (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             
