@@ -152,7 +152,7 @@ class ProfileController: UIViewController {
             self.title = title
             self.leaf = leaf
             self.subitems = subitems
-        
+            
         }
         
         func hash(into hasher: inout Hasher) {
@@ -306,6 +306,82 @@ class ProfileController: UIViewController {
         return layout
     }
     
+    func orthogonalSectionsLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewCompositionalLayout {
+            (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            
+            let leadingItem = NSCollectionLayoutItem(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.7),
+                    heightDimension: .fractionalHeight(1.0)))
+            leadingItem.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+            
+            let trailingItem = NSCollectionLayoutItem(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                    heightDimension: .fractionalHeight(0.3)))
+            trailingItem.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+            let trailingGroup = NSCollectionLayoutGroup.vertical(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.3),
+                    heightDimension: .fractionalHeight(1.0)),
+                subitem: trailingItem, count: 2)
+            
+            let containerGroup = NSCollectionLayoutGroup.horizontal(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.85),
+                    heightDimension: .fractionalHeight(0.4)),
+                subitems: [leadingItem, trailingGroup])
+            let section = NSCollectionLayoutSection(group: containerGroup)
+            section.orthogonalScrollingBehavior = .continuous
+            
+            return section
+            
+        }
+        return layout
+    }
+    
+    func myLayout() -> UICollectionViewLayout {
+        
+        let layout = UICollectionViewCompositionalLayout {
+            (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            
+            let leadingItem = NSCollectionLayoutItem(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.7),
+                    heightDimension: .fractionalHeight(1.0)))
+            leadingItem.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+            
+            let trailingItem = NSCollectionLayoutItem(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                    heightDimension: .fractionalHeight(0.3)))
+            trailingItem.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+            let trailingGroup = NSCollectionLayoutGroup.vertical(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.3),
+                    heightDimension: .fractionalHeight(1.0)),
+                subitem: trailingItem, count: 2)
+            
+            let containerGroup = NSCollectionLayoutGroup.horizontal(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.85),
+                    heightDimension: .fractionalHeight(0.4)),
+                subitems: [leadingItem, trailingGroup])
+            let section = NSCollectionLayoutSection(group: containerGroup)
+            section.orthogonalScrollingBehavior = .continuous
+            
+            let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                    heightDimension: .estimated(44)),
+                elementKind: "section-header-element-kind",
+                alignment: .top)
+            let sectionFooter = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                    heightDimension: .estimated(44)),
+                elementKind: "section-footer-element-kind",
+                alignment: .bottom)
+            sectionHeader.pinToVisibleBounds = true
+            sectionHeader.zIndex = 2
+            section.boundarySupplementaryItems = [sectionHeader, sectionFooter]
+            
+            return section
+            
+        }
+        return layout
+    }
     
     func initialSnapshot() -> NSDiffableDataSourceSectionSnapshot<OutlineItem> {
         var snapshot = NSDiffableDataSourceSectionSnapshot<OutlineItem>()
