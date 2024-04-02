@@ -47,108 +47,40 @@ class ProfileController: UIViewController {
     @IBOutlet weak var editProfileButton: UIButton!
     @IBOutlet weak var containerView: UIView!
     
-    var dataSource: UICollectionViewDiffableDataSource<Section, OutlineItem>! = nil
+    var dataSource: UICollectionViewDiffableDataSource<Section, Row>! = nil
     var outlineCollectionView: UICollectionView! = nil
     
     enum Section {
         case main
     }
     
-    private lazy var menuItems: [OutlineItem] = {
+    private lazy var menuItems: [Row] = {
         // voir pour faire une section par élément, avec le titre et la valeur sur deux colonnes
         // voir comment on peut implémenter les actions
         return [
-            OutlineItem(title: "Email"),
-            OutlineItem(title: "Phone Number"),
-            OutlineItem(title: "Custom Identifier"),
-            OutlineItem(title: "Given Name"),
-            OutlineItem(title: "Family Name"),
-            OutlineItem(title: "Last logged In"),
-            OutlineItem(title: "Method"),
-/*
-            OutlineItem(title: "Compositional Layout", subitems: [
-                OutlineItem(title: "Getting Started", subitems: [
-                    OutlineItem(title: "PasskeyCredentialController", viewController: PasskeyCredentialController.self),
-                    OutlineItem(title: "Inset Items Grid",
-                        viewController: InsetItemsGridViewController.self),
-                    OutlineItem(title: "Two-Column Grid", viewController: TwoColumnViewController.self),
-                    OutlineItem(title: "Per-Section Layout", subitems: [
-                        OutlineItem(title: "Distinct Sections",
-                            viewController: DistinctSectionsViewController.self),
-                        OutlineItem(title: "Adaptive Sections",
-                            viewController: AdaptiveSectionsViewController.self)
-                    ])
-                ]),
-        */
-/*
-                OutlineItem(title: "Advanced Layouts", subitems: [
-                    OutlineItem(title: "Supplementary Views", subitems: [
-                        OutlineItem(title: "Item Badges",
-                            viewController: ItemBadgeSupplementaryViewController.self),
-                        OutlineItem(title: "Section Headers/Footers",
-                            viewController: SectionHeadersFootersViewController.self),
-                        OutlineItem(title: "Pinned Section Headers",
-                            viewController: PinnedSectionHeaderFooterViewController.self)
-                    ]),
-                    OutlineItem(title: "Section Background Decoration",
-                        viewController: SectionDecorationViewController.self),
-                    OutlineItem(title: "Nested Groups",
-                        viewController: NestedGroupsViewController.self),
-                    OutlineItem(title: "Orthogonal Sections", subitems: [
-                        OutlineItem(title: "Orthogonal Sections",
-                            viewController: OrthogonalScrollingViewController.self),
-                        OutlineItem(title: "Orthogonal Section Behaviors",
-                            viewController: OrthogonalScrollBehaviorViewController.self)
-                    ])
-                ]),
-            */
-/*
-                OutlineItem(title: "Conference App", subitems: [
-                    OutlineItem(title: "Videos",
-                        viewController: ConferenceVideoSessionsViewController.self),
-                    OutlineItem(title: "News", viewController: ConferenceNewsFeedViewController.self)
-                ])
-            ]),
-            */
-/*
-            OutlineItem(title: "Diffable Data Source", subitems: [
-                OutlineItem(title: "Mountains Search", viewController: MountainsViewController.self),
-                OutlineItem(title: "Settings: Wi-Fi", viewController: WiFiSettingsViewController.self),
-                OutlineItem(title: "Insertion Sort Visualization",
-                    viewController: InsertionSortViewController.self),
-                OutlineItem(title: "UITableView: Editing",
-                    viewController: TableViewEditingViewController.self)
-            ]),
-            OutlineItem(title: "Lists", subitems: [
-                OutlineItem(title: "Simple List", viewController: SimpleListViewController.self),
-                OutlineItem(title: "Reorderable List", viewController: ReorderableListViewController.self),
-                OutlineItem(title: "List Appearances", viewController: ListAppearancesViewController.self),
-                OutlineItem(title: "List with Custom Cells", viewController: CustomCellListViewController.self)
-            ]),
-            OutlineItem(title: "Outlines", subitems: [
-                OutlineItem(title: "Emoji Explorer", viewController: EmojiExplorerViewController.self),
-                OutlineItem(title: "Emoji Explorer - List", viewController: EmojiExplorerListViewController.self)
-            ]),
-            OutlineItem(title: "Cell Configurations", subitems: [
-                OutlineItem(title: "Custom Configurations", viewController: CustomConfigurationViewController.self)
-            ])
-        */
+            Row(title: "Email"),
+            Row(title: "Phone Number"),
+            Row(title: "Custom Identifier"),
+            Row(title: "Given Name"),
+            Row(title: "Family Name"),
+            Row(title: "Last logged In"),
+            Row(title: "Method"),
         ]
     }()
     
-    struct LeafItem {
+    struct Value {
         let value: String
 //        let actions: [UIAction]
     }
     
-    class OutlineItem: Hashable {
+    class Row: Hashable {
         let title: String
-        let subitems: [OutlineItem]
-        let leaf: LeafItem?
+        let subitems: [Row]
+        let leaf: Value?
         
         init(title: String,
-             leaf: LeafItem? = nil,
-             subitems: [OutlineItem] = []) {
+             leaf: Value? = nil,
+             subitems: [Row] = []) {
             self.title = title
             self.leaf = leaf
             self.subitems = subitems
@@ -159,7 +91,7 @@ class ProfileController: UIViewController {
             hasher.combine(identifier)
         }
         
-        static func ==(lhs: OutlineItem, rhs: OutlineItem) -> Bool {
+        static func ==(lhs: Row, rhs: Row) -> Bool {
             return lhs.identifier == rhs.identifier
         }
         
@@ -208,7 +140,7 @@ class ProfileController: UIViewController {
     }
     
     func configureCollectionView() {
-        let collectionView = UICollectionView(frame: containerView.bounds, collectionViewLayout: twoColumnsLayout())
+        let collectionView = UICollectionView(frame: containerView.bounds, collectionViewLayout: myLayout())
         containerView.addSubview(collectionView)
         collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         collectionView.backgroundColor = .systemGroupedBackground
@@ -218,7 +150,7 @@ class ProfileController: UIViewController {
     
     func configureDataSource() {
         
-        let containerCellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, OutlineItem>{ (cell, indexPath, menuItem) in
+        let containerCellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Row>{ (cell, indexPath, menuItem) in
             // Populate the cell with our item description.
             var contentConfiguration = cell.defaultContentConfiguration()
             contentConfiguration.text = menuItem.title
@@ -230,7 +162,7 @@ class ProfileController: UIViewController {
             cell.backgroundConfiguration = UIBackgroundConfiguration.clear()
         }
         
-        let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, OutlineItem>{ cell, indexPath, menuItem in
+        let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Row>{ cell, indexPath, menuItem in
             // Populate the cell with our item description.
             var contentConfiguration = cell.defaultContentConfiguration()
             contentConfiguration.text = menuItem.title
@@ -238,8 +170,8 @@ class ProfileController: UIViewController {
             cell.backgroundConfiguration = UIBackgroundConfiguration.clear()
         }
         
-        dataSource = UICollectionViewDiffableDataSource<Section, OutlineItem>(collectionView: outlineCollectionView) {
-            (collectionView: UICollectionView, indexPath: IndexPath, item: OutlineItem) -> UICollectionViewCell? in
+        dataSource = UICollectionViewDiffableDataSource<Section, Row>(collectionView: outlineCollectionView) {
+            (collectionView: UICollectionView, indexPath: IndexPath, item: Row) -> UICollectionViewCell? in
             // Return the cell.
             if item.subitems.isEmpty {
                 return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
@@ -343,26 +275,19 @@ class ProfileController: UIViewController {
             (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             
             let leadingItem = NSCollectionLayoutItem(
-                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.7),
-                    heightDimension: .fractionalHeight(1.0)))
-            leadingItem.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1.0)))
+//            leadingItem.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
             
             let trailingItem = NSCollectionLayoutItem(
-                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .fractionalHeight(0.3)))
-            trailingItem.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-            let trailingGroup = NSCollectionLayoutGroup.vertical(
-                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.3),
-                    heightDimension: .fractionalHeight(1.0)),
-                subitem: trailingItem, count: 2)
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1.0)))
+//            trailingItem.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
             
-            let containerGroup = NSCollectionLayoutGroup.horizontal(
-                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.85),
-                    heightDimension: .fractionalHeight(0.4)),
-                subitems: [leadingItem, trailingGroup])
-            let section = NSCollectionLayoutSection(group: containerGroup)
-            section.orthogonalScrollingBehavior = .continuous
-            
+            let nestedGroup = NSCollectionLayoutGroup.horizontal(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(44)),
+                subitems: [leadingItem, trailingItem])
+            let section = NSCollectionLayoutSection(group: nestedGroup)
+
+/*
             let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                     heightDimension: .estimated(44)),
@@ -376,6 +301,7 @@ class ProfileController: UIViewController {
             sectionHeader.pinToVisibleBounds = true
             sectionHeader.zIndex = 2
             section.boundarySupplementaryItems = [sectionHeader, sectionFooter]
+        */
             
             return section
             
@@ -383,10 +309,10 @@ class ProfileController: UIViewController {
         return layout
     }
     
-    func initialSnapshot() -> NSDiffableDataSourceSectionSnapshot<OutlineItem> {
-        var snapshot = NSDiffableDataSourceSectionSnapshot<OutlineItem>()
+    func initialSnapshot() -> NSDiffableDataSourceSectionSnapshot<Row> {
+        var snapshot = NSDiffableDataSourceSectionSnapshot<Row>()
         
-        func addItems(_ menuItems: [OutlineItem], to parent: OutlineItem?) {
+        func addItems(_ menuItems: [Row], to parent: Row?) {
             snapshot.append(menuItems, to: parent)
             for menuItem in menuItems where !menuItem.subitems.isEmpty {
                 addItems(menuItem.subitems, to: menuItem)
