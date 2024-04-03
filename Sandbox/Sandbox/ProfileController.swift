@@ -18,15 +18,8 @@ class ProfileController: UIViewController {
     var authToken: AuthToken?
     var profile: Profile = Profile() {
         didSet {
-            self.propertiesToDisplay = [
-                Field(name: "Email", value: profile.email?.appending(profile.emailVerified == true ? " ✔︎" : " ✘")),
-                Field(name: "Phone Number", value: profile.phoneNumber?.appending(profile.phoneNumberVerified == true ? " ✔︎" : " ✘")),
-                Field(name: "Custom Identifier", value: profile.customIdentifier),
-                Field(name: "Given Name", value: profile.givenName),
-                Field(name: "Family Name", value: profile.familyName),
-                Field(name: "Last logged In", value: profile.loginSummary?.lastLogin.map { date in self.format(date: date) } ?? ""),
-                Field(name: "Method", value: profile.loginSummary?.lastProvider)
-            ]
+            let snapshot = snapshot(profile: profile)
+            self.dataSource.apply(snapshot, to: .main, animatingDifferences: true)
         }
     }
     
@@ -54,23 +47,24 @@ class ProfileController: UIViewController {
         case main
     }
     
-    private lazy var menuItems: [Row] = {
-        // voir pour faire une section par élément, avec le titre et la valeur sur deux colonnes
-        // voir comment on peut implémenter les actions
+    private func rows(profile: Profile) -> [Row] {
         return [
-            Row(title: "Email"),
-            Row(title: "Phone Number"),
-            Row(title: "Custom Identifier"),
-            Row(title: "Given Name"),
-            Row(title: "Family Name"),
-            Row(title: "Last logged In"),
-            Row(title: "Method"),
+            Row(title: "Email", leaf: Value(profile.email?.appending(profile.emailVerified == true ? " ✔︎" : " ✘"))),
+            Row(title: "Phone Number", leaf: Value(profile.phoneNumber?.appending(profile.phoneNumberVerified == true ? " ✔︎" : " ✘"))),
+            Row(title: "Custom Identifier", leaf: Value(profile.customIdentifier)),
+            Row(title: "Given Name", leaf: Value(profile.givenName)),
+            Row(title: "Family Name", leaf: Value(profile.familyName)),
+            Row(title: "Last logged In", leaf: Value(profile.loginSummary?.lastLogin.map { date in self.format(date: date) } ?? "")),
+            Row(title: "Method", leaf: Value(profile.loginSummary?.lastProvider)),
         ]
-    }()
+    }
     
-    struct Value {
-        let value: String
+    class Value {
+        let value: String?
 //        let actions: [UIAction]
+        init(_ value: String?) {
+            self.value = value
+        }
     }
     
     class Row: Hashable {
@@ -163,9 +157,11 @@ class ProfileController: UIViewController {
         }
         
         let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Row>{ cell, indexPath, menuItem in
+            print("row: \(menuItem.title): val: \(menuItem.leaf?.value)")
             // Populate the cell with our item description.
             var contentConfiguration = cell.defaultContentConfiguration()
-            contentConfiguration.text = menuItem.title
+            contentConfiguration.text = "\(menuItem.title) \(menuItem.leaf?.value)"
+            contentConfiguration.secondaryText = menuItem.leaf?.value
             cell.contentConfiguration = contentConfiguration
             cell.backgroundConfiguration = UIBackgroundConfiguration.clear()
         }
@@ -181,7 +177,7 @@ class ProfileController: UIViewController {
         }
         
         // load our initial data
-        let snapshot = initialSnapshot()
+        let snapshot = snapshot(profile: profile)
         self.dataSource.apply(snapshot, to: .main, animatingDifferences: false)
     }
     
@@ -309,8 +305,9 @@ class ProfileController: UIViewController {
         return layout
     }
     
-    func initialSnapshot() -> NSDiffableDataSourceSectionSnapshot<Row> {
+    func snapshot(profile: Profile) -> NSDiffableDataSourceSectionSnapshot<Row> {
         var snapshot = NSDiffableDataSourceSectionSnapshot<Row>()
+        let rows = rows(profile: profile)
         
         func addItems(_ menuItems: [Row], to parent: Row?) {
             snapshot.append(menuItems, to: parent)
@@ -319,7 +316,7 @@ class ProfileController: UIViewController {
             }
         }
         
-        addItems(menuItems, to: nil)
+        addItems(rows, to: nil)
         return snapshot
     }
     
