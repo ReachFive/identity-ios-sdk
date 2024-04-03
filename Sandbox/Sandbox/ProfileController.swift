@@ -34,14 +34,13 @@ class ProfileController: UIViewController {
     @IBOutlet weak var otherOptions: UITableView!
     
     @IBOutlet weak var profileTabBarItem: UITabBarItem!
-    @IBOutlet weak var collection: UICollectionView!
+    @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var mfaButton: UIButton!
     @IBOutlet weak var passkeyButton: UIButton!
     @IBOutlet weak var editProfileButton: UIButton!
     @IBOutlet weak var containerView: UIView!
     
     var dataSource: UICollectionViewDiffableDataSource<Section, Row>! = nil
-    var outlineCollectionView: UICollectionView! = nil
     
     enum Section {
         case main
@@ -134,11 +133,7 @@ class ProfileController: UIViewController {
     }
     
     func configureCollectionView() {
-        let collectionView = UICollectionView(frame: containerView.bounds, collectionViewLayout: myLayout())
-        containerView.addSubview(collectionView)
-        collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        collectionView.backgroundColor = .systemGroupedBackground
-        self.outlineCollectionView = collectionView
+        collectionView.collectionViewLayout = myLayout()
         collectionView.delegate = self
     }
     
@@ -166,7 +161,7 @@ class ProfileController: UIViewController {
             cell.backgroundConfiguration = UIBackgroundConfiguration.clear()
         }
         
-        dataSource = UICollectionViewDiffableDataSource<Section, Row>(collectionView: outlineCollectionView) {
+        dataSource = UICollectionViewDiffableDataSource<Section, Row>(collectionView: collectionView) {
             (collectionView: UICollectionView, indexPath: IndexPath, item: Row) -> UICollectionViewCell? in
             // Return the cell.
             if item.subitems.isEmpty {

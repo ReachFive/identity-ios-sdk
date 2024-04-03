@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Gi6-Pt-F8W">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Gi6-Pt-F8W">
     <device id="retina6_72" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -269,7 +270,7 @@
                                         <rect key="frame" x="0.0" y="50" width="432" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HyK-Am-JUA" id="VRc-NK-UUF">
-                                            <rect key="frame" x="0.0" y="0.0" width="432" height="43.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="432" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -541,26 +542,43 @@
                                     <action selector="logoutAction:" destination="85A-IF-9ED" eventType="touchUpInside" id="eaC-wu-1hp"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2XT-WH-hJZ">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="29s-lf-Xpx">
                                 <rect key="frame" x="0.0" y="103" width="430" height="533"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </view>
+                                <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="bnb-f3-wCc">
+                                    <size key="itemSize" width="129" height="125"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="6xd-bN-LqB">
+                                        <rect key="frame" x="0.0" y="0.0" width="129" height="125"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="FQi-lE-eVh">
+                                            <rect key="frame" x="0.0" y="0.0" width="129" height="125"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="129" height="125"/>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ss7-L2-u8Z"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="60P-2D-hb5" firstAttribute="centerX" secondItem="ss7-L2-u8Z" secondAttribute="centerX" id="0MD-q9-pzy"/>
-                            <constraint firstItem="ss7-L2-u8Z" firstAttribute="trailing" secondItem="2XT-WH-hJZ" secondAttribute="trailing" id="Ak0-zq-8zC"/>
-                            <constraint firstItem="2XT-WH-hJZ" firstAttribute="top" secondItem="ss7-L2-u8Z" secondAttribute="top" id="E8G-fd-4VO"/>
-                            <constraint firstItem="60P-2D-hb5" firstAttribute="top" secondItem="2XT-WH-hJZ" secondAttribute="bottom" constant="8" symbolic="YES" id="EBP-9Z-UXW"/>
+                            <constraint firstItem="29s-lf-Xpx" firstAttribute="leading" secondItem="ss7-L2-u8Z" secondAttribute="leading" id="EXV-MP-Ww3"/>
                             <constraint firstItem="lsY-vN-hQ5" firstAttribute="centerX" secondItem="ss7-L2-u8Z" secondAttribute="centerX" id="HRI-Ay-ObQ"/>
                             <constraint firstItem="lsY-vN-hQ5" firstAttribute="top" secondItem="kej-VG-Gqk" secondAttribute="bottom" constant="15" id="ItN-qZ-Jkn"/>
+                            <constraint firstItem="ss7-L2-u8Z" firstAttribute="trailing" secondItem="29s-lf-Xpx" secondAttribute="trailing" id="UO6-r9-JP1"/>
                             <constraint firstItem="ss7-L2-u8Z" firstAttribute="bottom" secondItem="lsY-vN-hQ5" secondAttribute="bottom" constant="20" id="YfQ-Z2-aWj"/>
-                            <constraint firstItem="2XT-WH-hJZ" firstAttribute="leading" secondItem="ss7-L2-u8Z" secondAttribute="leading" id="Zrm-ho-es9"/>
                             <constraint firstItem="kej-VG-Gqk" firstAttribute="centerX" secondItem="ss7-L2-u8Z" secondAttribute="centerX" id="dkk-bv-Vkh"/>
                             <constraint firstItem="kej-VG-Gqk" firstAttribute="top" secondItem="kDa-mS-HRu" secondAttribute="bottom" constant="15" id="fSx-EM-xoy"/>
                             <constraint firstItem="kDa-mS-HRu" firstAttribute="centerX" secondItem="ss7-L2-u8Z" secondAttribute="centerX" id="qLp-PR-Akq"/>
                             <constraint firstItem="kDa-mS-HRu" firstAttribute="top" secondItem="60P-2D-hb5" secondAttribute="bottom" constant="15" id="t61-r5-r47"/>
+                            <constraint firstItem="29s-lf-Xpx" firstAttribute="top" secondItem="ss7-L2-u8Z" secondAttribute="top" id="uMF-r3-1Ie"/>
+                            <constraint firstItem="60P-2D-hb5" firstAttribute="top" secondItem="29s-lf-Xpx" secondAttribute="bottom" constant="8" symbolic="YES" id="ysQ-kb-ER8"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Profile" image="person.crop.circle.badge.xmark" catalog="system" selectedImage="person.crop.circle.fill.badge.xmark" id="ahA-UT-aB7"/>
@@ -573,7 +591,7 @@
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="containerView" destination="2XT-WH-hJZ" id="dL4-q8-PZs"/>
+                        <outlet property="collectionView" destination="29s-lf-Xpx" id="au9-b8-5I8"/>
                         <outlet property="editProfileButton" destination="60P-2D-hb5" id="gu9-8d-1wM"/>
                         <outlet property="mfaButton" destination="kej-VG-Gqk" id="N4c-tR-2Df"/>
                         <outlet property="passkeyButton" destination="kDa-mS-HRu" id="lAp-cx-LDH"/>
@@ -1561,12 +1579,15 @@
     </scenes>
     <resources>
         <image name="Reach5" width="821.427978515625" height="321.42800903320312"/>
-        <image name="faceid" catalog="system" width="32" height="32"/>
-        <image name="list.bullet.clipboard" catalog="system" width="32" height="32"/>
-        <image name="person.crop.circle.badge.xmark" catalog="system" width="32" height="32"/>
-        <image name="person.crop.circle.fill.badge.xmark" catalog="system" width="32" height="32"/>
+        <image name="faceid" catalog="system" width="128" height="115"/>
+        <image name="list.bullet.clipboard" catalog="system" width="98" height="128"/>
+        <image name="person.crop.circle.badge.xmark" catalog="system" width="128" height="114"/>
+        <image name="person.crop.circle.fill.badge.xmark" catalog="system" width="128" height="114"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGroupedBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
