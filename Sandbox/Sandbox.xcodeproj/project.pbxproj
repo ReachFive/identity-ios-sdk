@@ -12,6 +12,7 @@
 		2A1079E929721DAC00431655 /* NativePasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1079E829721DAC00431655 /* NativePasswordController.swift */; };
 		2A33F30B2A016B1D00D05EB1 /* LoginWKWebviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A33F30A2A016B1D00D05EB1 /* LoginWKWebviewController.swift */; };
 		2A33F30D2A01740600D05EB1 /* LoginCustomWebviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A33F30C2A01740600D05EB1 /* LoginCustomWebviewController.swift */; };
+		2A43D4302BBD9D47004287DE /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A43D42F2BBD9D47004287DE /* ProfileCell.swift */; };
 		2A52203B297F187D00815558 /* SandboxTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A52203A297F187D00815558 /* SandboxTabBarController.swift */; };
 		2A9C6BCA298AC2CE00BBD80F /* Pods_Sandbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E55CD881F31583F8D3480D8 /* Pods_Sandbox.framework */; };
 		2AA4B5902975B3920001747C /* DemoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA4B58F2975B3920001747C /* DemoController.swift */; };
@@ -42,6 +43,7 @@
 		2A18F2C4293E6C6F007C824C /* Sandbox.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Sandbox.entitlements; sourceTree = "<group>"; };
 		2A33F30A2A016B1D00D05EB1 /* LoginWKWebviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWKWebviewController.swift; sourceTree = "<group>"; };
 		2A33F30C2A01740600D05EB1 /* LoginCustomWebviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCustomWebviewController.swift; sourceTree = "<group>"; };
+		2A43D42F2BBD9D47004287DE /* ProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCell.swift; sourceTree = "<group>"; };
 		2A52203A297F187D00815558 /* SandboxTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SandboxTabBarController.swift; sourceTree = "<group>"; };
 		2AA4B58F2975B3920001747C /* DemoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoController.swift; sourceTree = "<group>"; };
 		2AFF7DE8296F1EB900514B47 /* ActionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionController.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				99FF44312B72884800DDCAAE /* PasskeyCredentialController.swift */,
 				2A0757FA296F69E30072869F /* PasskeyNonDiscoverableController.swift */,
 				3417FF6D22FB06E50009EC84 /* PasswordlessController.swift */,
+				2A43D42F2BBD9D47004287DE /* ProfileCell.swift */,
 				99E4472E2B863AB300EC7559 /* ProfileContentTableView.swift */,
 				3414A7CC22DDD39C00CF393A /* ProfileController.swift */,
 				2A52203A297F187D00815558 /* SandboxTabBarController.swift */,
@@ -269,6 +272,7 @@
 				34797ABD22A9607D00ED093C /* SignupController.swift in Sources */,
 				3417FF7022FB11CD0009EC84 /* LoginWithPasswordController.swift in Sources */,
 				34173200229D6B6400681CFD /* LoginWithProvidersController.swift in Sources */,
+				2A43D4302BBD9D47004287DE /* ProfileCell.swift in Sources */,
 				2A52203B297F187D00815558 /* SandboxTabBarController.swift in Sources */,
 				2AFF7DE9296F1EB900514B47 /* ActionController.swift in Sources */,
 				349E16EC230BEBBF002EA06B /* UpdatePasswordController.swift in Sources */,
