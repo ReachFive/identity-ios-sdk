@@ -16,12 +16,9 @@ import BrightFutures
 //      - Ajouter des infos sur le jeton dans une nouvelle page
 class ProfileController: UIViewController {
     var authToken: AuthToken?
-    var profile: Profile = Profile() {
-        didSet {
-            let snapshot = snapshot(profile: profile)
-            self.dataSource.apply(snapshot, to: .main, animatingDifferences: true)
-        }
-    }
+    var profile: Profile = Profile()
+    var passkeys: [DeviceCredential] = []
+    var mfaCredentials: [MfaCredentialItem] = []
     
     var clearTokenObserver: NSObjectProtocol?
     var setTokenObserver: NSObjectProtocol?
@@ -46,7 +43,7 @@ class ProfileController: UIViewController {
         case main
     }
     
-    private func rows(profile: Profile) -> [Row] {
+    private func rows() -> [Row] {
         return [
             Row(title: "Email", leaf: Value(profile.email?.appending(profile.emailVerified == true ? " ✔︎" : " ✘"))),
             Row(title: "Phone Number", leaf: Value(profile.phoneNumber?.appending(profile.phoneNumberVerified == true ? " ✔︎" : " ✘"))),
@@ -55,6 +52,8 @@ class ProfileController: UIViewController {
             Row(title: "Family Name", leaf: Value(profile.familyName)),
             Row(title: "Last logged In", leaf: Value(profile.loginSummary?.lastLogin.map { date in self.format(date: date) } ?? "")),
             Row(title: "Method", leaf: Value(profile.loginSummary?.lastProvider)),
+            Row(title: "Passkeys", subitems: passkeys.map { passkey in Row(title: passkey.friendlyName) }),
+            Row(title: "Mfa", subitems: mfaCredentials.map { mfa in Row(title: mfa.friendlyName) }),
         ]
     }
     
@@ -171,7 +170,7 @@ class ProfileController: UIViewController {
         }
         
         // load our initial data
-        let snapshot = snapshot(profile: profile)
+        let snapshot = snapshot()
         self.dataSource.apply(snapshot, to: .main, animatingDifferences: false)
     }
     
@@ -181,130 +180,16 @@ class ProfileController: UIViewController {
         return layout
     }
     
-    func twoColumnsLayout() -> UICollectionViewLayout {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(44))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
-        let spacing = CGFloat(10)
-        group.interItemSpacing = .fixed(spacing)
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.interGroupSpacing = spacing
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
-        
-        let layout = UICollectionViewCompositionalLayout(section: section)
-        return layout
-    }
-    
-    //voir plutôt les Orthogonal Sections
-    func nestedLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout {
-            (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            
-            let leadingItem = NSCollectionLayoutItem(
-                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.7),
-                    heightDimension: .fractionalHeight(1.0)))
-            leadingItem.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-            
-            let trailingItem = NSCollectionLayoutItem(
-                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .fractionalHeight(0.3)))
-            trailingItem.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-            let trailingGroup = NSCollectionLayoutGroup.vertical(
-                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.3),
-                    heightDimension: .fractionalHeight(1.0)),
-                subitem: trailingItem, count: 2)
-            
-            let nestedGroup = NSCollectionLayoutGroup.horizontal(
-                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .fractionalHeight(0.4)),
-                subitems: [leadingItem, trailingGroup])
-            let section = NSCollectionLayoutSection(group: nestedGroup)
-            return section
-            
-        }
-        return layout
-    }
-    
-    func orthogonalSectionsLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout {
-            (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            
-            let leadingItem = NSCollectionLayoutItem(
-                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.7),
-                    heightDimension: .fractionalHeight(1.0)))
-            leadingItem.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-            
-            let trailingItem = NSCollectionLayoutItem(
-                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .fractionalHeight(0.3)))
-            trailingItem.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-            let trailingGroup = NSCollectionLayoutGroup.vertical(
-                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.3),
-                    heightDimension: .fractionalHeight(1.0)),
-                subitem: trailingItem, count: 2)
-            
-            let containerGroup = NSCollectionLayoutGroup.horizontal(
-                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.85),
-                    heightDimension: .fractionalHeight(0.4)),
-                subitems: [leadingItem, trailingGroup])
-            let section = NSCollectionLayoutSection(group: containerGroup)
-            section.orthogonalScrollingBehavior = .continuous
-            
-            return section
-            
-        }
-        return layout
-    }
-    
-    func myLayout() -> UICollectionViewLayout {
-        
-        let layout = UICollectionViewCompositionalLayout {
-            (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            
-            let leadingItem = NSCollectionLayoutItem(
-                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1.0)))
-//            leadingItem.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-            
-            let trailingItem = NSCollectionLayoutItem(
-                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1.0)))
-//            trailingItem.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-            
-            let nestedGroup = NSCollectionLayoutGroup.horizontal(
-                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(44)),
-                subitems: [leadingItem, trailingItem])
-            let section = NSCollectionLayoutSection(group: nestedGroup)
-
-/*
-            let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
-                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .estimated(44)),
-                elementKind: "section-header-element-kind",
-                alignment: .top)
-            let sectionFooter = NSCollectionLayoutBoundarySupplementaryItem(
-                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .estimated(44)),
-                elementKind: "section-footer-element-kind",
-                alignment: .bottom)
-            sectionHeader.pinToVisibleBounds = true
-            sectionHeader.zIndex = 2
-            section.boundarySupplementaryItems = [sectionHeader, sectionFooter]
-        */
-            
-            return section
-            
-        }
-        return layout
-    }
-    
-    func snapshot(profile: Profile) -> NSDiffableDataSourceSectionSnapshot<Row> {
+    func snapshot() -> NSDiffableDataSourceSectionSnapshot<Row> {
+        print("snapshot")
         var snapshot = NSDiffableDataSourceSectionSnapshot<Row>()
-        let rows = rows(profile: profile)
+        let rows = rows()
         
         func addItems(_ menuItems: [Row], to parent: Row?) {
             snapshot.append(menuItems, to: parent)
+            for menuItem in menuItems {
+                print("\(menuItem.title): \(menuItem.leaf?.value). \(menuItem.subitems)")
+            }
             for menuItem in menuItems where !menuItem.subitems.isEmpty {
                 addItems(menuItem.subitems, to: menuItem)
             }
@@ -331,11 +216,11 @@ class ProfileController: UIViewController {
             .getProfile(authToken: authToken)
             .onSuccess { profile in
                 self.profile = profile
-//                self.profileData.reloadData()
-                self.setStatusImage(authToken: authToken)
                 self.mfaButton.isHidden = false
                 self.editProfileButton.isHidden = false
                 self.passkeyButton.isHidden = false
+                
+                self.fetchExtraProfileData(authToken: authToken)
             }
             .onFailure { error in
                 self.didLogout()
@@ -351,18 +236,31 @@ class ProfileController: UIViewController {
             }
     }
     
-    private func setStatusImage(authToken: AuthToken) {
+    private func fetchExtraProfileData(authToken: AuthToken) {
         // Use listWebAuthnCredentials to test if token is fresh
         // A fresh token is also needed for updating the profile and registering MFA credentials
-        AppDelegate.reachfive().listWebAuthnCredentials(authToken: authToken).onSuccess { _ in
+        AppDelegate.reachfive().listWebAuthnCredentials(authToken: authToken)
+            .onSuccess { passkeys in
+                self.passkeys = passkeys
                 self.passkeyButton.isEnabled = true
                 self.profileTabBarItem.image = SandboxTabBarController.loggedIn
                 self.profileTabBarItem.selectedImage = self.profileTabBarItem.image
             }
-            .onFailure { error in
+            .onFailure { _ in
                 self.passkeyButton.isEnabled = false
                 self.profileTabBarItem.image = SandboxTabBarController.loggedInButNotFresh
                 self.profileTabBarItem.selectedImage = self.profileTabBarItem.image
+            }
+            .onComplete { _ in
+                AppDelegate.reachfive()
+                    .mfaListCredentials(authToken: authToken)
+                    .onSuccess { response in
+                        self.mfaCredentials = response.credentials
+                    }
+                    .onComplete { _ in
+                        let snapshot = self.snapshot()
+                        self.dataSource.apply(snapshot, to: .main, animatingDifferences: true)
+                    }
             }
     }
     
@@ -378,7 +276,6 @@ class ProfileController: UIViewController {
         passkeyButton.isHidden = true
         mfaButton.isHidden = true
         editProfileButton.isHidden = true
-//        self.profileData.reloadData()
     }
     
     @IBAction func logoutAction(_ sender: Any) {
