@@ -43,6 +43,8 @@ class ProfileController: UIViewController {
         case main
     }
     
+    static let sectionHeaderElementKind = "section-header-element-kind"
+    
     private func rows() -> [Row] {
         return [
             Row(title: "Email", leaf: Value(profile.email?.appending(profile.emailVerified == true ? " ✔︎" : " ✘"))),
@@ -159,6 +161,16 @@ class ProfileController: UIViewController {
             cell.backgroundConfiguration = UIBackgroundConfiguration.clear()
         }
         
+        let headerRegistration = UICollectionView.SupplementaryRegistration
+        <TitleSupplementaryView>(elementKind: ProfileController.sectionHeaderElementKind) {
+            (supplementaryView, string, indexPath) in
+            supplementaryView.label.text = "\(string) for section \(indexPath.section)"
+            supplementaryView.label.textAlignment = .natural
+//            supplementaryView.backgroundColor = .lightGray
+//            supplementaryView.layer.borderColor = UIColor.black.cgColor
+            supplementaryView.layer.borderWidth = 1.0
+        }
+                
         dataSource = UICollectionViewDiffableDataSource<Section, Row>(collectionView: collectionView) {
             (collectionView: UICollectionView, indexPath: IndexPath, item: Row) -> UICollectionViewCell? in
             // Return the cell.
@@ -169,14 +181,38 @@ class ProfileController: UIViewController {
             }
         }
         
+        dataSource.supplementaryViewProvider = { (view, kind, index) in
+            return self.collectionView.dequeueConfiguredReusableSupplementary(
+                using: headerRegistration, for: index)
+        }
+        
         // load our initial data
         let snapshot = snapshot()
         self.dataSource.apply(snapshot, to: .main, animatingDifferences: false)
     }
     
     func listLayout() -> UICollectionViewLayout {
-        let listConfiguration = UICollectionLayoutListConfiguration(appearance: .sidebar)
-        let layout = UICollectionViewCompositionalLayout.list(using: listConfiguration)
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                             heightDimension: .fractionalHeight(1.0))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                              heightDimension: .absolute(44))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+
+        let section = NSCollectionLayoutSection(group: group)
+        section.interGroupSpacing = 5
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
+
+        let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                     heightDimension: .estimated(44))
+        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerFooterSize,
+            elementKind: ProfileController.sectionHeaderElementKind,
+            alignment: .top)
+        section.boundarySupplementaryItems = [sectionHeader]
+
+        let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
     }
     
