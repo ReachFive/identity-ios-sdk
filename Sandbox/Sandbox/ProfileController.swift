@@ -133,7 +133,7 @@ class ProfileController: UIViewController {
     }
     
     func configureCollectionView() {
-        collectionView.collectionViewLayout = myLayout()
+        collectionView.collectionViewLayout = listLayout()
         collectionView.delegate = self
     }
     
@@ -152,10 +152,9 @@ class ProfileController: UIViewController {
         }
         
         let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Row>{ cell, indexPath, menuItem in
-            print("row: \(menuItem.title): val: \(menuItem.leaf?.value)")
             // Populate the cell with our item description.
             var contentConfiguration = cell.defaultContentConfiguration()
-            contentConfiguration.text = "\(menuItem.title) \(menuItem.leaf?.value)"
+            contentConfiguration.text = menuItem.title
             contentConfiguration.secondaryText = menuItem.leaf?.value
             cell.contentConfiguration = contentConfiguration
             cell.backgroundConfiguration = UIBackgroundConfiguration.clear()
@@ -176,7 +175,7 @@ class ProfileController: UIViewController {
         self.dataSource.apply(snapshot, to: .main, animatingDifferences: false)
     }
     
-    func generateLayout() -> UICollectionViewLayout {
+    func listLayout() -> UICollectionViewLayout {
         let listConfiguration = UICollectionLayoutListConfiguration(appearance: .sidebar)
         let layout = UICollectionViewCompositionalLayout.list(using: listConfiguration)
         return layout
