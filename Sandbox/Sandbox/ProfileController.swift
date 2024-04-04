@@ -39,8 +39,10 @@ class ProfileController: UIViewController {
     
     var dataSource: UICollectionViewDiffableDataSource<Section, Row>! = nil
     
-    enum Section {
+    enum Section: CaseIterable {
         case main
+        case passkey
+        case mfa
     }
     
     static let sectionHeaderElementKind = "section-header-element-kind"
@@ -54,42 +56,7 @@ class ProfileController: UIViewController {
             Row(title: "Family Name", leaf: Value(profile.familyName)),
             Row(title: "Last logged In", leaf: Value(profile.loginSummary?.lastLogin.map { date in self.format(date: date) } ?? "")),
             Row(title: "Method", leaf: Value(profile.loginSummary?.lastProvider)),
-            Row(title: "Passkeys", subitems: passkeys.map { passkey in Row(title: passkey.friendlyName) }),
-            Row(title: "Mfa", subitems: mfaCredentials.map { mfa in Row(title: mfa.friendlyName) }),
         ]
-    }
-    
-    class Value {
-        let value: String?
-//        let actions: [UIAction]
-        init(_ value: String?) {
-            self.value = value
-        }
-    }
-    
-    class Row: Hashable {
-        let title: String
-        let subitems: [Row]
-        let leaf: Value?
-        
-        init(title: String,
-             leaf: Value? = nil,
-             subitems: [Row] = []) {
-            self.title = title
-            self.leaf = leaf
-            self.subitems = subitems
-            
-        }
-        
-        func hash(into hasher: inout Hasher) {
-            hasher.combine(identifier)
-        }
-        
-        static func ==(lhs: Row, rhs: Row) -> Bool {
-            return lhs.identifier == rhs.identifier
-        }
-        
-        private let identifier = UUID()
     }
     
     override func viewDidLoad() {
@@ -170,7 +137,7 @@ class ProfileController: UIViewController {
 //            supplementaryView.layer.borderColor = UIColor.black.cgColor
             supplementaryView.layer.borderWidth = 1.0
         }
-                
+        
         dataSource = UICollectionViewDiffableDataSource<Section, Row>(collectionView: collectionView) {
             (collectionView: UICollectionView, indexPath: IndexPath, item: Row) -> UICollectionViewCell? in
             // Return the cell.
@@ -185,54 +152,31 @@ class ProfileController: UIViewController {
             return self.collectionView.dequeueConfiguredReusableSupplementary(
                 using: headerRegistration, for: index)
         }
-        
-        // load our initial data
-        let snapshot = snapshot()
-        self.dataSource.apply(snapshot, to: .main, animatingDifferences: false)
     }
     
     func listLayout() -> UICollectionViewLayout {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                             heightDimension: .fractionalHeight(1.0))
+            heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
+        
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                              heightDimension: .absolute(44))
+            heightDimension: .absolute(44))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-
+        
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 5
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
-
+        
         let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                     heightDimension: .estimated(44))
+            heightDimension: .estimated(44))
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: headerFooterSize,
             elementKind: ProfileController.sectionHeaderElementKind,
             alignment: .top)
         section.boundarySupplementaryItems = [sectionHeader]
-
+        
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
-    }
-    
-    func snapshot() -> NSDiffableDataSourceSectionSnapshot<Row> {
-        print("snapshot")
-        var snapshot = NSDiffableDataSourceSectionSnapshot<Row>()
-        let rows = rows()
-        
-        func addItems(_ menuItems: [Row], to parent: Row?) {
-            snapshot.append(menuItems, to: parent)
-            for menuItem in menuItems {
-                print("\(menuItem.title): \(menuItem.leaf?.value). \(menuItem.subitems)")
-            }
-            for menuItem in menuItems where !menuItem.subitems.isEmpty {
-                addItems(menuItem.subitems, to: menuItem)
-            }
-        }
-        
-        addItems(rows, to: nil)
-        return snapshot
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -294,10 +238,37 @@ class ProfileController: UIViewController {
                         self.mfaCredentials = response.credentials
                     }
                     .onComplete { _ in
-                        let snapshot = self.snapshot()
-                        self.dataSource.apply(snapshot, to: .main, animatingDifferences: true)
+                        self.applySnapshot()
                     }
             }
+    }
+    
+    private func applySnapshot() {
+        print("applySnapshot")
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Row>()
+        snapshot.appendSections(Section.allCases)
+        dataSource.apply(snapshot, animatingDifferences: false)
+        
+        var mainSectionSnapshot = NSDiffableDataSourceSectionSnapshot<Row>()
+        //TODO séparer les identifiants en une section à part
+        let rows = rows()
+        
+        mainSectionSnapshot.addItems(rows, to: nil)
+        dataSource.apply(mainSectionSnapshot, to: Section.main, animatingDifferences: false)
+        
+        //TODO passer les titre des premiers niveau en temps que titre d'en-tête
+        // Ou pas parce que comment on fait la rétractation sinon ?
+        // Ou retirer les en-tête de section en gardant l'espace
+        var passkeySectionSnapshot = NSDiffableDataSourceSectionSnapshot<Row>()
+        let passkeyRow = Row(title: "Passkeys", subitems: passkeys.map { passkey in Row(title: passkey.friendlyName) })
+        passkeySectionSnapshot.addItems([passkeyRow], to: nil)
+        dataSource.apply(passkeySectionSnapshot, to: Section.passkey, animatingDifferences: true)
+        
+        //TODO voir pour remettre des didSet dans chacune des propriété pour que chacun gère ses snapshot
+        var mfaSectionSnapshot = NSDiffableDataSourceSectionSnapshot<Row>()
+        let mfaRow = Row(title: "Mfa", subitems: mfaCredentials.map { mfa in Row(title: mfa.friendlyName) })
+        mfaSectionSnapshot.addItems([mfaRow], to: nil)
+        dataSource.apply(mfaSectionSnapshot, to: Section.mfa, animatingDifferences: true)
     }
     
     func didLogin() {
@@ -333,5 +304,50 @@ class ProfileController: UIViewController {
             username = "Should have had an identifier"
         }
         return username
+    }
+}
+
+extension NSDiffableDataSourceSectionSnapshot<Row> {
+    mutating func addItems(_ menuItems: [Row], to parent: Row?) {
+        self.append(menuItems, to: parent)
+        for menuItem in menuItems {
+            print("\(menuItem.title): \(menuItem.leaf?.value). \(menuItem.subitems)")
+        }
+        for menuItem in menuItems where !menuItem.subitems.isEmpty {
+            addItems(menuItem.subitems, to: menuItem)
+        }
+    }
+}
+
+class Row: Hashable {
+    let title: String
+    let subitems: [Row]
+    let leaf: Value?
+    
+    init(title: String,
+         leaf: Value? = nil,
+         subitems: [Row] = []) {
+        self.title = title
+        self.leaf = leaf
+        self.subitems = subitems
+        
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(identifier)
+    }
+    
+    static func ==(lhs: Row, rhs: Row) -> Bool {
+        return lhs.identifier == rhs.identifier
+    }
+    
+    private let identifier = UUID()
+}
+
+class Value {
+    let value: String?
+//        let actions: [UIAction]
+    init(_ value: String?) {
+        self.value = value
     }
 }
