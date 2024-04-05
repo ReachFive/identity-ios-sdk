@@ -270,7 +270,7 @@
                                         <rect key="frame" x="0.0" y="50" width="432" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HyK-Am-JUA" id="VRc-NK-UUF">
-                                            <rect key="frame" x="0.0" y="0.0" width="432" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="432" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -544,7 +544,7 @@
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="29s-lf-Xpx">
                                 <rect key="frame" x="0.0" y="103" width="430" height="533"/>
-                                <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="bnb-f3-wCc">
                                     <size key="itemSize" width="406" height="125"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -1585,9 +1585,6 @@
         <image name="person.crop.circle.fill.badge.xmark" catalog="system" width="128" height="114"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGroupedBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
