@@ -16,9 +16,24 @@ import BrightFutures
 //      - Ajouter des infos sur le jeton dans une nouvelle page
 class ProfileController: UIViewController {
     var authToken: AuthToken?
-    var profile: Profile = Profile()
-    var passkeys: [DeviceCredential] = []
-    var mfaCredentials: [MfaCredentialItem] = []
+    
+    var profile: Profile = Profile() {
+        didSet {
+            self.applyMainSectionSnapshot()
+        }
+    }
+    
+    var passkeys: [DeviceCredential] = [] {
+        didSet {
+            self.applyPasskeySectionSnapshot()
+        }
+    }
+    
+    var mfaCredentials: [MfaCredentialItem] = [] {
+        didSet {
+            self.applyMfaSectionSnapshot()
+        }
+    }
     
     var clearTokenObserver: NSObjectProtocol?
     var setTokenObserver: NSObjectProtocol?
@@ -93,11 +108,9 @@ class ProfileController: UIViewController {
             profileTabBarItem.selectedImage = profileTabBarItem.image
         }
 
-//        self.profileData.delegate = self
-//        self.profileData.dataSource = self
-        
         configureCollectionView()
         configureDataSource()
+        applySectionSnapshot()
     }
     
     func configureCollectionView() {
@@ -149,8 +162,7 @@ class ProfileController: UIViewController {
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
-        section.interGroupSpacing = 5
-        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0)
         
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
@@ -208,41 +220,41 @@ class ProfileController: UIViewController {
                 self.profileTabBarItem.image = SandboxTabBarController.loggedInButNotFresh
                 self.profileTabBarItem.selectedImage = self.profileTabBarItem.image
             }
-            .onComplete { _ in
-                AppDelegate.reachfive()
-                    .mfaListCredentials(authToken: authToken)
-                    .onSuccess { response in
-                        self.mfaCredentials = response.credentials
-                    }
-                    .onComplete { _ in
-                        self.applySnapshot()
-                    }
+        
+        AppDelegate.reachfive()
+            .mfaListCredentials(authToken: authToken)
+            .onSuccess { response in
+                self.mfaCredentials = response.credentials
             }
     }
     
-    private func applySnapshot() {
-        print("applySnapshot")
+    private func applySectionSnapshot() {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Row>()
         snapshot.appendSections(Section.allCases)
         dataSource.apply(snapshot, animatingDifferences: false)
-        
+    }
+    
+    private func applyMfaSectionSnapshot() {
+        var mfaSectionSnapshot = NSDiffableDataSourceSectionSnapshot<Row>()
+        let mfaRow = Row(title: "Mfa", subitems: mfaCredentials.map { mfa in Row(title: mfa.friendlyName) })
+        mfaSectionSnapshot.addItems([mfaRow], to: nil)
+        dataSource.apply(mfaSectionSnapshot, to: Section.mfa, animatingDifferences: true)
+    }
+    
+    private func applyPasskeySectionSnapshot() {
+        var passkeySectionSnapshot = NSDiffableDataSourceSectionSnapshot<Row>()
+        let passkeyRow = Row(title: "Passkeys", subitems: passkeys.map { passkey in Row(title: passkey.friendlyName) })
+        passkeySectionSnapshot.addItems([passkeyRow], to: nil)
+        dataSource.apply(passkeySectionSnapshot, to: Section.passkey, animatingDifferences: true)
+    }
+    
+    private func applyMainSectionSnapshot() {
         var mainSectionSnapshot = NSDiffableDataSourceSectionSnapshot<Row>()
         //TODO séparer les identifiants en une section à part
         let rows = rows()
         
         mainSectionSnapshot.addItems(rows, to: nil)
-        dataSource.apply(mainSectionSnapshot, to: Section.main, animatingDifferences: false)
-        
-        var passkeySectionSnapshot = NSDiffableDataSourceSectionSnapshot<Row>()
-        let passkeyRow = Row(title: "Passkeys", subitems: passkeys.map { passkey in Row(title: passkey.friendlyName) })
-        passkeySectionSnapshot.addItems([passkeyRow], to: nil)
-        dataSource.apply(passkeySectionSnapshot, to: Section.passkey, animatingDifferences: true)
-        
-        //TODO voir pour remettre des didSet dans chacune des propriété pour que chacun gère ses snapshot
-        var mfaSectionSnapshot = NSDiffableDataSourceSectionSnapshot<Row>()
-        let mfaRow = Row(title: "Mfa", subitems: mfaCredentials.map { mfa in Row(title: mfa.friendlyName) })
-        mfaSectionSnapshot.addItems([mfaRow], to: nil)
-        dataSource.apply(mfaSectionSnapshot, to: Section.mfa, animatingDifferences: true)
+        dataSource.apply(mainSectionSnapshot, to: Section.main, animatingDifferences: true)
     }
     
     func didLogin() {
