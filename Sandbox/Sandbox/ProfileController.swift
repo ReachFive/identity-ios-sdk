@@ -54,14 +54,6 @@ class ProfileController: UIViewController {
     
     var dataSource: UICollectionViewDiffableDataSource<Section, Row>! = nil
     
-    enum Section: CaseIterable {
-        case main
-        case passkey
-        case mfa
-    }
-    
-    static let sectionHeaderElementKind = "section-header-element-kind"
-    
     private func rows() -> [Row] {
         return [
             Row(title: "Email", leaf: Value(profile.email?.appending(profile.emailVerified == true ? " ✔︎" : " ✘"))),
@@ -111,61 +103,6 @@ class ProfileController: UIViewController {
         configureCollectionView()
         configureDataSource()
         applySectionSnapshot()
-    }
-    
-    func configureCollectionView() {
-        collectionView.collectionViewLayout = listLayout()
-        collectionView.delegate = self
-    }
-    
-    func configureDataSource() {
-        
-        let containerCellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Row>{ (cell, indexPath, menuItem) in
-            // Populate the cell with our item description.
-            var contentConfiguration = cell.defaultContentConfiguration()
-            contentConfiguration.text = menuItem.title
-            contentConfiguration.textProperties.font = .preferredFont(forTextStyle: .headline)
-            cell.contentConfiguration = contentConfiguration
-            
-            let disclosureOptions = UICellAccessory.OutlineDisclosureOptions(style: .header)
-            cell.accessories = [.outlineDisclosure(options: disclosureOptions)]
-            cell.backgroundConfiguration = UIBackgroundConfiguration.clear()
-        }
-        
-        let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Row>{ cell, indexPath, menuItem in
-            // Populate the cell with our item description.
-            var contentConfiguration = cell.defaultContentConfiguration()
-            contentConfiguration.text = menuItem.title
-            contentConfiguration.secondaryText = menuItem.leaf?.value
-            cell.contentConfiguration = contentConfiguration
-            cell.backgroundConfiguration = UIBackgroundConfiguration.clear()
-        }
-        
-        dataSource = UICollectionViewDiffableDataSource<Section, Row>(collectionView: collectionView) {
-            (collectionView: UICollectionView, indexPath: IndexPath, item: Row) -> UICollectionViewCell? in
-            // Return the cell.
-            if item.subitems.isEmpty {
-                return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
-            } else {
-                return collectionView.dequeueConfiguredReusableCell(using: containerCellRegistration, for: indexPath, item: item)
-            }
-        }
-    }
-    
-    func listLayout() -> UICollectionViewLayout {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-            heightDimension: .fractionalHeight(1.0))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-            heightDimension: .absolute(44))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0)
-        
-        let layout = UICollectionViewCompositionalLayout(section: section)
-        return layout
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -228,35 +165,6 @@ class ProfileController: UIViewController {
             }
     }
     
-    private func applySectionSnapshot() {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Row>()
-        snapshot.appendSections(Section.allCases)
-        dataSource.apply(snapshot, animatingDifferences: false)
-    }
-    
-    private func applyMfaSectionSnapshot() {
-        var mfaSectionSnapshot = NSDiffableDataSourceSectionSnapshot<Row>()
-        let mfaRow = Row(title: "Mfa", subitems: mfaCredentials.map { mfa in Row(title: mfa.friendlyName) })
-        mfaSectionSnapshot.addItems([mfaRow], to: nil)
-        dataSource.apply(mfaSectionSnapshot, to: Section.mfa, animatingDifferences: true)
-    }
-    
-    private func applyPasskeySectionSnapshot() {
-        var passkeySectionSnapshot = NSDiffableDataSourceSectionSnapshot<Row>()
-        let passkeyRow = Row(title: "Passkeys", subitems: passkeys.map { passkey in Row(title: passkey.friendlyName) })
-        passkeySectionSnapshot.addItems([passkeyRow], to: nil)
-        dataSource.apply(passkeySectionSnapshot, to: Section.passkey, animatingDifferences: true)
-    }
-    
-    private func applyMainSectionSnapshot() {
-        var mainSectionSnapshot = NSDiffableDataSourceSectionSnapshot<Row>()
-        //TODO séparer les identifiants en une section à part
-        let rows = rows()
-        
-        mainSectionSnapshot.addItems(rows, to: nil)
-        dataSource.apply(mainSectionSnapshot, to: Section.main, animatingDifferences: true)
-    }
-    
     func didLogin() {
         print("ProfileController.didLogin")
         authToken = AppDelegate.storage.getToken()
@@ -293,6 +201,94 @@ class ProfileController: UIViewController {
     }
 }
 
+// MARK: - Gestion CollectionView
+extension ProfileController {
+    func configureCollectionView() {
+        collectionView.collectionViewLayout = listLayout()
+        collectionView.delegate = self
+    }
+    
+    func configureDataSource() {
+        
+        let containerCellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Row>{ (cell, indexPath, menuItem) in
+            // Populate the cell with our item description.
+            var contentConfiguration = cell.defaultContentConfiguration()
+            contentConfiguration.text = menuItem.title
+            contentConfiguration.textProperties.font = .preferredFont(forTextStyle: .headline)
+            cell.contentConfiguration = contentConfiguration
+            
+            let disclosureOptions = UICellAccessory.OutlineDisclosureOptions(style: .header)
+            cell.accessories = [.outlineDisclosure(options: disclosureOptions)]
+            cell.backgroundConfiguration = UIBackgroundConfiguration.clear()
+        }
+        
+        let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Row>{ cell, indexPath, menuItem in
+            // Populate the cell with our item description.
+            var contentConfiguration = cell.defaultContentConfiguration()
+            contentConfiguration.text = menuItem.title
+            contentConfiguration.secondaryText = menuItem.leaf?.value
+            cell.contentConfiguration = contentConfiguration
+            cell.backgroundConfiguration = UIBackgroundConfiguration.clear()
+        }
+        
+        dataSource = UICollectionViewDiffableDataSource<Section, Row>(collectionView: collectionView) {
+            (collectionView: UICollectionView, indexPath: IndexPath, item: Row) -> UICollectionViewCell? in
+            // Return the cell.
+            if item.subitems.isEmpty {
+                return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
+            } else {
+                return collectionView.dequeueConfiguredReusableCell(using: containerCellRegistration, for: indexPath, item: item)
+            }
+        }
+    }
+    
+    func listLayout() -> UICollectionViewLayout {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+            heightDimension: .fractionalHeight(1.0))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+            heightDimension: .absolute(44))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0)
+        
+        let layout = UICollectionViewCompositionalLayout(section: section)
+        return layout
+    }
+    
+    private func applySectionSnapshot() {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Row>()
+        snapshot.appendSections(Section.allCases)
+        dataSource.apply(snapshot, animatingDifferences: false)
+    }
+    
+    private func applyMfaSectionSnapshot() {
+        var mfaSectionSnapshot = NSDiffableDataSourceSectionSnapshot<Row>()
+        let mfaRow = Row(title: "Mfa", subitems: mfaCredentials.map { mfa in Row(title: mfa.friendlyName) })
+        mfaSectionSnapshot.addItems([mfaRow], to: nil)
+        dataSource.apply(mfaSectionSnapshot, to: Section.mfa, animatingDifferences: true)
+    }
+    
+    private func applyPasskeySectionSnapshot() {
+        var passkeySectionSnapshot = NSDiffableDataSourceSectionSnapshot<Row>()
+        let passkeyRow = Row(title: "Passkeys", subitems: passkeys.map { passkey in Row(title: passkey.friendlyName) })
+        passkeySectionSnapshot.addItems([passkeyRow], to: nil)
+        dataSource.apply(passkeySectionSnapshot, to: Section.passkey, animatingDifferences: true)
+    }
+    
+    private func applyMainSectionSnapshot() {
+        var mainSectionSnapshot = NSDiffableDataSourceSectionSnapshot<Row>()
+        //TODO séparer les identifiants en une section à part
+        let rows = rows()
+        
+        mainSectionSnapshot.addItems(rows, to: nil)
+        dataSource.apply(mainSectionSnapshot, to: Section.main, animatingDifferences: true)
+    }
+}
+
+// MARK: - Utilitaire DataSource
 extension NSDiffableDataSourceSectionSnapshot<Row> {
     mutating func addItems(_ menuItems: [Row], to parent: Row?) {
         self.append(menuItems, to: parent)
@@ -303,6 +299,13 @@ extension NSDiffableDataSourceSectionSnapshot<Row> {
             addItems(menuItem.subitems, to: menuItem)
         }
     }
+}
+
+// MARK: - Définition des données de la collection
+enum Section: CaseIterable {
+    case main
+    case passkey
+    case mfa
 }
 
 class Row: Hashable {
