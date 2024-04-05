@@ -23,6 +23,8 @@ class ProfileController: UIViewController {
         }
     }
     
+    //TODO quand il n'y en a pas ou que c'est pas frais on ne voit pas la section.
+    // Est-ce dommage et devrait-on réintroduire les en-tête de section ?
     var passkeys: [DeviceCredential] = [] {
         didSet {
             self.applyPasskeySectionSnapshot()
@@ -47,6 +49,7 @@ class ProfileController: UIViewController {
     
     @IBOutlet weak var profileTabBarItem: UITabBarItem!
     @IBOutlet weak var collectionView: UICollectionView!
+    //Mettre une table list au lieu des boutons
     @IBOutlet weak var mfaButton: UIButton!
     @IBOutlet weak var passkeyButton: UIButton!
     @IBOutlet weak var editProfileButton: UIButton!
@@ -56,6 +59,7 @@ class ProfileController: UIViewController {
     
     private func rows() -> [Row] {
         return [
+            // faire une donnée spécifique pour les identifiants pour savoir s'ils sont vérifiés, s'ils sont enrollés MFA...
             Row(title: "Email", leaf: Value(profile.email?.appending(profile.emailVerified == true ? " ✔︎" : " ✘"))),
             Row(title: "Phone Number", leaf: Value(profile.phoneNumber?.appending(profile.phoneNumberVerified == true ? " ✔︎" : " ✘"))),
             Row(title: "Custom Identifier", leaf: Value(profile.customIdentifier)),
@@ -242,6 +246,7 @@ extension ProfileController {
             heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
+        //TODO centrer au milieu de l'écran si grand écran (au lieu d'avoir le titre tout à gauche et la valeur tout à droite)
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
             heightDimension: .absolute(44))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
@@ -330,6 +335,7 @@ class Row: Hashable {
 
 class Value {
     let value: String?
+    //TODO mettre les actions
 //        let actions: [UIAction]
     init(_ value: String?) {
         self.value = value
