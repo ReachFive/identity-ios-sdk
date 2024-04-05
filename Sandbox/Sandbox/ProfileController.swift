@@ -99,7 +99,7 @@ class ProfileController: UIViewController {
             profileTabBarItem.image = SandboxTabBarController.tokenPresent
             profileTabBarItem.selectedImage = profileTabBarItem.image
         }
-
+        
         configureCollectionView()
         configureDataSource()
         applySectionSnapshot()
@@ -222,13 +222,8 @@ extension ProfileController {
             cell.backgroundConfiguration = UIBackgroundConfiguration.clear()
         }
         
-        let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Row>{ cell, indexPath, menuItem in
-            // Populate the cell with our item description.
-            var contentConfiguration = cell.defaultContentConfiguration()
-            contentConfiguration.text = menuItem.title
-            contentConfiguration.secondaryText = menuItem.leaf?.value
-            cell.contentConfiguration = contentConfiguration
-            cell.backgroundConfiguration = UIBackgroundConfiguration.clear()
+        let cellRegistration = UICollectionView.CellRegistration<ProfileDataCell, Row>{ cell, indexPath, menuItem in
+            cell.configure(with: menuItem)
         }
         
         dataSource = UICollectionViewDiffableDataSource<Section, Row>(collectionView: collectionView) {
@@ -339,4 +334,39 @@ class Value {
     init(_ value: String?) {
         self.value = value
     }
+}
+
+// MARK: - Cellule d'affichage
+class ProfileDataCell: UICollectionViewListCell {
+    let title: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.preferredFont(forTextStyle: .body)
+        
+        return label
+    }()
+    
+    let value: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.preferredFont(forTextStyle: .body)
+        
+        return label
+    }()
+    
+    public func configure(with row: Row) {
+        title.text = row.title
+        value.text = row.leaf?.value
+        title.translatesAutoresizingMaskIntoConstraints = false
+        value.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(title)
+        contentView.addSubview(value)
+        
+        title.font = UIFont.preferredFont(forTextStyle: .body)
+        value.font = UIFont.preferredFont(forTextStyle: .body)
+        
+        NSLayoutConstraint.activate([
+            title.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            value.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20)
+        ])
+    }
+    
 }
