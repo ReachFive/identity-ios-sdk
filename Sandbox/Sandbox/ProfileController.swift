@@ -128,16 +128,6 @@ class ProfileController: UIViewController {
             cell.backgroundConfiguration = UIBackgroundConfiguration.clear()
         }
         
-        let headerRegistration = UICollectionView.SupplementaryRegistration
-        <TitleSupplementaryView>(elementKind: ProfileController.sectionHeaderElementKind) {
-            (supplementaryView, string, indexPath) in
-            supplementaryView.label.text = "\(string) for section \(indexPath.section)"
-            supplementaryView.label.textAlignment = .natural
-//            supplementaryView.backgroundColor = .lightGray
-//            supplementaryView.layer.borderColor = UIColor.black.cgColor
-            supplementaryView.layer.borderWidth = 1.0
-        }
-        
         dataSource = UICollectionViewDiffableDataSource<Section, Row>(collectionView: collectionView) {
             (collectionView: UICollectionView, indexPath: IndexPath, item: Row) -> UICollectionViewCell? in
             // Return the cell.
@@ -146,11 +136,6 @@ class ProfileController: UIViewController {
             } else {
                 return collectionView.dequeueConfiguredReusableCell(using: containerCellRegistration, for: indexPath, item: item)
             }
-        }
-        
-        dataSource.supplementaryViewProvider = { (view, kind, index) in
-            return self.collectionView.dequeueConfiguredReusableSupplementary(
-                using: headerRegistration, for: index)
         }
     }
     
@@ -165,15 +150,7 @@ class ProfileController: UIViewController {
         
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 5
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
-        
-        let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(44))
-        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: headerFooterSize,
-            elementKind: ProfileController.sectionHeaderElementKind,
-            alignment: .top)
-        section.boundarySupplementaryItems = [sectionHeader]
+        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
         
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
@@ -256,9 +233,6 @@ class ProfileController: UIViewController {
         mainSectionSnapshot.addItems(rows, to: nil)
         dataSource.apply(mainSectionSnapshot, to: Section.main, animatingDifferences: false)
         
-        //TODO passer les titre des premiers niveau en temps que titre d'en-tête
-        // Ou pas parce que comment on fait la rétractation sinon ?
-        // Ou retirer les en-tête de section en gardant l'espace
         var passkeySectionSnapshot = NSDiffableDataSourceSectionSnapshot<Row>()
         let passkeyRow = Row(title: "Passkeys", subitems: passkeys.map { passkey in Row(title: passkey.friendlyName) })
         passkeySectionSnapshot.addItems([passkeyRow], to: nil)
