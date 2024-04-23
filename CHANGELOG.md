@@ -1,5 +1,12 @@
 # Changelog
 
+## v6.2.0
+### New features
+- Add privacy manifest.
+
+### Dependencies
+- Updated Facebook from 16.2 to 17.0
+
 ## v6.1.0
 ### New features
 - Add custom fields in `ProfileAddress` entity.
