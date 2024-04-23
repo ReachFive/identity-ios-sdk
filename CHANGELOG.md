@@ -4,6 +4,9 @@
 ### New features
 - Add privacy manifest.
 
+### Bug fix
+- Fix a crash when calling `webviewLogin` in quick succession
+
 ### Dependencies
 - Updated Facebook from 16.2 to 17.0
 
