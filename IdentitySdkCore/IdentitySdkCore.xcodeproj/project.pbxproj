@@ -81,6 +81,7 @@
 		8496EB4325DEB141005098DD /* AuthenticationToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496EB3925DEB141005098DD /* AuthenticationToken.swift */; };
 		8496EB4425DEB141005098DD /* R5PublicKeyCredentialRpEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496EB3A25DEB141005098DD /* R5PublicKeyCredentialRpEntity.swift */; };
 		8496EB4525DEB141005098DD /* R5PublicKeyCredentialUserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496EB3B25DEB141005098DD /* R5PublicKeyCredentialUserEntity.swift */; };
+		991296BF2BDBBCAF00DCEDC1 /* MfaStepUpRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991296BE2BDBBCAF00DCEDC1 /* MfaStepUpRequest.swift */; };
 		9943B0852B6953C5007AD120 /* ReachFiveMfa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9943B0842B6953C5007AD120 /* ReachFiveMfa.swift */; };
 		9943B0872B6954F1007AD120 /* MfaCredentialsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9943B0862B6954F1007AD120 /* MfaCredentialsRequest.swift */; };
 /* End PBXBuildFile section */
@@ -165,6 +166,7 @@
 		8496EB3A25DEB141005098DD /* R5PublicKeyCredentialRpEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R5PublicKeyCredentialRpEntity.swift; sourceTree = "<group>"; };
 		8496EB3B25DEB141005098DD /* R5PublicKeyCredentialUserEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R5PublicKeyCredentialUserEntity.swift; sourceTree = "<group>"; };
 		92974ED6A8B2D1CEADE0BFF5 /* Pods-IdentitySdkCore.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IdentitySdkCore.debug.xcconfig"; path = "Target Support Files/Pods-IdentitySdkCore/Pods-IdentitySdkCore.debug.xcconfig"; sourceTree = "<group>"; };
+		991296BE2BDBBCAF00DCEDC1 /* MfaStepUpRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MfaStepUpRequest.swift; sourceTree = "<group>"; };
 		9943B0842B6953C5007AD120 /* ReachFiveMfa.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachFiveMfa.swift; sourceTree = "<group>"; };
 		9943B0862B6954F1007AD120 /* MfaCredentialsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MfaCredentialsRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -239,6 +241,7 @@
 				34689A9D22CE4666002970F9 /* VerifyPhoneNumberRequest.swift */,
 				2AE533132994632F00EF97E0 /* WebviewLoginRequest.swift */,
 				8496EB0725DEAE10005098DD /* webAuthn */,
+				991296BE2BDBBCAF00DCEDC1 /* MfaStepUpRequest.swift */,
 			);
 			path = requests;
 			sourceTree = "<group>";
@@ -519,6 +522,7 @@
 				3404A40C22CBA6DD002FFEDB /* AuthCodeRequest.swift in Sources */,
 				8496EB2425DEAFCF005098DD /* R5AuthenticatorAssertionResponse.swift in Sources */,
 				34BDDA3E22E5BFAC00D16DAE /* ProfileSignupRequest.swift in Sources */,
+				991296BF2BDBBCAF00DCEDC1 /* MfaStepUpRequest.swift in Sources */,
 				3455FCEC22F1B57400892794 /* DictionaryEncodable.swift in Sources */,
 				34251C0B232FC13800B0C271 /* RefreshRequest.swift in Sources */,
 				8496EB4325DEB141005098DD /* AuthenticationToken.swift in Sources */,

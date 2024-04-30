@@ -40,7 +40,7 @@ public class StartPasswordlessRequest: Codable, DictionaryEncodable {
             origin: origin
         )
     }
-    
+
     public init(
         clientId: String,
         email: String?,

@@ -367,7 +367,6 @@ public class ReachFiveApi {
             )
             .validate(contentType: ["application/json"])
             .responseJson(type: MfaCredentialItem.self, decoder: decoder)
-        
     }
     
     public func mfaListCredentials(
@@ -383,6 +382,46 @@ public class ReachFiveApi {
             .responseJson(type: MfaCredentialsListResponse.self, decoder: decoder)
     }
     
+    public func startMfaStepUp(
+        _ request: StartMfaStepUpRequest,
+        authToken: AuthToken?
+    ) -> Future<StartMfaStepUpResponse, ReachFiveError> {
+        AF
+            .request(
+                createUrl(path: "/identity/v1/mfa/stepup"),
+                method: .post,
+                parameters: request.dictionary(),
+                encoding: JSONEncoding.default,
+                headers: authToken.map(tokenHeader)
+            )
+            .validate(contentType: ["application/json"])
+            .responseJson(type: StartMfaStepUpResponse.self, decoder: decoder)
+    }
+    
+    public func startPasswordless(mfa request: StartMfaPasswordlessRequest) -> Future<StartMfaPasswordlessResponse, ReachFiveError> {
+        AF
+            .request(
+                createUrl(path: "/identity/v1/passwordless/start"),
+                method: .post,
+                parameters: request.dictionary(),
+                encoding: JSONEncoding.default
+            )
+            .validate(contentType: ["application/json"])
+            .responseJson(type: StartMfaPasswordlessResponse.self, decoder: decoder)
+    }
+    
+    public func verifyPasswordless(mfa request: VerifyMfaPasswordlessRequest) -> Future<PasswordlessVerifyResponse, ReachFiveError> {
+        AF
+            .request(
+                createUrl(path: "/identity/v1/passwordless/verify"),
+                method: .post,
+                parameters: request.dictionary(),
+                encoding: JSONEncoding.default
+            )
+            .validate(contentType: ["application/json"])
+            .responseJson(type: PasswordlessVerifyResponse.self, decoder: decoder)
+    }
+   
     public func requestPasswordReset(
         requestPasswordResetRequest: RequestPasswordResetRequest
     ) -> Future<Void, ReachFiveError> {
