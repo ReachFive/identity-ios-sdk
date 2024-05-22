@@ -37,6 +37,20 @@ public struct StartStepUp {
     }
 }
 
+public class ContinueStepUp {
+    public let challengeId: String
+    public let reachfive: ReachFive
+
+    fileprivate init(challengeId: String, reachFive: ReachFive) {
+        self.challengeId = challengeId
+        self.reachfive = reachFive
+    }
+    
+    public func verify(code: String, trustDevice: Bool? = nil) -> Future<AuthToken, ReachFiveError> {
+        reachfive.mfaVerify(stepUp: VerifyStepUp(challengeId: challengeId, verificationCode: code, trustDevice: trustDevice))
+    }
+}
+
 public struct VerifyStepUp {
     var challengeId: String
     var verificationCode: String
@@ -107,7 +121,7 @@ public extension ReachFive {
         return reachFiveApi.mfaListCredentials(authToken: authToken)
     }
     
-    func mfaStart(stepUp request: StartStepUp) -> Future<StartMfaPasswordlessResponse, ReachFiveError> {
+    func mfaStart(stepUp request: StartStepUp) -> Future<ContinueStepUp, ReachFiveError> {
         let redirectUri = request.redirectUri ?? sdkConfig.redirectUri
         let pkce = Pkce.generate()
         storage.save(key: pkceKey, value: pkce)
@@ -120,6 +134,8 @@ public extension ReachFive {
                                            authToken: request.authToken)
             .flatMap { result in
                 self.reachFiveApi.startPasswordless(mfa: StartMfaPasswordlessRequest(redirectUri: redirectUri, clientId: self.sdkConfig.clientId, stepUp: result.token, authType: request.authType, origin: request.origin))
+            }.map { response in
+                ContinueStepUp(challengeId: response.challengeId, reachFive: self)
             }
     }
     

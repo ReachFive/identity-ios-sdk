@@ -78,7 +78,7 @@ class MfaController: UIViewController {
         }
         let mfaAction = MfaAction(presentationAnchor: self)
         
-        mfaAction.mfaStart(stepUp: StartStepUp(authType: stepUpSelectedType, authToken: authToken), authToken: authToken).onSuccess { freshToken in
+        mfaAction.mfaStart(stepUp: StartStepUp(authType: stepUpSelectedType, authToken: authToken, scope: ["openid", "email", "profile", "phone", "full_write", "offline_access"]), authToken: authToken).onSuccess { freshToken in
             AppDelegate.storage.setToken(freshToken)
         }
     }
@@ -165,7 +165,7 @@ class MfaAction {
             }
     }
     
-    private func handleStartVerificationCode(_ resp: StartMfaPasswordlessResponse, stepUpType authType: MfaCredentialItemType) -> Future<AuthToken, ReachFiveError> {
+    private func handleStartVerificationCode(_ resp: ContinueStepUp, stepUpType authType: MfaCredentialItemType) -> Future<AuthToken, ReachFiveError> {
         let promise: Promise<AuthToken, ReachFiveError> = Promise()
         let alert = UIAlertController(title: "Verification code", message: "Please enter the verification code you got by \(authType)", preferredStyle: .alert)
         alert.addTextField { textField in
@@ -181,7 +181,7 @@ class MfaAction {
                 promise.failure(.AuthFailure(reason: "no verification code"))
                 return
             }
-            let future = AppDelegate.reachfive().mfaVerify(stepUp: VerifyStepUp(challengeId: resp.challengeId, verificationCode: verificationCode))
+            let future = resp.verify(code: verificationCode)
             promise.completeWith(future)
             future
                 .onSuccess { _ in
