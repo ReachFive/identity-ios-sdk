@@ -395,6 +395,19 @@ public class ReachFiveApi {
             .validate(contentType: ["application/json"])
             .responseJson(decoder: decoder)
     }
+
+    public func requestAccountRecovery(
+        requestAccountRecoveryRequest: RequestAccountRecoveryRequest
+    ) -> Future<Void, ReachFiveError> {
+        AF
+            .request(createUrl(
+                path: "/identity/v1/account-recovery"),
+            method: .post,
+            parameters: requestAccountRecoveryRequest.dictionary(),
+            encoding: JSONEncoding.default)
+            .validate(contentType: ["application/json"])
+            .responseJson(decoder: decoder)
+    }
     
     public func startPasswordless(_ startPasswordlessRequest: StartPasswordlessRequest) -> Future<Void, ReachFiveError> {
         AF

@@ -76,6 +76,22 @@ public extension ReachFive {
         )
     }
     
+    func requestAccountRecovery(
+        email: String?,
+        phoneNumber: String?,
+        redirectUrl: String? = nil
+    ) -> Future<(), ReachFiveError> {
+            let requestAccountRecoveryRequest = RequestAccountRecoveryRequest(
+            clientId: sdkConfig.clientId,
+            email: email,
+            phoneNumber: phoneNumber,
+            redirectUrl: redirectUrl
+        )
+        return reachFiveApi.requestAccountRecovery(
+            requestAccountRecoveryRequest: requestAccountRecoveryRequest
+        )
+    }
+    
     /// Lists all passkeys and other webauthn credentials the user has registered
     func listWebAuthnCredentials(authToken: AuthToken) -> Future<[DeviceCredential], ReachFiveError> {
         reachFiveApi.getWebAuthnRegistrations(authToken: authToken)
