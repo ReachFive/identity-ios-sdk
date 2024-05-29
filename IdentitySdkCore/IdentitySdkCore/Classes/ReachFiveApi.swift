@@ -536,6 +536,30 @@ public class ReachFiveApi {
             .responseJson(decoder: decoder)
     }
     
+    public func createWebAuthnResetOptions(resetOptions: ResetOptions) -> Future<RegistrationOptions, ReachFiveError> {
+        AF
+            .request(
+                createUrl(path: "/identity/v1/webauthn/reset-options"),
+                method: .post,
+                parameters: resetOptions.dictionary(),
+                encoding: JSONEncoding.default
+            )
+            .validate(contentType: ["application/json"])
+            .responseJson(type: RegistrationOptions.self, decoder: decoder)
+    }
+    
+    public func resetWebAuthn(resetPublicKeyCredential: ResetPublicKeyCredential) -> Future<Void, ReachFiveError> {
+        AF
+            .request(
+                createUrl(path: "/identity/v1/webauthn/reset"),
+                method: .post,
+                parameters: resetPublicKeyCredential.dictionary(),
+                encoding: JSONEncoding.default
+            )
+            .validate(contentType: ["application/json"])
+            .responseJson(decoder: decoder)
+    }
+    
     public func getWebAuthnRegistrations(authToken: AuthToken) -> Future<[DeviceCredential], ReachFiveError> {
         AF
             .request(

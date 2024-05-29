@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A0305102C04DBE500A92524 /* ResetOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A03050F2C04DBE500A92524 /* ResetOptions.swift */; };
+		2A0305122C04F07900A92524 /* ResetPasskeyRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0305112C04F07900A92524 /* ResetPasskeyRequest.swift */; };
+		2A0305142C063DEA00A92524 /* ResetPublicKeyCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0305132C063DEA00A92524 /* ResetPublicKeyCredential.swift */; };
 		2A624FDA2B2BDBC400BF33A7 /* DefaultProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A624FD92B2BDBC400BF33A7 /* DefaultProvider.swift */; };
 		2ADFF84F2BFE661300A659FE /* RequestAccountRecoveryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ADFF84E2BFE661200A659FE /* RequestAccountRecoveryRequest.swift */; };
 		2AE18CDB29FC1DAF00258D2B /* LoginWKWebview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE18CDA29FC1DAF00258D2B /* LoginWKWebview.swift */; };
@@ -87,6 +90,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2A03050F2C04DBE500A92524 /* ResetOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetOptions.swift; sourceTree = "<group>"; };
+		2A0305112C04F07900A92524 /* ResetPasskeyRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasskeyRequest.swift; sourceTree = "<group>"; };
+		2A0305132C063DEA00A92524 /* ResetPublicKeyCredential.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPublicKeyCredential.swift; sourceTree = "<group>"; };
 		2A2D5B102BA4C59300245439 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		2A624FD92B2BDBC400BF33A7 /* DefaultProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultProvider.swift; sourceTree = "<group>"; };
 		2ADFF84E2BFE661200A659FE /* RequestAccountRecoveryRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestAccountRecoveryRequest.swift; sourceTree = "<group>"; };
@@ -317,6 +323,9 @@
 				8496EB1F25DEAFCF005098DD /* R5PublicKeyCredentialRequestOptions.swift */,
 				8496EB1D25DEAFCF005098DD /* RegistrationPublicKeyCredential.swift */,
 				2AE5331A2994638000EF97E0 /* RegistrationRequest.swift */,
+				2A03050F2C04DBE500A92524 /* ResetOptions.swift */,
+				2A0305112C04F07900A92524 /* ResetPasskeyRequest.swift */,
+				2A0305132C063DEA00A92524 /* ResetPublicKeyCredential.swift */,
 				2AE533192994638000EF97E0 /* SignupOptions.swift */,
 				8496EB2225DEAFCF005098DD /* WebAuthnLoginRequest.swift */,
 				8496EB2325DEAFCF005098DD /* WebauthnSignupCredential.swift */,
@@ -489,6 +498,7 @@
 				8496EB3E25DEB141005098DD /* R5PublicKeyCredentialDescriptor.swift in Sources */,
 				34689A9C22CE3E57002970F9 /* Base64.swift in Sources */,
 				34BDDA3622E5BE6000D16DAE /* ProfileAddress.swift in Sources */,
+				2A0305142C063DEA00A92524 /* ResetPublicKeyCredential.swift in Sources */,
 				8496EB2825DEAFCF005098DD /* R5PublicKeyCredentialRequestOptions.swift in Sources */,
 				3474D28B22D32F3A005112C1 /* RequestPasswordResetRequest.swift in Sources */,
 				2ADFF84F2BFE661300A659FE /* RequestAccountRecoveryRequest.swift in Sources */,
@@ -504,6 +514,7 @@
 				34F7D3E622A54ADE003A7BC0 /* ProvidersConfigsResult.swift in Sources */,
 				34E508B222F19F7700BF9BAF /* DataRequest.swift in Sources */,
 				340AF1F9232AA32F00AA114D /* UpdatePasswordRequest.swift in Sources */,
+				2A0305102C04DBE500A92524 /* ResetOptions.swift in Sources */,
 				8496EB3D25DEB141005098DD /* R5AuthenticatorSelectionCriteria.swift in Sources */,
 				72DDB78E22EF354300048262 /* ClientConfigResponse.swift in Sources */,
 				3417FF6A22FAD1810009EC84 /* ReachFivePasswordLess.swift in Sources */,
@@ -511,6 +522,7 @@
 				2AE533062994629400EF97E0 /* StringUtils.swift in Sources */,
 				8496EB2525DEAFCF005098DD /* AuthenticationPublicKeyCredential.swift in Sources */,
 				34DD31FF22F3286400279E54 /* CustomField.swift in Sources */,
+				2A0305122C04F07900A92524 /* ResetPasskeyRequest.swift in Sources */,
 				34BDDA3A22E5BF1C00D16DAE /* Consent.swift in Sources */,
 				34689A9522CDFB39002970F9 /* OpenIdUser.swift in Sources */,
 				8496EB2B25DEAFCF005098DD /* WebAuthnLoginRequest.swift in Sources */,

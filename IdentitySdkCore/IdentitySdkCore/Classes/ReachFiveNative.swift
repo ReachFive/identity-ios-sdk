@@ -76,6 +76,13 @@ public extension ReachFive {
         return credentialManager.registerNewPasskey(withRequest: NewPasskeyRequest(anchor: request.anchor, friendlyName: request.friendlyName, originWebAuthn: originWebAuthn, origin: request.origin), authToken: authToken)
     }
     
+    @available(iOS 16.0, *)
+    func resetPasskeys(withRequest request: ResetPasskeyRequest) -> Future<(), ReachFiveError> {
+        let domain = sdkConfig.domain
+        let originWebAuthn = request.originWebAuthn ?? "https://\(domain)"
+        return credentialManager.resetPasskeys(withRequest: ResetPasskeyRequest(email: request.email, phoneNumber: request.phoneNumber, verificationCode: request.verificationCode, anchor: request.anchor, friendlyName: request.friendlyName, originWebAuthn: originWebAuthn, origin: request.origin))
+    }
+    
     private func adapt(_ request: NativeLoginRequest) -> NativeLoginRequest {
         let domain = sdkConfig.domain
         let originWebAuthn = request.originWebAuthn ?? "https://\(domain)"
