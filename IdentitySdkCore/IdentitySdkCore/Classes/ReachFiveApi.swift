@@ -397,7 +397,7 @@ public class ReachFiveApi {
     }
 
     public func requestAccountRecovery(
-        requestAccountRecoveryRequest: RequestAccountRecoveryRequest
+        _ requestAccountRecoveryRequest: RequestAccountRecoveryRequest
     ) -> Future<Void, ReachFiveError> {
         AF
             .request(createUrl(

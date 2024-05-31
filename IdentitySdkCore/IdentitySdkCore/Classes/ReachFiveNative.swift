@@ -2,7 +2,6 @@ import Foundation
 import AuthenticationServices
 import BrightFutures
 
-
 public extension ReachFive {
 // On naming and signature for methods:
 // first argument indicates modality to distinguish the two primary way UI is shown to user: Modal and AutoFill
@@ -80,7 +79,7 @@ public extension ReachFive {
     func resetPasskeys(withRequest request: ResetPasskeyRequest) -> Future<(), ReachFiveError> {
         let domain = sdkConfig.domain
         let originWebAuthn = request.originWebAuthn ?? "https://\(domain)"
-        return credentialManager.resetPasskeys(withRequest: ResetPasskeyRequest(email: request.email, phoneNumber: request.phoneNumber, verificationCode: request.verificationCode, anchor: request.anchor, friendlyName: request.friendlyName, originWebAuthn: originWebAuthn, origin: request.origin))
+        return credentialManager.resetPasskeys(withRequest: ResetPasskeyRequest(verificationCode: request.verificationCode, friendlyName: request.friendlyName, anchor: request.anchor, email: request.email, phoneNumber: request.phoneNumber, originWebAuthn: originWebAuthn, origin: request.origin))
     }
     
     private func adapt(_ request: NativeLoginRequest) -> NativeLoginRequest {

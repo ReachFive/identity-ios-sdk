@@ -9,6 +9,8 @@ public typealias PasswordlessCallback = (_ result: Result<AuthToken, ReachFiveEr
 
 public typealias MfaCredentialRegistrationCallback = (_ result: Result<(), ReachFiveError>) -> Void
 
+public typealias AccountRecoveryCallback = (_ result: Result<AccountRecoveryResponse, ReachFiveError>) -> Void
+
 //TODO
 // Tester One-tap account upgrade : https://developer.apple.com/videos/play/wwdc2020/10666/
 // Tester le MFA avec "Securing Logins with iCloud Keychain Verification Codes" https://developer.apple.com/documentation/authenticationservices/securing_logins_with_icloud_keychain_verification_codes
@@ -17,6 +19,7 @@ public typealias MfaCredentialRegistrationCallback = (_ result: Result<(), Reach
 public class ReachFive: NSObject {
     var passwordlessCallback: PasswordlessCallback? = nil
     var mfaCredentialRegistrationCallback: MfaCredentialRegistrationCallback? = nil
+    var accountRecoveryCallback: AccountRecoveryCallback? = nil
     var state: State = .NotInitialized
     public let sdkConfig: SdkConfig
     let providersCreators: Array<ProviderCreator>
@@ -77,10 +80,13 @@ public class ReachFive: NSObject {
     
     public func interceptUrl(_ url: URL) -> () {
         let host = URLComponents(url: url, resolvingAgainstBaseURL: true)?.host
-        if host == "mfa" {
-            interceptVerifyMfaCredential(url)
-        } else {
-            interceptPasswordless(url)
+        guard let host else { return }
+        switch host {
+        case "mfa": interceptVerifyMfaCredential(url)
+        case "account-recovery": interceptAccountRecovery(url)
+        case "callback": interceptPasswordless(url)
+        // interpret non-standard hosts as passwordless
+        default: interceptPasswordless(url)
         }
     }
 }

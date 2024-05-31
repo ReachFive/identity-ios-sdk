@@ -61,8 +61,8 @@ public extension ReachFive {
     }
     
     func requestPasswordReset(
-        email: String?,
-        phoneNumber: String?,
+        email: String? = nil,
+        phoneNumber: String? = nil,
         redirectUrl: String? = nil
     ) -> Future<(), ReachFiveError> {
         let requestPasswordResetRequest = RequestPasswordResetRequest(
@@ -77,19 +77,17 @@ public extension ReachFive {
     }
     
     func requestAccountRecovery(
-        email: String?,
-        phoneNumber: String?,
+        email: String? = nil,
+        phoneNumber: String? = nil,
         redirectUrl: String? = nil
     ) -> Future<(), ReachFiveError> {
-            let requestAccountRecoveryRequest = RequestAccountRecoveryRequest(
+        let requestAccountRecoveryRequest = RequestAccountRecoveryRequest(
             clientId: sdkConfig.clientId,
             email: email,
             phoneNumber: phoneNumber,
-            redirectUrl: redirectUrl
+            redirectUrl: redirectUrl ?? sdkConfig.accountRecoveryUri
         )
-        return reachFiveApi.requestAccountRecovery(
-            requestAccountRecoveryRequest: requestAccountRecoveryRequest
-        )
+        return reachFiveApi.requestAccountRecovery(requestAccountRecoveryRequest)
     }
     
     /// Lists all passkeys and other webauthn credentials the user has registered
@@ -100,5 +98,29 @@ public extension ReachFive {
     /// Deletes a passkey or other webauthn credentials the user has registered
     func deleteWebAuthnRegistration(id: String, authToken: AuthToken) -> Future<(), ReachFiveError> {
         reachFiveApi.deleteWebAuthnRegistration(id: id, authToken: authToken)
+    }
+    
+    func addAccountRecoveryCallback(accountRecoveryCallback: @escaping AccountRecoveryCallback) {
+        self.accountRecoveryCallback = accountRecoveryCallback
+    }
+    
+    func interceptAccountRecovery(_ url: URL) {
+        let params = URLComponents(url: url, resolvingAgainstBaseURL: true)?.queryItems
+        if let error = params?.first(where: { $0.name == "error" })?.value {
+            accountRecoveryCallback?(.failure(.TechnicalError(reason: error, apiError: ApiError(fromQueryParams: params))))
+            return
+        }
+        
+        guard let params, let verificationCode = params.first(where: { $0.name == "verification_code" })?.value else {
+            accountRecoveryCallback?(.failure(.TechnicalError(reason: "No authorization code", apiError: ApiError(fromQueryParams: params))))
+            return
+        }
+        
+        guard let email = params.first(where: { $0.name == "email" })?.value else {
+            accountRecoveryCallback?(.failure(.TechnicalError(reason: "No email", apiError: ApiError(fromQueryParams: params))))
+            return
+        }
+        
+        accountRecoveryCallback?(.success(AccountRecoveryResponse(email: email, verificationCode: verificationCode)))
     }
 }
