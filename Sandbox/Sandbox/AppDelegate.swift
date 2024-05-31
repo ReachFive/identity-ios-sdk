@@ -160,6 +160,14 @@ extension UIViewController {
             navigationController?.pushViewController(tabBarController, animated: true)
         }
     }
+    
+    func showToast(message: String, seconds: Double) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        self.present(alert, animated: true)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + seconds) {
+            alert.dismiss(animated: true)
+        }
+    }
 }
 
 extension NSNotification.Name {
