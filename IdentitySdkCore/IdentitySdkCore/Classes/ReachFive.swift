@@ -80,7 +80,6 @@ public class ReachFive: NSObject {
     
     public func interceptUrl(_ url: URL) -> () {
         let host = URLComponents(url: url, resolvingAgainstBaseURL: true)?.host
-        guard let host else { return }
         switch host {
         case "mfa": interceptVerifyMfaCredential(url)
         case "account-recovery": interceptAccountRecovery(url)

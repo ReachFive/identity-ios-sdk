@@ -366,6 +366,7 @@ extension CredentialManager: ASAuthorizationControllerDelegate {
                 let webauthnSignupCredential = WebauthnSignupCredential(webauthnId: signupOptions.options.publicKey.user.id, publicKeyCredential: registrationPublicKeyCredential)
                 promise.completeWith(reachFiveApi.signupWithWebAuthn(webauthnSignupCredential: webauthnSignupCredential, originR5: self.originR5)
                     .flatMap({ self.loginCallback(tkn: $0.tkn, scope: scope, origin: self.originR5) }))
+
             case let .ResetPasskey(resetOptions):
                 let resetPublicKeyCredential = ResetPublicKeyCredential(resetOptions: resetOptions, publicKeyCredential: registrationPublicKeyCredential)
                 registrationPromise.completeWith(reachFiveApi.resetWebAuthn(resetPublicKeyCredential: resetPublicKeyCredential))

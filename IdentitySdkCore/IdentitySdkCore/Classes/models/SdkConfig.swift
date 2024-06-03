@@ -9,7 +9,7 @@ public class SdkConfig {
     
     ///The scheme. Defaults to `reachfive-clientId`
     public let baseScheme: String
-    /// The redirect URI. Defaults to `reachfive-clientId://callback`
+    /// The redirect URI for passwordless. Defaults to `reachfive-clientId://callback`
     public let redirectUri: String
     /// The redirect URI for MFA. Defaults to `reachfive-clientId://mfa`
     public let mfaUri: String

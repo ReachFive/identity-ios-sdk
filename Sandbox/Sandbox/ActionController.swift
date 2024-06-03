@@ -8,13 +8,12 @@ class ActionController: UITableViewController {
     
     override func viewDidLoad() {
         AppDelegate.reachfive().addAccountRecoveryCallback { result in
-            print("addAccountRecoveryCallback \(result)")
             switch result {
             case .success(let resp):
                 guard let window = self.view.window else { fatalError("The view was not in the app's view hierarchy!") }
                 if #available(iOS 16.0, *) {
                     AppDelegate.reachfive().resetPasskeys(withRequest: ResetPasskeyRequest(verificationCode: resp.verificationCode, friendlyName: resp.email, anchor: window, email: resp.email))
-                        .onSuccess { () in
+                        .onSuccess { _ in
                             print("succcess reset")
                         }
                         .onFailure { error in
@@ -80,47 +79,33 @@ class ActionController: UITableViewController {
         
         // Section Recovery
         if indexPath.section == 5 {
-//            // Forgot Password
-//            if indexPath.row == 0 {
-//                sendRecoveryLink(message: "Recover password") { email in
-//                    AppDelegate.reachfive().requestPasswordReset(email: email, redirectUrl: AppDelegate.reachfive().sdkConfig.accountRecoveryUri)
-//                }
-//            }
-            
             // Forgot Passkey
             if indexPath.row == 0 {
-                sendRecoveryLink(message: "Recover passkey") { email in
-                    AppDelegate.reachfive().requestAccountRecovery(email: email)
+                let alert = UIAlertController(title: "Recover passkey", message: "Enter your identifier", preferredStyle: .alert)
+                alert.addTextField { field in
+                    field.textContentType = .username
+                    field.keyboardType = .emailAddress
                 }
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+                let sendAction = UIAlertAction(title: "Send recovery link", style: .default) { [unowned alert] (_) in
+                    let textField = alert.textFields?[0]
+                    guard let textField, let texte = textField.text else {
+                        return
+                    }
+                    AppDelegate.reachfive().requestAccountRecovery(email: texte)
+                        .onSuccess { () in
+                            self.showToast(message: "Email Sent", seconds: 1)
+                        }
+                        .onFailure { error in
+                            let alert = AppDelegate.createAlert(title: "Login failed", message: "Error: \(error.message())")
+                            self.present(alert, animated: true)
+                        }
+                }
+                alert.addAction(sendAction)
+                alert.preferredAction = sendAction
+                self.present(alert, animated: true)
             }
         }
-    }
-    
-    private func sendRecoveryLink(message: String, action: @escaping (String) -> Future<(), ReachFiveError>) {
-        let alert = UIAlertController(title: message, message: "Enter your identifier", preferredStyle: .alert)
-        alert.addTextField { field in
-            field.textContentType = .username
-            field.keyboardType = .emailAddress
-        }
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        let sendAction = UIAlertAction(title: "Send recovery link", style: .default) { [unowned alert] (_) in
-            let textField = alert.textFields?[0]
-            guard let textField, let texte = textField.text else {
-                return
-            }
-            let reset: Future<(), ReachFiveError> = action(texte)
-            reset
-                .onSuccess { () in
-                    self.showToast(message: "Email Sent", seconds: 1)
-                }
-                .onFailure { error in
-                    let alert = AppDelegate.createAlert(title: "Login failed", message: "Error: \(error.message())")
-                    self.present(alert, animated: true)
-                }
-        }
-        alert.addAction(sendAction)
-        alert.preferredAction = sendAction
-        self.present(alert, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
