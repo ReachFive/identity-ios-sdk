@@ -269,7 +269,7 @@
                                         <rect key="frame" x="0.0" y="50" width="432" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HyK-Am-JUA" id="VRc-NK-UUF">
-                                            <rect key="frame" x="0.0" y="0.0" width="432" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="432" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -355,6 +355,63 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mM7-to-ugn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-318" y="864"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="egb-zI-9Dm">
+            <objects>
+                <viewController id="iwt-j4-C91" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="rIK-YV-mBr">
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xnb-I4-CeL">
+                                <rect key="frame" x="120.00000000000001" y="223" width="190.33333333333337" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Create a new passkey"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="or" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iWT-4W-N9R">
+                                <rect key="frame" x="207" y="298" width="16" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hei-Cc-aWw" userLabel="New Password field">
+                                <rect key="frame" x="20" y="340" width="390" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="new-password"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yTN-Ql-5u8">
+                                <rect key="frame" x="114" y="395" width="202" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Create a new password"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Passkey are cool" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yep-7v-NMj">
+                                <rect key="frame" x="151.66666666666666" y="139" width="126.99999999999997" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="EGI-cb-f4N"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="yTN-Ql-5u8" firstAttribute="top" secondItem="hei-Cc-aWw" secondAttribute="bottom" constant="21" id="0ed-Y5-m4r"/>
+                            <constraint firstItem="xnb-I4-CeL" firstAttribute="top" secondItem="Yep-7v-NMj" secondAttribute="bottom" constant="63" id="BtO-a6-wvR"/>
+                            <constraint firstItem="hei-Cc-aWw" firstAttribute="top" secondItem="iWT-4W-N9R" secondAttribute="bottom" constant="21" id="C7h-JW-4j0"/>
+                            <constraint firstItem="Yep-7v-NMj" firstAttribute="top" secondItem="EGI-cb-f4N" secondAttribute="top" constant="80" id="HYT-y2-IJb"/>
+                            <constraint firstItem="xnb-I4-CeL" firstAttribute="centerX" secondItem="iWT-4W-N9R" secondAttribute="centerX" id="Lyn-FX-Rba"/>
+                            <constraint firstItem="iWT-4W-N9R" firstAttribute="top" secondItem="xnb-I4-CeL" secondAttribute="bottom" constant="40" id="Xsz-7D-q1u"/>
+                            <constraint firstItem="Yep-7v-NMj" firstAttribute="centerX" secondItem="xnb-I4-CeL" secondAttribute="centerX" id="ZuZ-xb-2Nq"/>
+                            <constraint firstItem="hei-Cc-aWw" firstAttribute="leading" secondItem="rIK-YV-mBr" secondAttribute="leadingMargin" id="fKe-oc-JV2"/>
+                            <constraint firstItem="xnb-I4-CeL" firstAttribute="centerX" secondItem="hei-Cc-aWw" secondAttribute="centerX" id="fSz-nw-556"/>
+                            <constraint firstItem="xnb-I4-CeL" firstAttribute="centerX" secondItem="rIK-YV-mBr" secondAttribute="centerX" id="oLG-pM-Ogv"/>
+                            <constraint firstItem="xnb-I4-CeL" firstAttribute="centerX" secondItem="yTN-Ql-5u8" secondAttribute="centerX" id="yS4-Kk-9L3"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ltQ-nN-jqc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="549.76744186046506" y="863.94849785407735"/>
         </scene>
         <!--Signup with password-->
         <scene sceneID="H6o-jf-Xhj">
