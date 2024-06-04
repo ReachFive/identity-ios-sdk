@@ -78,7 +78,7 @@ class MfaController: UIViewController {
         }
         let mfaAction = MfaAction(presentationAnchor: self)
         
-        mfaAction.mfaStart(stepUp: StartStepUp(authType: stepUpSelectedType, authToken: authToken, scope: ["openid", "email", "profile", "phone", "full_write", "offline_access"]), authToken: authToken).onSuccess { freshToken in
+        mfaAction.mfaStart(stepUp: StartStepUp(authType: stepUpSelectedType, authToken: authToken, scope: ["openid", "email", "profile", "phone", "full_write", "offline_access", "mfa"]), authToken: authToken).onSuccess { freshToken in
             AppDelegate.storage.setToken(freshToken)
         }
     }
@@ -338,34 +338,82 @@ class CredentialCollectionViewCell: UICollectionViewListCell {
 
         return label
     }()
+    
+    let deleteButton: UIButton = {
+        let uiButton = UIButton()
+        uiButton.tintColor = UIColor.red
+        uiButton.setImage(UIImage(systemName: "minus.circle"), for: UIControl.State.normal)
+        return uiButton
+    }()
 }
 
 extension CredentialCollectionViewCell {
     public func configure(with credential: MfaCredential) {
         id.text = credential.identifier
-        createdAt.text = credential.createdAt
         id.translatesAutoresizingMaskIntoConstraints = false
-        createdAt.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(id)
-        contentView.addSubview(createdAt)
 
+        createdAt.text = credential.createdAt.components(separatedBy: ".")[0]
+        createdAt.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(createdAt)
+        
+        deleteButton.frame = CGRect(x: contentView.frame.width - 20, y: 0, width: 20, height: 20)
+        deleteButton.addTarget(self, action: #selector(buttonTapped), for: UIControl.Event.touchUpInside)
+        contentView.addSubview(deleteButton)
+        
         let fontSize = contentView.frame.size.width < 330 ? 12.0 : 15.0
         id.font = UIFont.preferredFont(forTextStyle: .body).withSize(fontSize)
         createdAt.font = UIFont.preferredFont(forTextStyle: .body).withSize(fontSize)
 
-        let spacing = CGFloat(contentView.frame.width/12)
+        let spacing = CGFloat((contentView.frame.width/2.5))
     
         NSLayoutConstraint.activate([
             id.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            createdAt.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: spacing)
+            createdAt.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: spacing),
+            deleteButton.leadingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 20)
         ])
+    }
+    @IBAction func buttonTapped() -> Void {
+        guard let authToken = AppDelegate.storage.getToken() else {
+            print("not logged in")
+            return
+        }
+        guard let identifier = id.text else {
+            print("identifier cannot be nil")
+            return
+        }
+        
+        let alert = UIAlertController(title: "Remove identifier \(identifier)", message: "Are you sure you want to remove the identifier ?", preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "No", style: .cancel) { _ in
+                return
+        }
+        let approveRemove = UIAlertAction(title: "Yes", style: .default) { _ in
+            if(identifier.contains("@")) {
+                AppDelegate.reachfive().mfaDeleteEmail(authToken: authToken)
+                    .onSuccess { _ in
+                        self.contentView.removeFromSuperview()
+                    }
+            } else {
+                AppDelegate.reachfive()
+                    .mfaDeletePhoneNumber(identifier, authToken: authToken)
+                    .onSuccess { _ in
+                        self.contentView.removeFromSuperview()
+                    }
+            }
+        }
+        alert.addAction(cancelAction)
+        alert.addAction(approveRemove)
+        self.window?.rootViewController?.present(alert, animated: true)
     }
 }
 
 struct MfaCredential: Hashable {
     let identifier: String
     let createdAt: String
-
+    let email: String?
+    let phoneNumber: String?
+    
     func hash(into hasher: inout Hasher) {
         hasher.combine(identifier)
     }
@@ -377,7 +425,7 @@ struct MfaCredential: Hashable {
         case .email:
             mfaCredentialItem.email
         }
-        return MfaCredential(identifier: identifier!, createdAt: mfaCredentialItem.createdAt)
+        return MfaCredential(identifier: identifier!, createdAt: mfaCredentialItem.createdAt, email: mfaCredentialItem.email, phoneNumber: mfaCredentialItem.phoneNumber)
     }
 }
 

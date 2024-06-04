@@ -369,6 +369,36 @@ public class ReachFiveApi {
             .responseJson(type: MfaCredentialItem.self, decoder: decoder)
     }
     
+    public func deleteMfaPhoneNumberCredential(
+        phoneNumber: String,
+        authToken: AuthToken
+    ) -> Future<Void, ReachFiveError> {
+        AF
+            .request(
+                    createUrl(path: "/identity/v1/mfa/credentials/phone-numbers"),
+                    method: .delete,
+                    parameters: ["phone_number": phoneNumber],
+                    encoding: JSONEncoding.default,
+                    headers: tokenHeader(authToken)
+            )
+            .validate(contentType: ["application/json"])
+            .responseJson(decoder: decoder)
+    }
+    
+    public func deleteMfaEmailCredential(
+        authToken: AuthToken
+    ) -> Future<Void, ReachFiveError> {
+        AF
+            .request(
+                    createUrl(path: "/identity/v1/mfa/credentials/emails"),
+                    method: .delete,
+                    encoding: JSONEncoding.default,
+                    headers: tokenHeader(authToken)
+            )
+            .validate(contentType: ["application/json"])
+            .responseJson(decoder: decoder)
+    }
+    
     public func mfaListCredentials(
         authToken: AuthToken
     ) -> Future<MfaCredentialsListResponse, ReachFiveError> {
