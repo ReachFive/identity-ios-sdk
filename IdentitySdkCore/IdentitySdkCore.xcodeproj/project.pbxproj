@@ -3,11 +3,15 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		2A624FDA2B2BDBC400BF33A7 /* DefaultProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A624FD92B2BDBC400BF33A7 /* DefaultProvider.swift */; };
+		2AB299FB2C10C1FB00D0C5C8 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 2AB299FA2C10C1FB00D0C5C8 /* Alamofire */; };
+		2AB29A002C10C27B00D0C5C8 /* BrightFutures in Frameworks */ = {isa = PBXBuildFile; productRef = 2AB299FF2C10C27B00D0C5C8 /* BrightFutures */; };
+		2AB29A032C10C2C000D0C5C8 /* DeviceKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2AB29A022C10C2C000D0C5C8 /* DeviceKit */; };
+		2AB29A062C10C32F00D0C5C8 /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2AB29A052C10C32F00D0C5C8 /* CryptoSwift */; };
 		2AE18CDB29FC1DAF00258D2B /* LoginWKWebview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE18CDA29FC1DAF00258D2B /* LoginWKWebview.swift */; };
 		2AE533062994629400EF97E0 /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE533052994629400EF97E0 /* StringUtils.swift */; };
 		2AE5330B299462DD00EF97E0 /* ReachFiveWebviewLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE53307299462DD00EF97E0 /* ReachFiveWebviewLogin.swift */; };
@@ -177,6 +181,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				63B485A8E4E7A8A3D94D4C18 /* Pods_IdentitySdkCore.framework in Frameworks */,
+				2AB29A032C10C2C000D0C5C8 /* DeviceKit in Frameworks */,
+				2AB299FB2C10C1FB00D0C5C8 /* Alamofire in Frameworks */,
+				2AB29A002C10C27B00D0C5C8 /* BrightFutures in Frameworks */,
+				2AB29A062C10C32F00D0C5C8 /* CryptoSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -388,6 +396,12 @@
 			dependencies = (
 			);
 			name = IdentitySdkCore;
+			packageProductDependencies = (
+				2AB299FA2C10C1FB00D0C5C8 /* Alamofire */,
+				2AB299FF2C10C27B00D0C5C8 /* BrightFutures */,
+				2AB29A022C10C2C000D0C5C8 /* DeviceKit */,
+				2AB29A052C10C32F00D0C5C8 /* CryptoSwift */,
+			);
 			productName = IdentitySdkCore;
 			productReference = 347FDB42229BE84500660687 /* IdentitySdkCore.framework */;
 			productType = "com.apple.product-type.framework";
@@ -415,6 +429,12 @@
 				en,
 			);
 			mainGroup = 347FDB38229BE84500660687;
+			packageReferences = (
+				2AB299F92C10C1FB00D0C5C8 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				2AB299FE2C10C27B00D0C5C8 /* XCRemoteSwiftPackageReference "BrightFutures" */,
+				2AB29A012C10C2C000D0C5C8 /* XCRemoteSwiftPackageReference "DeviceKit" */,
+				2AB29A042C10C32F00D0C5C8 /* XCRemoteSwiftPackageReference "CryptoSwift" */,
+			);
 			productRefGroup = 347FDB43229BE84500660687 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -761,6 +781,64 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2AB299F92C10C1FB00D0C5C8 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.9.1;
+			};
+		};
+		2AB299FE2C10C27B00D0C5C8 /* XCRemoteSwiftPackageReference "BrightFutures" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Thomvis/BrightFutures.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.2.0;
+			};
+		};
+		2AB29A012C10C2C000D0C5C8 /* XCRemoteSwiftPackageReference "DeviceKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devicekit/DeviceKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.4.0;
+			};
+		};
+		2AB29A042C10C32F00D0C5C8 /* XCRemoteSwiftPackageReference "CryptoSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/krzyzanowskim/CryptoSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.8.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2AB299FA2C10C1FB00D0C5C8 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2AB299F92C10C1FB00D0C5C8 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		2AB299FF2C10C27B00D0C5C8 /* BrightFutures */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2AB299FE2C10C27B00D0C5C8 /* XCRemoteSwiftPackageReference "BrightFutures" */;
+			productName = BrightFutures;
+		};
+		2AB29A022C10C2C000D0C5C8 /* DeviceKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2AB29A012C10C2C000D0C5C8 /* XCRemoteSwiftPackageReference "DeviceKit" */;
+			productName = DeviceKit;
+		};
+		2AB29A052C10C32F00D0C5C8 /* CryptoSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2AB29A042C10C32F00D0C5C8 /* XCRemoteSwiftPackageReference "CryptoSwift" */;
+			productName = CryptoSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 347FDB39229BE84500660687 /* Project object */;
 }
