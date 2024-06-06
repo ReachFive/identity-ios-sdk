@@ -32,7 +32,7 @@ let package = Package(
             path: "IdentitySdkCore/IdentitySdkCore"),
         .target(
             name: "Reach5Google",
-            dependencies: ["Reach5", "GoogleSignIn-iOS"],
+//            dependencies: ["Reach5", "GoogleSignIn-iOS"],
             path: "IdentitySdkGoogle/IdentitySdkGoogle"),
     ]
 )
