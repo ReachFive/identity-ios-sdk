@@ -154,11 +154,10 @@ public extension ReachFive {
             }
     }
     
-    func mfaDeleteEmail(authToken: AuthToken) -> Future<Void, ReachFiveError> {
-        return reachFiveApi.deleteMfaEmailCredential(authToken: authToken)
-    }
-    
-    func mfaDeletePhoneNumber(_ phoneNumber: String, authToken: AuthToken) -> Future<Void, ReachFiveError> {
+    func mfaDeleteCredential(phoneNumber phoneNumber: String? = nil, authToken: AuthToken) -> Future<Void, ReachFiveError> {
+        guard let phoneNumber else {
+            return reachFiveApi.deleteMfaEmailCredential(authToken: authToken)
+        }
         return reachFiveApi
             .deleteMfaPhoneNumberCredential(phoneNumber: phoneNumber, authToken: authToken)
     }

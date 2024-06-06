@@ -390,13 +390,13 @@ extension CredentialCollectionViewCell {
         }
         let approveRemove = UIAlertAction(title: "Yes", style: .default) { _ in
             if(identifier.contains("@")) {
-                AppDelegate.reachfive().mfaDeleteEmail(authToken: authToken)
+                AppDelegate.reachfive().mfaDeleteCredential(authToken: authToken)
                     .onSuccess { _ in
                         self.contentView.removeFromSuperview()
                     }
             } else {
                 AppDelegate.reachfive()
-                    .mfaDeletePhoneNumber(identifier, authToken: authToken)
+                    .mfaDeleteCredential(phoneNumber: identifier, authToken: authToken)
                     .onSuccess { _ in
                         self.contentView.removeFromSuperview()
                     }
