@@ -43,38 +43,7 @@ public class ReachFive: NSObject {
         Scope: \(scope.joined(separator: " "))
         """
     }
-    
-    public func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
-        interceptUrl(url)
-        for provider in providers {
-            let _ = provider.application(app, open: url, options: options)
-        }
-        return true
-    }
-    
-    public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        initialize().onSuccess { providers in
-            for provider in providers {
-                let _ = provider.application(application, didFinishLaunchingWithOptions: launchOptions)
-            }
-        }
         
-        return true
-    }
-    
-    public func applicationDidBecomeActive(_ application: UIApplication) {
-        for provider in providers {
-            let _ = provider.applicationDidBecomeActive(application)
-        }
-    }
-    
-    public func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-        for provider in providers {
-            let _ = provider.application(application, continue: userActivity, restorationHandler: restorationHandler)
-        }
-        return true
-    }
-    
     public func interceptUrl(_ url: URL) -> () {
         let host = URLComponents(url: url, resolvingAgainstBaseURL: true)?.host
         if host == "mfa" {
