@@ -358,7 +358,7 @@ extension CredentialCollectionViewCell {
         contentView.addSubview(createdAt)
         
         deleteButton.frame = CGRect(x: contentView.frame.width - 20, y: 0, width: 20, height: 20)
-        deleteButton.addTarget(self, action: #selector(buttonTapped), for: UIControl.Event.touchUpInside)
+        deleteButton.addTarget(self, action: #selector(deleteCredentialButtonTapped), for: UIControl.Event.touchUpInside)
         contentView.addSubview(deleteButton)
         
         let fontSize = contentView.frame.size.width < 330 ? 12.0 : 15.0
@@ -373,7 +373,7 @@ extension CredentialCollectionViewCell {
             deleteButton.leadingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 20)
         ])
     }
-    @IBAction func buttonTapped() -> Void {
+    @IBAction func deleteCredentialButtonTapped() -> Void {
         guard let authToken = AppDelegate.storage.getToken() else {
             print("not logged in")
             return
