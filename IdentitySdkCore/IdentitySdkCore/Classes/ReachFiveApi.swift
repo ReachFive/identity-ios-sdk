@@ -1,3 +1,4 @@
+import Foundation
 import Alamofire
 import BrightFutures
 import DeviceKit
@@ -110,9 +111,9 @@ public class ReachFiveApi {
     ) -> Future<AccessTokenResponse, ReachFiveError> {
         AF
             .request(createUrl(path: "/identity/v1/oauth/provider/token"),
-                     method: .post,
-                     parameters: loginProviderRequest.dictionary(),
-                     encoding: JSONEncoding.default)
+                method: .post,
+                parameters: loginProviderRequest.dictionary(),
+                encoding: JSONEncoding.default)
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
             .responseJson(type: AccessTokenResponse.self, decoder: decoder)
@@ -152,7 +153,7 @@ public class ReachFiveApi {
                 parameters: loginCallback.dictionary()
             )
             .redirect(using: Redirector.doNotFollow)
-            .validate(statusCode: 300 ... 308) // TODO: pas de 305/306
+            .validate(statusCode: 300...308) // TODO: pas de 305/306
             .response { responseData in
                 let callbackURL = responseData.response?.allHeaderFields["Location"] as? String
                 guard let callbackURL else {
@@ -451,16 +452,16 @@ public class ReachFiveApi {
             .validate(contentType: ["application/json"])
             .responseJson(type: PasswordlessVerifyResponse.self, decoder: decoder)
     }
-   
+    
     public func requestPasswordReset(
         requestPasswordResetRequest: RequestPasswordResetRequest
     ) -> Future<Void, ReachFiveError> {
         AF
             .request(createUrl(
                 path: "/identity/v1/forgot-password"),
-            method: .post,
-            parameters: requestPasswordResetRequest.dictionary(),
-            encoding: JSONEncoding.default)
+                method: .post,
+                parameters: requestPasswordResetRequest.dictionary(),
+                encoding: JSONEncoding.default)
             .validate(contentType: ["application/json"])
             .responseJson(decoder: decoder)
     }
