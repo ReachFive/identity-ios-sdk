@@ -25,7 +25,10 @@ let package = Package(
         .target(
             name: "IdentitySdkCore",
             dependencies: [
-                .product(name: "Alamofire", package: "Alamofire")
+                .product(name: "Alamofire", package: "Alamofire"),
+                .product(name: "CryptoSwift", package: "CryptoSwift"),
+                .product(name: "DeviceKit", package: "DeviceKit"),
+                .product(name: "BrightFutures", package: "BrightFutures"),
             ],
             path: "IdentitySdkCore/IdentitySdkCore"),
     ]
