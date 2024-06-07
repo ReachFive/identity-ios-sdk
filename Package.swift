@@ -11,7 +11,7 @@ let package = Package(
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(name: "IdentitySdkCore", targets: ["IdentitySdkCore"]),
-//        .library(name: "Reach5Google", targets: ["Reach5Google"]),
+        .library(name: "IdentitySdkGoogle", targets: ["IdentitySdkGoogle"]),
     ],
     dependencies: [
         .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.9.1")),
@@ -30,12 +30,12 @@ let package = Package(
                 .product(name: "BrightFutures", package: "BrightFutures"),
             ],
             path: "IdentitySdkCore/IdentitySdkCore"),
-//        .target(
-//            name: "Reach5Google",
-//            dependencies: [
-//                "Reach5",
-//                .product(name: "GoogleSignIn-iOS", package: "GoogleSignIn-iOS"),
-//            ],
-//            path: "IdentitySdkGoogle/IdentitySdkGoogle"),
+        .target(
+            name: "IdentitySdkGoogle",
+            dependencies: [
+                "IdentitySdkCore",
+                .product(name: "GoogleSignIn-iOS", package: "GoogleSignIn-iOS"),
+            ],
+            path: "IdentitySdkGoogle/IdentitySdkGoogle"),
     ]
 )
