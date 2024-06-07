@@ -34,7 +34,7 @@ let package = Package(
             name: "IdentitySdkGoogle",
             dependencies: [
                 "IdentitySdkCore",
-                .product(name: "GoogleSignIn-iOS", package: "GoogleSignIn-iOS"),
+                .product(name: "GoogleSignIn", package: "GoogleSignIn"),
             ],
             path: "IdentitySdkGoogle/IdentitySdkGoogle"),
     ]
