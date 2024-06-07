@@ -4,14 +4,14 @@
 import PackageDescription
 
 let package = Package(
-    name: "IdentitySdkCore",
+    name: "Reach5",
     platforms: [
         .iOS(.v13)
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
-        .library(name: "Reach5", targets: ["Reach5"]),
-        .library(name: "Reach5Google", targets: ["Reach5Google"]),
+        .library(name: "IdentitySdkCore", targets: ["IdentitySdkCore"]),
+//        .library(name: "Reach5Google", targets: ["Reach5Google"]),
     ],
     dependencies: [
         .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.9.1")),
@@ -22,7 +22,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "Reach5",
+            name: "IdentitySdkCore",
             dependencies: [
                 .product(name: "Alamofire", package: "Alamofire"),
                 .product(name: "CryptoSwift", package: "CryptoSwift"),
@@ -30,9 +30,12 @@ let package = Package(
                 .product(name: "BrightFutures", package: "BrightFutures"),
             ],
             path: "IdentitySdkCore/IdentitySdkCore"),
-        .target(
-            name: "Reach5Google",
-//            dependencies: ["Reach5", "GoogleSignIn-iOS"],
-            path: "IdentitySdkGoogle/IdentitySdkGoogle"),
+//        .target(
+//            name: "Reach5Google",
+//            dependencies: [
+//                "Reach5",
+//                .product(name: "GoogleSignIn-iOS", package: "GoogleSignIn-iOS"),
+//            ],
+//            path: "IdentitySdkGoogle/IdentitySdkGoogle"),
     ]
 )
