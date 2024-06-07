@@ -19,6 +19,7 @@ let package = Package(
         .package(url: "https://github.com/devicekit/DeviceKit.git", .upToNextMajor(from: "5.1.0")),
         .package(url: "https://github.com/Thomvis/BrightFutures.git", .upToNextMajor(from: "8.2.0")),
         .package(url: "https://github.com/google/GoogleSignIn-iOS.git", .upToNextMajor(from: "7.1.0")),
+        .package(url: "https://github.com/facebook/facebook-ios-sdk.git", .upToNextMajor(from: "17.0.0")),
     ],
     targets: [
         .target(
@@ -30,12 +31,20 @@ let package = Package(
                 .product(name: "BrightFutures", package: "BrightFutures"),
             ],
             path: "IdentitySdkCore/IdentitySdkCore"),
+//        .target(
+//            name: "IdentitySdkGoogle",
+//            dependencies: [
+//                "IdentitySdkCore",
+//                .product(name: "GoogleSignIn", package: "GoogleSignIn"),
+//            ],
+//            path: "IdentitySdkGoogle/IdentitySdkGoogle"),
         .target(
-            name: "IdentitySdkGoogle",
+            name: "IdentitySdkFacebook",
             dependencies: [
                 "IdentitySdkCore",
-                .product(name: "GoogleSignIn", package: "GoogleSignIn"),
+                .product(name: "FacebookCore", package: "facebook-ios-sdk"),
+                .product(name: "FacebookLogin", package: "facebook-ios-sdk"),
             ],
-            path: "IdentitySdkGoogle/IdentitySdkGoogle"),
+            path: "IdentitySdkFacebook/IdentitySdkFacebook"),
     ]
 )
