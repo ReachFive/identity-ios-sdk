@@ -7,29 +7,53 @@
 
 # ReachFive Identity iOS SDK
 
-## Cocoapods pods
-
-- [IdentitySdkCore](https://cocoapods.org/pods/IdentitySdkCore)
-- [IdentitySdkFacebook](https://cocoapods.org/pods/IdentitySdkFacebook)
-- [IdentitySdkGoogle](https://cocoapods.org/pods/IdentitySdkGoogle)
-- [IdentitySdkWeChat](https://cocoapods.org/pods/IdentitySdkWeChat)
-
 ## Installation
 
-Refer to the [public documentation](https://developer.reachfive.com/sdk-ios/index.html) to install the SDKs and to initialize your ReachFive client.
+### Cocoapods
 
-The basics are:
-- Add this SDK to your project in your Cocoapods Podfile: 
+Add the following line to your **Podfile**:
 
 
     pod 'IdentitySdkCore'
 
-- Configure the SDK:
+and other dependencies, for Social Login, as needed:
+
+    pod 'IdentitySdkFacebook'
+    pod 'IdentitySdkGoogle'
+    pod 'IdentitySdkWeChat'
+
+
+### Swift Package Manager
+Open the following menu item in Xcode:
+
+**File > Add Package Dependencies...**
+
+In the **Search or Enter Package URL** search box enter this URL:
+
+https://github.com/ReachFive/identity-ios-sdk.git
+
+Then, select the dependency rule and press **Add Package**.
+
+Or directly add it to the dependencies value of your Package.swift or the Package list in Xcode
+
+
+    dependencies: [
+        .package(url: "https://github.com/ReachFive/identity-ios-sdk.git", .upToNextMajor(from: "6.3.0"))
+    ]
+
+## initialisation
+Refer to the [public documentation](https://developer.reachfive.com/sdk-ios/index.html) to install the SDKs and to initialize your ReachFive client.
+
+The basics are:
+
+- Configuration:
 
 
     let reachfive: ReachFive = ReachFive(sdkConfig: SdkConfig(domain: "DOMAIN", clientId: "CLIENT_ID"))
 
-- Initialize the SDK using this method (makes a network call) to be called inside the corresponding method of `UIApplicationDelegate`
+- Initialisation:
+
+Call this method (that makes a network call) inside the corresponding method of `UIApplicationDelegate`
 
 
     reachfive.application(application, didFinishLaunchingWithOptions: launchOptions)
