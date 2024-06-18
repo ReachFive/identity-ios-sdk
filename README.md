@@ -41,7 +41,7 @@ Or directly add it to the dependencies value of your Package.swift or the Packag
         .package(url: "https://github.com/ReachFive/identity-ios-sdk.git", .upToNextMajor(from: "6.3.0"))
     ]
 
-## initialisation
+## Initialisation
 Refer to the [public documentation](https://developer.reachfive.com/sdk-ios/index.html) to install the SDKs and to initialize your ReachFive client.
 
 The basics are:
