@@ -3,7 +3,7 @@
 
 import PackageDescription
 
-let packageF = Package(
+let package = Package(
     name: "Reach5Facebook",
     platforms: [
         .iOS(.v13)
@@ -26,7 +26,7 @@ let packageF = Package(
             path: "IdentitySdkFacebook/IdentitySdkFacebook"),
     ]
 )
-let package = Package(
+let packageF = Package(
     name: "Reach5",
     platforms: [
         .iOS(.v13)
