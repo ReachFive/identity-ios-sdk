@@ -19,10 +19,6 @@ Pod::Spec.new do |spec|
 
   spec.static_framework = true
 
-  # cf. https://github.com/CocoaPods/CocoaPods/issues/10203
-  spec.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64'}
-  spec.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64'}
-
   spec.dependency 'IdentitySdkCore', '~> 6'
   spec.dependency 'GoogleSignIn', '~> 7'
 end
