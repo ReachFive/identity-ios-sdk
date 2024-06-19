@@ -81,6 +81,7 @@ public class ReachFive: NSObject {
     public func interceptUrl(_ url: URL) -> () {
         let host = URLComponents(url: url, resolvingAgainstBaseURL: true)?.host
         switch host {
+        //TODO faire en sorte que les versions customs marchent quand même, en lisant sdkConfig.mfaUri, .scheme et .accountRecoveryUri
         case "mfa": interceptVerifyMfaCredential(url)
         case "account-recovery": interceptAccountRecovery(url)
         case "callback": interceptPasswordless(url)
