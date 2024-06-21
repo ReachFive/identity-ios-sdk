@@ -56,7 +56,7 @@ jobs:
             cd IdentitySdkCore
             pod install
             cd ../
-            pod spec lint IdentitySdkCore.podspec --allow-warnings
+            pod spec lint IdentitySdkCore.podspec
       - run:
           name: Check IdentitySdkFacebook
           command: |
