@@ -5,6 +5,10 @@
   - mfaListCredentials, mfaStart, mfaVerify, mfaDeleteCredential
 - add MFA step up support methods:
   - mfaStart, mfaVerify
+  
+  ### Bug fixes
+  - Fix a bug where the provided scope parameter was not transmitted to the backend in `webviewLogin`
+  - Allow the Sandbox app to run in the ARM iPhone simulator 
 
 ## v6.2.0
 ### New features
