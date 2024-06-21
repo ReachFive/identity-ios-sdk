@@ -1,4 +1,10 @@
 # Changelog
+## v6.3.0
+### New features
+- add MfA credentials support methods:
+  - mfaListCredentials, mfaStart, mfaVerify, mfaDeleteCredential
+- add MFA step up support methods:
+  - mfaStart, mfaVerify
 
 ## v6.2.0
 ### New features

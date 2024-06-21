@@ -8,7 +8,7 @@ PODS:
     - AppAuth/Core
   - BrightFutures (8.2.0)
   - CryptoSwift (1.8.2)
-  - DeviceKit (5.2.3)
+  - DeviceKit (5.4.0)
   - GoogleSignIn (7.1.0):
     - AppAuth (< 2.0, >= 1.7.3)
     - GTMAppAuth (< 5.0, >= 4.1.1)
@@ -17,12 +17,12 @@ PODS:
     - AppAuth/Core (~> 1.7)
     - GTMSessionFetcher/Core (< 4.0, >= 3.3)
   - GTMSessionFetcher/Core (3.4.1)
-  - IdentitySdkCore (6.2.0):
+  - IdentitySdkCore (6.3.0):
     - Alamofire (~> 5.8)
     - BrightFutures (~> 8.2.0)
     - CryptoSwift (~> 1.8)
     - DeviceKit (~> 5.1)
-  - IdentitySdkGoogle (6.2.0):
+  - IdentitySdkGoogle (6.3.0):
     - GoogleSignIn (~> 7)
     - IdentitySdkCore (~> 6)
 
@@ -52,12 +52,12 @@ SPEC CHECKSUMS:
   AppAuth: 501c04eda8a8d11f179dbe8637b7a91bb7e5d2fa
   BrightFutures: 67e0e8cd974ab9f6c04650cc64153f7adf1ec489
   CryptoSwift: c63a805d8bb5e5538e88af4e44bb537776af11ea
-  DeviceKit: 4504e64df8f8ad1c42aae68f30ece5b51d56022a
+  DeviceKit: bd34bb1766d926c3cc5a5f6e3e9a6dd10148b805
   GoogleSignIn: d4281ab6cf21542b1cfaff85c191f230b399d2db
   GTMAppAuth: f69bd07d68cd3b766125f7e072c45d7340dea0de
   GTMSessionFetcher: 8000756fc1c19d2e5697b90311f7832d2e33f6cd
-  IdentitySdkCore: c7fcd8336521bfb1152f13338580aa9dca145b84
-  IdentitySdkGoogle: 5c4d4131522d0a413db9da4075441b02c5aed043
+  IdentitySdkCore: e74e8f81ce688fac4365183376e3b26f62f06b5f
+  IdentitySdkGoogle: f977b56714cdb52c20ddab0e38178201a922517b
 
 PODFILE CHECKSUM: 8a08fef6e31a090283b52e0d6ae5de086e9cc9cf
 
