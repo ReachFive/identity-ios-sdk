@@ -79,13 +79,15 @@ public extension ReachFive {
     func requestAccountRecovery(
         email: String? = nil,
         phoneNumber: String? = nil,
-        redirectUrl: String? = nil
+        redirectUrl: String? = nil,
+        origin: String? = nil
     ) -> Future<(), ReachFiveError> {
         let requestAccountRecoveryRequest = RequestAccountRecoveryRequest(
             clientId: sdkConfig.clientId,
             email: email,
             phoneNumber: phoneNumber,
-            redirectUrl: redirectUrl ?? sdkConfig.accountRecoveryUri
+            redirectUrl: redirectUrl ?? sdkConfig.accountRecoveryUri,
+            origin: origin
         )
         return reachFiveApi.requestAccountRecovery(requestAccountRecoveryRequest)
     }

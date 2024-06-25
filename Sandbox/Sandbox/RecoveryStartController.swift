@@ -15,7 +15,7 @@ class RecoveryStartController: UIViewController {
             phoneNumber = username
         }
         
-        AppDelegate.reachfive().requestAccountRecovery(email: email, phoneNumber: phoneNumber)
+        AppDelegate.reachfive().requestAccountRecovery(email: email, phoneNumber: phoneNumber, origin: "RecoveryStartController:sendLink")
             .onSuccess { _ in
                 if let verificationController = self.storyboard?.instantiateViewController(withIdentifier: "AccountRecoveryVerification") as? RecoveryVerificationController {
                     verificationController.email = email
