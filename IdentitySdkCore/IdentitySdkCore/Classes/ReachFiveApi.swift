@@ -548,10 +548,10 @@ public class ReachFiveApi {
             .responseJson(type: RegistrationOptions.self, decoder: decoder)
     }
     
-    public func resetWebAuthn(resetPublicKeyCredential: ResetPublicKeyCredential) -> Future<Void, ReachFiveError> {
+    public func resetWebAuthn(resetPublicKeyCredential: ResetPublicKeyCredential, originR5: String? = nil) -> Future<Void, ReachFiveError> {
         AF
             .request(
-                createUrl(path: "/identity/v1/webauthn/reset"),
+                createUrl(path: "/identity/v1/webauthn/reset", params: ["origin": originR5]),
                 method: .post,
                 parameters: resetPublicKeyCredential.dictionary(),
                 encoding: JSONEncoding.default

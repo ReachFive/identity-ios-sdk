@@ -20,7 +20,7 @@ class RecoveryEndController: UIViewController {
             return
         }
         if #available(iOS 16.0, *) {
-            AppDelegate.reachfive().resetPasskeys(withRequest: ResetPasskeyRequest(verificationCode: verificationCode, friendlyName: username, anchor: window, email: email, phoneNumber: phoneNumber, origin: "RecoveryEndController"))
+            AppDelegate.reachfive().resetPasskeys(withRequest: ResetPasskeyRequest(verificationCode: verificationCode, friendlyName: username, anchor: window, email: email, phoneNumber: phoneNumber, origin: "RecoveryEndController.newPasskey"))
                 .onSuccess { _ in
                     print("succcess reset passkey")
                     self.navigationController?.popViewController(animated: true)
