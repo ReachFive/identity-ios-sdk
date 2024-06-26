@@ -83,7 +83,7 @@ public class ReachFive: NSObject {
         
         let recovery = URLComponents(string: sdkConfig.accountRecoveryUri)
         let mfa = URLComponents(string: sdkConfig.mfaUri)
-        let passwordless = URLComponents(string: sdkConfig.scheme)
+        let passwordless = URLComponents(string: sdkConfig.redirectUri)
         
         switch (receivedUrl?.host, receivedUrl?.path) {
         
