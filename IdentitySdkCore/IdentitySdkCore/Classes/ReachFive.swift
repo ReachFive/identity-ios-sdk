@@ -79,13 +79,23 @@ public class ReachFive: NSObject {
     }
     
     public func interceptUrl(_ url: URL) -> () {
-        let host = URLComponents(url: url, resolvingAgainstBaseURL: true)?.host
-        switch host {
-        //TODO faire en sorte que les versions customs marchent quand même, en lisant sdkConfig.mfaUri, .scheme et .accountRecoveryUri
-        case "mfa": interceptVerifyMfaCredential(url)
-        case "account-recovery": interceptAccountRecovery(url)
-        case "callback": interceptPasswordless(url)
-        // interpret non-standard hosts as passwordless
+        let receivedUrl = URLComponents(url: url, resolvingAgainstBaseURL: true)
+        
+        let recovery = URLComponents(string: sdkConfig.accountRecoveryUri)
+        let mfa = URLComponents(string: sdkConfig.mfaUri)
+        let passwordless = URLComponents(string: sdkConfig.scheme)
+        
+        switch (receivedUrl?.host, receivedUrl?.path) {
+        
+        case (recovery?.host, recovery?.path): interceptAccountRecovery(url)
+        case (mfa?.host, mfa?.path): interceptVerifyMfaCredential(url)
+        case (passwordless?.host, passwordless?.path): interceptPasswordless(url)
+            
+            // fallback to old way of doing things if url components are not properly extracted
+        case ("account-recovery", _): interceptAccountRecovery(url)
+        case ("mfa", _): interceptVerifyMfaCredential(url)
+        case ("callback", _): interceptPasswordless(url)
+        
         default: interceptPasswordless(url)
         }
     }
