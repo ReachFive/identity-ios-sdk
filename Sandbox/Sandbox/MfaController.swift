@@ -396,7 +396,7 @@ extension CredentialCollectionViewCell {
                     }
             } else {
                 AppDelegate.reachfive()
-                    .mfaDeleteCredential(phoneNumber: identifier, authToken: authToken)
+                    .mfaDeleteCredential(identifier, authToken: authToken)
                     .onSuccess { _ in
                         self.contentView.removeFromSuperview()
                     }
