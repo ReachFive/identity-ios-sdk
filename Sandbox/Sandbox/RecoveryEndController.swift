@@ -29,6 +29,8 @@ class RecoveryEndController: UIViewController {
                 }
                 .onFailure { error in
                     print("Error: \(error.message())")
+                    let alert = AppDelegate.createAlert(title: "Account Recovery Failed", message: "Error: \(error.message())")
+                    self.present(alert, animated: true)
                 }
         }
     }
@@ -60,6 +62,8 @@ class RecoveryEndController: UIViewController {
             }
             .onFailure { error in
                 print("Error: \(error.message())")
+                let alert = AppDelegate.createAlert(title: "Account Recovery Failed", message: "Error: \(error.message())")
+                self.present(alert, animated: true)
             }
 
     }
