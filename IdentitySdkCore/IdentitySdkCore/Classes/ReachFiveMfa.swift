@@ -19,17 +19,6 @@ public enum Credential {
     }
 }
 
-public enum ListMfa {
-    case TrustedDevices
-    case Credentials
-}
-
-public enum CredentialToDelete {
-    case Email
-    case PhoneNumber(_ phoneNumber: String)
-}
-
-
 public struct StartStepUp {
     var redirectUri: String?
     var authToken: AuthToken?
@@ -172,8 +161,6 @@ public extension ReachFive {
         return reachFiveApi
             .deleteMfaPhoneNumberCredential(phoneNumber: phoneNumber, authToken: authToken)
     }
-    
-    
     
     func mfaListTrustedDevices(authToken: AuthToken) -> Future<MfaListTrustedDevices, ReachFiveError> {
         return reachFiveApi
