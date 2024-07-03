@@ -19,6 +19,17 @@ public enum Credential {
     }
 }
 
+public enum ListMfa {
+    case TrustedDevices
+    case Credentials
+}
+
+public enum CredentialToDelete {
+    case Email
+    case PhoneNumber(_ phoneNumber: String)
+}
+
+
 public struct StartStepUp {
     var redirectUri: String?
     var authToken: AuthToken?
@@ -160,6 +171,17 @@ public extension ReachFive {
         }
         return reachFiveApi
             .deleteMfaPhoneNumberCredential(phoneNumber: phoneNumber, authToken: authToken)
+    }
+    
+    
+    
+    func mfaListTrustedDevices(authToken: AuthToken) -> Future<MfaListTrustedDevices, ReachFiveError> {
+        return reachFiveApi
+            .listMfaTrustedDevices(authToken: authToken)
+    }
+    
+    func mfaDelete(trustedDevice deviceId: String, authToken: AuthToken) -> Future<Void, ReachFiveError> {
+        return reachFiveApi.deleteMfaTrustedDevice(deviceId: deviceId, authToken: authToken)
     }
     
     internal func interceptVerifyMfaCredential(_ url: URL) {
