@@ -229,6 +229,7 @@
 				34689A9822CDFC24002970F9 /* LoginProviderRequest.swift */,
 				34E18B8E22A6C32500952EBD /* LoginRequest.swift */,
 				9943B0862B6954F1007AD120 /* MfaCredentialsRequest.swift */,
+				991296BE2BDBBCAF00DCEDC1 /* MfaStepUpRequest.swift */,
 				34BDDA3D22E5BFAC00D16DAE /* ProfileSignupRequest.swift */,
 				34251C0A232FC13800B0C271 /* RefreshRequest.swift */,
 				3474D28A22D32F3A005112C1 /* RequestPasswordResetRequest.swift */,
@@ -241,7 +242,6 @@
 				34689A9D22CE4666002970F9 /* VerifyPhoneNumberRequest.swift */,
 				2AE533132994632F00EF97E0 /* WebviewLoginRequest.swift */,
 				8496EB0725DEAE10005098DD /* webAuthn */,
-				991296BE2BDBBCAF00DCEDC1 /* MfaStepUpRequest.swift */,
 			);
 			path = requests;
 			sourceTree = "<group>";
