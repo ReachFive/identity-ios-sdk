@@ -499,7 +499,7 @@ extension TrustedDeviceCollectionViewCell {
                 return
         }
         let approveRemove = UIAlertAction(title: "Yes", style: .default) { _ in
-            AppDelegate().reachfive.mfaDelete(trustedDevice: deviceId, authToken: authToken)
+            AppDelegate().reachfive.mfaDelete(trustedDeviceId: deviceId, authToken: authToken)
                 .onSuccess { _ in
                     self.contentView.removeFromSuperview()
                 }
