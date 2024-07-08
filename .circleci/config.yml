@@ -20,28 +20,28 @@ jobs:
             cd IdentitySdkCore
             pod install
             cd ../
-            pod lib lint IdentitySdkCore.podspec --allow-warnings
+            pod lib lint IdentitySdkCore.podspec
       - run:
           name: Check IdentitySdkFacebook
           command: |
             cd IdentitySdkFacebook
             pod install
             cd ../
-            pod lib lint IdentitySdkFacebook.podspec --allow-warnings
+            pod lib lint IdentitySdkFacebook.podspec
       - run:
           name: Check IdentitySdkGoogle
           command: |
             cd IdentitySdkGoogle
             pod install
             cd ../
-            pod lib lint IdentitySdkGoogle.podspec --allow-warnings
+            pod lib lint IdentitySdkGoogle.podspec
       - run:
           name: Check IdentitySdkWeChat
           command: |
             cd IdentitySdkWeChat
             pod install
             cd ../
-            pod lib lint IdentitySdkWeChat.podspec --allow-warnings
+            pod lib lint IdentitySdkWeChat.podspec
   build-for-release:
     macos:
       xcode: "15.3.0"
@@ -56,28 +56,28 @@ jobs:
             cd IdentitySdkCore
             pod install
             cd ../
-            pod spec lint IdentitySdkCore.podspec --allow-warnings
+            pod spec lint IdentitySdkCore.podspec
       - run:
           name: Check IdentitySdkFacebook
           command: |
             cd IdentitySdkFacebook
             pod install
             cd ../
-            pod spec lint IdentitySdkFacebook.podspec --allow-warnings
+            pod spec lint IdentitySdkFacebook.podspec
       - run:
           name: Check IdentitySdkGoogle
           command: |
             cd IdentitySdkGoogle
             pod install
             cd ../
-            pod spec lint IdentitySdkGoogle.podspec --allow-warnings
+            pod spec lint IdentitySdkGoogle.podspec
       - run:
           name: Check IdentitySdkWeChat
           command: |
             cd IdentitySdkWeChat
             pod install
             cd ../
-            pod spec lint IdentitySdkWeChat.podspec --allow-warnings
+            pod spec lint IdentitySdkWeChat.podspec
 
   publish:
     macos:

@@ -9,6 +9,7 @@ public extension ReachFive {
         let promise = Promise<AuthToken, ReachFiveError>()
         
         let pkce = Pkce.generate()
+        let scope = (request.scope ?? scope)
         let authURL = buildAuthorizeURL(pkce: pkce, state: request.state, nonce: request.nonce, scope: scope, origin: request.origin, provider: request.provider)
         
         // Initialize the session.

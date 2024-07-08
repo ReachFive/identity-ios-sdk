@@ -10,7 +10,7 @@
 	<array>
 		<string>webcredentials:local-sandbox.og4.me?mode=developer</string>
 		<string>applinks:local-sandbox.og4.me</string>
-		<string>webcredentials:integ-qa-fonctionnelle-pr3970.reach5.dev</string>
+		<string>webcredentials:integ-qa-fonctionnelle.reach5.net</string>
 		<string>applinks:integ-qa-fonctionnelle-pr3970.reach5.dev</string>
 	</array>
 	<key>com.apple.security.app-sandbox</key>
