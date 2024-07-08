@@ -63,7 +63,7 @@ class MfaController: UIViewController {
         AppDelegate.reachfive()
             .mfaListTrustedDevices(authToken: authToken)
             .onSuccess { response in
-                self.mfaTrustedDevicesToDisplay = response.trustedDevices
+                self.mfaTrustedDevicesToDisplay = response
             }
     }
     
