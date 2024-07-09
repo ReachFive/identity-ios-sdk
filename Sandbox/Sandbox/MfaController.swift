@@ -8,22 +8,36 @@ class MfaController: UIViewController {
     
     var listMfaCredentialsView: UICollectionView! = nil
     
+    var listMfaTrustedDevicesView: UICollectionView! = nil
+    
     @IBOutlet var selectedStepUpType: UISegmentedControl!
     
     @IBOutlet var startStepUp: UIButton!
     
     enum Section {
         case main
+        case trusted
     }
     
     var listMfaCredentialsDataSource: UICollectionViewDiffableDataSource<Section, MfaCredential>! = nil
     
     var currentListMfaCredentialSnapshot: NSDiffableDataSourceSnapshot<Section, MfaCredential>! = nil
     
+    var listMfaTrustedDevicesDataSource: UICollectionViewDiffableDataSource<Section, TrustedDevice>! = nil
+    
+    var currentListMfaTrustedDeviceSnapshot: NSDiffableDataSourceSnapshot<Section, TrustedDevice>! = nil
+    
     var mfaCredentialsToDisplay: [MfaCredential] = [] {
         didSet {
             currentListMfaCredentialSnapshot.appendItems(mfaCredentialsToDisplay)
             listMfaCredentialsDataSource.apply(currentListMfaCredentialSnapshot)
+        }
+    }
+    
+    var mfaTrustedDevicesToDisplay: [TrustedDevice] = [] {
+        didSet {
+            currentListMfaTrustedDeviceSnapshot.appendItems(mfaTrustedDevicesToDisplay)
+            listMfaTrustedDevicesDataSource.apply(currentListMfaTrustedDeviceSnapshot)
         }
     }
     
@@ -38,6 +52,18 @@ class MfaController: UIViewController {
             .mfaListCredentials(authToken: authToken)
             .onSuccess { response in
                 self.mfaCredentialsToDisplay = response.credentials.map { MfaCredential.convert(from: $0) }
+            }
+    }
+    
+    private func fetchTrustedDevices() {
+        guard let authToken = AppDelegate.storage.getToken() else {
+            print("not logged in")
+            return
+        }
+        AppDelegate.reachfive()
+            .mfaListTrustedDevices(authToken: authToken)
+            .onSuccess { response in
+                self.mfaTrustedDevicesToDisplay = response
             }
     }
     
@@ -80,6 +106,7 @@ class MfaController: UIViewController {
         
         mfaAction.mfaStart(stepUp: StartStepUp(authType: stepUpSelectedType, authToken: authToken, scope: ["openid", "email", "profile", "phone", "full_write", "offline_access", "mfa"]), authToken: authToken).onSuccess { freshToken in
             AppDelegate.storage.setToken(freshToken)
+            self.fetchTrustedDevices()
         }
     }
     
@@ -251,14 +278,14 @@ class MfaAction {
 }
 
 extension MfaController {
-    func createLayout() -> UICollectionViewLayout {
+    func createLayout(_ elementKind: String) -> UICollectionViewLayout {
         let sectionProvider = { (_: Int,
                                  _: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                                       heightDimension: .fractionalHeight(0.1))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                     
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.85),
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.95),
                                                        heightDimension: .absolute(250))
                 let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
             
@@ -269,7 +296,7 @@ extension MfaController {
                                                        heightDimension: .estimated(22))
                 let titleSupplementary = NSCollectionLayoutBoundarySupplementaryItem(
                     layoutSize: titleSize,
-                    elementKind: "Mfa credentials",
+                    elementKind: elementKind,
                     alignment: .top)
                 titleSupplementary.pinToVisibleBounds = true
                 section.boundarySupplementaryItems = [titleSupplementary]
@@ -285,14 +312,21 @@ extension MfaController {
     }
     
     func configureHierarchy() {
-        listMfaCredentialsView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
+        listMfaCredentialsView = UICollectionView(frame: .zero, collectionViewLayout: createLayout("Mfa credentials"))
         listMfaCredentialsView?.translatesAutoresizingMaskIntoConstraints = false
+        listMfaTrustedDevicesView = UICollectionView(frame: .zero, collectionViewLayout: createLayout("Mfa trusted devices"))
+        listMfaTrustedDevicesView?.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(listMfaCredentialsView)
+        view.addSubview(listMfaTrustedDevicesView)
         NSLayoutConstraint.activate([
             listMfaCredentialsView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             listMfaCredentialsView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             listMfaCredentialsView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height/2),
-            listMfaCredentialsView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            listMfaCredentialsView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            listMfaTrustedDevicesView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            listMfaTrustedDevicesView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            listMfaTrustedDevicesView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height/(1.5)),
+            listMfaTrustedDevicesView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
     
@@ -319,6 +353,160 @@ extension MfaController {
         currentListMfaCredentialSnapshot.appendSections([.main])
         currentListMfaCredentialSnapshot.appendItems(mfaCredentialsToDisplay)
         listMfaCredentialsDataSource.apply(currentListMfaCredentialSnapshot, animatingDifferences: false)
+        
+        
+        let cellTrustedDeviceRegistration = UICollectionView.CellRegistration<TrustedDeviceCollectionViewCell, TrustedDevice> { cell, _, trustedDevice in
+            cell.configure(with: trustedDevice)
+        }
+        listMfaTrustedDevicesDataSource = UICollectionViewDiffableDataSource<Section, TrustedDevice>(collectionView: listMfaTrustedDevicesView) {
+            (collectionView: UICollectionView, indexPath: IndexPath, trustedDevice: TrustedDevice) -> UICollectionViewCell? in
+            collectionView.dequeueConfiguredReusableCell(using: cellTrustedDeviceRegistration, for: indexPath, item: trustedDevice)
+        }
+        
+        let supplementaryTrustedDeviceRegistration = UICollectionView.SupplementaryRegistration<TitleSupplementaryView>(elementKind: "Mfa trusted devices") {
+            (supplementaryView, _, _) in
+            supplementaryView.label.text = "Added trusted devices"
+        }
+        listMfaTrustedDevicesDataSource.supplementaryViewProvider = { _, _, index in
+            self.listMfaTrustedDevicesView.collectionViewLayout.collectionView?
+                .dequeueConfiguredReusableSupplementary(using: supplementaryTrustedDeviceRegistration, for: index)
+        }
+        currentListMfaTrustedDeviceSnapshot = NSDiffableDataSourceSnapshot<Section, TrustedDevice>()
+        currentListMfaTrustedDeviceSnapshot.appendSections([.trusted])
+        currentListMfaTrustedDeviceSnapshot.appendItems(mfaTrustedDevicesToDisplay)
+        listMfaTrustedDevicesDataSource.apply(currentListMfaTrustedDeviceSnapshot, animatingDifferences: false)
+        
+    }
+}
+
+class TrustedDeviceCollectionViewCell: UICollectionViewListCell {
+    static let identifier = "TrustedDeviceCollectionViewCell"
+    
+    let id: UILabel = {
+        let label = UILabel()
+        return label
+    }()
+    
+    let userId: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.preferredFont(forTextStyle: .body)
+
+        return label
+    }()
+    
+    let ip: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.preferredFont(forTextStyle: .body)
+
+        return label
+    }()
+    
+    let createdAt: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.preferredFont(forTextStyle: .body)
+
+        return label
+    }()
+    
+    let operatingSystem: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.preferredFont(forTextStyle: .body)
+
+        return label
+    }()
+    
+    let deviceClass: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.preferredFont(forTextStyle: .body)
+
+        return label
+    }()
+    
+    let deviceName: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.preferredFont(forTextStyle: .body)
+
+        return label
+    }()
+    
+    let deleteButton: UIButton = {
+        let uiButton = UIButton()
+        uiButton.tintColor = UIColor.red
+        uiButton.setImage(UIImage(systemName: "minus.circle"), for: UIControl.State.normal)
+        return uiButton
+    }()
+}
+
+extension TrustedDeviceCollectionViewCell {
+    public func configure(with trustedDevice: TrustedDevice) {
+        id.text = trustedDevice.id
+        
+        ip.text = trustedDevice.metadata.ip
+        ip.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(ip)
+        
+        operatingSystem.text = trustedDevice.metadata.operatingSystem
+        operatingSystem.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(operatingSystem)
+        
+        deviceClass.text = trustedDevice.metadata.deviceClass
+        deviceClass.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(deviceClass)
+        
+        deviceName.text = trustedDevice.metadata.deviceName
+        deviceName.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(deviceName)
+        
+        createdAt.text = trustedDevice.createdAt.components(separatedBy: "T")[0]
+        createdAt.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(createdAt)
+        
+        deleteButton.frame = CGRect(x: contentView.frame.width - 20, y: 0, width: 20, height: 20)
+        deleteButton.addTarget(self, action: #selector(deleteTrustedDeviceButtonTapped), for: UIControl.Event.touchUpInside)
+        contentView.addSubview(deleteButton)
+        
+        let fontSize = contentView.frame.size.width < 330 ? 6.0 : 9.0
+        createdAt.font = UIFont.preferredFont(forTextStyle: .body).withSize(fontSize)
+        ip.font = UIFont.preferredFont(forTextStyle: .body).withSize(fontSize)
+        operatingSystem.font = UIFont.preferredFont(forTextStyle: .body).withSize(fontSize)
+        deviceClass.font = UIFont.preferredFont(forTextStyle: .body).withSize(fontSize)
+        deviceName.font = UIFont.preferredFont(forTextStyle: .body).withSize(fontSize)
+        
+        
+        let spacing = CGFloat((contentView.frame.width/6.5))
+    
+        NSLayoutConstraint.activate([
+            ip.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            operatingSystem.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 1.2 * spacing),
+            deviceName.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 2 * spacing),
+            deviceClass.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 3.5 * spacing),
+            createdAt.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 4.2 * spacing),
+        ])
+    }
+    @IBAction func deleteTrustedDeviceButtonTapped() -> Void {
+        guard let authToken = AppDelegate.storage.getToken() else {
+            print("not logged in")
+            return
+        }
+        guard let deviceId = id.text else {
+            print("identifier cannot be nil")
+            return
+        }
+        
+        let alert = UIAlertController(title: "Remove trusted device", message: "Are you sure you want to remove the trusted device ?", preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "No", style: .cancel) { _ in
+                return
+        }
+        let approveRemove = UIAlertAction(title: "Yes", style: .default) { _ in
+            AppDelegate().reachfive.mfaDelete(trustedDeviceId: deviceId, authToken: authToken)
+                .onSuccess { _ in
+                    self.contentView.removeFromSuperview()
+                }
+        }
+        alert.addAction(cancelAction)
+        alert.addAction(approveRemove)
+        self.window?.rootViewController?.present(alert, animated: true)
     }
 }
 

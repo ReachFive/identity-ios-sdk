@@ -162,6 +162,16 @@ public extension ReachFive {
             .deleteMfaPhoneNumberCredential(phoneNumber: phoneNumber, authToken: authToken)
     }
     
+    func mfaListTrustedDevices(authToken: AuthToken) -> Future<[TrustedDevice], ReachFiveError> {
+        return reachFiveApi
+            .listMfaTrustedDevices(authToken: authToken)
+            .map{ res in res.trustedDevices }
+    }
+    
+    func mfaDelete(trustedDeviceId deviceId: String, authToken: AuthToken) -> Future<Void, ReachFiveError> {
+        return reachFiveApi.deleteMfaTrustedDevice(deviceId: deviceId, authToken: authToken)
+    }
+    
     internal func interceptVerifyMfaCredential(_ url: URL) {
         let params = URLComponents(url: url, resolvingAgainstBaseURL: true)?.queryItems
         if let error = params?.first(where: { $0.name == "error" })?.value {

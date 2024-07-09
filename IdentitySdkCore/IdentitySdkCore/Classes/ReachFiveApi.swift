@@ -400,6 +400,35 @@ public class ReachFiveApi {
             .responseJson(decoder: decoder)
     }
     
+    public func listMfaTrustedDevices(
+        authToken: AuthToken
+    ) -> Future<MfaListTrustedDevices, ReachFiveError> {
+        AF
+            .request(
+                createUrl(path: "/identity/v1/mfa/trusteddevices"),
+                method: .get,
+                encoding: JSONEncoding.default,
+                headers: tokenHeader(authToken)
+            )
+            .validate(contentType: ["application/json"])
+            .responseJson(type: MfaListTrustedDevices.self, decoder: decoder)
+    }
+    
+    public func deleteMfaTrustedDevice(
+        deviceId: String,
+        authToken: AuthToken
+    ) -> Future<Void, ReachFiveError> {
+        AF
+            .request(
+                createUrl(path: "/identity/v1/mfa/trusteddevices/\(deviceId)"),
+                method: .delete,
+                encoding: JSONEncoding.default,
+                headers: tokenHeader(authToken)
+            )
+            .validate(contentType: ["application/json"])
+            .responseJson(decoder: decoder)
+    }
+    
     public func mfaListCredentials(
         authToken: AuthToken
     ) -> Future<MfaCredentialsListResponse, ReachFiveError> {
