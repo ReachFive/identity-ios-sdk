@@ -16,6 +16,8 @@ Pod::Spec.new do |spec|
   spec.source_files          = "IdentitySdkWeChat/IdentitySdkWeChat/**/*.*"
   spec.platform              = :ios
   spec.ios.deployment_target = $IOS_DEPLOYMENT_TARGET
+  spec.deprecated = true
+  spec.deprecated_in_favor_of = "Reach5WeChat"
 
   spec.static_framework = true
 

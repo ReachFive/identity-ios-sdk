@@ -16,6 +16,8 @@ Pod::Spec.new do |spec|
   spec.source_files          = "IdentitySdkFacebook/IdentitySdkFacebook/Classes/**/*.*"
   spec.platform              = :ios
   spec.ios.deployment_target = $IOS_DEPLOYMENT_TARGET
+  spec.deprecated = true
+  spec.deprecated_in_favor_of = "Reach5Facebook"
 
   spec.dependency 'IdentitySdkCore', '~> 6'
   spec.dependency 'FBSDKCoreKit', '~> 17.0.0'
