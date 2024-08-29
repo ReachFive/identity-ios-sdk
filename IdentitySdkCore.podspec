@@ -16,6 +16,8 @@ Pod::Spec.new do |spec|
   spec.source_files          = "IdentitySdkCore/IdentitySdkCore/Classes/**/*.*"
   spec.platform              = :ios
   spec.ios.deployment_target = $IOS_DEPLOYMENT_TARGET
+  spec.deprecated = true
+  spec.deprecated_in_favor_of = "Reach5"
 
   spec.dependency 'Alamofire', '~> 5.8'
   spec.dependency 'BrightFutures', '~> 8.2.0'
